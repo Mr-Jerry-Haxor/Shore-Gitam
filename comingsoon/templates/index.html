@@ -1,442 +1,348 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'index.css' %}" />
-    <link rel="shortcut icon" type="image/png" href="{% static 'shore_24_clogo.png' %}" >
-    <link rel="stylesheet" href="{% static 'timer.css' %}" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="{% static 'timer.js' %}"></script>
-  </head>
-  <body>
-    <video autoplay muted loop id="backgroundVideo" class="video-background">
-        <source src="{% static 'main-background.mp4' %}" type="video/mp4">
-    </video>
-    <div id="componentContainer">
-      
-<div id="clock-container" class="relative  w-full h-screen m-0 bg-gradient-to-b from-mostlyBlackBlue to-veryDarkBlue
-font-redHatText">
-<section id="time-main" class="w-full md:w-30 h-full flex flex-col justify-center items-center">
-<div class="text-xl text-center tracking-[8px] md:text-4xl text-grayishBlue md:tracking-[14px] font-bold">
-  WE'RE LAUNCHING SOON
-</div>
-<!--Time-->
-<div id="clock-main" class="mt-80px] flex justify-center items-center gap-[40px]">
-  <!--HOURS-->
-  <div id="clock-cards" class="flex flex-col-reverse justify-center items-center space-y-1">
-    <h1 class="mt-[30px] md:text-l text-2xl text-grayishBlue font-bold">
-      DAYS
-    </h1>
-    <div class="flex justify-center items-center">
-      <div class="flex flex-col text-softRed space-y-[1px] rounded-xl container-shadow" data-days>
-        <!--Top-->
-        <span class="relative w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden
-                     rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl">
-          <div class="absolute w-full h-full flex justify-start items-end">
-            <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
-          </div>
-          <div class="absolute w-full h-full flex justify-end items-end">
-            <div class="w-[10px] h-[8px] rounded-tl-full bg-veryDarkBlue"></div>
-          </div>
-          <span class="translate-y-[46px]" data-card-top>
-            09
-          </span>
-          <!--FlipTop-->
-          <span class="absolute w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden
-                         rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl top-flip-shadow" data-flip-top>
-            <div class="absolute w-full h-full flex justify-start items-end">
-              <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Scroll-driven animations for columns and rows powered by GSAP" />
+	<meta name="keywords" content="scroll animation, grid, column, javascript, css, gsap, 3d, distort" />
+	<meta name="author" content="Codrops" />
+  <title>SHORE 24</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
+  <link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="https://use.typekit.net/rzt6nuu.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+  <link rel="stylesheet" href="{% static 'index.css' %}" />
+  <script src="{% static 'index.js' %}"></script>
+  <script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
+	<script src="//tympanus.net/codrops/adpacks/analytics.js"></script>
+  <link rel="icon" type="image/x-icon" href="{% static 'shore_24_clogo.png'%}">
+</head>
+<body>
+    <style>
+      .tick {
+          padding-bottom: 1em;
+          font-size: 1rem;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans,
+              Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+      }
+
+      .tick-label {
+          font-size: 0.375em;
+          text-align: center;
+          color: white;
+      }
+
+      .tick-group {
+          margin: 0 0.25em;
+          text-align: center;
+      }
+  </style>
+  <video autoplay muted loop  id="video-background">
+    <source src="{% static 'shorefest.mp4' %}" type="video/mp4">
+  </video>
+
+<div>
+  <div class="tick"  data-did-init="handleTickInit">
+    <div
+        data-repeat="true"
+        data-layout="horizontal center fit"
+        data-transform="preset(d, h, m, s) -> delay"
+    >
+        <div class="tick-group">
+            <div
+                data-key="value"
+                data-repeat="true"
+                data-transform="pad(00) -> split -> delay"
+            >
+                <span data-view="flip"></span>
             </div>
-            <div class="absolute w-full h-full flex justify-end items-end">
-              <div class="w-[10px] h-[8px] rounded-tl-full bg-veryDarkBlue"></div>
-            </div>
-            <span class="translate-y-[46px]" data-flip-top-num data-card-top>
-              00
-            </span>
-          </span>
-        </span>
-        <!--Bottom-->
-        <span class="relative w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden 
-                    rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow">
-          <div class="absolute w-full h-full flex justify-start items-start">
-            <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
-          </div>
-          <div class="absolute w-full h-full flex justify-end items-start">
-            <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
-          </div>
-          <span class="-translate-y-[45px]" data-card-bot>00</span>
-          <!--FlipBottom-->
-          <span class="absolute w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden 
-                        rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow" data-flip-bot>
-            <div class="absolute w-full h-full flex justify-start items-start">
-              <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
-            </div>
-            <div class="absolute w-full h-full flex justify-end items-start">
-              <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
-            </div>
-            <span class="-translate-y-[45px]" data-flip-bot-num>00</span>
-          </span>
-        </span>
-      </div>
-    </div>
-  </div>
-  <!--HOURS-->
-  <div id="clock-cards" class="flex flex-col-reverse justify-center items-center space-y-1">
-    <h1 class="mt-[30px] text-2xl text-grayishBlue font-bold">
-      HOURS
-    </h1>
-    <div class="flex justify-center items-center">
-      <div class="flex flex-col text-softRed space-y-[1px] rounded-xl container-shadow" data-hours>
-        <!--Top-->
-        <span class="relative w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden
-                     rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl">
-          <div class="absolute w-full h-full flex justify-start items-end">
-            <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
-          </div>
-          <div class="absolute w-full h-full flex justify-end items-end">
-            <div class="w-[10px] h-[8px] rounded-tl-full bg-veryDarkBlue"></div>
-          </div>
-          <span class="translate-y-[46px]" data-card-top>
-            00
-          </span>
-          <!--FlipTop-->
-          <span class="absolute w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden
-                         rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl top-flip-shadow" data-flip-top>
-            <div class="absolute w-full h-full flex justify-start items-end">
-              <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
-            </div>
-            <div class="absolute w-full h-full flex justify-end items-end">
-              <div class="w-[10px] h-[8px] rounded-tl-full bg-veryDarkBlue"></div>
-            </div>
-            <span class="translate-y-[46px]" data-flip-top-num data-card-top>
-              00
-            </span>
-          </span>
-        </span>
-        <!--Bottom-->
-        <span class="relative w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden 
-                    rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow">
-          <div class="absolute w-full h-full flex justify-start items-start">
-            <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
-          </div>
-          <div class="absolute w-full h-full flex justify-end items-start">
-            <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
-          </div>
-          <span class="-translate-y-[45px]" data-card-bot>00</span>
-          <!--FlipBottom-->
-          <span class="absolute w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden 
-                        rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow" data-flip-bot>
-            <div class="absolute w-full h-full flex justify-start items-start">
-              <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
-            </div>
-            <div class="absolute w-full h-full flex justify-end items-start">
-              <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
-            </div>
-            <span class="-translate-y-[45px]" data-flip-bot-num>00</span>
-          </span>
-        </span>
-      </div>
-    </div>
-  </div>
-  <!--MINUTES-->
-  <div id="clock-cards" class="flex flex-col-reverse justify-center md:w-20 items-center space-y-5">
-    <h1 class="mt-[30px] text-2xl text-grayishBlue font-bold">
-      MINUTES
-    </h1>
-    <div class="flex justify-center items-center">
-      <div class="flex flex-col text-softRed space-y-[1px] rounded-xl container-shadow" data-minutes>
-        <!--Top-->
-        <span class="relative w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden
-                     rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl">
-          <div class="absolute w-full h-full flex justify-start items-end">
-            <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
-          </div>
-          <div class="absolute w-full h-full flex justify-end items-end">
-            <div class="w-[10px] h-[8px] rounded-tl-full bg-veryDarkBlue"></div>
-          </div>
-          <span class="translate-y-[46px]" data-card-top>
-            00
-          </span>
-          <!--FlipTop-->
-          <span class="absolute w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden
-                         rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl top-flip-shadow" data-flip-top>
-            <div class="absolute w-full h-full flex justify-start items-end">
-              <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
-            </div>
-            <div class="absolute w-full h-full flex justify-end items-end">
-              <div class="w-[10px] h-[8px] rounded-tl-full bg-veryDarkBlue"></div>
-            </div>
-            <span class="translate-y-[46px]" data-flip-top-num data-card-top>
-              00
-            </span>
-          </span>
-        </span>
-        <!--Bottom-->
-        <span class="relative w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden 
-                    rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow">
-          <div class="absolute w-full h-full flex justify-start items-start">
-            <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
-          </div>
-          <div class="absolute w-full h-full flex justify-end items-start">
-            <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
-          </div>
-          <span class="-translate-y-[45px]" data-card-bot>00</span>
-          <!--FlipBottom-->
-          <span class="absolute w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden 
-                        rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow" data-flip-bot>
-            <div class="absolute w-full h-full flex justify-start items-start">
-              <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
-            </div>
-            <div class="absolute w-full h-full flex justify-end items-start">
-              <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
-            </div>
-            <span class="-translate-y-[45px]" data-flip-bot-num>00</span>
-          </span>
-        </span>
-      </div>
-    </div>
-  </div>
-  <!--Seconds-->
-  <div id="clock-cards" class="flex flex-col-reverse justify-center items-center space-y-5">
-    <h1 class="mt-[30px] text-2xl text-grayishBlue font-bold">
-      SECONDS
-    </h1>
-    <div class="flex justify-center items-center">
-      <div class="flex flex-col text-softRed space-y-[1px] rounded-xl container-shadow" data-seconds>
-        <!--Top-->
-        <span class="relative w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden
-                     rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl">
-          <div class="absolute w-full h-full flex justify-start items-end">
-            <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
-          </div>
-          <div class="absolute w-full h-full flex justify-end items-end">
-            <div class="w-[10px] h-[8px] rounded-tl-full bg-veryDarkBlue"></div>
-          </div>
-          <span class="translate-y-[46px]" data-card-top>
-            00
-          </span>
-          <!--FlipTop-->
-          <span class="absolute w-[180px] h-[90px] bg-slightlyDarkerDesBlue overflow-hidden
-                         rounded-tl-xl rounded-tr-xl flex justify-center items-end text-8xl top-flip-shadow">
-            <div class="absolute w-full h-full flex justify-start items-end" data-flip-top>
-              <div class="w-[10px] h-[8px] rounded-tr-full bg-veryDarkBlue"></div>
-            </div>
-            <div class="absolute w-full h-full flex justify-end items-end">
-              <div class="w-[10px] h-[8px] rounded-tl-full bg-veryDarkBlue"></div>
-            </div>
-            <span class="translate-y-[46px]" data-flip-top-num data-card-top>
-              00
-            </span>
-          </span>
-        </span>
-        <!--Bottom-->
-        <span class="relative w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden 
-                    rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow">
-          <div class="absolute w-full h-full flex justify-start items-start">
-            <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
-          </div>
-          <div class="absolute w-full h-full flex justify-end items-start">
-            <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
-          </div>
-          <span class="-translate-y-[45px]" data-card-bot>00</span>
-          <!--FlipBottom-->
-          <span class="absolute w-[180px] h-[90px] bg-darkDesaturatedBlue overflow-hidden 
-                        rounded-bl-xl rounded-br-xl flex justify-center items-end text-8xl bottom-flip-shadow" data-flip-bot>
-            <div class="absolute w-full h-full flex justify-start items-start">
-              <div class="w-[10px] h-[8px] rounded-br-full bg-veryDarkBlue"></div>
-            </div>
-            <div class="absolute w-full h-full flex justify-end items-start">
-              <div class="w-[10px] h-[8px] rounded-bl-full bg-veryDarkBlue"></div>
-            </div>
-            <span class="-translate-y-[45px]" data-flip-bot-num>00</span>
-          </span>
-        </span>
-      </div>
+  
+            <span data-key="label" data-view="text" class="tick-label"></span>
+        </div>
     </div>
   </div>
 </div>
-</section>
-</div>
-    </div>
-    <h1 class="gallery-heading">SHORE23' GALLERY</h1>
 
-    <div class="container">
-      <div id="level1" class="row">
-        <div class="col1">
-          <div class="gallery">
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1585919751768-dff94a989751?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
-              />
-            </div>
 
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1509018877337-3af7dd307ea9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1509018877337-3af7dd307ea9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1482996207824-b0f01de61751?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1586084475151-e2f744d2836d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-              />
-            </div>
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1511788599147-a78f4f6145de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1540284921398-e06aee87b0f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=748&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1537634368701-eb5b82a4711f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1551048950-35fd9d7524f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-              />
-            </div>
+  <div id="shore-text">SHORE 23 GALLERY</div>
+  <div id="shore-gallery">
+    <main>
+			<div class="columns">
+		        <div class="column">
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		        </div>
+		        <div class="column">
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		        </div>
+		        <div class="column">
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
           </div>
-        </div>
-      </div>
-
-      <div id="level2" class="row">
-        <div class="col2">
-          <div class="gallery">
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1586089767946-73887b2eb438?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1534841070059-fac69c75d466?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1586178132225-99f5d5277f1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1543867702-3881e7432e7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-              />
-            </div>
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1511788599147-a78f4f6145de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1540284921398-e06aee87b0f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=748&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1537634368701-eb5b82a4711f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1551048950-35fd9d7524f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-              />
-            </div>
+		        <div class="column">
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		        </div>
+				    <div class="column">
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		            <figure class="column__item">
+		                <div class="column__item-imgwrap">
+		                    <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+		                </div>
+		            </figure>
+		        </div>
+            <div class="column">
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
+              <figure class="column__item">
+                  <div class="column__item-imgwrap">
+                      <div class="column__item-img" style="background-image:url(https://res.cloudinary.com/jerryhaxor/image/upload/v1701948945/shore%2024/IMG_9061_1_d7k3xl.jpg)"></div>
+                  </div>
+              </figure>
           </div>
-        </div>
-      </div>
+			</div>
+		</main>
+		<script src="https://tympanus.net/codrops/adpacks/cda_sponsor.js"></script>
+		<script src="{% static 'js/gsap.min.js' %}"></script>
+		<script src="{% static 'js/ScrollTrigger.min.js' %}"></script>
+		<script src="{% static 'js/lenis.min.js' %}"></script>
+		<script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+		<script type="module" src="{% static 'js/index7.js' %}"></script>
+  </div>
 
-      <div id="level3" class="row">
-        <div class="col3">
-          <div class="gallery">
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1511788599147-a78f4f6145de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
-              />
-            </div>
+<script>
+  function handleTickInit(tick) {
 
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1540284921398-e06aee87b0f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=748&q=80"
-              />
-            </div>
+      var nextYear = new Date().getFullYear() + 1;
 
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1537634368701-eb5b82a4711f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-              />
-            </div>
+      Tick.count.down('2024-02-02').onupdate = function (value) {
+          tick.value = value;
+      };
+  }
+</script>
+  <script src="{% static 'countdown.js' %}"></script>
+</body>
 
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1551048950-35fd9d7524f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-              />
-            </div>
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1511788599147-a78f4f6145de?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1540284921398-e06aee87b0f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=748&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1537634368701-eb5b82a4711f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-              />
-            </div>
-
-            <div class="gallery_item">
-              <img
-                src="https://images.unsplash.com/photo-1551048950-35fd9d7524f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.min.js"
-      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-      crossorigin="anonymous"
-    ></script>
-    <script src="{% static 'index.js' %}"></script>
-
-    
-  </body>
 </html>

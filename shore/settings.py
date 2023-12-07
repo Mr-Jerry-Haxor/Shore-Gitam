@@ -150,7 +150,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 1
 
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000','https://shore.gitam.edu']
 
-
+AUTH_USER_MODEL = 'coreteam.CustomUser' 
 
 AUTHENTICATION_BACKENDS = [
   'social_core.backends.google.GoogleOAuth2',
