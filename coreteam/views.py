@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 def coreindex(request):
     if request.user.is_staff:
         return render(request , 'dashboard.html')
-    elif request.user.is_not_authenticated:
+    elif not request.user.is_authenticated:
         return redirect('index')
 
 
