@@ -13,11 +13,20 @@
 
 }
 
+#shore-soon{
+  text-align: center;
+  font-size: 5rem;
+  position: relative;
+  margin-top: 5rem;
+  font-family: Georgia;
+}
+
 #shore-text {
   text-align: center;
   font-size: 2rem;
   position: static;
   margin-top: 5rem;
+  font-family: Georgia;
   /* padding: 6rem; */
 }
 
@@ -454,7 +463,7 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: 18rem;
+      top: 3.5rem;
 
   }
 
@@ -471,7 +480,8 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: 17rem;
+      top: 12rem;
+      margin-top: -10% !important;
 
   }
 
@@ -486,7 +496,7 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: 22rem;
+      top: 10rem;
 
   }
 
@@ -500,10 +510,13 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: 8rem;
+      top: 13rem;
+      margin-top: -20% !important;
 
   }
-
+  #shore-soon{
+    font-size: 3rem;
+  }
   #shore-text {
       font-size: 3rem;
       padding: 1rem;
@@ -517,7 +530,7 @@
       top: -1.5rem;
 
   }
-
+  
   #shore-text {
       font-size: 3rem;
       padding: 1rem;
@@ -528,10 +541,13 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: -1rem;
+      top: 5rem;
 
   }
 
+  #shore-soon{
+    font-size: 2rem;
+  }
   #shore-text {
       font-size: 2.5rem;
       padding: 1rem;
@@ -542,7 +558,8 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: 7rem;
+      top: 16rem;
+      margin-top: -50% !important;
 
   }
 
@@ -556,7 +573,7 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: 5rem;
+      top: 12rem;
 
   }
 
@@ -650,3 +667,67 @@
       padding: 1rem;
   }
 }  */
+
+
+
+
+
+/* Example styles, modify as needed */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #090808;
+  padding: 20px;
+  font-family: Georgia;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.footer-left {
+  flex: 1;
+}
+
+.footer-middle {
+  flex: 2;
+  text-align: center;
+  margin: auto;
+}
+
+.footer-right {
+  flex: 1;
+  text-align: left;
+  margin-left: 5%;
+  margin: auto;
+}
+
+.logo {
+  max-width: 200px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.social-media-icons {
+  display: flex;
+  flex-direction: column; /* Change icons to align vertically */
+  align-items: flex; /* Align icons to the right */
+}
+
+.social-media-icons a {
+  display: flex;
+  align-items: center;
+  margin: 5px; /* Adjust the spacing between icons */
+}
+
+.social-media-icons img {
+  width: 30px; /* Set the width of the logos */
+  margin-right: 5px; /* Adjust the spacing between logo and text */
+}

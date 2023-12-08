@@ -1,0 +1,217 @@
+{% load static  %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Core Team</title>
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'shore_24_clogo.png'%}">
+</head>
+<body>
+    <div id="parent-component">
+        <div class="menubar">
+            <input type="checkbox" id="check">
+            <label for="check">
+                <i class="fas fa-bars" id="btn"></i>
+                <i class="fas fa-times" id="cancel"></i>
+            </label>
+            <div class="sidebar">
+                <header id="sidebar-title">Menu</header>
+                <a href="#" class="active">
+                    <i class="fas fa-qrcode"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#">
+                    <span>President</span>
+                </a>
+                <a href="#">
+                    <span>Vice president</span>
+                </a>
+                <a href="#">
+                    <span>TECHNOLOGY</span>
+                </a>
+                <a href="#">
+                    <span>Operations</span>
+                </a>
+                <a href="#">
+                    <span>Events clutural</span>
+                </a>
+                <a href="#">
+                    <span>Event-Sports</span>
+                </a>
+                <a href="#">
+                    <span>Marketing</span>
+                </a>
+                <a href="#">
+                    <span>Sponsership</span>
+                </a>
+                <a href="#">
+                    <span>Legal</span>
+                </a>
+                <a href="#">
+                    <span>Design&content</span>
+                </a>
+                <a href="#">
+                    <span>Finance</span>
+                </a>
+                <a href="#">
+                    <span>Media</span>
+                </a>
+                <a href="#">
+                    <span>security</span>
+                </a>
+                <a href="#">
+                    <span>Hospitality</span>
+                </a>
+            </div>
+            <div id="main-title">SHORE 24</div>
+            <div id="user-login">
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn"><i class = "material-icons" id="user-icon">person</i></button>
+                    <div id="myDropdown" class="dropdown-content">
+                      <a href="#">Home</a>
+                      <a href="#">About</a>
+                      <a href="#">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div id="wrapper-text">TECHNOLOGY</div>
+            <button type="button" class="btn btn-success" id="add-task">Success</button>
+      
+        <div class="child-two"> 
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th class="name">Task_title</th>
+                        <th class="name">Priority</th>
+                        <th class="name">Due_date</th>
+                        <th class="name">Status</th>
+                        <th class="name">Created_at</th>
+                        <th class="name">Updated_at</th>
+                        <th class="name">Assigned_to</th>
+                        <th class="name">Assigned_by</th>
+                        <th class="name">View</th>
+                    </tr>
+                    <tr>
+                        <td>Alfreds Futterkiste</td>
+                        <td>Maria Anders</td>
+                        <td>Germany</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                    </tr>
+                    <tr>
+                        <td>Centro comercial Moctezuma</td>
+                        <td>Francisco Chang</td>
+                        <td>Mexico</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                    </tr>
+                    <tr>
+                        <td>Ernst Handel</td>
+                        <td>Roland Mendel</td>
+                        <td>Austria</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing Island Trading</td>
+                        <td>Testing Island Trading</td>
+                    </tr>
+                    <tr>
+                        <td>Island Trading</td>
+                        <td>Helen Bennett</td>
+                        <td>Testing</td>
+                        <td>Island Trading Island Trading Island Trading </td>
+                        <td>Island Trading Island Trading</td>
+                        <td>Island Trading</td>
+                        <td>Testing</td>
+                        <td>Island Trading</td>
+                        <td>Testing</td>
+                    </tr>
+                    <tr>
+                        <td>Laughing Bacchus Winecellars</td>
+                        <td>Yoshi Tannamuri</td>
+                        <td>Canada</td>
+                        <td>Testing Island Trading</td>
+                        <td>Testing</td>
+                        <td>Testing Island Trading</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                    </tr>
+                    <tr>
+                        <td>Laughing Bacchus Winecellars</td>
+                        <td>Yoshi Tannamuri</td>
+                        <td>Canada</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                    </tr>
+                    <tr>
+                        <td>Laughing Bacchus Winecellars</td>
+                        <td>Yoshi Tannamuri</td>
+                        <td>Canada</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                    </tr>
+                    <tr>
+                        <td>Laughing Bacchus Winecellars</td>
+                        <td>Yoshi Tannamuri</td>
+                        <td>Canada</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                    </tr>
+                    <tr>
+                        <td>Laughing Bacchus Winecellars</td>
+                        <td>Yoshi Tannamuri</td>
+                        <td>Canada</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                    </tr>
+                    <tr>
+                        <td>Laughing Bacchus Winecellars</td>
+                        <td>Yoshi Tannamuri</td>
+                        <td>Canada</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                        <td>Testing</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{% static 'dashboard.js' %}"></script>
+</html>

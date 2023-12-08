@@ -1,15 +1,18 @@
-from django.shortcuts import render, HttpResponse , redirect
+from django.shortcuts import render, HttpResponse , redirect 
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
 
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
 def coreindex(request):
-    if not request.user.is_authenticated:
-        return render(request, 'coreindex.html')
-    elif request.user.is_staff:
-        return HttpResponse("Staff member")
-    else:
+    if request.user.is_staff:
+        return render(request , 'dashboard.html')
+    elif request.user.is_not_authenticated:
         return redirect('index')
 
 
+@login_required(login_url="/auth/login/google-oauth2/")
 def home(request):
-    return HttpResponse("Welcome home")
+    print(request.user.media)
+    return render(request, 'coreindex.html')

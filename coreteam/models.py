@@ -5,20 +5,21 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
-    is_president = models.BooleanField(default=False)
-    is_vice_president = models.BooleanField(default=False)
-    is_technology = models.BooleanField(default=False)
-    is_events_cultural = models.BooleanField(default=False)
-    is_events_sports = models.BooleanField(default=False)
-    is_legal = models.BooleanField(default=False)
-    is_operations = models.BooleanField(default=False)
-    is_marketing = models.BooleanField(default=False)
-    is_sponsorship = models.BooleanField(default=False)
-    is_design = models.BooleanField(default=False)
-    is_finance = models.BooleanField(default=False)
-    is_media = models.BooleanField(default=False)
-    is_security = models.BooleanField(default=False)
-    is_hospitality = models.BooleanField(default=False)
+    president = models.BooleanField(default=False)
+    vice_president = models.BooleanField(default=False)
+    technology = models.BooleanField(default=False)
+    events_cultural = models.BooleanField(default=False)
+    events_sports = models.BooleanField(default=False)
+    legal = models.BooleanField(default=False)
+    operations = models.BooleanField(default=False)
+    marketing = models.BooleanField(default=False)
+    sponsorship = models.BooleanField(default=False)
+    design = models.BooleanField(default=False)
+    finance = models.BooleanField(default=False)
+    media = models.BooleanField(default=False)
+    security = models.BooleanField(default=False)
+    hospitality = models.BooleanField(default=False)
+    advisory = models.BooleanField(default=False)
     # Add other role fields as needed
 
 
@@ -68,6 +69,7 @@ class Task(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     assigned_to = models.CharField(max_length=100)
     assigned_by = models.CharField(max_length=100)
+    advisory = models.BooleanField(default=False)
 
     def __str__(self):
         return self.task_title

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-o8i0@w39$ae86(5*(**!!0wn_g3e&2n6qiu!mo5ukc@n0k3q#@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['shore.gitam.edu', '127.0.0.1']
+ALLOWED_HOSTS = ['shore.gitam.edu', '127.0.0.1' ,  '*']
 
 
 # Application definition
