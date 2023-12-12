@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Noto+Sans:wght@200;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Noto+Sans:wght@600;800&display=swap');
+
+* {
+    background-color: black;
+}
+
+#title {
+    text-align: center;
+    color: aliceblue;
+    font-weight: bold;
+    font-size: 1.9rem;
+    padding: 1rem;
+}
+
+#cococola-title {
+    margin-top: 1rem;
+    text-align: center;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 900;
+    font-size: 1.7rem;
+}
+
+.cococola-sponsor {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+.sponsor-title {
+    text-align: center;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+.sponsor {
+    display: flex;
+    justify-content: space-between;
+    margin: 5rem;
+    align-items: center;
+}
+
+.about-sponsor {
+    color: white;
+    width: 50rem;
+    margin-top: 1rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
+    text-align: justify;
+    align-items: center;
+
+}
+
+.about-sponsor-left {
+    color: white;
+    display: flex;
+    width: 20rem;
+    margin-top: 1rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
+    text-align: justify;
+}
+
+.about-sponsor-right {
+    color: white;
+    display: flex;
+    width: 20rem;
+    margin-top: 1rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
+    text-align: justify;
+}
+
+#sponsor-2 {
+    width: 400px;
+}
+
+#sponsor-3 {
+    width: 250px;
+}
+
+#sponsor-6 {
+    width: 250px;
+}
+
+@media screen and (min-width: 1500px) {
+    .sponsor {
+        margin: 10rem;
+    }
+
+    .about-sponsor-right,
+    .about-sponsor-left {
+        font-size: 1.5rem;
+        width: 35rem;
+    }
+
+    .about-sponsor {
+        font-size: 1.5rem;
+        width: 50rem;
+    }
+}
+
+@media screen and (max-width: 770px) {
+    .sponsor {
+        margin: 1rem;
+    }
+
+    #sponsor-2 {
+        width: 270px;
+    }
+
+    #sponsor-3 {
+        width: 150px;
+    }
+
+    #cococola-title,
+    .sponsor-title {
+        font-size: 1rem;
+    }
+
+    .about-sponsor-right,
+    .about-sponsor-left {
+        font-size: 0.8rem;
+    }
+
+    .about-sponsor {
+        width: 30rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .sponsor {
+        margin: 3rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #new {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    #new-title {
+        margin-top: 1rem;
+    }
+
+    #sponsor-1 {
+        width: 250px;
+    }
+
+    #sponsor-3,
+    #sponsor-6 {
+        margin-bottom: 1rem;
+    }
+
+    #sponsor-4 {
+        margin-top: 2rem;
+    }
+
+    #sponsor-5 {
+        margin-top: 2rem;
+    }
+
+    .box {
+        text-align: justify;
+    }
+
+    .sponsor-title {
+        text-align: center;
+    }
+
+    .sponsor-title {
+        font-size: 1.3rem;
+    }
+
+    #cococola-title {
+        font-size: 1rem;
+    }
+
+    .about-sponsor {
+        width: 22rem;
+    }
+}
