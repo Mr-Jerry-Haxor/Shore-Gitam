@@ -37502,7 +37502,7 @@
           {
             name: "Cricket Stars",
             desc: "Cricket Stars is a strategy card game designed for the avid cricket lover in us. The game has tournaments for some spicy competition to prove who is the best while promoting a chess-like strategy needed to win over the opponents. So build your decks with the best cards to get the title of CRICKETSTAR!",
-            img: "/static/video/cricket_stars.mp4",
+            img: "/home/ubuntuserver/Shore24/static/video/cricket_stars.mp4",
           },
           {
             name: "Cricket",
@@ -38169,7 +38169,7 @@
               muted: !0,
               playsInline: !0,
               children: (0, Gx.jsx)("source", {
-                src: "/static/video/shorefest.mp4",
+                src: "/home/ubuntuserver/Shore24/static/video/shorefest.mp4",
                 type: "video/mp4",
                 alt: "logo video",
               }),
@@ -38210,7 +38210,7 @@
               muted: "true",
               playsInline: "true",
               children: (0, Gx.jsx)("source", {
-                src: "/static/video/about.mp4",
+                src: "/home/ubuntuserver/Shore24/static/video/about.mp4",
                 type: "video/mp4",
                 alt: "about video",
               }),
