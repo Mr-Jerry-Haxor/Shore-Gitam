@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore 24</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background: linear-gradient(to bottom right, #417ae9, #ce3345, #d04737 , #0f45bc);
+        }
+
+        form {
+            background-color: #fff;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea,
+        select,
+        input[type="file"],
+        input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #8b1828;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #d04737;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            form {
+                width: 90%;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1 style="text-align:center">Create Task</h1>
+        <label for="task_title">Task Title:</label>
+        <input type="text" id="task_title" name="task_title" required><br><br>
+        
+        <label for="domain">Domain:</label>
+        <select id="domain" name="domain" required>
+            <option Value="">Select</option>
+            {% for choice in DOMAIN_CHOICES %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+            {% endfor %}
+        </select><br><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+        
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority" required>
+        <option Value="">Select</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+        </select><br><br>
+        
+        <label for="attached_file">Attached File:</label>
+        <input type="file" id="attached_file" name="attached_file"><br><br>
+        
+        <label for="due_date">Due Date:</label>
+        <input type="date" id="due_date" name="due_date" required><br><br>
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+        <option Value="">Select</option>
+        <option value="todo">Todo</option>
+        <option value="in_progress">In Progress</option>
+        <option value="overdue">Overdue</option>
+        <option value="completed">Completed</option>
+        </select><br><br>
+        
+        <label for="assigned_to">Assigned To:</label>
+        <input type="text" id="assigned_to" name="assigned_to" required><br><br>
+        
+        <label for="assigned_by">Assigned By:</label>
+        <input type="text" id="assigned_by" name="assigned_by" value="{{ assigned_by }}" required readonly><br><br>
+        {% if request.user.president %}
+        <input type="checkbox" id="advisory" name="advisory">
+        <label for="advisory">Advisory</label><br><br>
+        {% endif %}
+        <input type="submit" value="Submit">
+      </form>     
+</body>
+</html>

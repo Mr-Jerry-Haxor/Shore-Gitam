@@ -65,7 +65,7 @@
                 <a href="#">
                     <span>security</span>
                 </a>
-                <a href="#">
+                <a href="">
                     <span>Hospitality</span>
                 </a>
             </div>
@@ -82,8 +82,9 @@
             </div>
         </div>
             <div id="wrapper-text">TECHNOLOGY</div>
-            <button type="button" class="btn btn-success" id="add-task">Success</button>
-      
+            <a href="{% url 'createtask' domain_name=domain %}">
+            <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+            </a>
         <div class="child-two"> 
             <div class="table-responsive">
                 <table class="table">

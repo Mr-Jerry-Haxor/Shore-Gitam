@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'import_export',
     'coreteam',
     'comingsoon',
+    'shore23',
 ]
 
 MIDDLEWARE = [

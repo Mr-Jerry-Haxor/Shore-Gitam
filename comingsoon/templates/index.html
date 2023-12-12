@@ -48,9 +48,11 @@
           text-align: center;
       }
   </style>
-  <video autoplay muted loop  id="video-background">
-    <source src="https://res.cloudinary.com/jerryhaxor/video/upload/v1702031381/shore%2024/shore_24_cp2z33.mp4" type="video/mp4">
+  <div>
+  <video loop muted autoplay playsinline preload="metadata" id="video-background" class="object-contain">
+    <source src="{% static 'shore23glimpse.mp4' %}" type="video/mp4">
   </video>
+  </div>
   <h1 id="shore-soon">We  Are  Launching  Soon</h1>
 <div>
   <div class="tick"  data-did-init="handleTickInit">
@@ -371,6 +373,7 @@
           tick.value = value;
       };
   }
+  
 </script>
 </body>
 

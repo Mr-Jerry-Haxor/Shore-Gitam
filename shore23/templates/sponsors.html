@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsers</title>
+    <link rel="stylesheet" href="{% static 'sponsors.css' %}">
+<body>
+    <div>
+        <div id="title">SHORE 23 SPONSORS</div>
+        <div class="cococola-sponsor">
+            <img src="{% static 'cococola.jpg' %}"> id="sponsor-1" alt="Cococola" >
+            <div class="box">
+                <div id="cococola-title">Associate Sponsor & Official Beverage Partners</div>
+                <div class="about-sponsor">
+                
+Their unwavering support and generous sponsorship played a pivotal role in making our annual fest an unparalleled grand success.
+                </div>
+            </div>
+        </div>
+        <div class="sponser-wrapper">
+            <div class="sponsor">
+                <img src="{% static 'gaming partners.png' %}" id="sponsor-2" alt="Gaming Partners">
+                <div class="box">
+                    <div class="sponsor-title">Official Gaming partners</div>
+                    <div class="about-sponsor-right">
+                    
+They heightened the event's joy with a competitive E-sports tournament, complemented by top-tier computers for an immersive and blissful experience.
+                    </div>
+                </div>
+            </div>
+            <div class="sponsor">
+                <img src="{% static 'media partners.png' %}" id="sponsor-3" alt="Media partners">
+                <div class="box">
+                    <div class="sponsor-title">Official Media partners</div>
+                    <div class="about-sponsor-right">
+                        YoVizag's invaluable assistance expanded our fest's reach across every nook of Visakhapatnam, revolutionizing our marketing efforts like never before.</div>
+                </div>
+            </div>
+            <div class="sponsor" id="new">
+                <div class="box">
+                    <div class="sponsor-title" id="new-title">Official Stay partners</div>
+                    <div class="about-sponsor-left"> Our Stay partner's exceptional hospitality and their accommodation services enhanced our guests' stay experience 
+                    </div>
+                </div>
+                <img src="{% static 'RadissonBlue.png' %}" alt="Stay Partners" id="sponsor-4">
+            </div>
+            <div class="sponsor" id="new">
+                <div class="box">
+                    <div class="sponsor-title" id="new-title">Official Valuable Sponsor</div>
+                    <div class="about-sponsor-left">Their contribution has not only enriched but also added essential value to our celebrations.</div>
+                </div>
+                <img src="{% static 'valuable.png' %}" alt="Valuable Partners" id="sponsor-5">
+            </div>  
+            <div class="sponsor">
+                <img src="{% static 'sustainability.png' %}" alt="Sustainable Partners" id="sponsor-6">
+                <div class="box">
+                    <div class="sponsor-title">Official Sustainability Partner</div>
+                    <div class="about-sponsor-left">
+                        Their profound awareness towards nature has provided invaluable insights, enlightening and resonating with every attendee.</div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</body>
+</html>

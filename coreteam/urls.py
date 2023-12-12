@@ -3,8 +3,9 @@ from .views import *
 
 
 urlpatterns = [
-    path('' , coreindex , name='coreindex'),
-    path('home/',home  , name='home'),
+    path('tasks/<str:domain_name>' , coretasks , name='coretasks'),
+    path('',home  , name='home'),
+    path('createtask/<str:domain_name>/', createtask , name="createtask"),
 ]
 
 
