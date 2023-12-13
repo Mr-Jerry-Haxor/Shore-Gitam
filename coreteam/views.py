@@ -34,14 +34,14 @@ def coretasks(request , domain_name):
                 events_cultural_tasks = Task.objects.filter(domain="events-cultural").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : events_cultural_tasks,
-                    'domain' : "events_cultural"
+                    'domain' : "events-cultural"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
-            elif domain_name == 'event-sports':
+            elif domain_name == 'events-sports':
                 events_sports_tasks = Task.objects.filter(domain="events-sports").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : events_sports_tasks,
-                    'domain' : "events_sports"
+                    'domain' : "events-sports"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'legal':
@@ -128,14 +128,14 @@ def coretasks(request , domain_name):
                 events_cultural_tasks = Task.objects.filter(domain="events-cultural").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : events_cultural_tasks,
-                    'domain' : "events_cultural"
+                    'domain' : "events-cultural"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'event-sports':
                 events_sports_tasks = Task.objects.filter(domain="events-sports").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : events_sports_tasks,
-                    'domain' : "events_sports"
+                    'domain' : "events-sports"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'legal':
@@ -487,7 +487,7 @@ def createtask(request , domain_name):
                 context = {
                     'DOMAIN_CHOICES' : DOMAIN_CHOICES,
                     'assigned_by': assigned_by,
-                    'domain' : "events_cultural"
+                    'domain' : "events-cultural"
                 }
                 return render(request , "createtask.html" ,context)
             else:
@@ -526,7 +526,7 @@ def createtask(request , domain_name):
                 context = {
                     'DOMAIN_CHOICES' : DOMAIN_CHOICES,
                     'assigned_by': assigned_by,
-                    'domain' : "events_sports"
+                    'domain' : "events-sports"
                 }
                 return render(request , "createtask.html" ,context)
             else:

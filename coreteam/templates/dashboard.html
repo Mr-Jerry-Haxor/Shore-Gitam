@@ -47,13 +47,13 @@
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.events_cultural %}
-                <a href="{% url 'coretasks' 'events_cultural' %}">
+                <a href="{% url 'coretasks' 'events-cultural' %}">
                     <span>Events clutural</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.events_sports %}
-                <a href="{% url 'coretasks' 'events_sports' %}">
-                    <span>Event-Sports</span>
+                <a href="{% url 'coretasks' 'events-sports' %}">
+                    <span>Event Sports</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.marketing %}
@@ -61,9 +61,9 @@
                     <span>Marketing</span>
                 </a>
                 {% endif %}
-                {% if request.user.president or request.user.vice_president or request.user.sponsership %}
-                <a href="{% url 'coretasks' 'sponsership' %}">
-                    <span>Sponsership</span>
+                {% if request.user.president or request.user.vice_president or request.user.sponsorship %}
+                <a href="{% url 'coretasks' 'sponsorship' %}">
+                    <span>Sponsorship</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.legal %}
@@ -118,9 +118,9 @@
                 Technology
                 {% elif  domain  == 'operations' %}
                 Operations
-                {% elif  domain  == 'events_cultural' %}
+                {% elif  domain  == 'events-cultural' %}
                 Events Cultural
-                {% elif domain  == 'events_sports' %}
+                {% elif domain  == 'events-sports' %}
                 Events Sports
                 {% elif domain  == 'marketing' %}
                 Marketing
