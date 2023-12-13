@@ -27,72 +27,72 @@
                     <span>Dashboard</span>
                 </a>
                 {% if request.user.president %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'president' %}">
                     <span>President</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'vice_president' %}">
                     <span>Vice president</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.technology %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'technology' %}">
                     <span>TECHNOLOGY</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.operations %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'operations' %}">
                     <span>Operations</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.events_cultural %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'events_cultural' %}">
                     <span>Events clutural</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.events_sports %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'events_sports' %}">
                     <span>Event-Sports</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.marketing %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'marketing' %}">
                     <span>Marketing</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.sponsership %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'sponsership' %}">
                     <span>Sponsership</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.legal %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'legal' %}">
                     <span>Legal</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.design %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'design' %}">
                     <span>Design&content</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.finance %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'finance' %}">
                     <span>Finance</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.media %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'media' %}">
                     <span>Media</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.security %}
-                <a href="#">
+                <a href="{% url 'coretasks' 'security' %}">
                     <span>security</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.hospitality %}
-                <a href="">
+                <a href="{% url 'coretasks' 'hospitality' %}">
                     <span>Hospitality</span>
                 </a>
                 {% endif %}
