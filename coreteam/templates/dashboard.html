@@ -109,7 +109,37 @@
                 </div>
             </div>
         </div>
-            <div id="wrapper-text">TECHNOLOGY</div>
+            <div id="wrapper-text">
+                {% if {{ domain }} == 'president' %}
+                President
+                {% elif {{ domain }} == 'vice_president' %}
+                Vice President
+                {% elif {{ domain }} == 'technology' %}
+                Technology
+                {% elif {{ domain }} == 'operations' %}
+                Operations
+                {% elif {{ domain }} == 'events_cultural' %}
+                Events Cultural
+                {% elif {{ domain }} == 'events_sports' %}
+                Events Sports
+                {% elif {{ domain }} == 'marketing' %}
+                Marketing
+                {% elif {{ domain }} == 'sponsorship' %}
+                Sponsorship
+                {% elif {{ domain }} == 'legal' %}
+                Legal and documentation
+                {% elif {{ domain }} == 'design' %}
+                Design and Content
+                {% elif {{ domain }} == 'finance' %}
+                Finance
+                {% elif {{ domain }} == 'media' %}
+                Media
+                {% elif {{ domain }} == 'security' %}
+                Security
+                {% elif {{ domain }} == 'hospitality' %}
+                Hospitality
+                {% endif %}
+            </div>
             <a href="{% url 'createtask' domain_name=domain %}">
             <button type="button" class="btn btn-success" id="add-task">Create Task</button>
             </a>

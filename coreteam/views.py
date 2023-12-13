@@ -211,74 +211,118 @@ def coretasks(request , domain_name):
                     'domain' : "technology"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
-            elif domain_name == '':
-                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.events_cultural:
-            events_cultural_tasks = Task.objects.filter(domain="events-cultural").order_by('-due_date')
-            dashcontext = {
-                'domain' : "events_cultural"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'events_cultural':
+                events_cultural_tasks = Task.objects.filter(domain="events-cultural").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : events_cultural_tasks,
+                    'domain' : "events_cultural"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.events_sports:
-            events_sports_tasks = Task.objects.filter(domain="events-sports").order_by('-due_date')
-            dashcontext = {
-                'domain' : "events_sports"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'events_sports':
+                events_sports_tasks = Task.objects.filter(domain="events-sports").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : events_sports_tasks,
+                    'domain' : "events_sports"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.legal:
-            legal_tasks = Task.objects.filter(domain="legal").order_by('-due_date')
-            dashcontext = {
-                'domain' : "legal"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'legal':
+                legal_tasks = Task.objects.filter(domain="legal").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : legal_tasks,
+                    'domain' : "legal"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.operations:
-            operations_tasks = Task.objects.filter(domain="operations").order_by('-due_date')
-            dashcontext = {
-                'domain' : "operations"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'operations':
+                operations_tasks = Task.objects.filter(domain="operations").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : operations_tasks,
+                    'domain' : "operations"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.marketing:
-            marketing_tasks = Task.objects.filter(domain="marketing").order_by('-due_date')
-            dashcontext = {
-                'domain' : "marketing"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'marketing':
+                marketing_tasks = Task.objects.filter(domain="marketing").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : marketing_tasks,
+                    'domain' : "marketing"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.sponsorship:
-            sponsorship_tasks = Task.objects.filter(domain="sponsorship").order_by('-due_date')
-            dashcontext = {
-                'domain' : "sponsorship"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'sponsorship':
+                sponsorship_tasks = Task.objects.filter(domain="sponsorship").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : sponsorship_tasks,
+                    'domain' : "sponsorship"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.design:
-            design_tasks = Task.objects.filter(domain="design").order_by('-due_date')
-            dashcontext = {
-                'domain' : "design"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'design':
+                design_tasks = Task.objects.filter(domain="design").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : design_tasks,
+                    'domain' : "design"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.finance:
-            finance_tasks = Task.objects.filter(domain="finance").order_by('-due_date')
-            dashcontext = {
-                'domain' : "finance"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'finance':
+                finance_tasks = Task.objects.filter(domain="finance").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : finance_tasks,
+                    'domain' : "finance"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.media:
-            media_tasks = Task.objects.filter(domain="media").order_by('-due_date')
-            dashcontext = {
-                'domain' : "media"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'media':
+                media_tasks = Task.objects.filter(domain="media").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : media_tasks,
+                    'domain' : "media"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.security:
-            security_tasks = Task.objects.filter(domain="security").order_by('-due_date')
-            dashcontext = {
-                'domain' : "security"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'security':
+                security_tasks = Task.objects.filter(domain="security").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  :  security_tasks,
+                    'domain' : "security"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         elif request.user.hospitality:
-            hospitality_tasks = Task.objects.filter(domain="hospitality").order_by('-due_date')
-            dashcontext = {
-                'domain' : "hospitality"
-            }
-            return render(request , 'dashboard.html' , dashcontext)
+            if domain_name == 'hospitality':
+                hospitality_tasks = Task.objects.filter(domain="hospitality").order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : hospitality_tasks,
+                    'domain' : "hospitality"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
+            else:
+                return redirect('corehome')
         else:
             return redirect('index')
     else:
