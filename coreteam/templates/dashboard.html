@@ -140,9 +140,63 @@
                 Hospitality
                 {% endif %}
             </div>
-            <a href="{% url 'createtask' domain_name=domain %}">
-            <button type="button" class="btn btn-success" id="add-task">Create Task</button>
-            </a>
+            {% if request.user.president and domain == 'president' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.vice_president and domain == 'vice_president'%}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.technology and domain == 'technology' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.operations and domain == 'operations' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.events_cultural and domain == 'events-cultural' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.events_sports and domain == 'events-sports' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.marketing and domain == 'marketing' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.sponsorship and domain == 'sponsorship' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.legal and domain == 'legal' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.design and domain == 'design' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.finance and domain == 'finance' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.media and domain == 'media' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.security and domain == 'security' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.hospitality and domain == 'hospitality' %}
+                <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% endif %}
         <div class="child-two"> 
             <div class="table-responsive">
                 <table class="table">
@@ -155,6 +209,7 @@
                         <th class="name">Updated_at</th>
                         <th class="name">Assigned_to</th>
                         <th class="name">Assigned_by</th>
+                        <th class="name">File Attached</th>
                         <th class="name">View</th>
                     </tr>
                     {% for task in tasks %}
@@ -167,6 +222,13 @@
                         <td>{{ task.updated_at }}</td>
                         <td>{{ task.assigned_to }}</td>
                         <td>{{ task.assigned_by }}</td>
+                        <td>
+                            {% if task.attached_file %}
+                                <a href="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/{{ task.attached_file }}">
+                                    <button type="button" class="btn btn-success">Download</button>
+                                </a>
+                            {% endif %}
+                        </td>
                         <td>
                             <a href="#">
                                 <button type="button" class="btn btn-success">View</button>
