@@ -26,48 +26,76 @@
                     <i class="fas fa-qrcode"></i>
                     <span>Dashboard</span>
                 </a>
+                {% if request.user.president %}
                 <a href="#">
                     <span>President</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president %}
                 <a href="#">
                     <span>Vice president</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.technology %}
                 <a href="#">
                     <span>TECHNOLOGY</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.operations %}
                 <a href="#">
                     <span>Operations</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.events_cultural %}
                 <a href="#">
                     <span>Events clutural</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.events_sports %}
                 <a href="#">
                     <span>Event-Sports</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.marketing %}
                 <a href="#">
                     <span>Marketing</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.sponsership %}
                 <a href="#">
                     <span>Sponsership</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.legal %}
                 <a href="#">
                     <span>Legal</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.design %}
                 <a href="#">
                     <span>Design&content</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.finance %}
                 <a href="#">
                     <span>Finance</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.media %}
                 <a href="#">
                     <span>Media</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.security %}
                 <a href="#">
                     <span>security</span>
                 </a>
+                {% endif %}
+                {% if request.user.president or request.user.vice_president or request.user.hospitality %}
                 <a href="">
                     <span>Hospitality</span>
                 </a>
+                {% endif %}
             </div>
             <div id="main-title">SHORE 24</div>
             <div id="user-login">
@@ -99,116 +127,23 @@
                         <th class="name">Assigned_by</th>
                         <th class="name">View</th>
                     </tr>
+                    {% for task in tasks %}
                     <tr>
-                        <td>Alfreds Futterkiste</td>
-                        <td>Maria Anders</td>
-                        <td>Germany</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
+                        <td>{{ task.task_title }}</td>
+                        <td>{{ task.priority }}</td>
+                        <td>{{ task.due_date }}</td>
+                        <td>{{ task.status }}</td>
+                        <td>{{ task.created_at }}</td>
+                        <td>{{ task.updated_at }}</td>
+                        <td>{{ task.assigned_to }}</td>
+                        <td>{{ task.assigned_by }}</td>
+                        <td>
+                            <a href="#">
+                                <button type="button" class="btn btn-success">View</button>
+                            </a>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>Centro comercial Moctezuma</td>
-                        <td>Francisco Chang</td>
-                        <td>Mexico</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                    </tr>
-                    <tr>
-                        <td>Ernst Handel</td>
-                        <td>Roland Mendel</td>
-                        <td>Austria</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing Island Trading</td>
-                        <td>Testing Island Trading</td>
-                    </tr>
-                    <tr>
-                        <td>Island Trading</td>
-                        <td>Helen Bennett</td>
-                        <td>Testing</td>
-                        <td>Island Trading Island Trading Island Trading </td>
-                        <td>Island Trading Island Trading</td>
-                        <td>Island Trading</td>
-                        <td>Testing</td>
-                        <td>Island Trading</td>
-                        <td>Testing</td>
-                    </tr>
-                    <tr>
-                        <td>Laughing Bacchus Winecellars</td>
-                        <td>Yoshi Tannamuri</td>
-                        <td>Canada</td>
-                        <td>Testing Island Trading</td>
-                        <td>Testing</td>
-                        <td>Testing Island Trading</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                    </tr>
-                    <tr>
-                        <td>Laughing Bacchus Winecellars</td>
-                        <td>Yoshi Tannamuri</td>
-                        <td>Canada</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                    </tr>
-                    <tr>
-                        <td>Laughing Bacchus Winecellars</td>
-                        <td>Yoshi Tannamuri</td>
-                        <td>Canada</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                    </tr>
-                    <tr>
-                        <td>Laughing Bacchus Winecellars</td>
-                        <td>Yoshi Tannamuri</td>
-                        <td>Canada</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                    </tr>
-                    <tr>
-                        <td>Laughing Bacchus Winecellars</td>
-                        <td>Yoshi Tannamuri</td>
-                        <td>Canada</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                    </tr>
-                    <tr>
-                        <td>Laughing Bacchus Winecellars</td>
-                        <td>Yoshi Tannamuri</td>
-                        <td>Canada</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                        <td>Testing</td>
-                    </tr>
+                    {% endfor %}
                 </table>
             </div>
         </div>

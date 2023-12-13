@@ -10,98 +10,98 @@ def coretasks(request , domain_name):
     if request.user.is_staff:
         if request.user.president:
             if domain_name == "president":
-                president_tasks = Task.objects.filter(domain="president")
+                president_tasks = Task.objects.filter(domain="president").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : president_tasks,
                     'domain' : "president"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == "vice_president":
-                vice_president_tasks = Task.objects.filter(domain="vice-president")
+                vice_president_tasks = Task.objects.filter(domain="vice-president").order_by('-due_date')
                 dashcontext = {
                     'tasks' : vice_president_tasks,
                     'domain' : "vice_president"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'technology':
-                technology_tasks = Task.objects.filter(domain="technology")
+                technology_tasks = Task.objects.filter(domain="technology").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : technology_tasks,
                     'domain' : "technology"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == "events-cultural":
-                events_cultural_tasks = Task.objects.filter(domain="events-cultural")
+                events_cultural_tasks = Task.objects.filter(domain="events-cultural").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : events_cultural_tasks,
                     'domain' : "events_cultural"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'event-sports':
-                events_sports_tasks = Task.objects.filter(domain="events-sports")
+                events_sports_tasks = Task.objects.filter(domain="events-sports").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : events_sports_tasks,
                     'domain' : "events_sports"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'legal':
-                legal_tasks = Task.objects.filter(domain="legal")
+                legal_tasks = Task.objects.filter(domain="legal").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : legal_tasks,
                     'domain' : "legal"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'operations':
-                operations_tasks = Task.objects.filter(domain="operations")
+                operations_tasks = Task.objects.filter(domain="operations").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : operations_tasks,
                     'domain' : "operations"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'marketing':
-                marketing_tasks = Task.objects.filter(domain="marketing")
+                marketing_tasks = Task.objects.filter(domain="marketing").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : marketing_tasks,
                     'domain' : "marketing"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'sponsorship':
-                sponsorship_tasks = Task.objects.filter(domain="sponsorship")
+                sponsorship_tasks = Task.objects.filter(domain="sponsorship").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : sponsorship_tasks,
                     'domain' : "sponsorship"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == "design":
-                design_tasks = Task.objects.filter(domain="design")
+                design_tasks = Task.objects.filter(domain="design").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : design_tasks,
                     'domain' : "design"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'finance':
-                finance_tasks = Task.objects.filter(domain="finance")
+                finance_tasks = Task.objects.filter(domain="finance").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : finance_tasks,
                     'domain' : "finance"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'media':
-                media_tasks = Task.objects.filter(domain="media")
+                media_tasks = Task.objects.filter(domain="media").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : media_tasks,
                     'domain' : "media"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'security':
-                security_tasks = Task.objects.filter(domain="security")
+                security_tasks = Task.objects.filter(domain="security").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : security_tasks,
                     'domain' : "security"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'hospitality':
-                hospitality_tasks = Task.objects.filter(domain="hospitality")
+                hospitality_tasks = Task.objects.filter(domain="hospitality").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : hospitality_tasks,
                     'domain' : "hospitality"
@@ -111,91 +111,91 @@ def coretasks(request , domain_name):
                 return redirect('coretasks')
         elif request.user.vice_president:
             if domain_name == "vice_president":
-                vice_president_tasks = Task.objects.filter(domain="vice-president")
+                vice_president_tasks = Task.objects.filter(domain="vice-president").order_by('-due_date')
                 dashcontext = {
                     'tasks' : vice_president_tasks,
                     'domain' : "vice_president"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'technology':
-                technology_tasks = Task.objects.filter(domain="technology")
+                technology_tasks = Task.objects.filter(domain="technology").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : technology_tasks,
                     'domain' : "technology"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == "events-cultural":
-                events_cultural_tasks = Task.objects.filter(domain="events-cultural")
+                events_cultural_tasks = Task.objects.filter(domain="events-cultural").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : events_cultural_tasks,
                     'domain' : "events_cultural"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'event-sports':
-                events_sports_tasks = Task.objects.filter(domain="events-sports")
+                events_sports_tasks = Task.objects.filter(domain="events-sports").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : events_sports_tasks,
                     'domain' : "events_sports"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'legal':
-                legal_tasks = Task.objects.filter(domain="legal")
+                legal_tasks = Task.objects.filter(domain="legal").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : legal_tasks,
                     'domain' : "legal"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'operations':
-                operations_tasks = Task.objects.filter(domain="operations")
+                operations_tasks = Task.objects.filter(domain="operations").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : operations_tasks,
                     'domain' : "operations"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'marketing':
-                marketing_tasks = Task.objects.filter(domain="marketing")
+                marketing_tasks = Task.objects.filter(domain="marketing").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : marketing_tasks,
                     'domain' : "marketing"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'sponsorship':
-                sponsorship_tasks = Task.objects.filter(domain="sponsorship")
+                sponsorship_tasks = Task.objects.filter(domain="sponsorship").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : sponsorship_tasks,
                     'domain' : "sponsorship"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == "design":
-                design_tasks = Task.objects.filter(domain="design")
+                design_tasks = Task.objects.filter(domain="design").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : design_tasks,
                     'domain' : "design"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'finance':
-                finance_tasks = Task.objects.filter(domain="finance")
+                finance_tasks = Task.objects.filter(domain="finance").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : finance_tasks,
                     'domain' : "finance"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'media':
-                media_tasks = Task.objects.filter(domain="media")
+                media_tasks = Task.objects.filter(domain="media").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : media_tasks,
                     'domain' : "media"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'security':
-                security_tasks = Task.objects.filter(domain="security")
+                security_tasks = Task.objects.filter(domain="security").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : security_tasks,
                     'domain' : "security"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
             elif domain_name == 'hospitality':
-                hospitality_tasks = Task.objects.filter(domain="hospitality")
+                hospitality_tasks = Task.objects.filter(domain="hospitality").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : hospitality_tasks,
                     'domain' : "hospitality"
@@ -205,7 +205,7 @@ def coretasks(request , domain_name):
                 return redirect('coretasks')
         elif request.user.technology:
             if domain_name == 'technology':
-                technology_tasks = Task.objects.filter(domain="technology")
+                technology_tasks = Task.objects.filter(domain="technology").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : technology_tasks,
                     'domain' : "technology"
@@ -214,67 +214,67 @@ def coretasks(request , domain_name):
             elif domain_name == '':
                 return render(request , 'dashboard.html' , dashcontext)
         elif request.user.events_cultural:
-            events_cultural_tasks = Task.objects.filter(domain="events-cultural")
+            events_cultural_tasks = Task.objects.filter(domain="events-cultural").order_by('-due_date')
             dashcontext = {
                 'domain' : "events_cultural"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.events_sports:
-            events_sports_tasks = Task.objects.filter(domain="events-sports")
+            events_sports_tasks = Task.objects.filter(domain="events-sports").order_by('-due_date')
             dashcontext = {
                 'domain' : "events_sports"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.legal:
-            legal_tasks = Task.objects.filter(domain="legal")
+            legal_tasks = Task.objects.filter(domain="legal").order_by('-due_date')
             dashcontext = {
                 'domain' : "legal"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.operations:
-            operations_tasks = Task.objects.filter(domain="operations")
+            operations_tasks = Task.objects.filter(domain="operations").order_by('-due_date')
             dashcontext = {
                 'domain' : "operations"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.marketing:
-            marketing_tasks = Task.objects.filter(domain="marketing")
+            marketing_tasks = Task.objects.filter(domain="marketing").order_by('-due_date')
             dashcontext = {
                 'domain' : "marketing"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.sponsorship:
-            sponsorship_tasks = Task.objects.filter(domain="sponsorship")
+            sponsorship_tasks = Task.objects.filter(domain="sponsorship").order_by('-due_date')
             dashcontext = {
                 'domain' : "sponsorship"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.design:
-            design_tasks = Task.objects.filter(domain="design")
+            design_tasks = Task.objects.filter(domain="design").order_by('-due_date')
             dashcontext = {
                 'domain' : "design"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.finance:
-            finance_tasks = Task.objects.filter(domain="finance")
+            finance_tasks = Task.objects.filter(domain="finance").order_by('-due_date')
             dashcontext = {
                 'domain' : "finance"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.media:
-            media_tasks = Task.objects.filter(domain="media")
+            media_tasks = Task.objects.filter(domain="media").order_by('-due_date')
             dashcontext = {
                 'domain' : "media"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.security:
-            security_tasks = Task.objects.filter(domain="security")
+            security_tasks = Task.objects.filter(domain="security").order_by('-due_date')
             dashcontext = {
                 'domain' : "security"
             }
             return render(request , 'dashboard.html' , dashcontext)
         elif request.user.hospitality:
-            hospitality_tasks = Task.objects.filter(domain="hospitality")
+            hospitality_tasks = Task.objects.filter(domain="hospitality").order_by('-due_date')
             dashcontext = {
                 'domain' : "hospitality"
             }
@@ -287,8 +287,8 @@ def coretasks(request , domain_name):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def home(request):
-    print(request.user.media)
-    return render(request, 'corehome.html')
+    name = request.user.first_name
+    return render(request, 'corehome.html' , {'name': name})
 
 
 def createtask(request , domain_name):
@@ -344,7 +344,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='president')
         elif request.user.vice_president and domain_name == "vice_president" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -395,7 +395,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='vice_president')
         elif request.user.technology and domain_name == "technology" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -433,7 +433,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks', domain_name='technology')
         elif request.user.events_cultural and domain_name == "events_cultural" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -472,7 +472,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='events_cultural')
         elif request.user.events_sports and domain_name == "events_sports" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -511,7 +511,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='events_sports')
         elif request.user.legal and domain_name == "legal" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -550,7 +550,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='legal')
         elif request.user.operations and domain_name == "operations" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -589,7 +589,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='operations')
         elif request.user.marketing and domain_name == "marketing" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -628,7 +628,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='marketing')
         elif request.user.sponsorship and domain_name == "sponsorship" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -667,7 +667,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='sponsorship')
         elif request.user.design and domain_name == "design" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -706,7 +706,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='design')
         elif request.user.finance and domain_name == "finance" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -745,7 +745,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='finance')
         elif request.user.media and domain_name == "media" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -784,7 +784,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='media')
         elif request.user.security and domain_name == "security" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -823,7 +823,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='security')
         elif request.user.hospitality and domain_name == "hospitality" :
             if request.method == "GET":
                 assigned_by = f"{request.user.first_name} {request.user.last_name}"
@@ -862,7 +862,7 @@ def createtask(request , domain_name):
                     advisory = advisory
                 )      
                 messages.success(request, 'Task Created Successfully')        
-                return redirect('coreindex')
+                return redirect('coretasks' , domain_name='hospitality')
         else:
             return redirect('index')
     else:

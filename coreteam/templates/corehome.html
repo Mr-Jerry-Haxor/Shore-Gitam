@@ -34,7 +34,7 @@
                 <!-- Left column with vertically and horizontally aligned text -->
                 <div class="col-12 col-md-5 align-center">
                     <h5 class="text-center fw-bold" style="margin-top:50px">
-                        Welcome to
+                        Welcoming {{ name }} to
                         <span style="color: red;">Shore 24</span>
                     </h5>
                     <br>
@@ -44,17 +44,102 @@
                     </a>
                     <br>
                     {% endif %}
-                    {% if request.user.president or request.user.vice_president %}
+                    {% if request.user.vice_president %}
                         <a href="{% url 'coretasks' 'vice-president' %}">
                             <button type="button" class="btn btn-danger">Vice President</button>
                         </a>
+                        <br>
                     {% endif %}
 
                     {% if request.user.technology %}
                         <a href="{% url 'coretasks' 'technology' %}">
-                            <button type="button" class="btn btn-danger">Technology</button>
+                            <button type="button" class="btn btn-danger">Head of Technology</button>
                         </a>
+                        <br>
                     {% endif %}
+
+                    {% if request.user.events_cultural %}
+                        <a href="{% url 'coretasks' 'events_cultural' %}">
+                            <button type="button" class="btn btn-danger">Head of Events Cultural</button>
+                        </a>
+                        <br>
+                    {% endif %}
+
+                    {% if request.user.events_sports %}
+                        <a href="{% url 'coretasks' 'events_sports' %}">
+                            <button type="button" class="btn btn-danger">Head of Events Sports</button>
+                        </a>
+                        <br>
+                    {% endif %}
+
+                    {% if request.user.legal %}
+                        <a href="{% url 'coretasks' 'legal' %}">
+                            <button type="button" class="btn btn-danger">Head of Legal and documentation</button>
+                        </a>
+                        <br>
+                    {% endif %} 
+                    {% if request.user.operations %}
+                        <a href="{% url 'coretasks' 'operations' %}">
+                            <button type="button" class="btn btn-danger">Head of Operations</button>
+                        </a>
+                        <br>
+                    {% endif %}  
+
+                    {% if request.user.marketing %}
+                        <a href="{% url 'coretasks' 'marketing' %}">
+                            <button type="button" class="btn btn-danger">Head of Marketing</button>
+                        </a>
+                        <br>
+                    {% endif %}  
+
+                    {% if request.user.sponsorship %}
+                        <a href="{% url 'coretasks' 'sponsorship' %}">
+                            <button type="button" class="btn btn-danger">Head of Sponsorship</button>
+                        </a>
+                        <br>
+                    {% endif %}  
+
+                    {% if request.user.design %}
+                        <a href="{% url 'coretasks' 'design' %}">
+                            <button type="button" class="btn btn-danger">Head of Design & Content</button>
+                        </a>
+                        <br>
+                    {% endif %}  
+
+                    {% if request.user.finance %}
+                        <a href="{% url 'coretasks' 'finance' %}">
+                            <button type="button" class="btn btn-danger">Head of Finance</button>
+                        </a>
+                        <br>
+                    {% endif %}  
+
+                    {% if request.user.media %}
+                        <a href="{% url 'coretasks' 'media' %}">
+                            <button type="button" class="btn btn-danger">Head of Media</button>
+                        </a>
+                        <br>
+                    {% endif %}  
+
+                    {% if request.user.security %}
+                        <a href="{% url 'coretasks' 'security' %}">
+                            <button type="button" class="btn btn-danger">Head of Security</button>
+                        </a>
+                    {% endif %}  
+
+                    {% if request.user.hospitality %}
+                        <a href="{% url 'coretasks' 'hospitality' %}">
+                            <button type="button" class="btn btn-danger">Head of Hospitality</button>
+                        </a>
+                    {% endif %}  
+
+                    {% if request.user.advisory %}
+                        <a href="{% url 'coretasks' 'advisory' %}">
+                            <button type="button" class="btn btn-danger">Advisory</button>
+                        </a>
+                    {% endif %}  
+
+                    
+
                 </div>
                 <!-- Right column with an image -->
                 <div class="col-12 col-md-7">

@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 # models.py (inside your custom user app)
 from django.contrib.auth.models import AbstractUser
+import os
+from django.utils import timezone
 
 class CustomUser(AbstractUser):
     president = models.BooleanField(default=False)
@@ -23,7 +25,19 @@ class CustomUser(AbstractUser):
     # Add other role fields as needed
 
 
+def file_upload_path(instance, filename):
+    # Get the current date and time
+    current_datetime = timezone.now().strftime('%Y%m%d%H%M%S')
 
+    # Extracting the file extension
+    ext = filename.split('.')[-1]
+
+    # Constructing the new file name
+    new_filename = f"{instance.task_title}__{instance.domain}__{current_datetime}.{ext}"
+
+    # Constructing the file path
+    domain_folder = f"Taskattachments/{instance.domain}"
+    return os.path.join(domain_folder, new_filename)
 
 
 
@@ -62,7 +76,7 @@ class Task(models.Model):
     domain = models.CharField(max_length=50, choices=DOMAIN_CHOICES)
     description = models.TextField(blank=True)
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES)
-    attached_file = models.FileField(upload_to='Taskattachments/', null=True, blank=True)
+    attached_file = models.FileField(upload_to=file_upload_path, null=True, blank=True)
     due_date = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=TASK_STATUSES, default='todo')
     created_at = models.DateTimeField(auto_now_add=True)

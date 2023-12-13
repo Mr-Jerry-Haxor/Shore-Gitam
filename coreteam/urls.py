@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('tasks/<str:domain_name>' , coretasks , name='coretasks'),
-    path('',home  , name='home'),
+    path('',home  , name='corehome'),
     path('createtask/<str:domain_name>/', createtask , name="createtask"),
 ]
 
