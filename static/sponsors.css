@@ -5,8 +5,26 @@
     background-color: black;
 }
 
+#home-img {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+}
+
+.bi-house-door-fill {
+    font-size: 1.8rem;
+    color: white !important;
+    margin-left: 1rem;
+    position: absolute;
+    display: flex;
+    top: 1.2rem;
+}
+
+#a {
+    margin-right: -2rem;
+}
+
 #title {
-    text-align: center;
     color: aliceblue;
     font-weight: bold;
     font-size: 1.9rem;
@@ -108,6 +126,14 @@
         font-size: 1.5rem;
         width: 50rem;
     }
+
+    #a {
+        margin-right: 0rem;
+    }
+
+    .bi-house-door-fill {
+        font-size: 2rem;
+    }
 }
 
 @media screen and (max-width: 770px) {
@@ -137,9 +163,23 @@
         width: 30rem;
         font-size: 0.8rem;
     }
+
+    #a {
+        margin-right: 0rem;
+    }
+
 }
 
 @media screen and (max-width: 500px) {
+    #title {
+        font-size: 1.3rem;
+    }
+
+    .bi-house-door-fill {
+        font-size: 1rem !important;
+        margin-top: 0.5rem !important;
+    }
+
     .sponsor {
         margin: 3rem;
         display: flex;
@@ -178,9 +218,6 @@
 
     .sponsor-title {
         text-align: center;
-    }
-
-    .sponsor-title {
         font-size: 1.3rem;
     }
 
@@ -189,6 +226,11 @@
     }
 
     .about-sponsor {
-        width: 22rem;
+        width: 21rem;
+    }
+
+    .bi-house-door-fill {
+        color: aliceblue;
+        font-size: 1.5rem;
     }
 }
