@@ -131,7 +131,7 @@ def coretasks(request , domain_name):
                     'domain' : "events-cultural"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
-            elif domain_name == 'event-sports':
+            elif domain_name == 'events-sports':
                 events_sports_tasks = Task.objects.filter(domain="events-sports").order_by('-due_date')
                 dashcontext = {
                     'tasks'  : events_sports_tasks,
