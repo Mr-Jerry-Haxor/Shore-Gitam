@@ -117,9 +117,9 @@
                 Technology
                 {% elif  domain  == 'operations' %}
                 Operations
-                {% elif  domain  == 'events-cultural' %}
+                {% elif  domain  == 'events_cultural' %}
                 Events Cultural
-                {% elif domain  == 'events-sports' %}
+                {% elif domain  == 'events_sports' %}
                 Events Sports
                 {% elif domain  == 'marketing' %}
                 Marketing
@@ -155,11 +155,11 @@
                 <a href="{% url 'createtask' domain_name=domain %}">
                 <button type="button" class="btn btn-success" id="add-task">Create Task</button>
                 </a>
-            {% elif request.user.events_cultural and domain == 'events-cultural' %}
+            {% elif request.user.events_cultural and domain == 'events_cultural' %}
                 <a href="{% url 'createtask' domain_name=domain %}">
                 <button type="button" class="btn btn-success" id="add-task">Create Task</button>
                 </a>
-            {% elif request.user.events_sports and domain == 'events-sports' %}
+            {% elif request.user.events_sports and domain == 'events_sports' %}
                 <a href="{% url 'createtask' domain_name=domain %}">
                 <button type="button" class="btn btn-success" id="add-task">Create Task</button>
                 </a>
