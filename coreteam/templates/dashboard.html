@@ -209,7 +209,7 @@
                         <th class="name">Assigned_to</th>
                         <th class="name">Assigned_by</th>
                         <th class="name">File Attached</th>
-                        {% if request.user.president or request.user.vice_president %}
+                        {% if request.user.president %}
                             <th class="name">Edit</th>
                         {% endif %}
                     </tr>
@@ -230,7 +230,7 @@
                                 </a>
                             {% endif %}
                         </td>
-                        {% if request.user.president or request.user.vice_president %}
+                        {% if request.user.president %}
                         <td>
                             <a href="{% url 'edittask' domain_name=domain taskid=task.id %}">
                                 <button type="button" class="btn btn-danger">Edit</button>

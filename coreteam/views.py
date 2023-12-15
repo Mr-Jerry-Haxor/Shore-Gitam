@@ -920,7 +920,7 @@ def createtask(request , domain_name):
 @login_required(login_url="/auth/login/google-oauth2/")  
 def edit_task(request, domain_name , taskid):
     if request.user.is_staff:
-        if request.user.president or request.user.vice_president:
+        if request.user.president:
             if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
                 if request.method == 'GET':
                     taskdetails = Task.objects.filter(id=taskid).values()[0]
