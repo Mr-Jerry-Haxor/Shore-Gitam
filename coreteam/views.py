@@ -331,10 +331,13 @@ def coretasks(request , domain_name):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def home(request):
-    name = request.user.first_name
-    return render(request, 'corehome.html' , {'name': name})
+    if request.user.is_staff:
+        name = request.user.first_name
+        return render(request, 'corehome.html' , {'name': name})
+    else:
+        return redirect('index')
 
-
+@login_required(login_url="/auth/login/google-oauth2/")
 def createtask(request , domain_name):
     if request.user.is_staff:
         if request.user.president and domain_name == "president" :
@@ -911,4 +914,47 @@ def createtask(request , domain_name):
             return redirect('index')
     else:
         return redirect('index')
+
+
+
+@login_required(login_url="/auth/login/google-oauth2/")  
+def edit_task(request, domain_name , taskid):
+    if request.user.is_staff:
+        if request.user.president or request.user.vice_president:
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+
+                    task.save()
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        else:
+            return redirect('corehome')
+    else:
+        return redirect('index')
+    
+    
+    
+    
+    
+    
     
