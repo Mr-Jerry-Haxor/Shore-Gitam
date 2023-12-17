@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse , redirect
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.contrib import messages
-
+from django.core.mail import send_mail, EmailMessage
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
