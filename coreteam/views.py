@@ -1068,9 +1068,13 @@ def edit_task(request, domain_name , taskid):
                     return render(request, 'edittask.html', {'task' :taskdetails })
                 elif request.method == 'POST':
                     now_attached_file = request.FILES.get('attached_file')
-                    
+                       
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1088,7 +1092,7 @@ def edit_task(request, domain_name , taskid):
                     return redirect('coretasks' , domain_name=domain_name)
             else:
                 return redirect('corehome')
-        elif request.user.vice_president and domain_name == "vice_president" or domain_name == "technology" or domain_name == "events_cultural" or domain_name == "events_sports" or domain_name == "legal" or domain_name == "operations" or domain_name == "marketing" or domain_name == "sponsorship" or domain_name == "design" or domain_name == "finance" or domain_name == "media" or domain_name == "security" or domain_name == "hospitality":
+        elif request.user.vice_president : 
             if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
                 if request.method == 'GET':
                     taskdetails = Task.objects.filter(id=taskid).values()[0]
@@ -1098,6 +1102,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1118,6 +1126,7 @@ def edit_task(request, domain_name , taskid):
         elif request.user.technology and domain_name == "technology":
             if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
                 if request.method == 'GET':
+                    print("tech")
                     taskdetails = Task.objects.filter(id=taskid).values()[0]
                     return render(request, 'edittask.html', {'task' :taskdetails })
                 elif request.method == 'POST':
@@ -1125,6 +1134,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = 'del_file' in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1151,7 +1164,11 @@ def edit_task(request, domain_name , taskid):
                     now_attached_file = request.FILES.get('attached_file')
                     
                     task = Task.objects.get(id=taskid)
-                    
+
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1179,6 +1196,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1206,6 +1227,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1233,6 +1258,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1260,6 +1289,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1287,6 +1320,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1314,6 +1351,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1341,6 +1382,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1368,6 +1413,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1395,6 +1444,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
@@ -1422,6 +1475,10 @@ def edit_task(request, domain_name , taskid):
                     
                     task = Task.objects.get(id=taskid)
                     
+                    is_del_file = request.FILES.get('del_file') in request.POST
+                    if is_del_file:
+                        task.attached_file.delete()
+                        
                     if now_attached_file:
                         task.attached_file.delete()  # Delete the old file
                         task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
