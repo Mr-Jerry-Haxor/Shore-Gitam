@@ -27,6 +27,9 @@
                     <span>Dashboard</span>
                 </a>
                 {% if request.user.president %}
+                <a href="{% url 'coretasks' 'alltasks' %}">
+                    <span>All domain Tasks</span>
+                </a>
                 <a href="{% url 'coretasks' 'president' %}">
                     <span>President</span>
                 </a>
@@ -96,6 +99,7 @@
                     <span>Hospitality</span>
                 </a>
                 {% endif %}
+                
             </div>
             <div id="main-title">SHORE 24</div>
             <div id="user-login">
@@ -137,10 +141,16 @@
                 Security
                 {% elif  domain  == 'hospitality' %}
                 Hospitality
+                {% elif domain == 'alltasks' %}
+                All Domain Tasks
                 {% endif %}
             </div>
             {% if request.user.president and domain == 'president' %}
                 <a href="{% url 'createtask' domain_name=domain %}">
+                <button type="button" class="btn btn-success" id="add-task">Create Task</button>
+                </a>
+            {% elif request.user.president and domain == 'alltasks' %}
+                <a href="{% url 'createtask' domain_name='president' %}">
                 <button type="button" class="btn btn-success" id="add-task">Create Task</button>
                 </a>
             {% elif request.user.vice_president and domain == 'vice_president'%}
@@ -201,6 +211,9 @@
                 <table class="table">
                     <tr>
                         <th class="name">Task_title</th>
+                        {% if domain == 'alltasks' %}
+                            <th class="name">Domain</th>
+                        {% endif %}
                         <th class="name">Task_description</th>
                         <th class="name">Priority</th>
                         <th class="name">Due_date</th>
@@ -215,6 +228,9 @@
                     {% for task in tasks %}
                     <tr>
                         <td>{{ task.task_title }}</td>
+                        {% if domain == 'alltasks' %}
+                        <td>{{ task.domain }}</td>
+                        {% endif %}
                         <td>{{ task.description }}</td>
                         <td>{{ task.priority }}</td>
                         <td>{{ task.due_date }}</td>

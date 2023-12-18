@@ -110,6 +110,13 @@ def coretasks(request , domain_name):
                     'domain' : "hospitality"
                 }
                 return render(request , 'dashboard.html' , dashcontext)
+            elif domain_name =='alltasks':
+                all_tasks = Task.objects.all().order_by('-due_date')
+                dashcontext = {
+                    'tasks'  : all_tasks,
+                    'domain' : "alltasks"
+                }
+                return render(request , 'dashboard.html' , dashcontext)
             else:
                 return redirect('coretasks')
         elif request.user.vice_president:
