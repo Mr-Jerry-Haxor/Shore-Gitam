@@ -3,7 +3,10 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from django.contrib import messages
 from django.core.mail import send_mail, EmailMessage
-
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.conf import settings
+from coreteam.models import CustomUser
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def coretasks(request , domain_name):
@@ -337,6 +340,68 @@ def home(request):
     else:
         return redirect('index')
 
+
+
+def sendmail_create(taskid):
+    task = Task.objects.filter(id=taskid).values()[0]
+    
+    task_title = task['task_title']
+    domain = task['domain']
+    description = task['description']
+    priority = task['priority']
+    due_date = task['due_date']
+    status = task['status']
+    assigned_to = task['assigned_to']
+    assigned_by = task['assigned_by']
+    
+
+    president_emails = CustomUser.objects.filter(president=True).values_list('email', flat=True)
+    vicepresident_emails = CustomUser.objects.filter(vice_president=True).values_list('email' , flat=True)
+    if domain == 'technology':
+        domain = CustomUser.objects.filter(technology=True).values_list('email' , flat=True)
+    elif domain == 'events-cultural':
+        domain = CustomUser.objects.filter(events_cultural=True).values_list('email' , flat=True)
+    elif domain == 'events-sports':
+        domain = CustomUser.objects.filter(events_sports=True).values_list('email' , flat=True)
+    elif domain == 'legal':
+        domain = CustomUser.objects.filter(legal=True).values_list('email' , flat=True)
+    elif domain == 'operations':
+        domain = CustomUser.objects.filter(operations=True).values_list('email' , flat=True)
+    elif domain == 'marketing':
+        domain = CustomUser.objects.filter(marketing=True).values_list('email' , flat=True)
+    elif domain == 'sponsorship':
+        domain = CustomUser.objects.filter(sponsorship=True).values_list('email' , flat=True)
+    elif domain == 'design':
+        domain = CustomUser.objects.filter(design=True).values_list('email' , flat=True)
+    elif domain == 'finance':
+        domain = CustomUser.objects.filter(finance=True).values_list('email' , flat=True)
+    elif domain == 'media':
+        domain = CustomUser.objects.filter(media=True).values_list('email' , flat=True)
+    elif domain == 'security':
+        domain = CustomUser.objects.filter(security=True).values_list('email' , flat=True)
+    elif domain == 'hospitality':
+        domain = CustomUser.objects.filter(hospitality=True).values_list('email' , flat=True)
+    else:
+        domain = CustomUser.objects.filter(president=True).values_list('email' , flat=True)
+    
+    emails_list = []
+    for i in president_emails:
+        emails_list.append(i)
+    for i in vicepresident_emails:
+        emails_list.append(i)
+    for i in domain:
+        emails_list.append(i)
+    emails_list = set(emails_list)
+    emails_list = list(emails_list)
+    
+    subject, from_email, to = f"Shore24 {task_title} Created", settings.EMAIL_HOST_USER, emails_list
+    html_content1 = get_template('createtaskmail.html').render({'task_title': task_title,'doamin':domain,'description':description,'priority':priority,'due_date':due_date,'status':status,'assigned_to':assigned_to,'assigned_by':assigned_by})
+    msg = EmailMultiAlternatives(subject, html_content1, from_email, to)
+    msg.content_subtype = "html"
+    msg.send() 
+
+
+
 @login_required(login_url="/auth/login/google-oauth2/")
 def createtask(request , domain_name):
     if request.user.is_staff:
@@ -389,7 +454,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                )   
+                sendmail_create(task.id)   
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='president')
         elif request.user.vice_president and domain_name == "vice_president" :
@@ -440,7 +506,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                ) 
+                sendmail_create(task.id)      
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='vice_president')
         elif request.user.technology and domain_name == "technology" :
@@ -478,7 +545,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                )   
+                sendmail_create(task.id)  
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks', domain_name='technology')
         elif request.user.events_cultural and domain_name == "events_cultural" :
@@ -518,6 +586,7 @@ def createtask(request , domain_name):
                     assigned_by = assigned_by,
                     advisory = advisory
                 )      
+                sendmail_create(task.id) 
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='events_cultural')
         elif request.user.events_sports and domain_name == "events_sports" :
@@ -556,7 +625,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                ) 
+                sendmail_create(task.id)      
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='events_sports')
         elif request.user.legal and domain_name == "legal" :
@@ -595,7 +665,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                ) 
+                sendmail_create(task.id)      
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='legal')
         elif request.user.operations and domain_name == "operations" :
@@ -634,7 +705,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                )  
+                sendmail_create(task.id)     
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='operations')
         elif request.user.marketing and domain_name == "marketing" :
@@ -673,7 +745,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                ) 
+                sendmail_create(task.id)      
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='marketing')
         elif request.user.sponsorship and domain_name == "sponsorship" :
@@ -712,7 +785,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                ) 
+                sendmail_create(task.id)      
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='sponsorship')
         elif request.user.design and domain_name == "design" :
@@ -751,7 +825,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                )  
+                sendmail_create(task.id)     
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='design')
         elif request.user.finance and domain_name == "finance" :
@@ -790,7 +865,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                )  
+                sendmail_create(task.id)     
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='finance')
         elif request.user.media and domain_name == "media" :
@@ -829,7 +905,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                )  
+                sendmail_create(task.id)     
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='media')
         elif request.user.security and domain_name == "security" :
@@ -868,7 +945,8 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                )  
+                sendmail_create(task.id)     
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='security')
         elif request.user.hospitality and domain_name == "hospitality" :
@@ -907,13 +985,76 @@ def createtask(request , domain_name):
                     assigned_to = assigned_to,
                     assigned_by = assigned_by,
                     advisory = advisory
-                )      
+                )  
+                sendmail_create(task.id)     
                 messages.success(request, 'Task Created Successfully')        
                 return redirect('coretasks' , domain_name='hospitality')
         else:
             return redirect('index')
     else:
         return redirect('index')
+
+
+
+def sendmail_edit(taskid):
+    task = Task.objects.filter(id=taskid).values()[0]
+    
+    task_title = task['task_title']
+    domain = task['domain']
+    description = task['description']
+    priority = task['priority']
+    due_date = task['due_date']
+    status = task['status']
+    assigned_to = task['assigned_to']
+    assigned_by = task['assigned_by']
+    
+
+    president_emails = CustomUser.objects.filter(president=True).values_list('email', flat=True)
+    vicepresident_emails = CustomUser.objects.filter(vice_president=True).values_list('email' , flat=True)
+    if domain == 'technology':
+        domain = CustomUser.objects.filter(technology=True).values_list('email' , flat=True)
+    elif domain == 'events-cultural':
+        domain = CustomUser.objects.filter(events_cultural=True).values_list('email' , flat=True)
+    elif domain == 'events-sports':
+        domain = CustomUser.objects.filter(events_sports=True).values_list('email' , flat=True)
+    elif domain == 'legal':
+        domain = CustomUser.objects.filter(legal=True).values_list('email' , flat=True)
+    elif domain == 'operations':
+        domain = CustomUser.objects.filter(operations=True).values_list('email' , flat=True)
+    elif domain == 'marketing':
+        domain = CustomUser.objects.filter(marketing=True).values_list('email' , flat=True)
+    elif domain == 'sponsorship':
+        domain = CustomUser.objects.filter(sponsorship=True).values_list('email' , flat=True)
+    elif domain == 'design':
+        domain = CustomUser.objects.filter(design=True).values_list('email' , flat=True)
+    elif domain == 'finance':
+        domain = CustomUser.objects.filter(finance=True).values_list('email' , flat=True)
+    elif domain == 'media':
+        domain = CustomUser.objects.filter(media=True).values_list('email' , flat=True)
+    elif domain == 'security':
+        domain = CustomUser.objects.filter(security=True).values_list('email' , flat=True)
+    elif domain == 'hospitality':
+        domain = CustomUser.objects.filter(hospitality=True).values_list('email' , flat=True)
+    else:
+        domain = CustomUser.objects.filter(president=True).values_list('email' , flat=True)
+    
+    emails_list = []
+    for i in president_emails:
+        emails_list.append(i)
+    for i in vicepresident_emails:
+        emails_list.append(i)
+    for i in domain:
+        emails_list.append(i)
+    emails_list = set(emails_list)
+    emails_list = list(emails_list)
+    
+    subject, from_email, to = f"Shore24 {task_title} edited", settings.EMAIL_HOST_USER, emails_list
+    html_content1 = get_template('edittaskmail.html').render({'task_title': task_title,'doamin':domain,'description':description,'priority':priority,'due_date':due_date,'status':status,'assigned_to':assigned_to,'assigned_by':assigned_by})
+    msg = EmailMultiAlternatives(subject, html_content1, from_email, to)
+    msg.content_subtype = "html"
+    msg.send() 
+
+
 
 
 
@@ -942,8 +1083,359 @@ def edit_task(request, domain_name , taskid):
                     task.assigned_to = request.POST.get('assigned_to')
                     task.assigned_by = request.POST.get('assigned_by')
                     task.advisory = 'advisory' in request.POST
-
                     task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.vice_president and domain_name == "vice_president" or domain_name == "technology" or domain_name == "events_cultural" or domain_name == "events_sports" or domain_name == "legal" or domain_name == "operations" or domain_name == "marketing" or domain_name == "sponsorship" or domain_name == "design" or domain_name == "finance" or domain_name == "media" or domain_name == "security" or domain_name == "hospitality":
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.technology and domain_name == "technology":
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.events_cultural and domain_name == "events_cultural" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.events_sports and domain_name == "events_sports" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.legal and domain_name == "legal" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.operations and domain_name == "operations" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.marketing and domain_name == "marketing" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.sponsorship and domain_name == "sponsorship" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.design and domain_name == "design" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.finance and domain_name == "finance" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.media and domain_name == "media" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.security and domain_name == "security" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
+                    return redirect('coretasks' , domain_name=domain_name)
+            else:
+                return redirect('corehome')
+        elif request.user.hospitality and domain_name == "hospitality" :
+            if domain_name == Task.objects.filter(id=taskid).values()[0]['domain']:
+                if request.method == 'GET':
+                    taskdetails = Task.objects.filter(id=taskid).values()[0]
+                    return render(request, 'edittask.html', {'task' :taskdetails })
+                elif request.method == 'POST':
+                    now_attached_file = request.FILES.get('attached_file')
+                    
+                    task = Task.objects.get(id=taskid)
+                    
+                    if now_attached_file:
+                        task.attached_file.delete()  # Delete the old file
+                        task.attached_file.save(now_attached_file.name, now_attached_file, save=True)
+                    task.task_title = request.POST.get('task_title')
+                    task.domain = request.POST.get('domain')
+                    task.description = request.POST.get('description')
+                    task.priority = request.POST.get('priority')
+                    task.due_date = request.POST.get('due_date')
+                    task.status = request.POST.get('status')
+                    task.assigned_to = request.POST.get('assigned_to')
+                    task.assigned_by = request.POST.get('assigned_by')
+                    task.advisory = 'advisory' in request.POST
+                    task.save()
+                    sendmail_edit(taskid)
                     return redirect('coretasks' , domain_name=domain_name)
             else:
                 return redirect('corehome')

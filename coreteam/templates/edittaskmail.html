@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore24 Task Edited</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            color: rgb(0, 0, 0);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-bottom: 10px;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Shore24</h1>
+        <h2>Task Edited</h2>
+        <p>Task Title: {{ task_title }}</p>
+        <p>Domain: {{ domain }}</p>
+        <p>Description: {{ description }}</p>
+        <p>Priority: {{ priority }}</p>
+        <p>Due Date: {{ due_date }}</p>
+        <p>Status: {{ status }}</p>
+        <p>Assigned To: {{ assigned_to }}</p>
+        <p>Assigned By: {{ assigned_by }}</p>
+        <br>
+        <br>
+        <h3>Team Shore24</h3>
+    </div>
+</body>
+
+</html>

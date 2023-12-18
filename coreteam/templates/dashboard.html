@@ -201,6 +201,7 @@
                 <table class="table">
                     <tr>
                         <th class="name">Task_title</th>
+                        <th class="name">Task_description</th>
                         <th class="name">Priority</th>
                         <th class="name">Due_date</th>
                         <th class="name">Status</th>
@@ -209,13 +210,12 @@
                         <th class="name">Assigned_to</th>
                         <th class="name">Assigned_by</th>
                         <th class="name">File Attached</th>
-                        {% if request.user.president %}
-                            <th class="name">Edit</th>
-                        {% endif %}
+                        <th class="name">Edit</th>
                     </tr>
                     {% for task in tasks %}
                     <tr>
                         <td>{{ task.task_title }}</td>
+                        <td>{{ task.description }}</td>
                         <td>{{ task.priority }}</td>
                         <td>{{ task.due_date }}</td>
                         <td>{{ task.status }}</td>
@@ -230,13 +230,13 @@
                                 </a>
                             {% endif %}
                         </td>
-                        {% if request.user.president %}
+                        
                         <td>
                             <a href="{% url 'edittask' domain_name=domain taskid=task.id %}">
                                 <button type="button" class="btn btn-danger">Edit</button>
                             </a>
                         </td>
-                        {% endif %}
+                        
                     </tr>
                     {% endfor %}
                 </table>
