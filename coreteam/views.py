@@ -341,7 +341,7 @@ def coretasks(request , domain_name):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def home(request):
-    if request.user.is_staff:
+    if request.user.is_authenticated:
         name = request.user.first_name
         return render(request, 'corehome.html' , {'name': name})
     else:
@@ -401,7 +401,7 @@ def sendmail_create(taskid):
     emails_list = set(emails_list)
     emails_list = list(emails_list)
     
-    subject, from_email, to = f"Shore24 {task_title} Created", settings.EMAIL_HOST_USER, emails_list
+    subject, from_email, to = f"Shore24 Tasks: {task_title} Created", settings.EMAIL_HOST_USER, emails_list
     html_content1 = get_template('createtaskmail.html').render({'task_title': task_title,'doamin':domain,'description':description,'priority':priority,'due_date':due_date,'status':status,'assigned_to':assigned_to,'assigned_by':assigned_by})
     msg = EmailMultiAlternatives(subject, html_content1, from_email, to)
     msg.content_subtype = "html"
@@ -1055,7 +1055,7 @@ def sendmail_edit(taskid):
     emails_list = set(emails_list)
     emails_list = list(emails_list)
     
-    subject, from_email, to = f"Shore24 {task_title} edited", settings.EMAIL_HOST_USER, emails_list
+    subject, from_email, to = f"Shore24 Tasks: {task_title} edited", settings.EMAIL_HOST_USER, emails_list
     html_content1 = get_template('edittaskmail.html').render({'task_title': task_title,'doamin':domain,'description':description,'priority':priority,'due_date':due_date,'status':status,'assigned_to':assigned_to,'assigned_by':assigned_by})
     msg = EmailMultiAlternatives(subject, html_content1, from_email, to)
     msg.content_subtype = "html"

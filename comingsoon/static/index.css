@@ -17,7 +17,7 @@
   text-align: center;
   font-size: 5rem;
   position: relative;
-  margin-top: 5rem;
+  margin-top: -2rem;
   font-family: Georgia;
 }
 
@@ -463,7 +463,7 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: 3.5rem;
+      top: 3rem;
 
   }
 
@@ -496,7 +496,7 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: 10rem;
+      top: 0rem;
 
   }
 
@@ -546,7 +546,7 @@
   }
 
   #shore-soon{
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   #shore-text {
       font-size: 2.5rem;
@@ -558,9 +558,16 @@
   .tick {
       height: 100vh;
       position: relative;
-      top: 16rem;
+      top: 13rem;
       margin-top: -50% !important;
 
+  }
+
+  #shorenav{
+    margin-top: 2rem;
+  }
+  #shore-soon{
+    margin-top: 1rem;
   }
 
   #shore-text {
@@ -576,6 +583,7 @@
       top: 12rem;
 
   }
+  
 
   #shore-text {
       font-size: 2rem;

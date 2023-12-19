@@ -9,44 +9,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-    
+    <style>
+      #shorenav{
+        text-align: center;
+        font-size: 5rem;
+        position: relative;
+        margin-top: 2rem;
+        font-family: Georgia;
+      }
+      #icon{
+        background: white;
+        color: black;
+        border-radius: inherit;
+        font-size: 2.5rem;
+        z-index: 10;
+      }
+      #user-dropdown {
+        display: none;
+        position: absolute;
+        z-index: 100; /* Ensure the dropdown is on top */
+        background-color: white; /* Change background color as needed */
+        padding: 10px;
+        /* Other styles for the dropdown menu */
+      }
+
+      #user-dropdown.show {
+          display: block;
+      }
+
+      .blurred-background {
+          filter: blur(4px); /* Add blur effect */
+          pointer-events: none; /* Prevent clicks on the background */
+      }
+    </style>
 </head>
 <body>
 
-    <nav class="bg-white border-gray-200 dark:bg-gray-900">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-end mx-auto p-4 ">
+    <nav class="border-gray-200 dark:bg-gray-900" id="shorenav">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-end mx-auto p-4 md:pr-6">
         
         <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-              <i class = "material-icons">menu</i>
-              <span class="material-symbols-outlined">
-                menu
-                </span>
+              <i class = "material-icons" id="icon">menu</i>
             </button>
             <!-- Dropdown menu -->
-            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-            
-              
-              
-              
-              
+            <div class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
                 <ul class="py-2" aria-labelledby="user-menu-button">
                 <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                  <a href="{% url 'index' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Home</a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
+                  <a href="{% url 'shore23' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Shore'23</a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                  <a href="{% url 'corehome' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign In</a>
                 </li>
               </ul>
-    
-    
-    
     
               
             </div>
@@ -54,5 +72,26 @@
         
         </div>
       </nav>
+      <script>
+        const menuButton = document.getElementById('user-menu-button');
+        const dropdownMenu = document.getElementById('user-dropdown');
+
+        menuButton.addEventListener('click', () => {
+            menuButton.classList.toggle('active');
+            dropdownMenu.classList.toggle('show');
+            <!-- document.body.classList.toggle('blurred-background'); -->
+        });
+
+        // Close the dropdown when clicking outside of it
+        document.addEventListener('click', function(event) {
+            const isClickInsideMenu = dropdownMenu.contains(event.target);
+            const isClickInsideButton = menuButton.contains(event.target);
+            if (!isClickInsideMenu && !isClickInsideButton) {
+                menuButton.classList.remove('active');
+                dropdownMenu.classList.remove('show');
+                document.body.classList.remove('blurred-background');
+            }
+        });
+    </script>
 </body>
 </html>
