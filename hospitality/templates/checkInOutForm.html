@@ -1,0 +1,133 @@
+{% extends 'hospitality_base.html' %}
+{% load static %}
+{% block title %}
+CheckIn & CheckOut Form
+{% endblock title %}
+{% block head %}
+<style>
+    .container {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .left-div,
+    .right-div {
+        width: 48%;
+        padding: 10px;
+    }
+
+    .center-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        border-left: 1px solid #ddd;
+        height: 100%;
+        transform: translateX(-50%);
+    }
+</style>
+{% endblock head %}
+
+
+{% block body %}
+{% include 'hospitality_navbar.html' %}
+<div class="h-screen flex items-center justify-center">
+    <div class="container mx-auto max-w-xl p-6 bg-white border border-gray-200 rounded-lg shadow ">
+        <div class="left-div">
+            <img class="w-20 h-20
+             rounded-full " src="{% static 'img/shore_24_clogo.png' %}" alt="Participant Image" />
+            <br>
+
+            <div class="max-w-sm mx-auto">
+                <div class="mb-5">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Name: {{ user.name }}</label>
+
+                </div>
+                <div class="mb-5">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Email: {{ user.email }}</label>
+
+                </div>
+                <div class="mb-5">
+                    <label for="tel" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
+                        Phone Number: {{ user.phone_number }}</label>
+                </div>
+                <div class="mb-5">
+                    <label for="tel" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
+                        Check In Status: {% if user.checkin_status %} Yes {% else %} No {% endif %}</label>
+                </div>
+                <div class="mb-5">
+                    <label for="tel" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
+                        Check Out Status: {% if user.checkout_status %} Yes {% else %} No {% endif %}</label>
+                </div>
+                {% if user.checkin %}
+                <div class="mb-5">
+                    <label for="tel" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
+                        Checkin Time: {{ user.checkin }}</label>
+                </div>
+                {% endif %}
+                {% if user.checkout %}
+                <div class="mb-5">
+                    <label for="tel" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
+                        Checkout Time: {{ user.checkout }}</label>
+                </div>
+                {% endif %}
+                {% if user.hostel %}
+                <div class="mb-5">
+                    <label for="tel" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
+                        Hostel: {{ user.hostel }}</label>
+                </div>
+                {% endif %}
+                {% if user.room_number %}
+                <div class="mb-5">
+                    <label for="tel" class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
+                        Room Number: {{ user.room_number }}</label>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="center-line"></div>
+        <div class="right-div">
+            <form class="max-w-sm mx-auto" method="post">
+                {% csrf_token %}
+                {% if not user.checkin_status %}
+                <div class="mb-5">
+                    <label for="countries"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hostel</label>
+                    <select name="hostel" id="hostel"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="RBS "> Rabindranath Sadan</option>
+                        <option value="RBS-AC">Rabindranath Tagore Sadan AC</option>
+                        <option value="VS">RVinay Sadan</option>
+                        <option value="NS">Nirmala Sadan</option>
+                        <option value="NS-AC">Nirmala Sadan AC</option>
+                        <option value="KS">Kokila Sadan</option>
+                        <option value="KS-AC">Kokila Sadan AC</option>
+                    </select>
+
+                </div>
+                <div class="mb-5">
+                    <label for="roomno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Room No</label>
+                    <input type="number" id="roomno" name="room_no" required
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div class="flex items-start mb-5">
+                    <div class="flex items-center h-5">
+                        <button type="submit" name="checkin"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Check In
+                        </button>
+                        {% else %}
+                        <button type="submit" name="checkout"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Check Out
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+            {% endblock %}

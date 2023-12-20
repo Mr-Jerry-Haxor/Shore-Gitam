@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <title>Check In & Out History</title>
+</head>
+
+<body>
+    {% include 'hospitality_navbar.html' %}
+    <div class="container-2xl">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-link active" id="nav-checkin-tab" data-bs-toggle="tab" data-bs-target="#nav-checkin"
+                    type="button" role="tab" aria-controls="nav-checkin" aria-selected="true">Check In</a>
+                <a class="nav-link" id="nav-checkout-tab" data-bs-toggle="tab" data-bs-target="#nav-checkout"
+                    type="button" role="tab" aria-controls="nav-checkout" aria-selected="false">Check Out</a>
+                <a class="nav-link" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button"
+                    role="tab" aria-controls="nav-all" aria-selected="false" all>All</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <!-- Check In -->
+            <div class="tab-pane fade show active" id="nav-checkin" role="tabpanel" aria-labelledby="nav-checkin-tab"
+                tabindex="0">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
+                    <div
+                        class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="p-6">
+
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        S.No
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        ID
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Phone Number
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Email
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Check-In Time
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in checked_in_users %}
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="w-4 p-4">
+
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ forloop.counter }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.id }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.name }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.phone_number }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.email }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.checkin }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Check Out -->
+            <div class="tab-pane fade" id="nav-checkout" role="tabpanel" aria-labelledby="nav-checkout-tab"
+                tabindex="1">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
+                    <div
+                        class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="p-6">
+
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        S.No
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        ID
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Phone Number
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Email
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Check Out Time
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in checked_out_users %}
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="w-4 p-4">
+
+                                    </td>
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{ user.id }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.name }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.phone_number }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.email }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.checkout }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- All -->
+            <div class="tab-pane fade" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
+                    <div
+                        class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="p-6">
+
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        S.No
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        ID
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Phone Number
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Email
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Check In Time
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Check Out Time
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in all_users %}
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="w-4 p-4">
+
+                                    </td>
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ forloop.counter }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{ user.id }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.name }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.phone_number }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.email }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.checkin }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ user.checkout }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+</body>
+
+</html>

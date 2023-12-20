@@ -6,18 +6,18 @@ from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory')
-    list_filter = ('president' , 'vice_president' ,'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' ,  'advisory')
+    list_display = ('username', 'email','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory' ,  'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')
+    list_filter = ('president' , 'vice_president' ,'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' ,  'advisory',  'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal Info', {'fields': ('first_name', 'last_name', 'email')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory', 'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'password1', 'password2', 'is_staff', 'is_superuser', 'president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory')}
+            'fields': ('username', 'email', 'password1', 'password2', 'is_staff', 'is_superuser', 'president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory'  , 'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')}
         ),
     )
     search_fields = ('username', 'email')

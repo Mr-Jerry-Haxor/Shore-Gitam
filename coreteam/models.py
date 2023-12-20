@@ -22,7 +22,11 @@ class CustomUser(AbstractUser):
     security = models.BooleanField(default=False)
     hospitality = models.BooleanField(default=False)
     advisory = models.BooleanField(default=False)
-    # Add other role fields as needed
+    hospitality_staff = models.BooleanField(default=False)
+    events_cultural_staff = models.BooleanField(default=False)
+    events_sports_staff = models.BooleanField(default=False)
+    security_staff = models.BooleanField(default=False)
+    # Add other role fields as needed   
 
 
 def file_upload_path(instance, filename):

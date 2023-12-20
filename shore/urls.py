@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('comingsoon.urls')),
     path('coreteam/', include('coreteam.urls')),
     path('shore23/' , include('shore23.urls')),
+    path('hospitality/' , include('hospitality.urls')),
 ]
 
 
