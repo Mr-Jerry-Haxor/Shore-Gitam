@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'coreteam',
     'comingsoon',
     'shore23',
+    'hospitality',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # custom context processro for retrieveing dates from meal model
+                'hospitality.context_processors.formatted_dates',
                 
                 # Add the following two
                 'social_django.context_processors.backends',
