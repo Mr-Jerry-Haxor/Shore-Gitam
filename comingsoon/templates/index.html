@@ -47,133 +47,144 @@
           margin: 0 0.25em;
           text-align: center;
       }
-	  .mascot{
-		display: flex;
-		justify-content: space-around;
-	  }
-	  #mascot-part2 img{
-		height:350px;
-		width: 350px;
-		object-fit: contain;
-	  }
-	  #about-mascot{
-		width:30rem;
-	  }
-	  #mascot-part1{
-		display: flex;
-		flex-direction: column;
-		justify-content: space-evenly;
-	  }
-	  #mascot-title{
-		font-size: 5rem;
-	  }
-	  #about-mascot{
-		font-size: 2rem;
-	  }
-	  @media screen and (max-width:1300px){
-		#mascot-title{
-			font-size: 2.5rem;
-		  }
-		  #about-mascot{
-			font-size: 1.3rem;
-			width:15rem;
-		  }
-	  }
-	  @media only screen and (max-width: 770px){
-		#mascot-title{
-			font-size: 2rem;
-		  }
-		  #about-mascot{
-			font-size: 1.2rem;
-			width:20rem;
-		  }
-		  #mascot-part2 img{
-			width:250px;
-			height:250px;
-		  }
-	  }
-	  @media screen and (max-width:692px){
-		.mascot {
+	  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Noto+Sans:wght@200;600;800&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Noto+Sans:wght@600;800&display=swap');
+		.mascot{
 			display: flex;
-			flex-direction:column;
+			justify-content: space-around;
+			background-color: black;
+		}
+		#mascot-part2 img{
+			height:350px;
+			width: 350px;
+			object-fit: contain;
+		}
+		#about-mascot{
+			width:30rem;
+			font-size: 2rem;
+			color: white;
+			font-family: 'Josefin Sans', sans-serif;
+			font-family: 'Noto Sans', sans-serif;
+		}
+		#mascot-part1{
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
 		}
 		#mascot-title{
-			font-size: 2rem;
-			text-align: center;
-		  }
-		  #about-mascot{
-			font-size: 1.2rem;
-			width:30rem;
-			margin-left: 5rem;
-			margin-top: 3rem;
-		  }
-		  #mascot-part2 img{
-			width:350px;
-			height:350px;
-			margin-left:9rem ;
-		  }
-	  }
-	  @media only screen and (max-width: 540px){
-		#about-mascot{
-			font-size: 1.2rem;
-			width:21rem;
-			margin-top: 2.5rem;
-		  }
-		  #mascot-part2 img{
-			width:350px;
-			height:350px;
-			margin-left: 5rem;
-		  }
-	  }
-	  @media only screen and (max-width: 465px){
-		#mascot-title{
-			font-size: 2rem;
-			text-align: center;
-			margin-top: 5rem;
-		  }
-		#about-mascot{
-			font-size: 1rem;
-			width:15rem;
-			margin-top: 2.5rem;
-			margin-right: 2rem;
-		  }
-		  #mascot-part2 img{
-			width:350px;
-			height:350px;
-			margin-left: 3rem;
-		  }
-	  }
-	  @media only screen and (max-width: 376px){
-		#about-mascot{
-			font-size: 1rem;
-			width:15rem;
-			margin-top: 2.5rem;
-			margin-left: 3rem;
-		  }
-		  #mascot-part2 img{
-			width:350px;
-			height:350px;
-			margin-left: 1rem;
-		  }
-	  }
-	  @media screen and (max-width:320px){
-		#mascot-title{
-			font-size: 2rem;
-			text-align: center;
-			margin-top: 5rem;
-		  }
-		#about-mascot{
-			font-size: 1rem;
-			width:12rem;
-			margin-top: 2.5rem;
-			margin-left: 3.5rem;
-		  }
-		  #mascot-part2 img{
-			width:290px;
-			height:290px;
-			margin-left: 1rem;
-		  }
-	  }
+			font-size: 5rem;
+			color: white;
+			font-weight: 900;
+			font-family: 'Josefin Sans', sans-serif;
+			font-family: 'Noto Sans', sans-serif;
+		}
+		@media screen and (max-width:1300px){
+			#mascot-title{
+				font-size: 2.5rem;
+			}
+			#about-mascot{
+				font-size: 1.3rem;
+				width:18rem;
+			}
+		}
+		@media only screen and (max-width: 770px){
+			#mascot-title{
+				font-size: 2rem;
+			}
+			#about-mascot{
+				font-size: 1.2rem;
+				width:20rem;
+			}
+			#mascot-part2 img{
+				width:250px;
+				height:250px;
+			}
+		}
+		@media screen and (max-width:692px){
+			.mascot {
+				display: flex;
+				flex-direction:column;
+			}
+			#mascot-title{
+				font-size: 2rem;
+				text-align: center;
+			}
+			#about-mascot{
+				font-size: 1.2rem;
+				width:30rem;
+				margin-left: 5rem;
+				margin-top: 3rem;
+			}
+			#mascot-part2 img{
+				width:350px;
+				height:350px;
+				margin-left:9rem ;
+			}
+		}
+		@media only screen and (max-width: 540px){
+			#about-mascot{
+				font-size: 1.2rem;
+				width:21rem;
+				margin-top: 2.5rem;
+			}
+			#mascot-part2 img{
+				width:350px;
+				height:350px;
+				margin-left: 5rem;
+			}
+		}
+		@media only screen and (max-width: 465px){
+			#mascot-title{
+				font-size: 2rem;
+				text-align: center;
+				margin-top: 5rem;
+			}
+			#about-mascot{
+				font-size: 1rem;
+				width:15rem;
+				margin-top: 2.5rem;
+				margin-right: 2rem;
+			}
+			#mascot-part2 img{
+				width:350px;
+				height:350px;
+				margin-left: 1.5rem;
+			}
+		}
+		@media only screen and (max-width: 376px){
+			#mascot-title{
+				font-size: 1.6rem;
+				text-align: center;
+			}
+			#about-mascot{
+				font-size: 1rem;
+				width:15.5rem;
+				margin-top: 2.5rem;
+				margin-left: 3rem;
+			}
+			#mascot-part2 img{
+				width:350px;
+				height:350px;
+				margin-left: 0.3rem;
+			}
+		}
+		@media screen and (max-width:320px){
+			#mascot-title{
+				font-size: 1.3rem;
+				text-align: center;
+				margin-top: 5rem;
+			}
+			#about-mascot{
+				font-size: 1rem;
+				width:13rem;
+				margin-top: 2.5rem;
+				margin-left: 3.5rem;
+			}
+			#mascot-part2 img{
+				width:290px;
+				height:290px;
+			}
+		}
   </style>
   <div>
   <video loop muted autoplay playsinline preload="metadata" id="video-background" class="object-contain">
@@ -205,7 +216,7 @@
 </div>
 <div class="mascot">
 	<div id="mascot-part1">
-		<div id="mascot-title">MASCOT FOR SHORE 24</div>
+		<div id="mascot-title">GITPHIN</div>
 		<div id="about-mascot">Meet Gitphin, the lively mascot of Shore Fest! Gitphin is here to make waves of excitement at the techno-cultural,sportsdriven celebration. </div>
 	</div>
 	<div id="mascot-part2">

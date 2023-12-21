@@ -21,7 +21,7 @@ meal_choices = (
 class HospitalityUser(models.Model):
     name = models.CharField(max_length=255, null=False)
     email = models.EmailField(max_length=255, null=False, unique=True)
-    phone_number = models.IntegerField(null=False, unique=True)  # length should be 10
+    phone_number = models.CharField(max_length=255, null=False, unique=True)  # length should be 10
     meal_id = models.IntegerField(null=True, blank=True)
     qr_hash = models.CharField(max_length=255, null=True, blank=True)
 
