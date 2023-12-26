@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'comingsoon',
     'shore23',
     'hospitality',
+    'prelims',
 ]
 
 MIDDLEWARE = [
