@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="Shore GITAM" />
+	<title>SHORE 24</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato" />
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="https://use.typekit.net/rzt6nuu.css">
+	<link rel="stylesheet" href="{% static 'countdown.css' %}" />
+	<script src="{% static 'index.js' %}"></script>
+	<script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
+	<link rel="icon" type="image/x-icon" href="{% static 'shore_24_clogo.png'%}">
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-FTVGGBL7NF"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-FTVGGBL7NF');
+	</script>
+</head>
+<body>
+    <style>
+      .tick {
+          padding-bottom: 1em;
+          font-size: 1rem;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans,
+              Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+      }
+
+      .tick-label {
+          font-size: 0.375em;
+          text-align: center;
+          color: white;
+      }
+
+      .tick-group {
+          margin: 0 0.25em;
+          text-align: center;
+      }
+  </style>
+  <div>
+<div>
+  <div class="tick"  data-did-init="handleTickInit">
+    <div
+        data-repeat="true"
+        data-layout="horizontal center fit"
+        data-transform="preset(d, h, m, s) -> delay"
+    >
+        <div class="tick-group">
+            <div
+                data-key="value"
+                data-repeat="true"
+                data-transform="pad(00) -> split -> delay"
+            >
+                <span data-view="flip"></span>
+            </div>
+  
+            <span data-key="label" data-view="text" class="tick-label"></span>
+        </div>
+    </div>
+  </div>
+</div>
+<script>
+  function handleTickInit(tick) {
+
+      var nextYear = new Date().getFullYear() + 1;
+
+      Tick.count.down('2024-02-02').onupdate = function (value) {
+          tick.value = value;
+      };
+  }
+  
+</script>
+</body>
+
+</html>

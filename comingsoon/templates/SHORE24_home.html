@@ -1,0 +1,2024 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="js lenis lenis-smooth">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="Shore GITAM" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>SHORE 24</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'shore_24_clogo.png'%}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTVGGBL7NF"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FTVGGBL7NF');
+    </script>
+    <style>
+      body {
+        font-family: "Outfit";
+        background-color: #000000;
+        margin-right: -2rem;
+        overflow-x: hidden;
+      }
+      #activator {
+        display: block;
+        position: absolute;
+        width: 30px;
+        height: 40px;
+        top: 41px;
+        right: 15px;
+        cursor: pointer;
+        z-index: 100;
+        -webkit-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+        .menu-icon,
+        .menu-icon::before,
+        .menu-icon::after {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: #ffffff;
+          border-radius: 1px;
+          cursor: pointer;
+          -webkit-transition: all 300ms ease-in-out;
+          transition: all 300ms ease-in-out;
+        }
+        .menu-icon {
+          top: 8px;
+        }
+        .menu-icon::before {
+          top: -8px;
+        }
+        .menu-icon::after {
+          bottom: -8px;
+        }
+      }
+      #activator.active {
+        .menu-icon {
+          background: none;
+        }
+        .menu-icon::before {
+          top: 0;
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+        }
+        .menu-icon::after {
+          bottom: 0;
+          -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+        }
+      }
+
+      #activate-menu {
+        z-index: 90;
+        padding: 20px 40px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: -40%;
+        width: 20%;
+        list-style-type: none;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        -webkit-overflow-scrolling: touch;
+        background: #000000;
+        color: #000000;
+        overflow: hidden;
+        overflow-y: auto;
+        -webkit-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+      }
+      #activate-menu.visible {
+        right: 0;
+      }
+
+      #fade-bg {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        -webkit-overflow-scrolling: touch;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        z-index: 80;
+        background: rgba(180, 180, 180, 0.17);
+        backdrop-filter: blur(8px);
+      }
+
+      li {
+        line-height: 2rem;
+        font-weight: bolder;
+        font-size: 1.5rem;
+        text-align: center;
+        color: #fff;
+        margin: 1rem;
+      }
+      li:hover {
+        background-color: #3700ff;
+        color: #ffffff;
+        border-radius: 5px;
+      }
+      .nav1 {
+        margin-top: 5rem;
+      }
+      @media only screen and (max-width: 767px) {
+        #activate-menu {
+          z-index: 90;
+          padding: 20px 40px;
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          right: -50%;
+          width: 50%;
+          list-style-type: none;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          -webkit-overflow-scrolling: touch;
+          background: #000000;
+          color: #000000;
+          overflow: hidden;
+          overflow-y: auto;
+          -webkit-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+        }
+      }
+
+      @media only screen and (min-width: 768px) and (max-width: 991px) {
+        #activate-menu {
+          z-index: 90;
+          padding: 20px 40px;
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          right: -30%;
+          width: 30%;
+          list-style-type: none;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+          -webkit-overflow-scrolling: touch;
+          background: #000000;
+          color: #ffffff;
+          overflow: hidden;
+          overflow-y: auto;
+          -webkit-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+        }
+      }
+      ul {
+        color: white;
+      }
+
+      .custom-video {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+      }
+
+      .section1 {
+        position: relative;
+        overflow: hidden;
+        padding-top: 100px;
+        height: calc(100vh - 4px);
+      }
+
+      .section1 small {
+        color: var(--white-color);
+        text-transform: uppercase;
+      }
+
+      .section1 .section-overlay {
+        z-index: 2;
+        opacity: 0.45;
+      }
+
+      .section1 .container {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        padding-bottom: 50px;
+      }
+
+      .section1 .container .row {
+        height: 100%;
+      }
+
+      .about {
+        display: flex;
+        justify-content: space-around;
+        background-color: black;
+        margin-top: 10rem;
+        margin-bottom: 6rem;
+      }
+
+      #about-img img {
+        height: 550px;
+        width: 550px;
+        object-fit: contain;
+      }
+
+      #about-text {
+        width: 40rem;
+        font-size: 1.5rem;
+        color: white;
+        font-family: "Outfit";
+      }
+
+      #about-part1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+
+      #about-part2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+
+      #about-title {
+        font-size: 3rem;
+        color: white;
+        font-weight: 900;
+        font-family: "MADE Outer Sans Alt";
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+      }
+      .shoredates {
+        font-size: 40px;
+        font-family: "MADE Outer Sans";
+        font-weight: 700;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+      }
+      #venue {
+        font-size: 18px;
+        font-family: "MADE Outer Sans Alt";
+        font-weight: 700;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+      }
+
+      @media screen and (max-width: 1300px) {
+        #about-title {
+          font-size: 2.5rem;
+        }
+        #about-text {
+          font-size: 1.3rem;
+          width: 18rem;
+        }
+      }
+
+      @media only screen and (max-width: 770px) {
+        .about {
+          margin: 3rem;
+        }
+        #about-title {
+          font-size: 2rem;
+        }
+        #about-text {
+          font-size: 1.2rem;
+          width: 20rem;
+        }
+        #about-img img {
+          width: 450px;
+          height: 450px;
+          margin-left: 2rem;
+        }
+      }
+
+      @media screen and (max-width: 692px) {
+        .about {
+          flex-direction: column;
+          align-items: center;
+        }
+        #about-title {
+          font-size: 2rem;
+          text-align: center;
+        }
+        #about-text {
+          font-size: 1.2rem;
+          width: 100%;
+          max-width: 30rem;
+          margin-left: 0;
+          margin-top: 3rem;
+        }
+        #about-img img {
+          width: 350px;
+          height: 350px;
+          margin-left: 0;
+        }
+      }
+
+      @media only screen and (max-width: 540px) {
+        #about-text {
+          font-size: 1.2rem;
+          width: 21rem;
+          margin-top: 2.5rem;
+        }
+        #about-img img {
+          width: 350px;
+          height: 350px;
+          margin-left: 0;
+        }
+      }
+
+      @media only screen and (max-width: 465px) {
+        .about {
+          display: flex;
+          justify-content: space-around;
+          background-color: black;
+          margin-top: 0rem;
+          margin-bottom: 0rem;
+        }
+        #about-title {
+          font-size: 1.5rem;
+          text-align: center;
+          margin-top: 5rem;
+        }
+        #about-text {
+          font-size: 1rem;
+          width: 15rem;
+          text-align: center;
+          margin-top: 2.5rem;
+          margin-left: 1rem;
+        }
+        #about-img img {
+          width: 350px;
+          height: 350px;
+          margin-left: 0;
+        }
+        .shoredates {
+          font-size: 16px !important;
+          font-family: "MADE Outer Sans Alt";
+          font-weight: 700;
+          color: rgba(255, 255, 255, 1);
+        }
+        #venue {
+          font-size: 12px !important;
+          font-family: "MADE Outer Sans Alt";
+          font-weight: 700;
+          color: rgba(255, 255, 255, 1);
+          text-align: center;
+          margin-left: 1rem;
+        }
+      }
+
+      @media only screen and (max-width: 376px) {
+        .about {
+          display: flex;
+          justify-content: space-around;
+          background-color: black;
+          margin-top: 0rem;
+          margin-bottom: 0rem;
+        }
+        #about-title {
+          font-size: 1.5rem;
+          text-align: center;
+        }
+        #about-text {
+          font-size: 0.8rem;
+          width: 16rem;
+          margin-top: 2.5rem;
+          margin-left: 0;
+        }
+        #about-img img {
+          width: 350px;
+          height: 350px;
+          margin-left: 0;
+        }
+        .shoredates {
+          text-align: center;
+          font-size: 15px !important;
+          font-family: "MADE Outer Sans Alt";
+          font-weight: 700;
+          color: rgba(255, 255, 255, 1);
+        }
+      }
+
+      @media screen and (max-width: 320px) {
+        .about {
+          display: flex;
+          justify-content: space-around;
+          background-color: black;
+          margin-top: 0rem;
+          margin-bottom: 0rem;
+        }
+        #about-title {
+          font-size: 1.3rem;
+          text-align: center;
+          margin-top: 5rem;
+        }
+        #about-text {
+          font-size: 0.8rem;
+          width: 15rem;
+          margin-top: 2.5rem;
+          margin-left: 0;
+        }
+        #about-img img {
+          width: 290px;
+          height: 290px;
+        }
+        .shoredates {
+          font-size: 16px !important;
+          font-family: "MADE Outer Sans Alt";
+          font-weight: 700;
+          color: rgba(255, 255, 255, 1);
+        }
+        
+      }
+      .circle-container{
+            display: flex;
+            justify-content: space-around;
+            align-items:center;
+            padding-bottom: 2rem;
+        }
+        .text-theme{
+            width:45vw;
+            text-align: justify;
+            color: #ffffff;
+        }
+        .circle-1 img{
+            border-radius: 50%;
+           
+        }
+        .circle-2 img{
+            border-radius: 50%;
+            width:250px;
+            height:250px;
+        }
+        .title {
+        font-size: 1.6rem;
+        padding-bottom: 0.5rem;
+        color: white;
+        font-weight: 900;
+        font-family: "MADE Outer Sans Alt";
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+        text-align: center;
+      }
+      #new-theme{
+          display: none;
+        }
+
+        @media screen and (max-width: 540px){
+            .circle-container{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .text-theme{
+              width:70vw;
+
+            }
+            .theme{
+              text-align: center;
+              padding: 0.7rem;
+              text-align: center;
+              display: none;
+            }
+            .title{
+              font-size: 1.6rem;
+              padding-bottom: 0.5rem;
+            }
+            #new-theme{
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            .circle-1 img{
+            border-radius: 60%;
+            margin-bottom: 2rem;
+        }
+        }
+
+      .description {
+        font-size: 16px;
+        color: #ffffff;
+        margin: 0 10px;
+      }
+      .team {
+        display: flex;
+        justify-content: space-around;
+        background-color: black;
+        margin-top: 10rem;
+        margin-bottom: 6rem;
+      }
+
+      #team-img img {
+        height: 550px;
+        width: 550px;
+        object-fit: contain;
+      }
+
+      #team-text {
+        width: 40rem;
+        font-size: 1.5rem;
+        color: white;
+        font-family: "Outfit";
+      }
+
+      #team-part1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+
+      #team-part2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+
+      #team-title {
+        font-size: 3rem;
+        color: white;
+        font-weight: 900;
+        font-family: "MADE Outer Sans Alt";
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+      }
+
+      @media screen and (max-width: 1300px) {
+        #team-title {
+          font-size: 2.5rem;
+        }
+        #team-text {
+          font-size: 1.3rem;
+          width: 18rem;
+        }
+      }
+
+      @media only screen and (max-width: 770px) {
+        .team {
+          margin: 3rem;
+        }
+        #team-title {
+          font-size: 1rem;
+          margin-left: 2rem;
+          margin-bottom: -5rem;
+        }
+        #team-text {
+          font-size: 1.2rem;
+          width: 18rem;
+          margin-left: 2rem;
+        }
+        #team-img img {
+          width: 450px;
+          height: 450px;
+          margin-left: 0rem;
+        }
+        .container1 {
+          margin: 0 auto;
+          padding: 4rem;
+          width: 48rem !important;
+          box-sizing: border-box;
+        }
+      }
+
+      @media screen and (max-width: 692px) {
+        .team {
+          flex-direction: column;
+          align-items: center;
+        }
+        #team-title {
+          font-size: 2rem;
+          text-align: center;
+        }
+        #team-text {
+          font-size: 1.2rem;
+          width: 100%;
+          max-width: 30rem;
+          margin-left: 0;
+          margin-top: 5rem;
+        }
+        #team-img img {
+          width: 400px;
+          height: 400px;
+          margin-left: 0;
+        }
+        .container1 {
+          margin: 0 auto;
+          padding: 4rem;
+          width: 35rem !important;
+          box-sizing: border-box;
+        }
+      }
+
+      @media only screen and (max-width: 540px) {
+        #team-text {
+          font-size: 1.2rem;
+          width: 21rem;
+          margin-top: 2.5rem;
+        }
+        #team-img img {
+          width: 350px;
+          height: 350px;
+          margin-left: 0;
+        }
+        .container1 {
+          margin: 0 auto;
+          padding: 4rem;
+          width: 30rem !important;
+          box-sizing: border-box;
+        }
+      }
+
+      @media only screen and (max-width: 465px) {
+        .team {
+          display: flex;
+          justify-content: space-around;
+          background-color: black;
+          margin-top: 0rem;
+          margin-bottom: 8rem;
+        }
+        #team-title {
+          font-size: 1.5rem;
+          text-align: center;
+          margin-top: 5rem;
+        }
+        #team-text {
+          font-size: 1rem;
+          width: 20rem;
+          text-align: center;
+          margin-top: 6rem;
+          margin-left: 1rem;
+        }
+        #team-img img {
+          width: 350px;
+          height: 350px;
+          margin-left: 0;
+          margin-bottom: -8rem;
+        }
+        .container1 {
+          margin: 0 auto;
+          padding: 4rem;
+          width: 27rem !important;
+          box-sizing: border-box;
+        }
+      }
+
+      @media only screen and (max-width: 376px) {
+        .team {
+          display: flex;
+          justify-content: space-around;
+          background-color: black;
+          margin-top: 0rem;
+          margin-bottom: 8rem;
+        }
+        #team-title {
+          font-size: 1.5rem;
+          text-align: center;
+        }
+        #team-text {
+          font-size: 1rem;
+          width: 20rem;
+          margin-top: 8rem;
+          margin-left: 0;
+        }
+        #team-img img {
+          width: 350px;
+          height: 350px;
+          margin-left: 0;
+          margin-bottom: -8rem;
+        }
+        .container1 {
+          margin: 0 auto;
+          padding: 4rem;
+          width: 23rem !important;
+          box-sizing: border-box;
+        }
+      }
+
+      @media screen and (max-width: 320px) {
+        .team {
+          display: flex;
+          justify-content: space-around;
+          background-color: black;
+          margin-top: 0rem;
+          margin-bottom: 10rem;
+        }
+        #team-title {
+          font-size: 1rem;
+          text-align: center;
+          margin-top: 5rem;
+        }
+        #team-text {
+          font-size: 0.8rem;
+          width: 15rem;
+          margin-top: 5rem;
+          margin-left: 0;
+        }
+        #team-img img {
+          width: 300px;
+          height: 300px;
+          margin-bottom: -8rem;
+        }
+        .container1 {
+          margin: 0 auto;
+          padding: 4rem;
+          width: 20rem !important;
+          box-sizing: border-box;
+        }
+      }
+      .container1 {
+        margin: 0 auto;
+        padding: 4rem;
+        width: 60rem;
+        box-sizing: border-box;
+        margin-top: -5rem;
+        margin-bottom: 5rem;
+      }
+      .accordion .accordion-item {
+        border-bottom: 1px solid #e5e5e5;
+      }
+      .accordion .accordion-item button[aria-expanded="true"] {
+        border-bottom: 1px solid #ffffff;
+      }
+      .accordion button {
+        position: relative;
+        display: block;
+        text-align: left;
+        width: 100%;
+        padding: 1em 0;
+        color: #7288a2;
+        font-size: 1.15rem;
+        font-weight: 400;
+        border: none;
+        background: none;
+        outline: none;
+      }
+      .accordion button:hover,
+      .accordion button:focus {
+        cursor: pointer;
+        color: #ffffff;
+      }
+      .accordion button:hover::after,
+      .accordion button:focus::after {
+        cursor: pointer;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+      }
+      .accordion button .accordion-title {
+        padding: 1em 1.5em 1em 0;
+      }
+      .accordion button .icon {
+        display: inline-block;
+        position: absolute;
+        top: 18px;
+        right: 0;
+        width: 22px;
+        height: 22px;
+        border: 1px solid;
+        border-radius: 22px;
+      }
+      .accordion button .icon::before {
+        display: block;
+        position: absolute;
+        content: "";
+        top: 9px;
+        left: 5px;
+        width: 10px;
+        height: 2px;
+        background: currentColor;
+      }
+      .accordion button .icon::after {
+        display: block;
+        position: absolute;
+        content: "";
+        top: 5px;
+        left: 9px;
+        width: 2px;
+        height: 10px;
+        background: currentColor;
+      }
+      .accordion button[aria-expanded="true"] {
+        color: #ffffff;
+      }
+      .accordion button[aria-expanded="true"] .icon::after {
+        width: 0;
+      }
+      .accordion button[aria-expanded="true"] + .accordion-content {
+        opacity: 1;
+        max-height: 9em;
+        transition: all 200ms linear;
+        will-change: opacity, max-height;
+      }
+      .accordion .accordion-content {
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: opacity 200ms linear, max-height 200ms linear;
+        will-change: opacity, max-height;
+      }
+      .accordion .accordion-content p {
+        font-size: 1rem;
+        font-weight: 300;
+        margin: 2em 0;
+        color: #fff;
+      }
+      .contact-title {
+        font-size: 2rem;
+        color: white;
+        font-weight: 900;
+        font-family: "MADE Outer Sans";
+
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+      }
+      #borderani {
+        animation: borderSpin1 5s ease infinite;
+      }
+
+      @keyframes borderSpin1 {
+        0% {
+          border-color: #d02090;
+        }
+        25% {
+          border-color: #7c1000;
+        }
+        50% {
+          border-position: 100% 50%;
+          border-color: #ff4605;
+        }
+        75% {
+          border-color: #f8a42f;
+        }
+        90% {
+          border-position: 0% 50%;
+          border-color: #d3312e;
+        }
+        100% {
+          border-position: 0% 50%;
+          border-color: #50010a;
+        }
+      }
+      .gallery-title {
+        font-size: 2rem;
+        color: white;
+        font-weight: 900;
+        margin: 5rem;
+        font-family: "MADE Outer Sans";
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+      }
+      .home {
+        margin-bottom: 8rem;
+      }
+      .home__slider {
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 5px 5px;
+        width: 100vw;
+        height: 100%;
+        margin: auto;
+        overflow: hidden;
+        position: relative;
+      }
+      .home__slider__track {
+        animation: infiscroll 10s linear infinite;
+        display: flex;
+        width: calc(500px * 12);
+      }
+      .home__slider__track__slide {
+        position: relative;
+        height: 300px;
+        width: 500px;
+      }
+      .home__slider__track__slide img {
+        margin: 0 0.5rem;
+        max-height: 260px;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+      .image-title {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        font-size: 2rem;
+        color: white;
+        font-family: "MADE Outer Sans";
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+        transform: translateX(-50%);
+        padding: 5px;
+        margin: 0;
+        text-align: center;
+        width: 100%;
+      }
+
+      @keyframes infiscroll {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(-50%, 0);
+        }
+      }
+
+      #container-1,
+      #container-2,
+      #container-3 {
+        display: grid;
+        column-gap: 40px;
+        grid-template-columns: 10fr 10fr;
+        align-items: center;
+        margin: 3rem;
+      }
+
+      #text {
+        color: white;
+        padding-top: 1rem;
+      }
+
+      #culture-text,
+      #sports-text,
+      #technicals-text {
+        font-size: 2rem;
+        color: white;
+        font-weight: 900;
+
+        font-family: "MADE Outer Sans";
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+        color: white;
+
+        font-size: 2.5rem;
+      }
+
+      #new-button-1,
+      #new-button-2,
+      #new-button-3 {
+        padding-top: 1.5rem;
+      }
+
+      @media screen and (max-width: 430px) {
+        #container-1,
+        #container-2,
+        #container-3 {
+          display: block;
+          align-items: center;
+          margin: 3rem;
+        }
+        #culture-text,
+        #sports-text,
+        #technicals-text {
+          text-align: center;
+          font-size: 1.5rem;
+        }
+        #container-2 {
+          display: flex;
+          flex-direction: column-reverse;
+        }
+      }
+
+      .carousel-container {
+        width: 500px;
+        height: 300px;
+        overflow: hidden;
+        margin: 0 auto;
+        box-shadow: 5px 5px 25px 0px rgba(140, 140, 140, 0.2);
+      }
+
+      .carousel {
+        display: flex;
+        width: 1500px;
+        animation: sliding 12s infinite;
+      }
+      .carousel div {
+        width: 500px;
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+      }
+      .carousel:hover {
+        animation-play-state: paused;
+      }
+      .carousel .culturals-one {
+        background-image: url("https://res.cloudinary.com/jerryhaxor/image/upload/v1703651774/shore%2024/shore24%20homepage/image2_bsqlwi.jpg");
+      }
+      .carousel .culturals-two {
+        background-image: url("https://res.cloudinary.com/jerryhaxor/image/upload/v1703651826/shore%2024/shore24%20homepage/image7_imxbxr.jpg");
+      }
+      .carousel .culturals-three {
+        background-image: url("https://res.cloudinary.com/jerryhaxor/image/upload/v1703651853/shore%2024/shore24%20homepage/image13_crora1.jpg");
+      }
+
+      .carousel .sports-one {
+        background-image: url("https://res.cloudinary.com/jerryhaxor/image/upload/v1703652012/shore%2024/shore24%20homepage/image7_kpsxuu.jpg");
+      }
+      .carousel .sports-two {
+        background-image: url("https://res.cloudinary.com/jerryhaxor/image/upload/v1703652029/shore%2024/shore24%20homepage/image10_ziaqr9.jpg");
+      }
+      .carousel .sports-three {
+        background-image: url("https://res.cloudinary.com/jerryhaxor/image/upload/v1703652049/shore%2024/shore24%20homepage/image8_gkguuh.jpg");
+      }
+      .carousel .tech-one {
+        background-image: url("https://res.cloudinary.com/jerryhaxor/image/upload/v1703652716/shore%2024/shore24%20homepage/image2_cmfors.jpg");
+      }
+      .carousel .tech-two {
+        background-image: url("https://res.cloudinary.com/jerryhaxor/image/upload/v1703652777/shore%2024/shore24%20homepage/image1_vgpqgi.jpg");
+      }
+      .carousel .tech-three {
+        background-image: url("https://res.cloudinary.com/jerryhaxor/image/upload/v1703652967/shore%2024/shore24%20homepage/image3_t5aik6.jpg");
+      }
+
+      @keyframes sliding {
+        30% {
+          transform: translateX(0);
+        }
+        35% {
+          transform: translateX(-500px);
+        }
+        65% {
+          transform: translateX(-500px);
+        }
+        70% {
+          transform: translateX(-1000px);
+        }
+        98% {
+          transform: translateX(-1000px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+      @media screen and (max-width: 768px) {
+        .carousel-wrapper {
+          width: 312px;
+          height: 210px;
+        }
+
+        .carousel-container {
+          width: 240px;
+          height: 150px;
+        }
+
+        .carousel {
+          width: 720px;
+        }
+        .carousel > div {
+          width: 240px;
+          height: 150px;
+        }
+
+        @keyframes sliding {
+          30% {
+            transform: translateX(0);
+          }
+          35% {
+            transform: translateX(-240px);
+          }
+          65% {
+            transform: translateX(-240px);
+          }
+          70% {
+            transform: translateX(-480px);
+          }
+          98% {
+            transform: translateX(-480px);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+      }
+
+      .box {
+        position: relative;
+        transform: translate(0);
+        transform: translate(0);
+      }
+      .shadow:before {
+        content: "";
+        position: absolute;
+        inset: 0px;
+        transform: translate3d(0, 0, -5px);
+        background: conic-gradient(
+          from 90deg at 40% -25%,
+          #ffd700,
+          #f79d03,
+          #ee6907,
+          #e6390a,
+          #de0d0d,
+          #d61039,
+          #cf1261,
+          #c71585,
+          #cf1261,
+          #d61039,
+          #de0d0d,
+          #ee6907,
+          #f79d03,
+          #ffd700,
+          #ffd700,
+          #ffd700
+        );
+        filter: blur(40px);
+        clip-path: polygon(
+          -100vmax -100vmax,
+          100vmax -100vmax,
+          100vmax 100vmax,
+          -100vmax 100vmax,
+          -100vmax -100vmax,
+          0 0,
+          0 100%,
+          100% 100%,
+          100% 0,
+          0 0
+        );
+      }
+      .footer {
+        background-image: url(https://res.cloudinary.com/jerryhaxor/image/upload/v1703706679/shore%2024/shore24%20homepage/footer_yzv6yc.png);
+        background-size: cover;
+      }
+
+      #social-media-title {
+        margin-bottom: 1rem;
+        font-family: "Josefin Sans", sans-serif;
+        font-family: "Noto Sans", sans-serif;
+        color: white;
+        font-weight: 900;
+      }
+
+      .social-media a {
+        text-decoration: none;
+        color: white;
+      }
+
+      .social-media a:hover {
+        color: #c0c0c0;
+      }
+
+      .shore-img {
+        width: 200px;
+        height: 200px;
+      }
+
+      #email {
+        margin-top: 1rem;
+        font-family: "Josefin Sans", sans-serif;
+        font-family: "Noto Sans", sans-serif;
+        color: white;
+      }
+
+      #address {
+        font-family: "Josefin Sans", sans-serif;
+        font-family: "Noto Sans", sans-serif;
+        color: white;
+        position: relative;
+        left: 20%;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .footer-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 40%;
+      }
+
+      .social-media {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .social-media-text {
+        font-family: "Josefin Sans", sans-serif;
+        font-family: "Noto Sans", sans-serif;
+        color: white;
+      }
+
+      .media-picture {
+        width: 30px;
+        height: 30px;
+      }
+
+      @media screen and (max-width: 770px) {
+        #address {
+          width: 50%;
+        }
+
+        .shore-img {
+          width: 280px;
+        }
+      }
+
+      @media screen and (max-width: 426px) {
+        #sports-new-box {
+          display: grid;
+          align-items: center;
+        }
+
+        #sports {
+          display: none;
+        }
+
+        #container-1,
+        #container-3 {
+          display: block;
+          align-items: center;
+          margin: 3rem;
+        }
+
+        #culture-text,
+        #sports-text,
+        #technicals-text {
+          text-align: center;
+        }
+
+        #wrapper {
+          padding: 1rem;
+        }
+
+        .footer-box {
+          width: 65%;
+        }
+
+        .footer {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        #address {
+          margin-top: 1rem;
+          width: 70%;
+        }
+
+        #social-media-container {
+          margin-top: 2rem;
+        }
+
+        .shore-img {
+          height: 100px;
+          width: 100px;
+          position: relative;
+          left: -60%;
+        }
+
+        #address {
+          font-size: 0.8rem;
+        }
+
+        #social-media-title {
+          font-size: 0.8rem;
+          text-align: center;
+        }
+
+        .social-media {
+          display: flex;
+          gap: 1rem;
+          padding-bottom: 0.6rem;
+        }
+      }
+      .fixed-gif-container {
+      position: fixed;
+      bottom: 3rem;
+      right: 0;
+      width: 40vw;
+      height: 50%;
+      z-index: 1;
+    }
+    </style>
+  </head>
+
+  <body style="margin-right:-2rem">
+    <div id="activator">
+      <span class="menu-icon"></span>
+    </div>
+    <nav id="activate-menu">
+      <ul>
+        <li class="nav1"><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'culturals_home' %}">Prelims</a></li>
+        <li><a href="{% url 'shore23' %}">Shore'23</a></li>
+        <li><a href="{% url 'corehome' %}">Login</a></li>
+      </ul>
+    </nav>
+    <div id="fade-bg"></div>
+    <section class="section1" id="section_1">
+      <div class="video-wrap">
+        <video loop muted autoplay playsinline class="custom-video" poster="">
+          <source
+            src="https://shore.gitam.edu/home/ubuntuserver/Shore24/static/shore23_glimpse.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+        {% include 'countdown.html' %}
+      </div>
+    </section>
+    <div class="fixed-gif-container">
+      <img src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706968/shore%2024/shore24%20homepage/Gif_itqoer.gif" alt="Your GIF" />
+    </div>
+    <div class="about">
+      <div id="about-part1">
+        <div id="about-title">ABOUT SHORE'24</div>
+        <div id="about-text">
+          <p>
+            Welcome to SHORE Fest - GITAM'S annual fest<br>
+ An otherworldly experience with a kaleidoscope of cultural delicacies laced with music, art , food, sports and everything in between. With a rich history from years' worth of people before us,SHORE 2024 is a hot pot of art and athleticism. The beautiful yet hustling shores of Vizag inspire and embody the spirit of Shore, just as the calming briny breezes and the crashing waves illustrate the youthful energy of Gitamites. Like the namesake of the fest “SHORE” suggests, lets make the “SOUND OF JOY”, and welcome the new year with a blast.
+          </p>
+
+          <br />
+
+          <div class="shoredates" style="text-shadow: 0 0 10px rgb(255, 0, 0);">
+            <h1>2<sup>nd</sup>, 3<sup>rd</sup> & 4<sup>th</sup> FEBRUARY, 2024</h1>
+          </div>
+
+          <div class="mt-5" style="display:none">
+            <center>
+              <button
+                type="button"
+                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                View All Events
+              </button>
+              <button
+                type="button"
+                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              >
+                Get Tickets Now →
+              </button>
+            </center>
+          </div>
+        </div>
+      </div>
+      <div id="about-img">
+        <img
+          src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703703170/shore%2024/shore24%20homepage/gitphin_lhzes1_dzd622.png"
+          alt=""
+        />
+      </div>
+    </div>    
+    <div class="circle-container">
+      <div class="theme" id="new-theme">
+        <h1 class="title">THEME FOR SHORE'24</h1><br>
+        <p class="text-theme">
+          Inclusivity, equality and health are few of the most essential aspects of one's life. Team SHORE will be working in 2024 with these in mind, aiming to promote GENDER EQUALITY, encourage healthy lifestyles and enhanced well being. The unfair gap between the different genders regarding opportunities, rights, and representation has been a focal point of our initiatives along with the declining health of our generation. We hope to bring about awareness and provide information regarding these issues, in our attempt to encourage people towards a society that is inclusive and healthy both on the inside and outside. 
+        </p>
+      </div>
+        <div class="circle-1">
+          <img
+            src="https://res.cloudinary.com/jerryhaxor/image/upload/c_scale,w_250/v1703713659/shore%2024/shore24%20homepage/gender_equality_ag7v7r.jpg"
+            alt="Image 1"
+            class="shadow-md hover:shadow-lg id=image1"
+          />
+        </div>
+        <div class="theme">
+          <h1 class="title">THEME FOR SHORE'24</h1><br>
+          <p class="text-theme">
+            Inclusivity, equality and health are few of the most essential aspects of one's life. Team SHORE will be working in 2024 with these in mind, aiming to promote GENDER EQUALITY, encourage healthy lifestyles and enhanced well being. The unfair gap between the different genders regarding opportunities, rights, and representation has been a focal point of our initiatives along with the declining health of our generation. We hope to bring about awareness and provide information regarding these issues, in our attempt to encourage people towards a society that is inclusive and healthy both on the inside and outside. 
+          </p>
+        </div>
+        <div class="circle-2" >
+          <img id=image2
+            src="https://png.pngtree.com/png-vector/20221109/ourmid/pngtree-wellbeing-woman-calm-mind-in-yoga-png-image_6439501.png"
+            alt="Image 2"
+          />
+        </div>
+      </div>
+    <h2 class="text-white text-center gallery-title" style="display: none;">Partners</h2>
+    <div class="home" style="display: none;">
+      <div class="home__slider">
+        <div class="home__slider__track">
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028661/shore%2024/image_19.43.02_lpukih.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028221/shore%2024/IMG_1217_myclhp.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028660/shore%2024/image_19.43.10_bxcjsl.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028661/shore%2024/image_19.43.04_2_azwzqz.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028661/shore%2024/image_19.43.04_1_sl6gad.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028661/shore%2024/image_19.43.08_akvnl3.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028660/shore%2024/image_19.43.08_1_jlxbum.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028660/shore%2024/image_19.43.06_engxmg.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028659/shore%2024/image_19.43.11_nwhiuy.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028228/shore%2024/IMG_2859_gafv2j.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028218/shore%2024/DSC02589_ozyufd.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028216/shore%2024/DSC02360_f9d2hq.jpg"
+              alt=""
+            />
+            <p class="image-title">Partner</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="culturals">
+      <h1 class="text-white text-center gallery-title">EVENTS</h1>
+      <div class="w-screen" data-carousel="slide" id="container-1">
+        <div class="carousel-container">
+          <div class="carousel">
+            <div class="culturals-one"></div>
+            <div class="culturals-two"></div>
+            <div class="culturals-three"></div>
+          </div>
+        </div>
+
+        <div id="culturals-box">
+          <div id="culture-text">CULTURALS</div>
+          <div id="text">
+            Experience a cultural extravaganza like never before at SHORE Fest 2024! Dive into a kaleidoscope of traditions, dances, and art forms that reflect the diversity of our vibrant heritage. From mesmerizing folk performances to breathtaking art exhibitions, immerse yourself in a celebration of cultures from around the globe. Join us to witness the fusion of creativity and tradition that promises to leave you spellbound.
+          </div>
+          <div class="dark">
+            <center id="new-button-1" style="display:none;">
+              <button 
+                class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+              >
+                <span
+                  class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+                >
+                  More Information
+                </span>
+              </button>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container-2" class="two">
+      <div id="sports-box">
+        <div id="sports-text">SPORTS</div>
+        <div id="text">
+          Get ready to unleash your competitive spirit at SHORE Fest 2024! Whether you're a seasoned athlete or a sports enthusiast, there's something for everyone. Feel the adrenaline rush as you participate in thrilling sporting events, from intense football matches to heart-pounding relay races. It's time to showcase your skills, teamwork, and sportsmanship on the vibrant shores of Vizag. Join us for an unforgettable experience filled with excitement and camaraderie!
+        </div>
+        <div class="dark">
+          <center id="new-button-2" style="display:none;">
+            <button
+              class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+            >
+              <span
+                class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+              >
+                More Information
+              </span>
+            </button>
+          </center>
+        </div>
+      </div>
+      <div class="w-180" data-carousel="slide">
+        <div class="carousel-container">
+          <div class="carousel">
+            <div class="sports-one"></div>
+            <div class="sports-two"></div>
+            <div class="sports-three"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="technical">
+      <div class="w-180" data-carousel="slide" id="container-3">
+        <div class="carousel-container">
+          <div class="carousel">
+            <div class="tech-one"></div>
+            <div class="tech-two"></div>
+            <div class="tech-three"></div>
+          </div>
+        </div>
+        <div id="technical-box">
+          <div id="technicals-text">TECHNICAL</div>
+          <div id="text">
+            Calling all innovators and tech enthusiasts! SHORE Fest 2024 brings you a platform to showcase your ingenuity and creativity. Engage in cutting-edge workshops, mind-boggling hackathons, and stimulating technical competitions. Explore the latest advancements in technology and embrace the opportunity to collaborate, learn, and innovate. Join us on this journey of discovery and innovation as we push the boundaries of what's possible in the world of technology.
+          </div>
+          <div class="dark">
+            <center id="new-button-3" style="display:none;">
+              <button
+                class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+              >
+                <span
+                  class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+                >
+                  More Information
+                </span>
+              </button>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="team" style="display: none;">
+      <div id="team-img">
+        <img src="https://gdscwowvzg.gitam.edu/images/team.jpg" alt="" />
+      </div>
+      <div id="team-part1">
+        <div id="team-title">TEAM SHORE'24</div>
+        <div id="team-text">
+          <p>
+            SHORE 2024 is a culmination of years of preparation, passion and
+            ambition of GITAM to celebrate a festival that features.
+          </p>
+          <center id="new-button-1">
+            <div class="dark">
+              <button
+                class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+              >
+                <span
+                  class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
+                >
+                  More Information
+                </span>
+              </button>
+            </div>
+          </center>
+        </div>
+      </div>
+    </div>
+
+    <div class="container1" style="margin-top:1rem;">
+      <h2 class="text-white text-2xl mb-5" style="text-align:center">Frequently Asked Questions</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button id="accordion-button-1" aria-expanded="false">
+            <span class="accordion-title"
+              >What are the dates of SHORE FEST 2024?</span
+            ><span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <p>
+              The 2nd Edition of SHORe FEST will be organized from 2nd to 4th
+              FEBRUARY 2024.
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-2" aria-expanded="false">
+            <span class="accordion-title"
+              >What is the duration of the registration process during the
+              fest?</span
+            ><span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <p>
+              The event registration process will begin on 20th January and will
+              be open throughout the fest, except from 6 PM to 11 PM during
+              concert nights. Entry to the concert nights will be permitted only
+              after registration is completed.
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-3" aria-expanded="false">
+            <span class="accordion-title"
+              >Would any transportation services be provided to reach the
+              campus? </span
+            ><span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <p>
+              Transportation services will not be provided by the SHORe
+              Committee or the University.
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-4" aria-expanded="false">
+            <span class="accordion-title"
+              >How do I register for SHORE Fest?</span
+            ><span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <p>
+              You can register at the SHORe website or through the QR codes that
+              are available all over the GITAM VISAKHAPATNAM Campus . For further
+              assistance, registration desks are located throughout the campus
+              where you can Self register or our team can help you out.
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-5" aria-expanded="false">
+            <span class="accordion-title"
+              >Which celebrities are going to perform at the concert nights of
+              SHORE Fest 2024?</span
+            ><span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <p>
+              The celebs performing at the SHORe Fest 2024 concert nights will
+              be announced soon on the SHORe Fest, GITAM Visakhapatnam Instagram
+              page
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-6" aria-expanded="false">
+            <span class="accordion-title"
+              >Can I get a refund if I change my mind about attending? </span
+            ><span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <p>
+              No, refund will not be given if you change your mind after
+              purchasing the ticket.
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-7" aria-expanded="false">
+            <span class="accordion-title"
+              >What should you look out for at the SHORE Fest?</span
+            ><span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <p>
+              SHORE Fest has a huge diversity of events and various other
+              elements planned for the attendees, starting with concert night to
+              various stalls and games. While you walk through the streets of
+              GITAM during Fest, keep a good view of your surroundings or you
+              could miss out on something interesting.
+            </p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button id="accordion-button-8" aria-expanded="false">
+            <span class="accordion-title"
+              >If I book my ticket online, how do I collect my ticket?</span
+            ><span class="icon" aria-hidden="true"></span>
+          </button>
+          <div class="accordion-content">
+            <p>
+              You will be receiving a mail which contains the soft copy of your
+              ticket attached to it, while entering the concert night you have
+              to carry an identity card along with your digital ticket.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-screen flex items-center justify-center dark">
+      <div
+        class="w-full max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 shadow-lime-700 box shadow"
+      >
+        <h1 class="text-white text-center contact-title">Contact Us</h1>
+        <br />
+        <form class="w-full max-w-4xl mx-auto">
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label
+                for="fullname"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="fullname"
+                name="fullname"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Full Name"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="phone"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Contact number</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="12345-67890"
+                pattern="[0-9]{5}-[0-9]{5}"
+                required
+              />
+            </div>
+          </div>
+          <div class="mb-6">
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >College Email address</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Your College Email , eg: name@gitam.in"
+              required
+            />
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label
+                for="campus"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Select  Gitamite / Non-Gitamite</label
+              >
+              <select
+                id="campus"
+                name="campus"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option selected>Choose campus</option>
+                <option value="Vizag">Visakhapatnam</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Banglore">Banglore</option>
+                <option value="Non-gitamite">Non-Gitamite</option>
+              </select>
+            </div>
+            <div>
+              <label
+                for="domain"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Select Domain </label
+              >
+              <select
+                id="domain"
+                name="domain"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option selected>Choose Query Domain</option>
+                <option value="cultural">Events-Culturals</option>
+                <option value="sports">Events-Sports</option>
+                <option value="technical">Technical</option>
+                <option value="hospitality">Hospitality</option>
+                <option value="security">Security</option>
+                <option value="marketing">Marketing</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label
+              for="message"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Your message</label
+            >
+            <textarea
+              id="message"
+              rows="4"
+              name="message"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Write your queries here..."
+            ></textarea>
+          </div>
+          <center><button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 mt-5">Submit</button></center>
+        </form>
+      </div>
+    </div>
+    <h2 class="text-white text-center gallery-title">SHORE'23 Gallery</h2>
+    <div class="home">
+      <div class="home__slider">
+        <div class="home__slider__track">
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028661/shore%2024/image_19.43.02_lpukih.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028221/shore%2024/IMG_1217_myclhp.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028660/shore%2024/image_19.43.10_bxcjsl.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028661/shore%2024/image_19.43.04_2_azwzqz.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028661/shore%2024/image_19.43.04_1_sl6gad.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028661/shore%2024/image_19.43.08_akvnl3.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028660/shore%2024/image_19.43.08_1_jlxbum.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028660/shore%2024/image_19.43.06_engxmg.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028659/shore%2024/image_19.43.11_nwhiuy.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028228/shore%2024/IMG_2859_gafv2j.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028218/shore%2024/DSC02589_ozyufd.jpg"
+              alt=""
+            />
+          </div>
+          <div class="home__slider__track__slide">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1702028216/shore%2024/DSC02360_f9d2hq.jpg"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="footer">
+        <div class="footer-box">
+          <div id="logo">
+            <img
+              src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706680/shore%2024/shore24%20homepage/shore_logo_dwcevk.png"
+              alt="shore-logo"
+              class="shore-img"
+            />
+          </div>
+          <div id="address">
+            <div>Visakhapatnam Campus</div>
+            <div>Gandhi Nagar, Rushikonda,</div>
+            <div>Visakhapatnam - 530045</div>
+            <div>Andhra Pradesh, India</div>
+            <div id="email">Contact: <a href="mailto:unifest_cc@gitam.in">unifest_cc@gitam.in</a></div>
+          </div>
+        </div>
+        <div id="social-media-container">
+          <h5 id="social-media-title">Social media links</h5>
+          <div class="social-media">
+            <div class="social-media-text" id="instagram">
+              <a href="https://www.instagram.com/shore.gitam/"
+                ><img
+                  src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706679/shore%2024/shore24%20homepage/instagram_udo0kg.png"
+                  alt="instagram"
+                  class="media-picture"
+              /></a>
+            </div>
+            <div class="social-media-text">
+              <a
+                href="https://www.facebook.com/people/Shore-Gitam/pfbid02egLqcozsNNNcAasJmLTQVDTKS4zqVWZqqHjZEBRABGeqzqmwWiiZdaGAt9SeGd28l/?mibextid=LQQJ4d"
+                ><img
+                  src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706678/shore%2024/shore24%20homepage/facebook_jl3hjl.png"
+                  alt="facebook"
+                  class="media-picture"
+              /></a>
+            </div>
+            <div class="social-media-text" id="linkedin">
+              <a
+                href="https://www.linkedin.com/company/shore-gitam-deemed-to-be-university/"
+                ><img
+                  src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706678/shore%2024/shore24%20homepage/linkedin_vcy1cg.png"
+                  alt="linkedin"
+                  class="media-picture"
+              /></a>
+            </div>
+            <div class="social-media-text">
+              <a
+                href="https://www.snapchat.com/add/shore.gitam?share_id=4NQqf4oGTgy7i8JkEVCrYw&locale=en_IN&sid=489faf2175d04d3d9092db22048b16f9"
+              >
+                <img
+                  src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706679/shore%2024/shore24%20homepage/snapchat_pgdzio.png"
+                  alt="snapchat"
+                  class="media-picture"
+              /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      $(document).ready(function () {
+        var activator = $("#activator");
+        var navBg = $("#fade-bg");
+
+        activator.on("click", function () {
+          $(this).toggleClass("active");
+          $("#activate-menu").toggleClass("visible");
+          navBg.fadeToggle();
+        });
+
+        navBg.on("click", function () {
+          $("#activate-menu").removeClass("visible");
+          activator.removeClass("active");
+          $(this).hide();
+        });
+      });
+
+      const items = document.querySelectorAll(".accordion button");
+
+      function toggleAccordion() {
+        const itemToggle = this.getAttribute("aria-expanded");
+
+        for (i = 0; i < items.length; i++) {
+          items[i].setAttribute("aria-expanded", "false");
+        }
+
+        if (itemToggle == "false") {
+          this.setAttribute("aria-expanded", "true");
+        }
+      }
+
+      items.forEach((item) => item.addEventListener("click", toggleAccordion));
+    </script>
+  </body>
+</html>
