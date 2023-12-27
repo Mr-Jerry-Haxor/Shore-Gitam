@@ -1,5 +1,6 @@
 {% extends 'prelims_base.html' %}
 {% load static %}
+{% load filter_tags %}
 
 {% block title %}
 Registered Events
@@ -12,169 +13,6 @@ Registered Events
             background-color: #000000;
         }
 
-        #activator {
-            display: block;
-            position: absolute;
-            width: 30px;
-            height: 40px;
-            top: 30px;
-            right: 15px;
-            cursor: pointer;
-            z-index: 100;
-            -webkit-transition: all 0.2s linear;
-            transition: all 0.2s linear;
-
-            .menu-icon,
-            .menu-icon::before,
-            .menu-icon::after {
-                content: "";
-                display: block;
-                position: absolute;
-                left: 0;
-                right: 0;
-                height: 4px;
-                background: #ffffff;
-                border-radius: 1px;
-                cursor: pointer;
-                -webkit-transition: all 300ms ease-in-out;
-                transition: all 300ms ease-in-out;
-            }
-
-            .menu-icon {
-                top: 8px;
-            }
-
-            .menu-icon::before {
-                top: -8px;
-            }
-
-            .menu-icon::after {
-                bottom: -8px;
-            }
-        }
-
-        #activator.active {
-            .menu-icon {
-                background: none;
-            }
-
-            .menu-icon::before {
-                top: 0;
-                -webkit-transform: rotate(45deg);
-                transform: rotate(45deg);
-            }
-
-            .menu-icon::after {
-                bottom: 0;
-                -webkit-transform: rotate(-45deg);
-                transform: rotate(-45deg);
-            }
-        }
-
-        #activate-menu {
-            z-index: 90;
-            padding: 20px 40px;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            right: -30%;
-            width: 20%;
-            list-style-type: none;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            -webkit-overflow-scrolling: touch;
-            background: #000000;
-            color: #000000;
-            overflow: hidden;
-            overflow-y: auto;
-            -webkit-transition: all 0.2s ease;
-            transition: all 0.2s ease;
-        }
-
-        #activate-menu.visible {
-            right: 0;
-        }
-
-        #fade-bg {
-            display: none;
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            -webkit-overflow-scrolling: touch;
-            overflow: hidden;
-            top: 0;
-            left: 0;
-            z-index: 80;
-            background: rgba(180, 180, 180, 0.17);
-            backdrop-filter: blur(8px);
-        }
-
-        li {
-            line-height: 2rem;
-            font-weight: bolder;
-            font-size: 1.5rem;
-            text-align: center;
-            color: #fff;
-            margin: 1rem;
-        }
-
-        li:hover {
-            background-color: #3700ff;
-            color: #ffffff;
-            border-radius: 5px;
-        }
-
-        .nav1 {
-            margin-top: 5rem;
-        }
-
-        @media only screen and (max-width: 767px) {
-            #activate-menu {
-                z-index: 90;
-                padding: 20px 40px;
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                right: -50%;
-                width: 50%;
-                list-style-type: none;
-                backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
-                -webkit-overflow-scrolling: touch;
-                background: #000000;
-                color: #000000;
-                overflow: hidden;
-                overflow-y: auto;
-                -webkit-transition: all 0.2s ease;
-                transition: all 0.2s ease;
-            }
-        }
-
-        @media only screen and (min-width: 768px) and (max-width: 991px) {
-            #activate-menu {
-                z-index: 90;
-                padding: 20px 40px;
-                position: fixed;
-                top: 0;
-                bottom: 0;
-                right: -30%;
-                width: 30%;
-                list-style-type: none;
-                backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
-                -webkit-overflow-scrolling: touch;
-                background: #000000;
-                color: #ffffff;
-                overflow: hidden;
-                overflow-y: auto;
-                -webkit-transition: all 0.2s ease;
-                transition: all 0.2s ease;
-            }
-        }
-
-        ul {
-            color: white;
-        }
 
         .cards {
             margin: 5rem;
@@ -209,6 +47,9 @@ Registered Events
                     </h5>
                 </div>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                    <span class="font-bold">Team Name:</span> {{ p.team.visible_name }}
+                </p>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
                     <span class="font-bold">Date:</span> {{ p.event.date }}
                 </p>
                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -220,23 +61,32 @@ Registered Events
 
                 <!-- Modal toggle -->
                 <div class="flex">
-                <button style="display: none;" data-modal-target="default-modal" data-modal-toggle="default-modal"
+                <button data-modal-target="modal_{{ p.event.name }}" data-modal-toggle="modal_{{ p.event.name }}"
                     class="mr-2 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     type="button">
                     View Teammates
                 </button>
                 {% if p.isCaptain and not p.team.reference_attatchment %}
-                <!-- Modal toggle to upload file -->
-                <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
-                    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button">
-                    Upload File
-                </button>
+                    {% if p.event.name == 'Masterchef' %}
+                        <a href="https://drive.google.com/drive/folders/1cdqjEVxYxH14dL0uqNH7rxdgIEsOuW6A?usp=sharing"
+                        class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        target="_blank"
+                        >
+                            Upload File
+                        </a>
+                    {% else %}
+                    <!-- Modal toggle to upload file -->
+                    <button data-modal-target="authentication-modal_{{ p.event.name }}" data-modal-toggle="authentication-modal_{{ p.event.name }}"
+                        class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        type="button">
+                        Upload File
+                    </button>
+                    {% endif %}
                 {% endif %}
                 </div>
 
                 <!-- Main modal -->
-                <div style="display: none;" id="default-modal" tabindex="-1" aria-hidden="true"
+                <div id="modal_{{ p.event.name }}" tabindex="-1" aria-hidden="true"
                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative p-4 w-full max-w-2xl max-h-full">
                         <!-- Modal content -->
@@ -248,7 +98,7 @@ Registered Events
                                 </h3>
                                 <button type="button"
                                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                    data-modal-hide="default-modal">
+                                    data-modal-hide="modal_{{ p.event.name }}">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 14 14">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -259,30 +109,14 @@ Registered Events
                             </div>
                             <!-- Modal body -->
                             <div class="p-4 md:p-5 space-y-4">
-                                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                        <tr>
-                                            <th scope="col" class="px-6 py-3">
-                                                Name
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Email
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for teammate in p.team.participant_set.all %}
-                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ teammate.name.title }}
-                                            </th>
-                                            <td class="px-6 py-4">
-                                                {{ teammate.email }}
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                            <h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Team Name: {{ p.team.visible_name }}</h2>
+                            {% with p.team.teammates|split:"," as names %}
+                            <ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400">
+                                {% for name in names %}
+                                    <li>{{ name.title }}</li>
+                                    {% endfor %}
+                            </ul>
+                            {% endwith %}
                             </div>
                         </div>
                     </div>
@@ -290,7 +124,7 @@ Registered Events
 
                 {% if p.isCaptain and not p.team.reference_attatchment %}
                 <!-- Main modal to upload file -->
-                <div id="authentication-modal" tabindex="-1" aria-hidden="true"
+                <div id="authentication-modal_{{ p.event.name }}" tabindex="-1" aria-hidden="true"
                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative p-4 w-full max-w-md max-h-full">
                         <!-- Modal content -->
@@ -302,7 +136,7 @@ Registered Events
                                 </h3>
                                 <button type="button"
                                     class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                    data-modal-hide="authentication-modal">
+                                    data-modal-hide="authentication-modal_{{ p.event.name }}">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                         viewBox="0 0 14 14">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -318,10 +152,16 @@ Registered Events
                                     <input type="hidden" name="team_id" value="{{ p.team.id }}">
                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload
                                         file</label>
-                                    <input required
-                                        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                        name="fileUpload" id="file_input" type="file" accept="audio/*">
-                                    <button type="submit"
+                                    {% if p.event.name == 'Canvas' %}
+                                        <input required
+                                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                            name="fileUpload" id="file_input" type="file">
+                                    {% else %}
+                                        <input required
+                                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                            name="fileUpload" id="file_input" type="file" accept="audio/*">
+                                    {% endif %}
+                                        <button type="submit"
                                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Upload</button>
                                 </form>
                             </div>

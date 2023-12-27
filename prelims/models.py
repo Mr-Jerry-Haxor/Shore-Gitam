@@ -40,6 +40,7 @@ class Team(models.Model):
     reference_attatchment = models.FileField(
         upload_to="prelims_files/", null=True, blank=True
     )
+    teammates = models.TextField(null=False, blank=True, max_length=5000)
 
     def __str__(self):
         return self.visible_name

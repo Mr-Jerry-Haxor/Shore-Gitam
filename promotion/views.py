@@ -33,10 +33,8 @@ def bgmi_player(request):
             messages.success(request, "Registration successful")
         except IntegrityError as e:
             # Catch the specific IntegrityError for unique constraint failure
-            if 'UNIQUE constraint failed' in str(e):
-                # Pass the error message to the template
-                messages.error(request, "Email already exists. Please use a different email")
-                return render(request, 'bgmireg.html')
+            messages.error(request, "Email already exists. Please use a different email")
+            return render(request, 'bgmireg.html')
 
         # Return a success message as JSON response
         # return JsonResponse({'message': 'Player created successfully'}, status=201)

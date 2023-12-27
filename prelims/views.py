@@ -22,20 +22,6 @@ def registered_events(request):
     email = request.user.email
     context = {}
     participant = Participant.objects.filter(email=email)
-    data = {}
-    events = []
-    for i in participant:
-        events.append(i.event.name)
-    
-    for event in events:
-        tempEvent = Event.objects.get(name=event)
-        data[event] = {
-            "name": [], "emails": []
-        }
-
-    for p in participant:
-        team = p.team
-        setattr(p, "team", team)
 
     context["participant"] = participant
 
@@ -60,6 +46,7 @@ def register(request, event_name):
 
     context["event"] = event
     context["team_size"] = range(2, event.min_team_size + 1)
+    teammates = ""
     if request.method == "POST":
         visible_team_name = request.POST.get("team_name")
         captain_name = request.POST.get("name_1")
@@ -69,7 +56,7 @@ def register(request, event_name):
         captain_campus = request.POST.get("campus_1")
 
         if request.user.email != captain_email:
-            context["error"] = "You can only register with your email"
+            messages.error(request, "You can only register with your email")
             return render(request, "prelims_register.html", context) 
 
         if Participant.objects.filter(
@@ -115,10 +102,12 @@ def register(request, event_name):
                         isCaptain=True,
                     )
                     captain.save()
+                    teammates += f"{captain_name}, "
                 except IntegrityError:
                     messages.error(
                         request, "You have already registered for this event"
                     )
+                    team.delete()
                     return render(request, "prelims_register.html", context)
 
                 max_team_size = int(event.max_team_size)
@@ -131,12 +120,13 @@ def register(request, event_name):
                         campus = request.POST.get(f"campus_{i}")
 
                         if Participant.objects.filter(
-                            registration_number=regnum, event=event
+                            email=email, event=event
                         ).exists():
                             messages.error(
                                 request,
-                                f"Participant with registration number {regnum} have already registered for {event.name}",
+                                f"Participant with email {email} and registration number {regnum} have already registered for {event.name}",
                             )
+                            team.delete()
                             return render(
                                 request, "prelims_register.html", context
                             )
@@ -155,7 +145,6 @@ def register(request, event_name):
                             )
 
                         if len(phone) != 10 or not phone.isdigit():
-                            # context["error"] = "Invalid Phone Number"
                             messages.error(request, "Invalid Phone Number")
                             return render(
                                 request, "prelims_register.html", context
@@ -173,16 +162,20 @@ def register(request, event_name):
                                 isCaptain=False,
                             )
                             participant.save()
+                            teammates += f"{name}, "
                         except IntegrityError:
                             messages.error(
                                 request,
                                 f"Participant with registration number {regnum} have already registered for {event.name}",
                             )
+                            team.delete()
                             return render(
                                 request, "prelims_register.html", context
                             )
                     else:
                         break
+                team.teammates = teammates
+                team.save()
         except IntegrityError:
             messages.error(request, "Team Name already exists")
             return render(request, "prelims_register.html", context)
