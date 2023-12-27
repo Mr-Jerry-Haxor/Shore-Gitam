@@ -26,6 +26,8 @@ urlpatterns = [
     path('coreteam/', include('coreteam.urls')),
     path('shore23/' , include('shore23.urls')),
     path('hospitality/' , include('hospitality.urls')),
+    path('prelims/', include('prelims.urls')),
+    path('preshore/',include('promotion.urls')),
 ]
 
 

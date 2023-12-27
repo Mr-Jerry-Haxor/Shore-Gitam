@@ -1,0 +1,303 @@
+{% extends 'prelims_base.html' %} {% load static %} {% block title %} Register
+{% endblock %} {% block head %}
+<style>
+    body {
+        background-color: black;
+    }
+
+    .title {
+        font-size: 40px;
+        font-family: Helvetica;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+    }
+
+    .form-title {
+        font-size: 20px;
+        font-family: Helvetica;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 1);
+        margin-bottom: 1rem;
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+    }
+
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    body {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+</style>
+{% endblock %} {% block body %} {% include 'messages.html' %}
+<div class="h-screen flex items-center justify-center dark">
+    <div style="height: 40rem"
+        class="overflow-y-scroll container mx-auto max-w-2xl p-6 border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+        <h1 class="text-center title font-bold mb-5">
+            Registration for {{ event.name }}
+        </h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-6">
+                <label for="teamname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Team
+                    Name</label>
+                <input type="text" name="team_name" id="teamname"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Enter team name" required />
+            </div>
+            <!-- Player 1 -->
+            <h1 class="form-title">Participant 1 (Leader)</h1>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                    <input type="text" id="name" name="name_1"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Enter name" required />
+                </div>
+                <div>
+                    <label for="email"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gitam Mail ID</label>
+                    <input type="email" id="email" name="email_1"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Enter email" required />
+                </div>
+            </div>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
+                        Number</label>
+                    <input type="number" id="phone" name="phone_1"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Enter contact number" required />
+                </div>
+                <div>
+                    <label for="regno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Registration
+                        Number</label>
+                    <input type="text" id="regno" name="regnum_1"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Enter Registration Number" required />
+                </div>
+            </div>
+            <div class="mb-6">
+                <div>
+                    <label for="campus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                        Campus</label>
+                    <select id="campus" name="campus_1"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="gitam_vzg">Vizag</option>
+                        <option value="gitam_hyd">Hyderabad</option>
+                        <option value="gitam_blr">Benguluru</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Other players -->
+            {% for i in team_size %}
+            <h1 class="form-title">Participant {{ i }}</h1>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                    <input type="text" id="name" name="name_{{ i }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Enter name" required />
+                </div>
+                <div>
+                    <label for="email"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gitam Mail ID</label>
+                    <input type="email" id="email" name="email_{{ i }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Enter email" required />
+                </div>
+            </div>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
+                        Number</label>
+                    <input type="number" id="phone" name="phone_{{ i }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Enter contact number" required />
+                </div>
+                <div>
+                    <label for="regno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Registration
+                        Number</label>
+                    <input type="text" id="regno" name="regnum_{{ i }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Enter Registration Number" required />
+                </div>
+            </div>
+            <div class="mb-6">
+                <div>
+                    <label for="campus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
+                        Campus</label>
+                    <select id="campus" name="campus_{{ i }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="gitam_vzg">Vizag</option>
+                        <option value="gitam_hyd">Hyderabad</option>
+                        <option value="gitam_blr">Benguluru</option>
+                    </select>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div id="additionalPlayers"></div>
+            <button type="button" onclick="addPlayer()"
+                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                Add Participant
+            </button>
+            <button type="submit"
+                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                Register
+            </button>
+        </form>
+    </div>
+</div>
+<script>
+    let minParticipants = {{ event.min_team_size }};
+    let participantCount = {{ event.min_team_size }};
+    let maxParticipants = {{ event.max_team_size }};
+    function addPlayer() {
+        const container = document.getElementById("additionalPlayers");
+
+        if (participantCount < maxParticipants) {
+            participantCount++;
+            const playerDiv = document.createElement("div");
+            playerDiv.classList.add("player-section", "mb-6");
+
+            const playerTitle = document.createElement("h1");
+            playerTitle.classList.add("form-title");
+            playerTitle.textContent = `Participant ${participantCount}`;
+
+            const nameDiv = document.createElement("div");
+            nameDiv.classList.add("grid", "gap-6", "mb-6", "md:grid-cols-2");
+            nameDiv.innerHTML = `
+            <div>
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Name
+                </label>
+                <input name="name_${participantCount}" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter name" required />
+            </div>
+            <div>
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Gitam Mail ID
+                </label>
+                <input type="email" name="email_${participantCount}" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter email" required />
+            </div>
+        `;
+
+            const contactDiv = document.createElement("div");
+            contactDiv.classList.add("grid", "gap-6", "mb-6", "md:grid-cols-2");
+            contactDiv.innerHTML = `
+            <div>
+                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Contact Number
+                </label>
+                <input type="number" name="phone_${participantCount}" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter contact number" required />
+            </div>
+            <div>
+                <label for="regno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Registration Number
+                </label>
+                <input type="text" name="regnum_${participantCount}" id="regno" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter Registration Number" required />
+            </div>
+        `;
+
+            const campusDiv = document.createElement("div");
+            campusDiv.classList.add("mb-6");
+            campusDiv.innerHTML = `
+            <div>
+                <label for="campus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Select Campus
+                </label>
+                <select id="campus" name="campus_${participantCount}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="gitam_vzg">Vizag</option>
+                    <option value="gitam_hyd">Hyderabad</option>
+                    <option value="gitam_blr">Benguluru</option>
+                </select>
+            </div>
+        `;
+
+            const removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.classList.add(
+                "text-white",
+                "bg-gradient-to-r",
+                "from-red-400",
+                "via-red-500",
+                "to-red-600",
+                "hover:bg-gradient-to-br",
+                "focus:ring-4",
+                "focus:outline-none",
+                "focus:ring-red-300",
+                "dark:focus:ring-red-800",
+                "font-medium",
+                "rounded-lg",
+                "text-sm",
+                "px-5",
+                "py-2.5",
+                "text-center",
+                "me-2",
+                "mb-2"
+            );
+            removeButton.textContent = "Remove Player";
+            removeButton.onclick = function () {
+                container.removeChild(playerDiv);
+                updatePlayerTitles();
+                participantCount--;
+            };
+
+            playerDiv.appendChild(playerTitle);
+            playerDiv.appendChild(nameDiv);
+            playerDiv.appendChild(contactDiv);
+            playerDiv.appendChild(campusDiv);
+            playerDiv.appendChild(removeButton);
+
+            container.appendChild(playerDiv);
+            updatePlayerTitles();
+        } else {
+            alert(`Maximum number of players reached (${maxParticipants})`);
+            return;
+        }
+    }
+
+    function updatePlayerTitles() {
+        const container = document.getElementById("additionalPlayers");
+        const playerSections = container.querySelectorAll(".player-section");
+
+        playerSections.forEach((player, index) => {
+            const title = player.querySelector(".form-title");
+            title.textContent = `Participant ${index + minParticipants + 1}`;
+        });
+
+        const nameInputs = container.querySelectorAll('[id^="name"]');
+        const emailInputs = container.querySelectorAll('[id^="email"]');
+        const phoneInputs = container.querySelectorAll('[id^="phone"]');
+        const regNumInputs = container.querySelectorAll('[id^="regno"]');
+        const campusInputs = container.querySelectorAll('[id^="campus"]');
+
+        nameInputs.forEach((input, index) => {
+            input.name = `name_${index + minParticipants +  1}`;
+        });
+
+        emailInputs.forEach((input, index) => {
+            input.name = `email_${index + minParticipants + 1}`;
+        });
+
+        phoneInputs.forEach((input, index) => {
+            input.name = `phone_${index + minParticipants + 1}`;
+        });
+
+        regNumInputs.forEach((input, index) => {
+            input.name = `regnum_${index + minParticipants + 1}`;
+        });
+
+        campusInputs.forEach((input, index) => {
+            input.name = `campus_${index + minParticipants + 1}`;
+        });
+    }
+</script>
+{% endblock %}

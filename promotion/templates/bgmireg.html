@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <title>Shore'24 - BGMI </title>
+  </head>
+  <body>
+    <div class="h-screen flex items-center justify-center">
+      
+      <div
+        class="container mx-auto max-w-2xl p-6 bg-white border border-gray-200 rounded-lg shadow-lg"
+      > 
+      {% if messages %}
+      {% for message in messages %}
+      <div class="p-4 mb-4 text-sm rounded-lg {% if message.tags == 'info' %}text-blue-800 bg-blue-50{% elif message.tags == 'error' %}text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400{% elif message.tags == 'success' %}text-green-800 bg-green-50{% endif %}"
+          role="alert">
+          <span class="font-medium">{{ message.tags.capitalize }}</span> : {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+        <h1 class="text-center text-lg font-bold mb-5">BGMI Battel royal Player Registration</h1>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label
+                for="Name"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="Name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Name"
+                name="Name"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="userid"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >BGMI User ID</label
+              >
+              <input
+                type="number"
+                id="userid"
+                name="userid"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter User ID"
+                required
+              />
+            </div>
+          </div>
+          <div class="mb-6">
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Gitam Email address</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter Email"
+              required
+            />
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label
+                for="regno"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Registaration Number</label
+              >
+              <input
+                type="text"
+                id="regno"
+                name="regno"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Reg No"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="yearofstudy"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Year of Study</label
+              >
+              <input
+                type="tel"
+                id="yearofstudy"
+                name="yearofstudy"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Year of Study"
+                required
+              />
+            </div>
+          </div>
+          <div class="mb-6">
+            <div>
+              <label
+                for="campus"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Select Campus</label
+              >
+              <select
+                id="campus"
+                name="campus"
+                required
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option value="">Choose Campus</option>
+                <option value="vizag">Vizag</option>
+                <option value="hyderabad">Hyderabad</option>
+                <option value="benguluru">Benguluru</option>
+              </select>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
