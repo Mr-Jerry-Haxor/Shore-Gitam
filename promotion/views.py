@@ -30,6 +30,7 @@ def bgmi_player(request):
                 campus=campus
             )
             new_player.save()
+            messages.success(request, "Registration successful")
         except IntegrityError as e:
             # Catch the specific IntegrityError for unique constraint failure
             if 'UNIQUE constraint failed' in str(e):
