@@ -7,6 +7,8 @@ from django.contrib import messages
 
 @require_http_methods(["GET", "POST"])
 def bgmi_player(request):
+    if True:
+        return render(request,'bgmiclose.html')
     if request.method == 'GET':
         # Render the form template for GET requests
         return render(request, 'bgmireg.html')  # Replace 'player_registration.html' with your template file
