@@ -4,7 +4,7 @@ from django.shortcuts import render , HttpResponse
 
 
 def test(request):
-    return render(request, 'shore24_home.html')
+    return render(request, 'SHORE24_home.html')
 
 def index(request):
     return render(request, 'index.html')
