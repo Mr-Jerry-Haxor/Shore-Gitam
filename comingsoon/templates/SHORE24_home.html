@@ -947,6 +947,7 @@
       #text {
         color: white;
         padding-top: 1rem;
+        text-align: justify;
       }
 
       #culture-text,
@@ -1300,11 +1301,74 @@
       width: 40vw;
       height: 50%;
       z-index: 1;
-    }
+      }
+      .popup {
+        background-image: url("{% static 'prelims.jpg' %}");
+        width: 550px;
+        height: 300px;
+        padding: 30px 40px;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        border-radius: 8px;
+        font-family: Helvetica;
+        display: none;
+        text-align: center;
+        background-position:center;
+        background-size: cover;
+        z-index: 20;
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(180, 180, 180, 0.17);
+        backdrop-filter: blur(8px);
+        z-index: 15;
+        display: none;
+      }
+      .popup button {
+        display: block;
+        margin: 0 0 20px auto;
+        background-color: transparent;
+        font-size: 30px;
+        color: #c5c5c5;
+        border: none;
+        outline: none;
+        cursor: pointer;
+      }
+      .popup p {
+        font-size: 14px;
+        color: #ffffff;
+        text-align: justify;
+        margin: 20px 0;
+        line-height: 25px;
+      }
+      @media only screen and (max-width: 600px) {
+        .popup {
+          width: 90%; /* Adjust width for smaller screens */
+          height: 50%; /* Allow height to adjust based on content */
+          padding: 20px;
+          top: 50%;
+        }
+
+        .popup button {
+          font-size: 24px; /* Adjust font size for smaller screens */
+        }
+
+        .popup p {
+          font-size: 12px; /* Adjust font size for smaller screens */
+          margin: 10px 0; /* Adjust margin for smaller screens */
+        }
+      }
     </style>
   </head>
 
-  <body style="margin-right:-2rem">
+  <body>
+    <div class="overlay"></div>
     <div id="activator">
       <span class="menu-icon"></span>
     </div>
@@ -1321,14 +1385,25 @@
       <div class="video-wrap">
         <video loop muted autoplay playsinline class="custom-video" poster="">
           <source
-            src="https://shore.gitam.edu/home/ubuntuserver/Shore24/static/shore23_glimpse.mp4"
+            src="{% static 'shore23_glimpse.mp4' %}"
             type="video/mp4"
           />
           Your browser does not support the video tag.
         </video>
-        {% include 'countdown.html' %}
+        
       </div>
     </section>
+    <div class="popup">
+      <button id="close" style="font-size:3rem">&times;</button>
+      <h2 class="title" style="color: #ffffff">Enroll for Prelims</h2>
+      <br />
+      <br />
+      <a
+        href="https://shore.gitam.edu/prelims"
+        class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        >Click here to Register</a
+      >
+    </div>
     <div class="fixed-gif-container">
       <img src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706968/shore%2024/shore24%20homepage/Gif_itqoer.gif" alt="Your GIF" />
     </div>
@@ -1336,7 +1411,7 @@
       <div id="about-part1">
         <div id="about-title">ABOUT SHORE'24</div>
         <div id="about-text">
-          <p>
+          <p style="text-align:justify;padding-top:1.3rem">
             Welcome to SHORE Fest - GITAM'S annual fest<br>
  An otherworldly experience with a kaleidoscope of cultural delicacies laced with music, art , food, sports and everything in between. With a rich history from years' worth of people before us,SHORE 2024 is a hot pot of art and athleticism. The beautiful yet hustling shores of Vizag inspire and embody the spirit of Shore, just as the calming briny breezes and the crashing waves illustrate the youthful energy of Gitamites. Like the namesake of the fest “SHORE” suggests, lets make the “SOUND OF JOY”, and welcome the new year with a blast.
           </p>
@@ -1344,7 +1419,7 @@
           <br />
 
           <div class="shoredates" style="text-shadow: 0 0 10px rgb(255, 0, 0);">
-            <h1>2<sup>nd</sup>, 3<sup>rd</sup> & 4<sup>th</sup> FEBRUARY, 2024</h1>
+            <h1 style="font-weight:900;font-size:1.6rem;padding-bottom:2rem">2<sup>nd</sup>, 3<sup>rd</sup> & 4<sup>th</sup> FEBRUARY, 2024</h1>
           </div>
 
           <div class="mt-5" style="display:none">
@@ -1733,7 +1808,7 @@
       </div>
     </div>
 
-    <div class="h-screen flex items-center justify-center dark">
+    <div class="h-screen flex items-center justify-center dark" style="display:none">
       <div
         class="w-full max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 shadow-lime-700 box shadow"
       >
@@ -2019,6 +2094,18 @@
       }
 
       items.forEach((item) => item.addEventListener("click", toggleAccordion));
+
+      window.addEventListener("load", function () {
+        setTimeout(function open(event) {
+          document.querySelector(".popup").style.display = "block";
+          document.querySelector(".overlay").style.display = "block";
+        }, 1000);
+      });
+
+      document.querySelector("#close").addEventListener("click", function () {
+      document.querySelector(".popup").style.display = "none";
+      document.querySelector(".overlay").style.display = "none";
+      });
     </script>
   </body>
 </html>

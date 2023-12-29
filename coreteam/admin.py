@@ -3,6 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Permission
 from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
@@ -11,7 +12,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal Info', {'fields': ('first_name', 'last_name', 'email')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory', 'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory', 'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff' , 'groups' ,'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (

@@ -4,6 +4,7 @@ from django.shortcuts import render , HttpResponse
 
 
 def test(request):
+    # return render(request, 'countdown.html')
     return render(request, 'SHORE24_home.html')
 
 def index(request):
