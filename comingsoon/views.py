@@ -8,4 +8,4 @@ def test(request):
     return render(request, 'SHORE24_home.html')
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'SHORE24_home.html')
