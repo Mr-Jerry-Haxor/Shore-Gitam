@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'shore23',
     'hospitality',
     'prelims',
-    'promotion'
+    'promotion',
+    'payments',
     # 'sports',
 ]
 
