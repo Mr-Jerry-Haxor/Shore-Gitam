@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'hospitality',
     'prelims',
     'promotion'
+    # 'sports',
 ]
 
 MIDDLEWARE = [
@@ -97,15 +98,26 @@ WSGI_APPLICATION = 'shore.wsgi.application'
 # }
 
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         'NAME' : 'shoredb',
+#         'USER' : 'shorepostgres',
+#         'PASSWORD' : 'shore@123$',
+#         'HOST' : 'localhost',
+#         'PORT' : 5432,
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        'NAME' : 'shoredb',
-        'USER' : 'shorepostgres',
-        'PASSWORD' : 'shore@123$',
-        'HOST' : 'localhost',
-        'PORT' : 5432,
-    }
+'default': {
+'ENGINE': 'django.db.backends.mysql',
+'NAME': 'shoredb',
+'USER': 'shoremysql',
+'PASSWORD': 'shore@123$',
+'HOST': '192.168.63.153',
+'PORT' : '3306',
+}
 }
 
 # Password validation
