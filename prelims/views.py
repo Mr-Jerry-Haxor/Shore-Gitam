@@ -74,13 +74,6 @@ def view_team(request, team_hash):
         messages.error(request, "You are not authorized to view this page")
         return redirect("culturals_home")
 
-def add_team_hash(request):
-    # temp view to add team hash to existing teams
-    teams = Team.objects.all()
-    for team in teams:
-        team.team_hash = generate_md5(team.visible_name + str(team.registered_at))
-        team.save()
-    return HttpResponse("Done")
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def register(request, event_name):
