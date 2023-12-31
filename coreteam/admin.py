@@ -7,7 +7,7 @@ from django.contrib.auth.models import Permission
 from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory' ,  'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')
+    list_display = ('username', 'email','first_name', 'last_name','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory' ,  'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')
     list_filter = ('president' , 'vice_president' ,'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' ,  'advisory',  'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
