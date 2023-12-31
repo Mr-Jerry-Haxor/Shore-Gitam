@@ -1,0 +1,103 @@
+{% extends 'prelims_base_admin.html' %}
+{% load static %}
+{% block title %}
+View Team
+{% endblock title %}
+{% block body %}
+{% include 'messages.html' %}
+<div class="h-screen flex items-center justify-center">
+<div
+    class="block max-w-4xl mx-auto p-6 bg-white border border-gray-300 rounded-lg shadow hover:bg-gray-100 ">
+   
+    <h2 class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900">
+       Team Name: {{ team.visible_name }}
+    </h2>
+    <br>
+    <div class="grid grid-cols-2 ">
+    <div class="p-4">
+        <h2 class="text-xl font-bold tracking-tight text-gray-900">Registered Event: {{ team.event.name }}</h2>
+        <h2 class="text-xl font-bold tracking-tight text-gray-900">Registered Date: <br>{{ team.registered_at }}</h2>
+    
+</div>
+    <div class="p-4">
+        <h2 class="text-4xl font-bold tracking-tight text-gray-900">Captain Details</h2>
+        <br>
+<ul class="max-w-md space-y-1 font-bold tracking-tight text-gray-900 list-disc list-inside">
+    <li>
+        {{ captain.name }}
+    </li>
+    <li>
+        {{ captain.email }}
+    </li>
+    <li>
+        {{ captain.phone_number }}
+    </li>
+    <li>
+        {{ captain.registration_number }}
+    </li>
+    <li>
+        {% if captain.campus == 'gitam_vzg' %}
+        GITAM Visakahpatnam
+        {% elif captain.campus == 'gitam_hyd' %}
+        GITAM Hyderabad
+        {% elif captain.campus == 'gitam_blr' %}
+        GITAM Bangalore
+        {% endif %}
+    </li>
+</ul>
+        
+</div>
+</div>
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Email
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Phone Number
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Registration Number
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Campus
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for participant in participants %}
+            <tr class="bg-white border-black">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                    {{ participant.name }}
+                </th>
+                <td class="px-6 py-4">
+                    {{ participant.email }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ participant.phone_number }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ participant.registration_number }}
+                </td>
+                <td class="px-6 py-4">
+                    {% if participant.campus == 'gitam_vzg' %}
+                    GITAM Visakahpatnam
+                    {% elif participant.campus == 'gitam_hyd' %}
+                    GITAM Hyderabad
+                    {% elif participant.campus == 'gitam_blr' %}
+                    GITAM Bangalore
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+{% endblock %}

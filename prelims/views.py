@@ -1,3 +1,5 @@
+import hashlib
+from django.http import HttpResponse
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.shortcuts import render
@@ -8,6 +10,10 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Event, Team, Participant
 
+
+def generate_md5(user_string):
+    hashed_string = hashlib.md5(user_string.encode("UTF-8"))
+    return hashed_string.hexdigest()
 
 def culturals_home(request):
     """ home page for culturals """
@@ -32,6 +38,49 @@ def registered_events(request):
         team.reference_attatchment.save(uploadedFile.name, uploadedFile, save=True)
 
     return render(request, "prelims_registered_events.html", context)
+
+@login_required(login_url="/auth/login/google-oauth2/")
+def view_teams(request, event_name):
+    if request.user.events_cultural:
+        context = {}
+        events = [event.name for event in Event.objects.all()]
+        context["events"] = events
+        event = Event.objects.get(name=event_name)
+        teams = Team.objects.filter(event=event)
+
+        context["event"] = event
+        context["teams"] = teams
+
+        return render(request, "prelims_view_teams.html", context)
+    else:
+        messages.error(request, "You are not authorized to view this page")
+        return redirect("culturals_home")
+
+@login_required(login_url="/auth/login/google-oauth2/")
+def view_team(request, team_hash):
+    if request.user.events_cultural:
+        context = {}
+        events = [event.name for event in Event.objects.all()]
+        context["events"] = events
+        team = Team.objects.get(team_hash=team_hash)
+        participants = Participant.objects.filter(team=team)
+
+        context["captain"] = Participant.objects.get(team=team, isCaptain=True)
+        context["team"] = team
+        context["participants"] = participants
+
+        return render(request, "prelims_view_team.html", context)
+    else:
+        messages.error(request, "You are not authorized to view this page")
+        return redirect("culturals_home")
+
+def add_team_hash(request):
+    # temp view to add team hash to existing teams
+    teams = Team.objects.all()
+    for team in teams:
+        team.team_hash = generate_md5(team.visible_name + str(team.registered_at))
+        team.save()
+    return HttpResponse("Done")
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def register(request, event_name):

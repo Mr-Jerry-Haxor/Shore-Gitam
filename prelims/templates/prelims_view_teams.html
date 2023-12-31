@@ -1,0 +1,52 @@
+{% extends 'prelims_base_admin.html' %}
+{% block title %}
+View Teams
+{% endblock title %}
+{% block body %}
+<h2 class="text-4xl text-center p-3">Registered Teams for {{ event.name }}</h2>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Team name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Event
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Registered Time
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    View team details
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Uploaded File
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+            <tr class="bg-white border-b">
+                <td class="px-6 py-4">
+                    {{ team.visible_name }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ team.event.name }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ team.registered_at }}
+                </td>
+                <td class="px-6 py-4">
+                    <a href="{% url 'prelims_view_team' team.team_hash %}" class="font-medium text-blue-600 hover:underline">View team details</a>
+                </td>
+                <td class="px-6 py-4">
+                    <a href="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/{{ team.reference_attatchment }}" target="_blank" class="font-medium text-blue-600 hover:underline">Download File</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock body %}

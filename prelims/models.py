@@ -1,3 +1,4 @@
+import hashlib
 from django.db import models
 
 event_choices = (
@@ -10,6 +11,9 @@ campus_choices = (
     ("gitam_blr", "GITAM Bangalore"),
 )
 
+def generate_md5(user_string):
+    hashed_string = hashlib.md5(user_string.encode("UTF-8"))
+    return hashed_string.hexdigest()
 
 class Event(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -35,6 +39,7 @@ class Team(models.Model):
         max_length=100, unique=True, null=False, blank=False
     )
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    team_hash = models.CharField(max_length=100, unique=True, null=True, blank=True)
     captain_email = models.EmailField(null=False, blank=False)
     registered_at = models.DateTimeField(auto_now=True)
     reference_attatchment = models.FileField(
@@ -44,6 +49,10 @@ class Team(models.Model):
 
     def __str__(self):
         return self.visible_name
+
+    def save(self, *args, **kwargs):
+        self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
+        super().save(*args, **kwargs)
 
 
 class Participant(models.Model):
