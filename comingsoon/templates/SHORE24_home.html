@@ -8,6 +8,7 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="Shore GITAM" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -34,7 +35,6 @@
       body {
         font-family: "Outfit";
         background-color: #000000;
-        margin-right: -2rem;
         overflow-x: hidden;
       }
       #activator {
@@ -710,6 +710,12 @@
           width: 23rem !important;
           box-sizing: border-box;
         }
+        .accordion .accordion-content p {
+          font-size: 10px !important;
+          font-weight: 300;
+          margin: 2em 0;
+          color: #fff;
+        }
       }
 
       @media screen and (max-width: 320px) {
@@ -741,6 +747,16 @@
           padding: 4rem;
           width: 20rem !important;
           box-sizing: border-box;
+        }
+        .accordion button .icon {
+          display: inline-block;
+          position: absolute;
+          top: 18px;
+          right: -25px !important;
+          width: 22px;
+          height: 22px;
+          border: 1px solid;
+          border-radius: 22px;
         }
       }
       .container1 {
@@ -793,6 +809,7 @@
         height: 22px;
         border: 1px solid;
         border-radius: 22px;
+        z-index: 10;
       }
       .accordion button .icon::before {
         display: block;
@@ -1145,10 +1162,16 @@
           0 0
         );
       }
+      @media only screen and (max-width: 600px) {
+        .shadow:before {
+          display: none;
+        }
+      }
       .footer {
         background-image: url(https://res.cloudinary.com/jerryhaxor/image/upload/v1703706679/shore%2024/shore24%20homepage/footer_yzv6yc.png);
         background-size: cover;
       }
+      
 
       #social-media-title {
         margin-bottom: 1rem;
@@ -1295,30 +1318,16 @@
         }
       }
       .fixed-gif-container {
-      position: fixed;
-      bottom: 3rem;
-      right: 0;
-      width: 40vw;
-      height: 50%;
-      z-index: 1;
-      }
-      .popup {
-        background-image: url("{% static 'prelims2.png' %}");
-        width: 550px;
-        height: 300px;
-        padding: 30px 40px;
         position: fixed;
-        transform: translate(-50%, -50%);
-        left: 50%;
-        top: 50%;
-        border-radius: 8px;
-        font-family: Helvetica;
-        display: none;
-        text-align: center;
-        background-position:center;
-        background-size: cover;
-        z-index: 20;
+        bottom: 0rem;
+        right: 0;
+        width: 40%;
+        height: 50%;
+        z-index: 1;
+        user-select: none; 
+    -webkit-user-drag: none;
       }
+      /* Popup */
       .overlay {
         position: fixed;
         top: 0;
@@ -1330,9 +1339,45 @@
         z-index: 15;
         display: none;
       }
-      .popup button {
+      .popup {
+        width: 40vw;
+        height: auto;
+        padding: 0;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        border-radius: 8px;
+        font-family: Helvetica;
+        display: none;
+        text-align: center;
+        z-index: 20;
+      }
+
+      .image-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+      }
+
+      .image-container img {
+        width: 100%;
+        height: auto;
         display: block;
-        margin: 0 0 20px auto;
+      }
+
+      .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #ffffff;
+      }
+
+      .popup #close {
+        display: block;
+        margin: 0 0 10px auto;
         background-color: transparent;
         font-size: 30px;
         color: #c5c5c5;
@@ -1340,28 +1385,38 @@
         outline: none;
         cursor: pointer;
       }
-      .popup p {
-        font-size: 14px;
-        color: #ffffff;
-        text-align: justify;
-        margin: 20px 0;
-        line-height: 25px;
+
+      .popup .title {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
+
+      .popup .description {
+        font-size: 14px;
+        margin: 10px 0;
+      }
+
       @media only screen and (max-width: 600px) {
         .popup {
-          width: 90%; /* Adjust width for smaller screens */
-          height: 50%; /* Allow height to adjust based on content */
-          padding: 20px;
-          top: 50%;
+          width: 90%;
+          height: auto;
+        }
+
+        .popup .title {
+          font-size: 1.5rem;
+          margin-bottom: 5rem;
         }
 
         .popup button {
-          font-size: 24px; /* Adjust font size for smaller screens */
+          font-size: 10px;
         }
 
-        .popup p {
-          font-size: 12px; /* Adjust font size for smaller screens */
-          margin: 10px 0; /* Adjust margin for smaller screens */
+        .popup .description {
+          font-size: 12px;
+          margin: 5px 0;
         }
       }
     </style>
@@ -1385,7 +1440,7 @@
       <div class="video-wrap">
         <video loop muted autoplay playsinline class="custom-video" poster="">
           <source
-            src="{% static 'shore23_glimpse.mp4' %}"
+            src="{% static 'shore24intro.mp4' %}"
             type="video/mp4"
           />
           Your browser does not support the video tag.
@@ -1394,15 +1449,29 @@
       </div>
     </section>
     <div class="popup">
-      <button id="close" style="font-size:3rem">&times;</button>
-      <h2 class="title" style="color: #ffffff ;text-shadow: 0 0 30px rgb(255, 0, 0);">Enroll for Prelims</h2>
-      <br />
-      <br />
-      <a
-        href="https://shore.gitam.edu/prelims"
-        class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-        >Click here to Register</a
-      >
+      <button id="close" style="font-size: 3rem">&times;</button>
+      <div class="image-container">
+        <img
+          src="https://shore.gitam.edu/home/ubuntuserver/Shore24/static/prelims2.png"
+          alt="Prelims Image"
+        />
+        <div class="content">
+          <h2
+            class="title"
+            style="color: #ffffff; text-shadow: 0 0 30px rgb(255, 0, 0)"
+          >
+            Enroll for Prelims
+          </h2>
+          <a href="https://shore.gitam.edu/prelims" >
+            <button
+              type="button"
+              class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            >
+            Click here to Register
+            </button>
+          </a>
+        </div>
+      </div>
     </div>
     <div class="fixed-gif-container">
       <img src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706968/shore%2024/shore24%20homepage/Gif_itqoer.gif" alt="Your GIF" />
@@ -1607,7 +1676,7 @@
         <div class="dark">
           <center id="new-button-2" style="display:none;">
             <button
-              class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+              class="z-10 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
             >
               <span
                 class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
@@ -1645,7 +1714,7 @@
           <div class="dark">
             <center id="new-button-3" style="display:none;">
               <button
-                class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+                class="z-10 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
               >
                 <span
                   class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
@@ -1672,7 +1741,7 @@
           <center id="new-button-1">
             <div class="dark">
               <button
-                class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
+                class="z-10 relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
               >
                 <span
                   class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0"
