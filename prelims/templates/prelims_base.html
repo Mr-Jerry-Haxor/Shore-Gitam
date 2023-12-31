@@ -171,6 +171,39 @@
                 >Registered Events</a
               >
             </li>
+            {% if request.user.events_cultural %}
+            <li>
+              <a id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Registered Teams <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+              </svg></a>
+              <!-- Dropdown menu -->
+              <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ">
+                  <ul class="py-2 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                    <li>
+                      <a href="{% url 'prelims_view_teams' event_name='Dance' %}" class="block px-4 py-2 hover:bg-gray-100">Dance</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'prelims_view_teams' event_name='Music' %}" class="block px-4 py-2 hover:bg-gray-100">Music</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'prelims_view_teams' event_name='Glamvoyage' %}" class="block px-4 py-2 hover:bg-gray-100">Glam voyage</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'prelims_view_teams' event_name='Nukkadnatak' %}" class="block px-4 py-2 hover:bg-gray-100">Nukkad Natak</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'prelims_view_teams' event_name='Debate' %}" class="block px-4 py-2 hover:bg-gray-100">Debate</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'prelims_view_teams' event_name='Canvas' %}" class="block px-4 py-2 hover:bg-gray-100">Canvas</a>
+                    </li>
+                    <li>
+                      <a href="{% url 'prelims_view_teams' event_name='Masterchef' %}" class="block px-4 py-2 hover:bg-gray-100">Master Chef</a>
+                    </li>
+                  </ul>
+              </div>
+            </li>
+            {% endif %}
             {% if not request.user.is_authenticated %}
             <li>
               <a

@@ -40,9 +40,11 @@ View Teams
                 <td class="px-6 py-4">
                     <a href="{% url 'prelims_view_team' team.team_hash %}" class="font-medium text-blue-600 hover:underline">View team details</a>
                 </td>
+                {% if team.reference_attatchment %}
                 <td class="px-6 py-4">
                     <a href="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/{{ team.reference_attatchment }}" target="_blank" class="font-medium text-blue-600 hover:underline">Download File</a>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>
