@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.conf import settings
-from .models import College, Event, Team, Participants
+from .models import College, Event, Team, Participants, Hackathon, HackathonTeam, HackathonParticipants
 
 
 def send_pass_mail(team_id, event_id):
@@ -38,6 +38,7 @@ def sports_home(request):
     context = {}
     events = Event.objects.filter(event_type="sports")
     context["events"] = events
+    context["title"] = "Sports"
 
     return render(request, "eventspage.html", context)
 
@@ -46,6 +47,7 @@ def culturals_home(request):
     context = {}
     events = Event.objects.filter(event_type="cultural").all()
     context["events"] = events
+    context["title"] = "Culturals"
 
     return render(request, "eventspage.html", context)
 
@@ -54,6 +56,7 @@ def selectCollege(request, sport_name):
     context = {}
     colleges = College.objects.all()
     context["colleges"] = colleges
+    context["sport_name"] = sport_name
 
     if request.method == "POST":
         college_id = request.POST.get("college")
@@ -158,20 +161,21 @@ def addEvent(request):
     return render(request, "addEvent.html", context)
 
 def register(request, sport_name):
-    # should modify code, should include the uploaded endorsement file
     context = {}
     passkey_status = request.session.get("passkey_valid")
     if not passkey_status:
         messages.error(request, "Invalid passkey.")
         return redirect("events:selectCollege", sport_name=sport_name)
     college_name = request.session.get("college_name")
+    if college_name == "Other":
+        context["passkey_not_required"] = True
     college = College.objects.get(name=college_name)
     sport = Event.objects.get(name=sport_name)
     allowed_team_count = sport.no_of_teams
 
     if (Team.objects.filter(college=college, sport=sport).count() >= sport.max_univeristy_teams):
         messages.error(request, f"Max registrations for {sport.name} from {college.name} received")
-        return redirect("events:home")
+        return redirect("events:eventshome")
 
     context["team_size"] = range(2, sport.min_team_size + 1)
     context["sport"] = sport
@@ -212,7 +216,7 @@ def register(request, sport_name):
             if sport.event_type == 'cultural':
                 if Participants.objects.filter(email=captain_email).count() == 2:
                     messages.error(request, f"A participant is allowed to participant atmost in only two culturals. {captain_name} already registered for 2 cultural events.")
-                    return redirect("events:home")
+                    return redirect("events:eventshome")
 
             # phone number length should be 10 and should be digits
             if (
@@ -268,7 +272,7 @@ def register(request, sport_name):
                 if sport.event_type == 'cultural':
                     if Participants.objects.filter(email=email).count() == 2:
                         messages.error(request, f"A participant is allowed to participant atmost in only two culturals. {name} already registered for 2 cultural events.")
-                        return redirect("events:home")
+                        return redirect("events:eventshome")
 
                 # phone number length should be 10 and should be digits
                 if len(phone_number) != 10 or not phone_number.isdigit():
@@ -388,3 +392,33 @@ def view_team(request, team_hash):
     else:
         messages.error(request, "You are not authorized to access this page.")
         return render(request, "index")
+
+
+""" Hackathon Views """
+def hackathon_home(request):
+    context = {}
+    hackathons = Hackathon.objects.all()
+    
+    context["isHackathon"] = True
+    context["events"] = hackathons
+    context["title"] = "Hackathons"
+
+    return render(request, "eventspage.html", context)
+
+
+def select_hackathon_college(request, hackathon_name):
+    context = {}
+    colleges = College.objects.all()
+    context["isHackathon"] = True
+    context["colleges"] = colleges
+    context["hackathon_name"] = hackathon_name
+
+    if request.method == "POST":
+        college_id = request.POST.get("college")
+        college = College.objects.get(college_id=college_id)
+        
+        request.session["college_name"] = college.name
+        request.session["passkey_valid"] = True
+        return redirect("events:hackathon_register", hackathon_name=hackathon_name)
+
+    return render(request, "selectCollege.html", context)

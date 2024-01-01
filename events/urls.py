@@ -14,4 +14,8 @@ urlpatterns = [
     path("registered_sports/", views.registered_sports, name="registered_sports"),
     path("registered_culturals/", views.registered_culturals, name="registered_culturals"),
     path("view_team/<str:team_hash>", views.view_team, name="view_team"),
+
+    # hackathon urls
+    path("hackathon/", views.hackathon_home, name="hackathon_home"),
+    path("hackathon/selectCollege/<str:hackathon_name>", views.select_hackathon_college, name="hackathon_selectCollege"),
 ]

@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from .models import College, Event, Team, Participants
+from .models import College, Event, Team, Participants, Hackathon, HackathonTeam, HackathonParticipants
 from import_export.admin import ImportExportModelAdmin
 
 
@@ -22,3 +22,6 @@ class TeamAdmin(ImportExportModelAdmin):
 class ParticipantsAdmin(ImportExportModelAdmin):
     list_display = ('participant_id', 'name', 'email', 'phone_number', 'accomdation', 'college', 'sport', 'team', 'isCaptain', 'isPaid', 'isGitamite', 'transaction_id')
 
+admin.site.register(Hackathon)
+admin.site.register(HackathonTeam)
+admin.site.register(HackathonParticipants)

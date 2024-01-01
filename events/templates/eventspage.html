@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Shore' 24 Prelims</title>
+    <title>Shore' 24 {{ title }}</title>
     <link rel="icon" type="image/x-icon" href="{% static 'shore_24_clogo.png'%}">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTVGGBL7NF"></script>
@@ -241,20 +241,29 @@
                   <div class="flex items-center mb-4">
                     <input
                       class="checkbox-agree"
-                      id="checkbox-{{ event.name }}"
+                      id="checkbox-{{ forloop.counter }}"
                       type="checkbox"
                       value=""
                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label
-                      for="checkbox-{{ event.name }}"
+                      for="checkbox-{{ forloop.counter }}"
                       class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                       style="color:white"
-                      >I hereby agree to all the terms and conditions </label>
+                      >I hereby agree to all the terms and conditions</label>
                   </div>
                   <br />
                   <center>
-                    <div class="registration-div" id="registration-div-{{ event.name }}" style="display: none;">
+                    <div class="registration-div" id="registration-div-{{ forloop.counter }}" style="display: none;">
+                      {% if isHackathon %}
+                      <a href="{% url 'events:hackathon_selectCollege' event.name %}"
+                        type="button"
+                        id="registerButton"
+                        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                      >
+                        Next
+                      </a>
+                      {% else %}
                       <a href="{% url 'events:selectCollege' event.name %}"
                         type="button"
                         id="registerButton"
@@ -262,6 +271,7 @@
                       >
                         Next
                       </a>
+                      {% endif %}
                     </div>
                   </center>
                 </div>
@@ -278,15 +288,15 @@
     <!-- JS -->
     <script>
       {% for event in events %}
-      var checkbox_{{ event.name }} = document.getElementById('checkbox-{{ event.name }}');
+      var checkbox_{{ forloop.counter }} = document.getElementById('checkbox-{{ forloop.counter }}');
 
-      var registrationDiv_{{ event.name }} = document.getElementById('registration-div-{{ event.name }}');
+      var registrationDiv_{{ forloop.counter }} = document.getElementById('registration-div-{{ forloop.counter }}');
 
-      checkbox_{{ event.name }}.addEventListener('change', function () {
-        if (checkbox_{{ event.name }}.checked) {
-          registrationDiv_{{ event.name }}.style.display = 'block';
+      checkbox_{{ forloop.counter }}.addEventListener('change', function () {
+        if (checkbox_{{ forloop.counter }}.checked) {
+          registrationDiv_{{ forloop.counter }}.style.display = 'block';
         } else {
-          registrationDiv_{{ event.name }}.style.display = 'none';
+          registrationDiv_{{ forloop.counter }}.style.display = 'none';
         }
       })
       {% endfor %}

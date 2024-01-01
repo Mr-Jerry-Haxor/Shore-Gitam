@@ -119,3 +119,77 @@ class Participants(models.Model):
             self.isGitamite = False
 
         super().save(*args, **kwargs)
+
+
+# hackathon model
+hackathon_choices = (
+    ('hackathon', 'hackathon'),
+)
+
+class Hackathon(models.Model):
+    event_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, null=False, blank=False)
+    event_type = models.CharField(max_length=100, null=False, blank=False, choices=hackathon_choices)
+    image = models.ImageField(upload_to=event_file_upload_path, null=True, blank=True)
+    min_team_size = models.IntegerField(null=False, blank=False)
+    max_team_size = models.IntegerField(null=False, blank=False)
+    guidelines = models.TextField(null=True, blank=True)
+    requirements = models.TextField(null=True, blank=True)
+    judiciary = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+# hackathon team
+class HackathonTeam(models.Model):
+    team_id = models.AutoField(primary_key=True)
+    team_name = models.CharField(max_length=100, null=False, blank=False)
+    visible_name = models.CharField(
+        max_length=100, unique=True, null=False, blank=False
+    )
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    hackathon = models.ForeignKey(Hackathon, on_delete=models.CASCADE)
+    isPaid = models.BooleanField(default=False)
+    isQualified = models.BooleanField(default=False)
+    registered_at = models.DateTimeField(default=timezone.now)
+    team_hash = models.CharField(max_length=100, null=True, blank=True)
+    endorsment_file = models.FileField(upload_to=file_upload_path, null=True, blank=True)
+    status = models.CharField(choices=status_choices, default="pending", max_length=10)
+
+
+    def __str__(self):
+        return self.visible_name
+
+    def save(self, *args, **kwargs):
+        # generate team hash using visiblie_name and registered time
+        self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
+        super().save(*args, **kwargs)
+
+
+# hackathon participants
+class HackathonParticipants(models.Model):
+    participant_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, null=False, blank=False)
+    email = models.EmailField(null=False, blank=False, unique=False)
+    phone_number = models.CharField(max_length=10, null=False, blank=False, unique=False)
+    accomdation = models.BooleanField(default=False)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    hackathon = models.ForeignKey(Hackathon, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    isCaptain = models.BooleanField(default=False)
+    isPaid = models.BooleanField(default=False)
+    isGitamite = models.BooleanField(default=False)
+    transaction_id = models.CharField(max_length=100, null=True, blank=True)
+    # nocFile = models.FileField(upload_to="noc/", null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if self.email.endswith("@gitam.in"):
+            self.isGitamite = True
+        else:
+            self.isGitamite = False
+
+        super().save(*args, **kwargs)
