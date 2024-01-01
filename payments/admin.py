@@ -1,7 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 # Register your models here.
-from .models import FestPass, Registrations
+from .models import FestPass
 
 @admin.register(FestPass)
 class FestPassAdmin(ImportExportModelAdmin):
