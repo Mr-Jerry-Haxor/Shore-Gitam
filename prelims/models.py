@@ -51,7 +51,8 @@ class Team(models.Model):
         return self.visible_name
 
     def save(self, *args, **kwargs):
-        self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
+        if not self.pk:
+            self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
         super().save(*args, **kwargs)
 
 

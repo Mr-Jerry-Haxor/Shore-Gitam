@@ -95,35 +95,39 @@
           <ul class="py-2" aria-labelledby="user-menu-button">
             <li>
               <a
-                href="{% url 'culturals_home' %}"
+                href="{% url 'index' %}"
                 class="block px-4 py-2 text-sm text-gray-700 "
-                >Prelims Home</a
+                >Home</a
               >
             </li>
             <li>
               <a
-                href="{% url 'prelims_registered_events' %}"
+                href="{% url 'events:eventshome' %}"
+                class="block px-4 py-2 text-sm text-gray-700 "
+                >Events Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'events:culturals_home' %}"
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >Registered Events</a
+                >Register for Culturals</a
               >
             </li>
-            {% if not request.user.is_authenticated %}
             <li>
               <a
-                href="{% url 'corehome' %}"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                >Sign In</a
+                href="{% url 'events:sports_home' %}"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Register for Sports</a
               >
             </li>
-            {% else %}
             <li>
               <a
-                href="{% url 'logout' %}"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
-                >Logout</a
+                href="{% url 'events:hackathon_home' %}"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Register for Hackathon</a
               >
             </li>
-            {% endif %}
           </ul>
         </div>
       </div>
