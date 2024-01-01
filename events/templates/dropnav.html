@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    {% block head %}
+    {% endblock %}
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <link rel="icon" type="image/x-icon" href="{% static 'shore_24_clogo.png'%}">
+    
+    <script>
+      if (navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
+        var root = document.getElementsByTagName("html")[0];
+        root.setAttribute("class", "ff");
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <style>
+      #shorenav {
+        text-align: center;
+        font-size: 5rem;
+        position: relative;
+
+        font-family: Georgia;
+      }
+      #icon {
+        background: #00000000;
+        color: white;
+        border-radius: inherit;
+        font-size: 2.5rem;
+        z-index: 10;
+      }
+      #user-dropdown {
+        display: none;
+        position: absolute;
+        z-index: 100; /* Ensure the dropdown is on top */
+        background-color: rgb(255, 255, 255); /* Change background color as needed */
+        padding: 10px;
+        /* Other styles for the dropdown menu */
+      }
+
+      #user-dropdown.show {
+        display: block;
+      }
+    </style>
+</head>
+  <nav class="bg-transparent" id="shorenav">
+    <div
+      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 md:pr-6"
+    >
+    <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="{%  static 'shore_24_clogo.png' %}" class="h-16" alt="Flowbite Logo" />
+      <span class="self-center text-2xl font-semibold whitespace-nowrap text-white title">Shore'24</span>
+    </a>
+      <div
+        class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"
+      >
+        <button
+          type="button"
+          class="flex text-sm md:me-0"
+          id="user-menu-button"
+          aria-expanded="false"
+          data-dropdown-toggle="user-dropdown"
+          data-dropdown-placement="bottom"
+        >
+          <i class="material-icons" id="icon">menu</i>
+        </button>
+        <!-- Dropdown menu -->
+        <div
+          class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+          id="user-dropdown"
+        >
+          <ul class="py-2" aria-labelledby="user-menu-button">
+            <li>
+              <a
+                href="{% url 'culturals_home' %}"
+                class="block px-4 py-2 text-sm text-gray-700 "
+                >Prelims Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'prelims_registered_events' %}"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >Registered Events</a
+              >
+            </li>
+            {% if not request.user.is_authenticated %}
+            <li>
+              <a
+                href="{% url 'corehome' %}"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                >Sign In</a
+              >
+            </li>
+            {% else %}
+            <li>
+              <a
+                href="{% url 'logout' %}"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                >Logout</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+<script>
+const menuButton = document.getElementById("user-menu-button");
+const dropdownMenu = document.getElementById("user-dropdown");
+
+menuButton.addEventListener("click", () => {
+    menuButton.classList.toggle("active");
+    dropdownMenu.classList.toggle("show");
+    <!-- document.body.classList.toggle('blurred-background'); -->
+});
+
+// Close the dropdown when clicking outside of it
+document.addEventListener("click", function (event) {
+    const isClickInsideMenu = dropdownMenu.contains(event.target);
+    const isClickInsideButton = menuButton.contains(event.target);
+    if (!isClickInsideMenu && !isClickInsideButton) {
+    menuButton.classList.remove("active");
+    dropdownMenu.classList.remove("show");
+    }
+});
+</script>
+{% block body %}
+{% endblock %}

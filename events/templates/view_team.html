@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+View Team
+{% endblock title %}
+{% block body %}
+{% include 'sports_navbar.html' %}
+{% include 'messages.html' %}
+<div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
+        id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+        <li class="me-2">
+            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about"
+                aria-selected="true"
+                class="inline-block p-4 text-blue-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-blue-500">About
+                Team</button>
+        </li>
+        <li class="me-2">
+            <button id="services-tab" data-tabs-target="#services" type="button" role="tab" aria-controls="services"
+                aria-selected="false"
+                class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Participants</button>
+        </li>
+        <li class="me-2">
+            <button id="statistics-tab" data-tabs-target="#statistics" type="button" role="tab"
+                aria-controls="statistics" aria-selected="false"
+                class="inline-block p-4 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300">Update
+                Status</button>
+        </li>
+    </ul>
+    <div id="defaultTabContent">
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="about" role="tabpanel"
+            aria-labelledby="about-tab">
+            <h2 class="mb-3 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+                {{ team.visible_name }}
+            </h2>
+            <p class="mb-3 text-gray-500 dark:text-gray-400">
+                Registered for: {{ team.sport.name }} <br>
+                Payment Status: {% if team.isPaid %} Paid {% else %} Not Paid {% endif %} <br>
+                Waitlisted: {% if isWaiting %} Yes {% else %} No {% endif %} <br>
+                Status: {% if team.status == "pending" %} Under Review {% else %} {{ team.status }} {% endif %} <br>
+            </p>
+        </div>
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel"
+            aria-labelledby="services-tab">
+            <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+                Participants
+            </h2>
+            <div class="relative overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Participant Name
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Email
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Contact Number
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                College or University
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Captain
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for participant in participants %}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ participant.name }}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ participant.email }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ participant.phone_number }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ participant.college.name }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {% if participant.isCaptain %} Yes {% else %} No {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="statistics" role="tabpanel"
+            aria-labelledby="statistics-tab">
+            <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+                Update Status
+            </h2>
+            <h2 class="mb-5 text-sm font-semibold tracking-tight text-gray-900 dark:text-white">
+                Current Status: {{ team.status }}
+            </h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="flex items-center mb-4">
+                    <input id="status-radio-1" type="radio" value="accepted" name="status-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="status-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Accepted
+                    </label>
+                </div>
+                <div class="flex items-center mb-4">
+                    <input id="status-radio-2" type="radio" value="pending" name="status-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="status-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Pending
+                    </label>
+                </div>
+                <div class="flex items-center mb-4">
+                    <input id="status-radio-3" type="radio" value="rejected" name="status-radio"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="status-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        Rejected
+                    </label>
+                </div>
+                <button type="submit"
+                    class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                    Update
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

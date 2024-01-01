@@ -1,0 +1,77 @@
+{% extends 'events_base.html' %}
+{% load static %}
+{% block title %}
+Add Sport
+{% endblock %}
+
+{% block body %}
+{% include 'sports_navbar.html' %}
+{% include 'notification.html' %}
+{% include 'messages.html' %}
+<div class="h-screen flex items-center justify-center">
+    <div
+        class="container mx-auto block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+        <form class="max-w-sm mx-auto" method="post">
+            {% csrf_token %}
+            <div class="mb-5">
+                <h1 class="text-xl font-bold">Add Event</h1>
+                <br />
+                <label for="sportname" class="block mb-2 text-sm font-medium text-gray-900">
+                    Event Name
+                </label>
+                <input type="text" id="sportname" name="sport_name"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Enter Event Name" required />
+            </div>
+            <div class="mb-5">
+                <label for="event_type" class="block mb-2 text-sm font-medium text-gray-900">
+                    Event Type
+                </label>
+                <select name="event_type" id="event_type"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <option value="sports">Sports</option>
+                    <option value="culturals">Culturals</option>
+                </select>
+
+            </div>
+            <div class="mb-5">
+                <label for="no_of_teams" class="block mb-2 text-sm font-medium text-gray-900">
+                    No.of Teams
+                </label>
+                <input type="text" id="no_of_teams" name="no_of_teams"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Maximum no.of teams that can register" required />
+            </div>
+            <div class="mb-5">
+                <label for="no_of_teams_college" class="block mb-2 text-sm font-medium text-gray-900">
+                    No.of Teams for each college
+                </label>
+                <input type="text" id="no_of_teams_college" name="no_of_teams_college"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Max teams that can register from each college" required />
+            </div>
+            <div class="mb-5">
+                <label for="teamsize" class="block mb-2 text-sm font-medium text-gray-900">
+                    Minimum Team Size
+                </label>
+                <input type="number" id="teamsize" name="team_size"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Minimum Team Size" required />
+            </div>
+            <div class="mb-5">
+                <label for="max_teamsize" class="block mb-2 text-sm font-medium text-gray-900">
+                    Maximum Team Size
+                </label>
+                <input type="number" id="max_teamsize" name="max_team_size"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Maximum Team Size" required />
+            </div>
+
+            <button type="submit"
+                class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

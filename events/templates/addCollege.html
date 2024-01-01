@@ -1,0 +1,52 @@
+{% extends '.html' %}
+{% load static %}
+
+{% block title %}
+Add College
+{% endblock %}
+
+
+{% block body %}
+{% include 'sports_navbar.html' %}
+{% include 'notification.html' %}
+{% include 'messages.html' %}
+<div class="h-screen flex items-center justify-center">
+    <div
+        class="container mx-auto block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+        <form class="max-w-sm mx-auto" method="post">
+            {% csrf_token %}
+            <div class="mb-5">
+                <h1 class="text-xl font-bold">Add College</h1>
+                <br />
+                <label for="collegename" class="block mb-2 text-sm font-medium text-gray-900">
+                    College Name
+                </label>
+                <input type="text" id="collegename" name="college_name"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Enter College Name" required />
+            </div>
+            <div class="mb-5">
+                <label for="collegeab" class="block mb-2 text-sm font-medium text-gray-900">
+                    College Abbrevation
+                </label>
+                <input type="text" id="collegeab" name="college_ab"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Enter College Abbrevation" required />
+            </div>
+            <div class="mb-5">
+                <label for="college_passkey" class="block mb-2 text-sm font-medium text-gray-900">
+                    College Passkey
+                </label>
+                <input type="password" id="college_passkey" name="college_passkey"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Enter College Secret Passkey" required />
+            </div>
+
+            <button type="submit"
+                class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

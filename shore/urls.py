@@ -28,6 +28,7 @@ urlpatterns = [
     path('hospitality/' , include('hospitality.urls')),
     path('prelims/', include('prelims.urls')),
     path('preshore/',include('promotion.urls')),
+    path('events/' , include('events.urls')),
 ]
 
 

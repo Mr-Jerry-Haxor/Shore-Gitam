@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Success
+{% endblock title %}
+{% block body %}
+{% include 'sports_navbar.html' %}
+{% include 'notification.html' %}
+{% include 'messages.html' %}
+<div class="h-screen flex items-center justify-center">
+<div
+    class="block max-w-4xl mx-auto p-6 bg-white border border-gray-300 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+   
+    <h2 class="mb-2 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {{ team.visible_name }}
+    </h2>
+    <br>
+    <div class="grid grid-cols-2 ">
+    <div class="p-4">
+    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+        College Name: {{ team.college.name }}
+    </h5>
+    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Event name: {{ team.sport.name }}
+    </h5>
+    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Registered Date: {{ team.registered_at.date }}
+    </h5>
+    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+        Registered Time: {{ team.registered_at.time }}
+    </h5>
+    
+</div>
+    <div class="p-4">
+        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Waitlisted: {% if isWaiting %} Yes {% else %} No {% endif %}
+        </h5>
+        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-nowrap">
+            Status: {% if team.status == "pending" %} <span class="inline-block bg-yellow-300 text-black px-2 py-1 rounded-2xl font-medium text-lg">Under Review</span> {% else %} {{ team.status | upper }} {% endif %}
+        </h5>
+        
+</div>
+</div>
+<h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+    Registered Players
+</h5>
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Participant Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Email
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Contact Number
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    College or University
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Captain
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ player.name }}
+                </th>
+                <td class="px-6 py-4">
+                    {{ player.email }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ player.phone_number }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ player.college.name }}
+                </td>
+                <td class="px-6 py-4">
+                {% if player.isCaptain %}  Yes {% else %} No {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+{% endblock %}

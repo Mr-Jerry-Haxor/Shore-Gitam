@@ -1,0 +1,314 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap");
+
+      :root {
+        /* Colors */
+        --brand-color: hsl(46, 100%, 50%);
+        --black: hsl(0, 0%, 0%);
+        --white: hsl(0, 0%, 100%);
+        /* Fonts */
+        --font-title: "Montserrat", sans-serif;
+        --font-text: "Lato", sans-serif;
+      }
+      body,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      /* GLOBAL STYLES */
+      body {
+        background: black;
+        height: 100vh;
+        
+      }
+      .carditems
+      {
+        display: grid;
+        place-items: center;
+        margin-top: 2rem;
+      }
+      .carditems h2{
+        font-size: 2.25rem;
+        font-family: var(--font-title);
+        color: white;
+        line-height: 1.1;
+      }
+    .title{
+        font-size: 2.25rem;
+        font-family: var(--font-title);
+        color: white;
+        line-height: 1.1;
+      }
+
+      .carditems p {
+        font-family: var(--font-text);
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--white);
+      }
+
+      .flow > * + * {
+        margin-top: var(--flow-space, 1em);
+      }
+
+      .card {
+        display: grid;
+        place-items: center;
+        width: 80vw;
+        max-width: 21.875rem;
+        height: 28.125rem;
+        overflow: hidden;
+        border-radius: 0.625rem;
+        box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+      }
+
+      .card > * {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+      }
+
+      .card__background {
+        object-fit: cover;
+        max-width: 100%;
+        height: 100%;
+      }
+
+      .card__content {
+        --flow-space: 0.9375rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-self: flex-end;
+        height: 55%;
+        padding: 12% 1.25rem 1.875rem;
+        background: linear-gradient(
+          180deg,
+          hsla(0, 0%, 0%, 0) 0%,
+          hsla(0, 0%, 0%, 0.3) 10%,
+          hsl(0, 0%, 0%) 100%
+        );
+      }
+
+      .card__content--container {
+        --flow-space: 1.25rem;
+      }
+
+      .card__title {
+        position: relative;
+        width: fit-content;
+        width: -moz-fit-content; /* Prefijo necesario para Firefox  */
+      }
+
+      .card__title::after {
+        content: "";
+        position: absolute;
+        height: 0.3125rem;
+        width: calc(100% + 1.25rem);
+        bottom: calc((1.25rem - 0.5rem) * -1);
+        left: -1.25rem;
+        background-color: var(--brand-color);
+      }
+
+      .card__button {
+        padding: 0.3em 1.1em;
+        width: fit-content;
+        width: -moz-fit-content; /* Prefijo necesario para Firefox  */
+        font-variant: small-caps;
+        margin-left: 0.5rem;
+        font-weight: bold;
+        border-radius: 0.45em;
+        border: none;
+        background-color: var(--brand-color);
+        font-family: var(--font-title);
+        font-size: 1.125rem;
+        color: var(--black);
+      }
+      @media screen and (max-width: 400px) {
+        .card__button {
+          padding: 0.3em 1em;
+          width: fit-content;
+          width: -moz-fit-content; /* Prefijo necesario para Firefox  */
+          font-variant: small-caps;
+          margin-left: 0.5rem;
+          font-weight: bold;
+          border-radius: 0.45em;
+          border: none;
+          background-color: var(--brand-color);
+          font-family: var(--font-title);
+          font-size: 0.85rem;
+          color: var(--black);
+        }
+      }
+
+      .card__button:focus {
+        outline: 2px solid black;
+        outline-offset: -5px;
+      }
+
+      @media (any-hover: hover) and (any-pointer: fine) {
+        .card__content {
+          transform: translateY(62%);
+          transition: transform 500ms ease-out;
+          transition-delay: 500ms;
+        }
+
+        .card__title::after {
+          opacity: 0;
+          transform: scaleX(0);
+          transition: opacity 1000ms ease-in, transform 500ms ease-out;
+          transition-delay: 500ms;
+          transform-origin: right;
+        }
+
+        .card__background {
+          transition: transform 500ms ease-in;
+        }
+
+        .card__content--container > :not(.card__title),
+        .card__button {
+          opacity: 0;
+          transition: transform 500ms ease-out, opacity 500ms ease-out;
+        }
+
+        .card:hover,
+        .card:focus-within {
+          transform: scale(1.05);
+          transition: transform 500ms ease-in;
+        }
+
+        .card:hover .card__content,
+        .card:focus-within .card__content {
+          transform: translateY(0);
+          transition: transform 500ms ease-in;
+        }
+
+        .card:focus-within .card__content {
+          transition-duration: 0ms;
+        }
+
+        .card:hover .card__background,
+        .card:focus-within .card__background {
+          transform: scale(1.3);
+        }
+
+        .card:hover .card__content--container > :not(.card__title),
+        .card:hover .card__button,
+        .card:focus-within .card__content--container > :not(.card__title),
+        .card:focus-within .card__button {
+          opacity: 1;
+          transition: opacity 500ms ease-in;
+          transition-delay: 300ms;
+        }
+
+        .card:hover .card__title::after,
+        .card:focus-within .card__title::after {
+          opacity: 1;
+          transform: scaleX(1);
+          transform-origin: left;
+          transition: opacity 500ms ease-in, transform 500ms ease-in;
+          transition-delay: 500ms;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'dropnav.html' %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="p-4 mb-4 text-sm rounded-lg {% if message.tags == 'info' %}text-blue-800 bg-blue-50{% elif message.tags == 'error' %}text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400{% elif message.tags == 'success' %}text-green-800 bg-green-50{% endif %}"
+        role="alert">
+        <span class="font-medium">{{ message.tags.capitalize }}</span> {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <div class="carditems "> 
+    <div class="flex flex-col md:flex-row">
+      <div class="md:w-1/3 px-4 mb-8">
+        <article class="card">
+          <img
+            class="card__background"
+            src="{% static 'img/cultural.jpg' %}"
+            alt="Photo of Cartagena's cathedral at the background and some colonial style houses"
+            width="1920"
+            height="2193"
+          />
+          <div class="card__content | flow">
+            <div class="card__content--container | flow">
+              <h2 class="card__title">Culturals</h2>
+              <p class="card__description">
+                Immerse yourself in a celebration of cultures from around the globe. 
+                Join us to witness the fusion of creativity and tradition that promises to leave you spellbound. 
+              </p>
+            </div>
+            <div class="flex">
+              <a href="{% url 'events:culturals_home' %}"><button class="card__button">Compete</button></a>
+              <button class="card__button">Guidelines</button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="md:w-1/3 px-4 mb-8">
+        <article class="card">
+          <img
+            class="card__background"
+            src="{% static 'img/cricket.png' %}"
+            alt="Photo of Cartagena's cathedral at the background and some colonial style houses"
+            width="1920"
+            height="2193"
+          />
+          <div class="card__content | flow">
+            <div class="card__content--container | flow">
+              <h2 class="card__title">Sports</h2>
+              <p class="card__description">
+                Get ready to Feel the adrenaline rush as you participate in thrilling sporting events,
+                Join us for an unforgettable experience.
+              </p>
+            </div>
+            <div class="flex">
+              <a href="{% url 'events:sports_home' %}"><button class="card__button">Compete</button></a>
+              <button class="card__button">Guidelines</button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="md:w-1/3 px-4 mb-8">
+        <article class="card">
+          <img
+            class="card__background"
+            src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703652716/shore%2024/shore24%20homepage/image2_cmfors.jpg"
+            alt="Photo of Cartagena's cathedral at the background and some colonial style houses"
+            width="1920"
+            height="2193"
+          />
+          <div class="card__content | flow">
+            <div class="card__content--container | flow">
+              <h2 class="card__title">Hackaton</h2>
+              <p class="card__description">
+                Explore the latest advancements in technology and embrace the opportunity to learn, and innovate. 
+                Join us on this journey of discovery and innovation.
+              </p>
+            </div>
+            <div class="flex">
+              <a href="#"><button class="card__button">Compete</button></a>
+              <button class="card__button">Guidelines</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+</div>
+  </body>
+</html>

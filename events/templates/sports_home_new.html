@@ -1,0 +1,100 @@
+{% extends 'events_base.html' %}
+{% load filter_tags %}
+{% load static %}
+{% block title %}
+Home
+{% endblock title %}
+{% block head %}
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+{% endblock head %}
+{% block body %}
+{% include 'sports_navbar.html' %}
+{% include 'messages.html' %}
+    <h2 class="font-sans text-white text-center title mt-5">Sports</h2>
+    {% for sport in sports %}
+    <div class="flex cards md:flex-row mb-6 flex-wrap">
+        <div
+            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto card">
+            <div>
+                <img class="rounded-t-lg" src="{{ sport.image_url }}" alt="" />
+            </div>
+            <div class="p-5">
+                <div>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        {{ sport.name }}
+                    </h5>
+                </div>
+                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                    {{ event.description }}
+                </p>
+
+                <!-- Modal toggle -->
+                <button data-modal-target="static-modal_{{ sport.name }}" data-modal-toggle="static-modal_{{ sport.name }}"
+                    class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">
+                    Select
+                </button>
+
+                <!-- Main modal -->
+                <div id="static-modal_{{ sport.name }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                    
+                    <div class="relative p-4 w-full max-w-2xl max-h-full">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                            <!-- Modal header -->
+                            <div
+                                class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                    Guidelines
+                                </h3>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="p-4 md:p-5 space-y-4">
+                                {% if sport.guidelines %}
+                                {% with sport.guidelines|split:"\n" as guidelines %}
+                                {% for guideline in guidelines %}
+                                <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                    {{ guideline }}
+                                </p>
+                                {% endfor %}
+                                {% endwith %}
+                                {% endif %}
+                            </div>
+                            <!-- Modal footer -->
+                            <div
+                                class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                <a 
+                                    href="{% url 'events:selectCollege' sport.name %}"  
+                                    data-modal-hide="static-modal_{{ sport.name }}" 
+                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    I accept
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+    <script>
+        $(document).ready(function () {
+            var activator = $("#activator");
+            var navBg = $("#fade-bg");
+
+            activator.on("click", function () {
+                $(this).toggleClass("active");
+                $("#activate-menu").toggleClass("visible");
+                navBg.fadeToggle();
+            });
+
+            navBg.on("click", function () {
+                $("#activate-menu").removeClass("visible");
+                activator.removeClass("active");
+                $(this).hide();
+            });
+        });
+    </script>
+{% endblock %}
