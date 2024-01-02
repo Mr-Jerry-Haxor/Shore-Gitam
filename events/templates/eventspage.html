@@ -213,6 +213,11 @@
                 {% else %}
                     <p style="margin-bottom: 10px; color: #ffffff;"><strong>Team Limit:</strong> Each team can have {{ event.min_team_size }} to {{ event.max_team_size }} members.</p>
                 {% endif %}
+
+                {% if event.description %}
+                <h3 style="color: #ffffff; margin-bottom: 10px;font-weight:bolder">Requirements:</h2>
+                  <p style="margin-bottom: 10px; color: #ffffff;"><strong>Description:</strong> {{ event.description }}</p>
+                {% endif %}
             
                   {% if event.requirements %}
                   <h3 style="color: #ffffff; margin-bottom: 10px;font-weight:bolder">Requirements:</h2>

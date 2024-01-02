@@ -41,6 +41,7 @@ def event_file_upload_path(instance, filename):
 class Event(models.Model):
     event_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
+    description = models.TextField(null=True, blank=True)
     event_type = models.CharField(max_length=100, null=False, blank=False, choices=event_choices)
     image_url = models.URLField(max_length=1000, null=True, blank=True)
     image = models.ImageField(upload_to=event_file_upload_path, null=True, blank=True)
