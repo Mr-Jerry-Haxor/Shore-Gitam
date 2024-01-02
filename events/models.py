@@ -8,6 +8,7 @@ status_choices = (
     ("pending", "pending"),
     ("approved", "approved"),
     ("rejected", "rejected"),
+    ("eligible_for_payment", "Eligible for payment"),
 )
 
 event_choices = (
@@ -62,7 +63,7 @@ def file_upload_path(instance, filename):
     ext = filename.split('.')[-1]
 
     # Constructing the new file name
-    new_filename = f"{instance.visible_name}__{instance.college.name}__{current_datetime}.{ext}"
+    new_filename = f"{instance.visible_name}__{instance.college.name}__{instance.sport.name}__{current_datetime}.{ext}"
 
     # Constructing the file path
     domain_folder = f"EventsRegistrations/{instance.sport.name}/{instance.college.name}"
@@ -82,15 +83,16 @@ class Team(models.Model):
     registered_at = models.DateTimeField(default=timezone.now)
     team_hash = models.CharField(max_length=100, null=True, blank=True)
     endorsment_file = models.FileField(upload_to=file_upload_path, null=True, blank=True)
-    status = models.CharField(choices=status_choices, default="pending", max_length=10)
+    status = models.CharField(choices=status_choices, default="pending", max_length=50)
 
 
     def __str__(self):
         return self.visible_name
 
     def save(self, *args, **kwargs):
-        # generate team hash using visiblie_name and registered time
-        self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
+        if not self.pk:
+            # generate team hash using visiblie_name and registered time
+            self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
         super().save(*args, **kwargs)
 
 
@@ -126,6 +128,13 @@ hackathon_choices = (
     ('hackathon', 'hackathon'),
 )
 
+def file_upload_path_hackthon(instance, filename):
+    current_datetime = timezone.now().strftime('%Y%m%d%H%M%S')
+    ext = filename.split('.')[-1]
+    new_filename = f"{instance.visible_name}__{instance.college.name}__{instance.hackathon.name}__{current_datetime}.{ext}"
+    domain_folder = f"EventsRegistrations/{instance.hackathon.name}/{instance.college.name}"
+    return os.path.join(domain_folder, new_filename)
+
 class Hackathon(models.Model):
     event_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -154,8 +163,8 @@ class HackathonTeam(models.Model):
     isQualified = models.BooleanField(default=False)
     registered_at = models.DateTimeField(default=timezone.now)
     team_hash = models.CharField(max_length=100, null=True, blank=True)
-    endorsment_file = models.FileField(upload_to=file_upload_path, null=True, blank=True)
-    status = models.CharField(choices=status_choices, default="pending", max_length=10)
+    endorsment_file = models.FileField(upload_to=file_upload_path_hackthon, null=True, blank=True)
+    status = models.CharField(choices=status_choices, default="pending", max_length=50)
 
 
     def __str__(self):
@@ -171,12 +180,12 @@ class HackathonTeam(models.Model):
 class HackathonParticipants(models.Model):
     participant_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
-    email = models.EmailField(null=False, blank=False, unique=False)
-    phone_number = models.CharField(max_length=10, null=False, blank=False, unique=False)
+    email = models.EmailField(null=False, blank=False, unique=True)
+    phone_number = models.CharField(max_length=10, null=False, blank=False, unique=True)
     accomdation = models.BooleanField(default=False)
     college = models.ForeignKey(College, on_delete=models.CASCADE)
     hackathon = models.ForeignKey(Hackathon, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    team = models.ForeignKey(HackathonTeam, on_delete=models.CASCADE)
     isCaptain = models.BooleanField(default=False)
     isPaid = models.BooleanField(default=False)
     isGitamite = models.BooleanField(default=False)

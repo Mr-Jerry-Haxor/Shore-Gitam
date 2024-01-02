@@ -128,6 +128,36 @@
                 >Register for Hackathon</a
               >
             </li>
+            {% comment %} Admin {% endcomment %}
+            {% if request.user.is_authenticated %} 
+              {% if request.user.events_sports or request.user.events_sports_staff %}
+                <li>
+                  <a
+                    href="{% url 'events:events_admin_sports' %}"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >Teams Registered for Sports</a
+                  >
+                </li>
+              {% elif request.user.events_cultural or request.user.events_cultural_staff %}
+                <li>
+                  <a
+                    href="{% url 'events:events_admin_culturals' %}"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >Teams Registered for Culturals</a
+                  >
+                </li>
+                {% comment %} 
+                <li>
+                  <a
+                    href="{% url 'events:events_admin_hackathon' %}"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >Teams Registered for Hackathon</a
+                  >
+                </li>
+                {% endcomment %}
+              {% endif %}
+            {% endif %}
+            {% comment %} Endadmin {% endcomment %}
           </ul>
         </div>
       </div>

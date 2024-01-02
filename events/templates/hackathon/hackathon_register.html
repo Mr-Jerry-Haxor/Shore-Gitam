@@ -1,9 +1,6 @@
 {% extends 'events_base.html' %}
 {% load static %}
-{% block title %}
-Register
-{% endblock %}
-
+{% block title %}Hackathon Registration{% endblock %}
 {% block head %}
 <style>
     .title {
@@ -34,7 +31,7 @@ Register
         /* Firefox */
     }
 </style>
-{% endblock %} 
+{% endblock %}
 
 {% block body %}
 {% include 'sports_navbar.html' %}
@@ -64,7 +61,7 @@ Register
                 </div>
             </div>
             <!-- Player 1 -->
-            <h1 class="form-title">Participant 1 ({% if sport.event_type == 'sports' %}Captain{% else %}Lead{% endif %})</h1>
+            <h1 class="form-title">Participant 1 (Lead)</h1>
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>

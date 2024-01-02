@@ -26,17 +26,6 @@ Select College
                 </select>
             </div>
             
-            {% if isHackathon %}
-            <a 
-                {% comment %}
-                    href="{% url "events:register" hackathon_name %}"
-                {% endcomment %}
-                href="#"
-                class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-            >
-                Next
-            </a>
-            {% else %}
                 <button
                     id="next_button"
                     type="button" 
@@ -95,7 +84,6 @@ Select College
                         </div>
                     </div>
                 </div>
-            {% endif %}
         </form>
         <script>
             function passkey() {

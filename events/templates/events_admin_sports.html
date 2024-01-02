@@ -1,0 +1,50 @@
+{% extends 'events_base.html' %}
+{% load static %}
+{% block title %}
+Events
+{% endblock %}
+{% block head %}
+<style>
+    .card {
+  box-sizing: border-box;
+  width: 300px;
+  height: 254px;
+  background: rgba(217, 217, 217, 0.58);
+  border: 1px solid white;
+  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6px);
+  border-radius: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-weight: bolder;
+  color: black;
+  font-size: 2em;
+}
+
+.card:hover {
+  border: 1px solid black;
+  transform: scale(1.05);
+}
+
+.card:active {
+  transform: scale(0.95) rotateZ(1.7deg);
+}
+</style>
+{% endblock head %}
+{% block body %}
+{% include 'sports_navbar.html' %}
+{% include 'messages.html' %}
+        <div class="flex flex-wrap justify-center mt-20">
+            {% for event in events %}
+                <a href="{% url 'events:registered_sports' event.name %}" class="card sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 ">
+                    {{ event.name }}
+                </a>
+            {% endfor %}
+        </div>
+
+{% endblock %}

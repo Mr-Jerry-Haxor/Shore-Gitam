@@ -34,9 +34,8 @@ View Team
                 {{ team.visible_name }}
             </h2>
             <p class="mb-3 text-gray-500 dark:text-gray-400">
-                Registered for: {{ team.sport.name }} <br>
+                Registered for: {{ team.hackathon.name }} <br>
                 Payment Status: {% if team.isPaid %} Paid {% else %} Not Paid {% endif %} <br>
-                Waitlisted: {% if isWaiting %} Yes {% else %} No {% endif %} <br>
                 Status: {% if team.status == "pending" %} Under Review {% else %} {{ team.status }} {% endif %} <br>
             </p>
         </div>

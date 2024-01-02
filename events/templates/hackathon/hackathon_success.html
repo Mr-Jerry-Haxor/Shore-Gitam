@@ -1,7 +1,7 @@
 {% extends 'events_base.html' %}
 {% load static %}
 {% block title %}
-Success
+Hackathon Success
 {% endblock title %}
 {% block body %}
 {% include 'sports_navbar.html' %}
@@ -27,7 +27,7 @@ Success
           <h5
             class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white"
           >
-            Event Name: {{ team.event.name }}
+            Event Name: {{ team.hackathon.name }}
           </h5>
           <h5
             class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white"
@@ -41,11 +41,6 @@ Success
           </h5>
         </div>
         <div class="flex-1 p-4">
-          <h5
-            class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white"
-          >
-            Waitlisted: {% if team.isWaiting %} Yes {% else %} No {% endif %}
-          </h5>
           <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-nowrap">
             Status: {% if team.status == "pending" %}
               <span class="inline-block bg-yellow-300 text-black px-2 py-1 rounded-2xl font-medium text-lg">Under Review</span>
@@ -58,7 +53,7 @@ Success
             {% else %}
               {{ team.status }}
             {% endif %}
-          </h5>          
+          </h5>
         </div>
       </div>
       <h5
@@ -77,11 +72,7 @@ Success
               <th scope="col" class="px-6 py-3">Participant Name</th>
               <th scope="col" class="px-6 py-3">Email</th>
               <th scope="col" class="px-6 py-3">Contact Number</th>
-              {% if not team.isWaiting %}
-              {% if team.status == 'eligible_for_payment' or team.status == 'approved' %}
-                <th scope="col" class="px-6 py-3">Payment Status</th>
-              {% endif %}
-              {% endif %}
+              <th scope="col" class="px-6 py-3">Payment Status</th>
               <th scope="col" class="px-6 py-3">College or University</th>
               <th scope="col" class="px-6 py-3">Captain</th>
             </tr>
@@ -99,26 +90,26 @@ Success
               </th>
               <td class="px-6 py-4">{{ player.email }}</td>
               <td class="px-6 py-4">{{ player.phone_number }}</td>
-              {% if not team.isWaiting %}
-              {% if team.status == 'eligible_for_payment' or team.status == 'approved' %}
-                <td class="px-6 py-4">
-                  {% if player.isPaid %}
-                  <span
-                    class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                    >Paid</span
+              <td class="px-6 py-4">
+                {% if player.isPaid %}
+                <span
+                  class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                  >Paid</span
+                >
+                {% elif team.status == 'eligible_for_payment' %}
+                <a href="#">
+                  <button
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-0.5 py-0.5 text-center me-2 mb-2"
                   >
-                  {% elif not player.isPaid %}
-                  <a href="#">
-                    <button
-                      class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-0.5 py-0.5 text-center me-2 mb-2"
-                    >
-                      Click to Pay
-                    </button>
-                  </a>
-                  {% endif %}
-                </td>
-              {% endif %}
-              {% endif %}
+                    Click to Pay
+                  </button>
+                </a>
+                {% elif team.status == 'approved' and player.isPaid %}
+                  Paid
+                {% else %}
+                  Not Paid
+                {% endif %}
+              </td>
               <td class="px-6 py-4">{{ player.college.name }}</td>
               <td class="px-6 py-4">
                 {% if player.isCaptain %} Yes {% else %} No {% endif %}

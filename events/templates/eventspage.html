@@ -83,6 +83,7 @@
       ol {
         list-style-type: disc; /* or other list-style-type like disc, circle, etc. */
       }
+
     </style>
     <style>
       .card__content{
@@ -207,32 +208,37 @@
                 
                 <div class="card__copy">
                 <!--  border-bottom: 2px solid #ffffff; -->
-                  <p style="margin-bottom: 10px;color: #ffffff;"><strong>Team Limit:</strong> Each team can have {{ event.min_team_size }} to {{ event.max_team_size }} members.</p>
+                {% if event.min_team_size == event.max_team_size %}
+                    <p style="margin-bottom: 10px; color: #ffffff;"><strong>Team Limit:</strong> Each team can have {{ event.min_team_size }} members.</p>
+                {% else %}
+                    <p style="margin-bottom: 10px; color: #ffffff;"><strong>Team Limit:</strong> Each team can have {{ event.min_team_size }} to {{ event.max_team_size }} members.</p>
+                {% endif %}
+            
                   {% if event.requirements %}
                   <h3 style="color: #ffffff; margin-bottom: 10px;font-weight:bolder">Requirements:</h2>
-                  <ul style="list-style-type: disc; margin-bottom: 15px;margin-left:40px;"></ul>
+                  <ol style="list-style-type: disc; margin-bottom: 15px; margin-left:45px !important;">
                     {% with event.requirements|split:"\n" as requirements %}
                     {% for requirement in requirements %}
                     <li>{{ requirement }}</li>
                     {% endfor %}
                     {% endwith %}
-                  </ul>
+                  </ol>
                   {% endif %}
 
                   {% if event.guidelines %}
                   <h3 style="color: #ffffff; margin-bottom: 10px;font-weight:bolder">Guidelines:</h3>
-                  <ul style="list-style-type: disc; margin-bottom: 15px;margin-left:40px;">
+                  <ol style="list-style-type: disc; margin-bottom: 15px;margin-left:45px;">
                     {% with event.guidelines|split:"\n" as guidelines %}
                     {% for guideline in guidelines %}
                     <li>{{ guideline }}</li>
                     {% endfor %}
                     {% endwith %}
-                  </ul>
+                  </ol>
                   {% endif %}
 
                   {% if event.judiciary %}
                   <h3 style="color: #ffffff; margin-bottom: 10px;font-weight:bolder;">Judging Criteria:</h3>
-                  <ol style="padding-left: 0; margin-left: 40px;">
+                  <ol style="list-style-type: disc; margin-bottom: 15px;margin-left:45px;">
                     {% with event.judiciary|split:"\n" as criterias %}
                     {% for criteria in criterias %}
                     <li style="margin-bottom: 10px;">{{ criteria }}</li>
@@ -248,13 +254,52 @@
                       type="checkbox"
                       value=""
                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                    />
+                      required
+                      />
                     <label
                       for="checkbox-{{ forloop.counter }}"
                       class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                       style="color:white"
                       >
-                      I hereby agree to all the terms and conditions</label>
+                      I,hereby acknowledge and agree that I am attending Shore Fest'24 at GITAM (Deemed to be University), Visakhapatnam, from 2nd February 2024 to 4th February 2024.
+                      I understand and expressly acknowledge that GITAM University, its representatives, or organizers of Shore Fest'24 are not responsible for any untoward incident, injury, loss, or damage that may occur to me during my time on the premises or while participating in the event.
+                      </label>
+                  </div>
+                  <div class="flex items-center mb-4">
+                    <input
+                      class="checkbox-agree"
+                      id="checkbox1-{{ forloop.counter }}"
+                      type="checkbox"
+                      value=""
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      required
+                      />
+                    <label
+                      for="checkbox1-{{ forloop.counter }}"
+                      class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      style="color:white"
+                      >
+                      
+                      I agree that I am responsible for my own safety, well-being, and belongings during the event, and I will take necessary precautions to ensure my personal safety and security.
+                      In the circumstance of my act in violation of rules and regulations and and any damage or injury caused to me due to my violation, I release GITAM University, its officers, employees, and event organizers from any liability, claims, or demands for personal injury, loss, or damage to personal property that may arise during my attendance at Shore Fest'24.
+                      By attending Shore Fest'24 at GITAM University, I hereby acknowledge that I have read and understood and agreed to  the regulations and agree voluntarily to the terms and conditions set by GITAM(Deemed to be University) and by Shore Fest24 committee.
+                      </label>
+                  </div>
+                  <div class="flex items-center mb-4">
+                    <input
+                      class="checkbox-agree"
+                      id="checkbox2-{{ forloop.counter }}"
+                      type="checkbox"
+                      value=""
+                      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      required
+                      />
+                    <label
+                      for="checkbox2-{{ forloop.counter }}"
+                      class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      style="color:white"
+                      >
+                      These terms and conditions are tentive and might change in the future.shore committee has the autothority to change accordingly.</label>
                   </div>
                   <br />
                   <center>
@@ -291,32 +336,97 @@
     <!-- /container -->
     <!-- JS -->
     <script>
-      {% for event in events %}
-      var checkbox_{{ forloop.counter }} = document.getElementById('checkbox-{{ forloop.counter }}');
+          let isCheckboxChecked = false;
+          let isCheckbox1Checked = false;
+          let isCheckbox2Checked = false;
+          
+          {% for event in events %}
+          var checkbox_{{ forloop.counter }} = document.getElementById('checkbox-{{ forloop.counter }}');
+          var checkbox1_{{ forloop.counter }} = document.getElementById('checkbox1-{{ forloop.counter }}');
+          var checkbox2_{{ forloop.counter }} = document.getElementById('checkbox2-{{ forloop.counter }}');
 
-      var registrationDiv_{{ forloop.counter }} = document.getElementById('registration-div-{{ forloop.counter }}');
+          var registrationDiv_{{ forloop.counter }} = document.getElementById('registration-div-{{ forloop.counter }}');
 
-      checkbox_{{ forloop.counter }}.addEventListener('change', function () {
-        if (checkbox_{{ forloop.counter }}.checked) {
-          registrationDiv_{{ forloop.counter }}.style.display = 'block';
-        } else {
-          registrationDiv_{{ forloop.counter }}.style.display = 'none';
-        }
-      })
-      {% endfor %}
+          checkbox_{{ forloop.counter }}.addEventListener('change', function () {
+            if (checkbox_{{ forloop.counter }}.checked) {
+              isCheckboxChecked = true;
+            } else {
+              isCheckboxChecked = false;
+            }
+          })
+
+          checkbox1_{{ forloop.counter }}.addEventListener('change', function () {
+            if (checkbox1_{{ forloop.counter }}.checked) {
+              isCheckbox1Checked = true;
+            } else {
+              isCheckbox1Checked = false;
+            }
+          })
+
+          checkbox2_{{ forloop.counter }}.addEventListener('change', function () {
+            if (checkbox2_{{ forloop.counter }}.checked) {
+              isCheckbox2Checked = true;
+            } else {
+              isCheckbox2Checked = false;
+            }
+          })
+
+          checkbox_{{ forloop.counter }}.addEventListener('change', function () {
+            if (isCheckboxChecked && isCheckbox1Checked && isCheckbox2Checked) {
+              registrationDiv_{{ forloop.counter }}.style.display = 'block';
+            } else {
+              registrationDiv_{{ forloop.counter }}.style.display = 'none';
+            }
+          })
+
+          checkbox1_{{ forloop.counter }}.addEventListener('change', function () {
+            if (isCheckboxChecked && isCheckbox1Checked && isCheckbox2Checked) {
+              registrationDiv_{{ forloop.counter }}.style.display = 'block';
+            } else {
+              registrationDiv_{{ forloop.counter }}.style.display = 'none';
+            }
+          })
+
+          checkbox2_{{ forloop.counter }}.addEventListener('change', function () {
+            if (isCheckboxChecked && isCheckbox1Checked && isCheckbox2Checked) {
+              registrationDiv_{{ forloop.counter }}.style.display = 'block';
+            } else {
+              registrationDiv_{{ forloop.counter }}.style.display = 'none';
+            }
+          })
+
+          {% endfor %}
+          
+          
+          {% comment %}  
+            {% for event in events %}
+            var checkbox_{{ forloop.counter }} = document.getElementById('checkbox-{{ forloop.counter }}');
+
+            var registrationDiv_{{ forloop.counter }} = document.getElementById('registration-div-{{ forloop.counter }}');
+
+            checkbox_{{ forloop.counter }}.addEventListener('change', function () {
+              if (checkbox_{{ forloop.counter }}.checked) {
+                registrationDiv_{{ forloop.counter }}.style.display = 'block';
+              } else {
+                registrationDiv_{{ forloop.counter }}.style.display = 'none';
+              }
+            })
+            {% endfor %}
+          {% endcomment %}
+
 
       function toggleRegistrationDiv(checkboxId, registrationDivId) {
-    var checkbox = document.getElementById(checkboxId);
-    var registrationDiv = document.getElementById(registrationDivId);
+        var checkbox = document.getElementById(checkboxId);
+        var registrationDiv = document.getElementById(registrationDivId);
 
-    // Check if the checkbox is checked
-    if (checkbox.checked) {
-      // Display the corresponding registration div
-      registrationDiv.style.display = 'block';
-    } else {
-      // Hide the corresponding registration div
-      registrationDiv.style.display = 'none';
-    }
+        // Check if the checkbox is checked
+        if (checkbox.checked) {
+          // Display the corresponding registration div
+          registrationDiv.style.display = 'block';
+        } else {
+          // Hide the corresponding registration div
+          registrationDiv.style.display = 'none';
+        }
   }
     </script>
     <script src="{% static 'js/vendors/trianglify.min.js' %}"></script>

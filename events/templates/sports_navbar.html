@@ -2,7 +2,8 @@
 {% load static %}
 
 {% block body %}
-<nav class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+
+<nav class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700 w-full z-50">
     <div class="max-w-screen-xl flex flex-wrap  px-3 justify-between mx-auto p-4">
         <a href="#" class="flex  px-3 space-x-3 rtl:space-x-reverse">
             <img src="{% static 'img/shore_24_clogo.png' %}" class="h-8" alt="Logo" />
@@ -21,21 +22,45 @@
             <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                 <li>
                     <a href="{% url 'events:eventshome' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">
-                        Home
+                        All Events
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'events:culturals_home' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">
+                        Register for Culturals
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'events:sports_home' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">
+                        Register for Sports
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'events:hackathon_home' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">
+                        Register for Hackathon
                     </a>
                 </li>
                 {% if request.user.is_authenticated %} 
-                {% if request.user.events_cultural or request.user.events_cultural_staff or request.user.events_sports or request.user.events_sports_staff %}
+                {% if request.user.events_sports or request.user.events_sports_staff %}
                 <li>
-                    <a href="{% url 'events:registered_sports' %}" class="block px-4 py-2 hover:bg-gray-100">
-                        Registered Teams for Sports
+                    <a href="{% url 'events:events_admin_sports'  %}" class="block px-4 py-2 hover:bg-gray-100">
+                        Teams Registered - Sports
+                    </a>
+                </li>
+                {% endif %}
+                {% if request.user.events_culturals or request.user.events_culturals_staff %}
+                <li>
+                    <a href="{% url 'events:events_admin_culturals' %}" class="block px-4 py-2 hover:bg-gray-100">
+                        Teams Registered - Culturals
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'events:registered_culturals' %}" class="block px-4 py-2 hover:bg-gray-100">
-                        Registered Teams for Culturals
+                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">
+                        Teams Registered - Hackathon
                     </a>
                 </li>
+                {% endif %}
+                {% if request.user.events_sports or request.user.events_culturals %}
                 <li>
                     <a href="{% url 'events:addCollege' %}" class="block px-4 py-2 hover:bg-gray-100">
                         Add College
@@ -48,7 +73,9 @@
                 </li>
                 {% endif %}
                 {% endif %}
+            </ul>
         </div>
+    </div>
 </nav>
 
 <script>

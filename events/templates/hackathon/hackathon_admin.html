@@ -1,12 +1,12 @@
 {% extends 'events_base.html' %}
 {% load static %}
 {% block title %}
-{{ sport.name.title }} Registered Teams
+Hackathon Registered Teams
 {% endblock title %}
 {% block body %}
 {% include 'sports_navbar.html' %}
 {% include 'messages.html' %}
-<h2 class="text-2xl text-center">Teams Registered for {{ sport.name }}</h2>
+<h2 class="text-2xl text-center">Teams Registered for Hackathon</h2>
 <div class="relative overflow-x-auto">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -19,12 +19,6 @@
                 </th>
                 <th scope="col" class="px-6 py-3">
                     College
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Sport
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Waiting Status
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Team Status
@@ -50,19 +44,18 @@
                     {{ team.college.name }}
                 </td>
                 <td class="px-6 py-4">
-                    {{ team.sport.name }}
-                </td>
-                <td class="px-6 py-4">
-                    {% if team.isWaiting %} Yes {% else %} No {% endif %}
-                </td>
-                <td class="px-6 py-4">
-                    {{ team.status|upper }}
+                    {% if team.status == 'eligible_for_payment' %}
+                        Eligible for Payment
+                    {% else %}
+                        {{ team.status }}
+                    {% endif %}
                 </td>
                 <td class="px-6 py-4">
                     {% if team.isPaid %} Paid {% else %} Not Paid {% endif %}
                 </td>
                 <td class="px-6 py-4">
-                    <a href="{% url 'events:view_team' team.team_hash %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <a href="{% url 'events:view_hackathon_team' team.team_hash %}"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         View
                     </a>
                 </td>

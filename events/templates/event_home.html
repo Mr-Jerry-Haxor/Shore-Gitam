@@ -10,6 +10,7 @@
       rel="stylesheet"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/node-marquee@3.0.6/build/cdn/index.min.js"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@700&display=swap");
 
@@ -222,10 +223,22 @@
           transition-delay: 500ms;
         }
       }
+      .endoscroll {
+        color: aliceblue;
+        margin: 20px 0;
+        text-transform: uppercase;
+      }
     </style>
   </head>
   <body class="min-h-screen" style="background: linear-gradient(to bottom right, #276fff, #ce3345, #4575de);">
     {% include 'dropnav.html' %}
+    <h3 class="endoscroll">Each team must obtain an endorsement form from their respective college and submit it during registration.<a href="https://drive.google.com/file/d/1EK1mIt8ITSEmsd2khhF4ju0hZotBUJ4F/view?usp=sharing" style="color: rgb(200, 255, 0); text-decoration: underline;"> Sample Form (click to download)</a></h3>
+    <script>
+      nodeMarquee({
+        parent: "h3",
+        speed: 1,
+      });
+    </script>
     {% if messages %}
     {% for message in messages %}
     <div class="p-4 mb-4 text-sm rounded-lg {% if message.tags == 'info' %}text-blue-800 bg-blue-50{% elif message.tags == 'error' %}text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400{% elif message.tags == 'success' %}text-green-800 bg-green-50{% endif %}"

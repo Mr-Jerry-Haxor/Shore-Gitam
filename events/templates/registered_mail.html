@@ -434,7 +434,13 @@
                                         style="padding:10px;Margin:0">
                                         <h1 align="center"
                                             style="Margin:0;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:30px;font-style:normal;font-weight:normal;line-height:36px;color:#ffffff"
-                                            class=" es-m-txt-c"><strong>Thank you for registering for {{ even.name }} </strong></h1>
+                                            class=" es-m-txt-c">
+                                            {% if status_text %}
+                                            <strong> {{ status_text }} </strong>
+                                            {% else %}
+                                            <strong>Thank you for registering for {{ event.name }} </strong>
+                                            {% endif %}
+                                        </h1>
                                         <h1 align="center"
                                             style="Margin:0;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:30px;font-style:normal;font-weight:normal;line-height:36px;color:#ffffff"
                                             class=" es-m-txt-c"><strong>Shore Fest'24 Events!!</strong></h1>
