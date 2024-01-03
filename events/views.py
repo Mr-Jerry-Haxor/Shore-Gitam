@@ -23,7 +23,7 @@ def send_pass_mail(team_id, event_id):
     subject, from_email= f"SHORE'24 GITAM,Thank you for Registering", settings.EMAIL_HOST_USER
     html_content1 = get_template('registered_mail.html').render({
         "event": event, "team": team, "teammates": participants,
-        "status_link":  f'https://shore.gitam.edu/events/success/{team.team_hash}'
+        "status_link":  f'https://shore.gitam.edu/registrations/success/{team.team_hash}'
     })
     msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
     msg.content_subtype = "html"
@@ -40,7 +40,7 @@ def send_pass_mail_hackathon(team_id, event_id):
     subject, from_email= f"SHORE'24 GITAM,Thank you for Registering", settings.EMAIL_HOST_USER
     html_content1 = get_template('registered_mail.html').render({
         "event": event, "team": team, "teammates": participants,
-        "status_link":  f'https://shore.gitam.edu/events/hackathon/success/{team.team_hash}'
+        "status_link":  f'https://shore.gitam.edu/registrations/hackathon/success/{team.team_hash}'
     })
     msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
     msg.content_subtype = "html"
@@ -58,7 +58,7 @@ def send_pass_mail_updated(team_id, event_id):
     subject, from_email= f"SHORE'24 GITAM, Your team status is updated to {team.status}", settings.EMAIL_HOST_USER
     html_content1 = get_template('registered_mail.html').render({
         "event": event, "team": team, "teammates": participants,
-        "status_link":  f'https://shore.gitam.edu/events/success/{team.team_hash}',
+        "status_link":  f'https://shore.gitam.edu/registrations/success/{team.team_hash}',
         "status_text" : f"Your Team status is updated to {team.status}",
     })
     msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
