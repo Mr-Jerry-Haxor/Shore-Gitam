@@ -30,6 +30,9 @@
     gtag('js', new Date());
 
     gtag('config', 'G-FTVGGBL7NF');
+  // Call the function when the page loads
+  window.onload = setGIFSource;
+
     </script>
     <style>
       body {
@@ -233,6 +236,13 @@
         margin-top: 10rem;
         margin-bottom: 6rem;
       }
+      @media only screen and (max-device-width: 480px),
+       (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+    .fixed-gif-container {
+        display: none;
+    }
+}
 
       #about-img img {
         height: 550px;
@@ -463,13 +473,15 @@
             color: #ffffff;
         }
         .circle-1 img{
+          width:350px;
+            height:350px;
             border-radius: 50%;
            
         }
         .circle-2 img{
             border-radius: 50%;
-            width:250px;
-            height:250px;
+            width:350px;
+            height:350px;
         }
         .title {
         font-size: 1.6rem;
@@ -1347,6 +1359,7 @@
         transform: translate(-50%, -50%);
         left: 50%;
         top: 50%;
+        
         border-radius: 8px;
         font-family: Helvetica;
         display: none;
@@ -1362,6 +1375,7 @@
 
       .image-container img {
         width: 100%;
+        border: 5px solid rgb(255, 255, 255);
         height: auto;
         display: block;
       }
@@ -1400,6 +1414,7 @@
       }
 
       @media only screen and (max-width: 600px) {
+        
         .popup {
           width: 90%;
           height: auto;
@@ -1482,8 +1497,8 @@
         <div id="about-title">ABOUT SHORE'24</div>
         <div id="about-text">
           <p style="text-align:justify;padding-top:1.3rem">
-            Welcome to SHORE Fest - GITAM'S annual fest<br>
- An otherworldly experience with a kaleidoscope of cultural delicacies laced with music, art , food, sports and everything in between. With a rich history from years' worth of people before us,SHORE 2024 is a hot pot of art and athleticism. The beautiful yet hustling shores of Vizag inspire and embody the spirit of Shore, just as the calming briny breezes and the crashing waves illustrate the youthful energy of Gitamites. Like the namesake of the fest “SHORE” suggests, lets make the “SOUND OF JOY”, and welcome the new year with a blast.
+            Welcome to SHORE Fest - GITAM University's Annual Fest<br>
+ An otherworldly experience with a kaleidoscope of cultural delicacies laced with music, art, food, sports and everything in between. With a rich history from years' worth of people before us, SHORE 2024 is a hot pot of art and athleticism. The beautiful yet hustling shores of Vizag inspire and embody the spirit of Shore, just as the calming briny breezes and the crashing waves illustrate the youthful energy of Gitamites.
           </p>
 
           <br />
@@ -1526,7 +1541,7 @@
       </div>
         <div class="circle-1">
           <img
-            src="https://res.cloudinary.com/jerryhaxor/image/upload/c_scale,w_250/v1703713659/shore%2024/shore24%20homepage/gender_equality_ag7v7r.jpg"
+            src="{% static 'sdg03.png'%}"
             alt="Image 1"
             class="shadow-md hover:shadow-lg id=image1"
           />
@@ -1539,7 +1554,7 @@
         </div>
         <div class="circle-2" >
           <img id=image2
-            src="https://png.pngtree.com/png-vector/20221109/ourmid/pngtree-wellbeing-woman-calm-mind-in-yoga-png-image_6439501.png"
+            src="{% static 'sdg05.png'%}"
             alt="Image 2"
           />
         </div>
@@ -1762,12 +1777,12 @@
         <div class="accordion-item">
           <button id="accordion-button-1" aria-expanded="false">
             <span class="accordion-title"
-              >What are the dates of SHORE FEST 2024?</span
+              >What are the dates of SHORE Fest'24?</span
             ><span class="icon" aria-hidden="true"></span>
           </button>
           <div class="accordion-content">
             <p>
-              The 2nd Edition of SHORe FEST will be organized from 2nd to 4th
+              The 2nd Edition of SHORE Fest will be organized from 2nd to 4th
               FEBRUARY 2024.
             </p>
           </div>
@@ -2081,7 +2096,7 @@
             />
           </div>
           <div id="address">
-            <div>Visakhapatnam Campus</div>
+            <div>GITAM (Deemed to be University)</div>
             <div>Gandhi Nagar, Rushikonda,</div>
             <div>Visakhapatnam - 530045</div>
             <div>Andhra Pradesh, India</div>

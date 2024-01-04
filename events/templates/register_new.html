@@ -82,7 +82,7 @@ Register
             </div>
             <div class="mb-6">
                 <div>
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email ID</label>
                     <input type="email" id="email" name="email_1"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Enter email" required />
@@ -122,7 +122,7 @@ Register
             </div>
             <div class="mb-6">
                 <div>
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email ID</label>
                     <input type="email" id="email" name="email_{{ i }}"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Enter email" required />
@@ -144,6 +144,11 @@ Register
             {% endfor %}
 
             <div id="additionalPlayers"></div>
+            <button type="button" onclick="addPlayer()"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                Add Participant
+            </button>
             <div class="py-3">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="endorsment_file">Upload Endorsment
                 file</label>
@@ -151,22 +156,62 @@ Register
                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 id="endorsment_file" name="endorsment_file" type="file" required>
             </div>
-            <button type="button" onclick="addPlayer()"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                Add Participant
-            </button>
-            <button type="submit"
-                class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                Register
-            </button>
-        </form>
-    </div>
-</div>
-<script>
-    let minParticipants = {{ sport.min_team_size }};
-    let participantCount = {{ sport.min_team_size }};
-    let maxParticipants = {{ sport.max_team_size }};
+            <br>
+              <div class="max-w-xl mx-auto">
+                <div class="bg-white p-6 rounded-md shadow-md mb-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                      <input id="link-checkbox-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="link-checkbox-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        I, hereby acknowledge and agree that I am attending Shore Fest'24 at GITAM (Deemed to be University), Visakhapatnam, from 2nd February 2024 to 4th February 2024. I understand and expressly acknowledge that GITAM University, its representatives, or organizers of Shore Fest'24 are not responsible for any untoward incident, injury, loss, or damage that may occur to me during my time on the premises or while participating in the event.
+                    </label>
+                    </div>
+                    <div class="checkbox-indicator"></div>
+                  </div>
+                </div>
+              
+                <div class="bg-white p-6 rounded-md shadow-md mb-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                      <input id="link-checkbox-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                      <label for="link-checkbox-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        I agree that I am responsible for my own safety, well-being, and belongings during the event, and I will take necessary precautions to ensure my personal safety and security. In the circumstance of my act in violation of rules and regulations and and any damage or injury caused to me due to my violation, I release GITAM University, its officers, employees, and event organizers from any liability, claims, or demands for personal injury, loss, or damage to personal property that may arise during my attendance at Shore Fest'24. By attending Shore Fest'24 at GITAM University, I hereby acknowledge that I have read and understood and agreed to the regulations and agree voluntarily to the terms and conditions set by GITAM(Deemed to be University) and by Shore Fest24 committee.
+                    </label>
+                    </div>
+                    <div class="checkbox-indicator"></div>
+                  </div>
+                </div>
+              
+                <div class="text-center" id="submit-button" style="display: none;">
+                  <button type="submit" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    Register
+                  </button>
+                </div>
+              </div>
+            </form>
+        </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var checkbox1 = document.getElementById('link-checkbox-1');
+                var checkbox2 = document.getElementById('link-checkbox-2');
+                var submitButton = document.getElementById('submit-button');
+            
+                function updateSubmitButton() {
+                  if (checkbox1.checked && checkbox2.checked) {
+                    submitButton.style.display = 'block';
+                  } else {
+                    submitButton.style.display = 'none';
+                  }
+                }
+            
+                checkbox1.addEventListener('change', updateSubmitButton);
+                checkbox2.addEventListener('change', updateSubmitButton);
+              });
+              
+            let minParticipants = {{ sport.min_team_size }};
+            let participantCount = {{ sport.min_team_size }};
+            let maxParticipants = {{ sport.max_team_size }};
     function addPlayer() {
         const container = document.getElementById("additionalPlayers");
 

@@ -139,6 +139,7 @@ def file_upload_path_hackthon(instance, filename):
 class Hackathon(models.Model):
     event_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
+    description = models.TextField(null=True, blank=True)
     event_type = models.CharField(max_length=100, null=False, blank=False, choices=hackathon_choices)
     image = models.ImageField(upload_to=event_file_upload_path, null=True, blank=True)
     min_team_size = models.IntegerField(null=False, blank=False)

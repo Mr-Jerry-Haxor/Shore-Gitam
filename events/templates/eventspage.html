@@ -208,11 +208,15 @@
                 
                 <div class="card__copy">
                 <!--  border-bottom: 2px solid #ffffff; -->
-                {% if event.min_team_size == event.max_team_size %}
-                    <p style="margin-bottom: 10px; color: #ffffff;"><strong>Team Limit:</strong> Each team can have {{ event.min_team_size }} members.</p>
-                {% else %}
-                    <p style="margin-bottom: 10px; color: #ffffff;"><strong>Team Limit:</strong> Each team can have {{ event.min_team_size }} to {{ event.max_team_size }} members.</p>
-                {% endif %}
+                <h2 style="color: #ffffff;">Team Limit</h2>
+                <ul  style="list-style-type: disc; margin-bottom: 15px; margin-left:45px !important;">
+                  <li>Each university can have {{ event.no_of_teams }} {{ event.no_of_teams|pluralize:"team, teams" }}.</li>
+                  {% if event.min_team_size == event.max_team_size %}
+                  <li>Each team can have {{ event.min_team_size }} members.</li>
+                  {% else %}
+                  <li>Each team can have {{ event.min_team_size }} to {{ event.max_team_size }} members.</li>
+                  {% endif %}
+                </ul>
 
                 {% if event.description %}
                 <h3 style="color: #ffffff; margin-bottom: 10px;font-weight:bolder">Description:</h2>
@@ -252,7 +256,7 @@
                   </ol>
                   {% endif %}
                   <br/>
-                  <div class="flex items-center mb-4">
+                  {% comment %} <div class="flex items-center mb-4">
                     <input
                       class="checkbox-agree"
                       id="checkbox-{{ forloop.counter }}"
@@ -266,7 +270,7 @@
                       class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                       style="color:white"
                       >
-                      I,hereby acknowledge and agree that I am attending Shore Fest'24 at GITAM (Deemed to be University), Visakhapatnam, from 2nd February 2024 to 4th February 2024.
+                      I, hereby acknowledge and agree that I am attending Shore Fest'24 at GITAM (Deemed to be University), Visakhapatnam, from 2nd February 2024 to 4th February 2024.
                       I understand and expressly acknowledge that GITAM University, its representatives, or organizers of Shore Fest'24 are not responsible for any untoward incident, injury, loss, or damage that may occur to me during my time on the premises or while participating in the event.
                       </label>
                   </div>
@@ -289,7 +293,7 @@
                       In the circumstance of my act in violation of rules and regulations and and any damage or injury caused to me due to my violation, I release GITAM University, its officers, employees, and event organizers from any liability, claims, or demands for personal injury, loss, or damage to personal property that may arise during my attendance at Shore Fest'24.
                       By attending Shore Fest'24 at GITAM University, I hereby acknowledge that I have read and understood and agreed to  the regulations and agree voluntarily to the terms and conditions set by GITAM(Deemed to be University) and by Shore Fest24 committee.
                       </label>
-                  </div>
+                  </div> {% endcomment %}
                   <div class="flex items-center mb-4">
                     <input
                       class="checkbox-agree"
@@ -301,10 +305,10 @@
                       />
                     <label
                       for="checkbox2-{{ forloop.counter }}"
-                      class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      class="ms-4 text-sm font-medium text-gray-900 dark:text-gray-300"
                       style="color:white"
                       >
-                      These terms and conditions are tentive and might change in the future.shore committee has the autothority to change accordingly.</label>
+                      I, accept all the terms and conditions.These terms and conditions are tentative and might change in the future. The SHORE Committee has the autothority to change accordingly.</label>
                   </div>
                   <br />
                   <center>
@@ -341,17 +345,37 @@
     <!-- /container -->
     <!-- JS -->
     <script>
-          let isCheckboxChecked = false;
-          let isCheckbox1Checked = false;
+          let isCheckboxChecked = true;
+          let isCheckbox1Checked = true;
           let isCheckbox2Checked = false;
           
           {% for event in events %}
-          var checkbox_{{ forloop.counter }} = document.getElementById('checkbox-{{ forloop.counter }}');
-          var checkbox1_{{ forloop.counter }} = document.getElementById('checkbox1-{{ forloop.counter }}');
+          // var checkbox_{{ forloop.counter }} = document.getElementById('checkbox-{{ forloop.counter }}');
+          // var checkbox1_{{ forloop.counter }} = document.getElementById('checkbox1-{{ forloop.counter }}');
           var checkbox2_{{ forloop.counter }} = document.getElementById('checkbox2-{{ forloop.counter }}');
 
           var registrationDiv_{{ forloop.counter }} = document.getElementById('registration-div-{{ forloop.counter }}');
 
+          checkbox2_{{ forloop.counter }}.addEventListener('change', function () {
+            if (checkbox2_{{ forloop.counter }}.checked) {
+              isCheckbox2Checked = true;
+            } else {
+              isCheckbox2Checked = false;
+            }
+          })
+
+          checkbox2_{{ forloop.counter }}.addEventListener('change', function () {
+            if (isCheckboxChecked && isCheckbox1Checked && isCheckbox2Checked) {
+              registrationDiv_{{ forloop.counter }}.style.display = 'block';
+            } else {
+              registrationDiv_{{ forloop.counter }}.style.display = 'none';
+            }
+          })
+
+          {% endfor %}
+
+          {% comment %} 
+          /*
           checkbox_{{ forloop.counter }}.addEventListener('change', function () {
             if (checkbox_{{ forloop.counter }}.checked) {
               isCheckboxChecked = true;
@@ -367,15 +391,11 @@
               isCheckbox1Checked = false;
             }
           })
+          */ {% endcomment %}
 
-          checkbox2_{{ forloop.counter }}.addEventListener('change', function () {
-            if (checkbox2_{{ forloop.counter }}.checked) {
-              isCheckbox2Checked = true;
-            } else {
-              isCheckbox2Checked = false;
-            }
-          })
-
+          
+{% comment %} 
+          /*
           checkbox_{{ forloop.counter }}.addEventListener('change', function () {
             if (isCheckboxChecked && isCheckbox1Checked && isCheckbox2Checked) {
               registrationDiv_{{ forloop.counter }}.style.display = 'block';
@@ -392,15 +412,8 @@
             }
           })
 
-          checkbox2_{{ forloop.counter }}.addEventListener('change', function () {
-            if (isCheckboxChecked && isCheckbox1Checked && isCheckbox2Checked) {
-              registrationDiv_{{ forloop.counter }}.style.display = 'block';
-            } else {
-              registrationDiv_{{ forloop.counter }}.style.display = 'none';
-            }
-          })
-
-          {% endfor %}
+          */ {% endcomment %}
+          
           
           
           {% comment %}  
