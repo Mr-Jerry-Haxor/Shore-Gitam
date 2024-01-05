@@ -210,7 +210,7 @@
                 <!--  border-bottom: 2px solid #ffffff; -->
                 <h2 style="color: #ffffff;">Team Limit</h2>
                 <ul  style="list-style-type: disc; margin-bottom: 15px; margin-left:45px !important;">
-                  {% if title== 'Sports' %}
+                  {% if title == 'Sports' %}
                   <li>Each university can have {{ event.no_of_teams }} {{ event.no_of_teams|pluralize:"team, teams" }}.</li>
                   {% endif %}
                   {% if event.min_team_size == event.max_team_size %}
