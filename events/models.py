@@ -25,7 +25,7 @@ class College(models.Model):
     college_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     abbreviation = models.CharField(max_length=20, unique=True)
-    passkey = models.CharField(max_length=100, null=True, blank=True, unique=False)
+    passkey = models.CharField(max_length=100, null=True, blank=True, unique=True)
 
     def save(self, *args, **kwargs):
         # Replace spaces with underscores and capitalize letters
