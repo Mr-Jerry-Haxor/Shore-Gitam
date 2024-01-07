@@ -91,6 +91,15 @@
         background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
       }
     </style>
+    <style>
+      @font-face {
+        font-family: 'Samarn';
+        font-size: xx-large;
+        font-weight: bold;
+        src: url('https://res.cloudinary.com/jerryhaxor/raw/upload/v1704624999/shore%2024/SAMARO___sdiqwo.woff') format('woff');
+        /* You may need to adjust the format based on the file type */
+      }
+    </style>
   </head>
   <body class="demo-3" style="font-family: Helvetica; background: linear-gradient(to bottom right, #276fff, #ce3345, #4575de);">
     {% include 'messages.html' %}
@@ -201,8 +210,8 @@
               <div class="card__content">
                 <i class="card__btn-close fa fa-times"></i>
                 <div class="card__caption">
-                  <h2 class="card__title title " style="color: #ffffff;">{{ event.name.title }}</h2>
-                  <p class="card__subtitle title" style="color: #ffffff;">{{ event.name.title }} Competition</p>
+                  <h2 class="card__title title " style="color: #ffffff; text-shadow: 0px 4px 10px rgb(0, 0, 0);font-family: 'Samarn' !important;font-size: 50px !important">{{ event.name.title }}</h2>
+                  <p class="card__subtitle title" style="color: #ffffff; text-shadow: 0px 4px 10px rgb(0, 0, 0);">{{ event.name.title }} Competition</p>
                 </div>
 
                 

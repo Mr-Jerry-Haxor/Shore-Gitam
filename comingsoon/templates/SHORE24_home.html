@@ -19,6 +19,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@900&display=swap" rel="stylesheet">
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>SHORE 24</title>
     <link rel="icon" type="image/x-icon" href="{% static 'shore_24_clogo.png'%}">
@@ -187,6 +189,7 @@
           -webkit-transition: all 0.2s ease;
           transition: all 0.2s ease;
         }
+        
       }
       ul {
         color: white;
@@ -236,13 +239,6 @@
         margin-top: 10rem;
         margin-bottom: 6rem;
       }
-      @media only screen and (max-device-width: 480px),
-       (-webkit-min-device-pixel-ratio: 2),
-       (min-resolution: 192dpi) {
-    .fixed-gif-container {
-        display: none;
-    }
-}
 
       #about-img img {
         height: 550px;
@@ -273,12 +269,12 @@
         font-size: 3rem;
         color: white;
         font-weight: 900;
-        font-family: "MADE Outer Sans Alt";
+        font-family: 'Raleway';
         text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
       }
       .shoredates {
         font-size: 40px;
-        font-family: "MADE Outer Sans";
+        font-family: 'Raleway';
         font-weight: 700;
         color: rgba(255, 255, 255, 1);
         text-align: center;
@@ -286,7 +282,7 @@
       }
       #venue {
         font-size: 18px;
-        font-family: "MADE Outer Sans Alt";
+        font-family: 'Raleway';
         font-weight: 700;
         color: rgba(255, 255, 255, 1);
         text-align: center;
@@ -384,13 +380,13 @@
         }
         .shoredates {
           font-size: 16px !important;
-          font-family: "MADE Outer Sans Alt";
+          font-family: 'Raleway';
           font-weight: 700;
           color: rgba(255, 255, 255, 1);
         }
         #venue {
           font-size: 12px !important;
-          font-family: "MADE Outer Sans Alt";
+          font-family: 'Raleway';
           font-weight: 700;
           color: rgba(255, 255, 255, 1);
           text-align: center;
@@ -424,7 +420,7 @@
         .shoredates {
           text-align: center;
           font-size: 15px !important;
-          font-family: "MADE Outer Sans Alt";
+          font-family: 'Raleway';
           font-weight: 700;
           color: rgba(255, 255, 255, 1);
         }
@@ -455,7 +451,7 @@
         }
         .shoredates {
           font-size: 16px !important;
-          font-family: "MADE Outer Sans Alt";
+          font-family: 'Raleway';
           font-weight: 700;
           color: rgba(255, 255, 255, 1);
         }
@@ -488,7 +484,7 @@
         padding-bottom: 0.5rem;
         color: white;
         font-weight: 900;
-        font-family: "MADE Outer Sans Alt";
+        font-family: 'Raleway';
         text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
         text-align: center;
       }
@@ -569,7 +565,7 @@
         font-size: 3rem;
         color: white;
         font-weight: 900;
-        font-family: "MADE Outer Sans Alt";
+        font-family: 'Raleway';
         text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
       }
 
@@ -656,6 +652,14 @@
           width: 30rem !important;
           box-sizing: border-box;
         }
+        li {
+        line-height: 1rem;
+        font-weight: bolder;
+        font-size: 0.8rem !important;
+        text-align: left;
+        color: #fff;
+        margin: 1rem;
+      }
       }
 
       @media only screen and (max-width: 465px) {
@@ -872,7 +876,7 @@
         font-size: 2rem;
         color: white;
         font-weight: 900;
-        font-family: "MADE Outer Sans";
+        font-family: 'Raleway';
 
         text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
       }
@@ -904,11 +908,11 @@
         }
       }
       .gallery-title {
-        font-size: 2rem;
+        font-size: 3rem;
         color: white;
         font-weight: 900;
         margin: 5rem;
-        font-family: "MADE Outer Sans";
+        font-family: 'Raleway';
         text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
       }
       .home {
@@ -945,7 +949,7 @@
         left: 50%;
         font-size: 2rem;
         color: white;
-        font-family: "MADE Outer Sans";
+        font-family: 'Raleway';
         text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
         transform: translateX(-50%);
         padding: 5px;
@@ -982,11 +986,11 @@
       #culture-text,
       #sports-text,
       #technicals-text {
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: white;
         font-weight: 900;
 
-        font-family: "MADE Outer Sans";
+        font-family: 'Raleway';
         text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
         color: white;
 
@@ -1182,6 +1186,7 @@
       .footer {
         background-image: url(https://res.cloudinary.com/jerryhaxor/image/upload/v1703706679/shore%2024/shore24%20homepage/footer_yzv6yc.png);
         background-size: cover;
+        z-index: 100 !important;
       }
       
 
@@ -1191,15 +1196,18 @@
         font-family: "Noto Sans", sans-serif;
         color: white;
         font-weight: 900;
+        z-index: 100 !important;
       }
 
       .social-media a {
         text-decoration: none;
         color: white;
+        z-index: 100 !important;
       }
 
       .social-media a:hover {
         color: #c0c0c0;
+        z-index: 10 !important;
       }
 
       .shore-img {
@@ -1238,12 +1246,14 @@
       .social-media {
         display: flex;
         justify-content: space-between;
+        z-index: 10 !important; 
       }
 
       .social-media-text {
         font-family: "Josefin Sans", sans-serif;
         font-family: "Noto Sans", sans-serif;
         color: white;
+        z-index: 10 !important;
       }
 
       .media-picture {
@@ -1490,7 +1500,10 @@
       </div>
     </div>
     <div class="fixed-gif-container">
+      <img src="{% static 'gitphin3.gif'%}" alt="Your GIF" />
+      {% comment %}
       <img src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706968/shore%2024/shore24%20homepage/Gif_itqoer.gif" alt="Your GIF" />
+      {% endcomment %}
     </div>
     <div class="about">
       <div id="about-part1">
@@ -2105,7 +2118,7 @@
         </div>
         <div id="social-media-container">
           <h5 id="social-media-title">Social media links</h5>
-          <div class="social-media">
+          <div class="z-10 social-media">
             <div class="social-media-text" id="instagram">
               <a href="https://www.instagram.com/shore.gitam/"
                 ><img
