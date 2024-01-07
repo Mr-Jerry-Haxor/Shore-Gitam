@@ -24,8 +24,13 @@ def generate_md5(user_string):
 class College(models.Model):
     college_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
-    abbreviation = models.CharField(max_length=10, unique=True)
+    abbreviation = models.CharField(max_length=20, unique=True)
     passkey = models.CharField(max_length=100, null=True, blank=True, unique=False)
+
+    def save(self, *args, **kwargs):
+        # Replace spaces with underscores and capitalize letters
+        self.abbreviation = self.abbreviation.replace(' ', '_').upper()
+        super(College, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -41,6 +46,7 @@ def event_file_upload_path(instance, filename):
 class Event(models.Model):
     event_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
+    subtitle = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     event_type = models.CharField(max_length=100, null=False, blank=False, choices=event_choices)
     image_url = models.URLField(max_length=1000, null=True, blank=True)
@@ -139,6 +145,7 @@ def file_upload_path_hackthon(instance, filename):
 class Hackathon(models.Model):
     event_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
+    subtitle = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     event_type = models.CharField(max_length=100, null=False, blank=False, choices=hackathon_choices)
     image = models.ImageField(upload_to=event_file_upload_path, null=True, blank=True)
