@@ -20,14 +20,33 @@ Check In & Check Out
                     Student Email
                 </label>
                 <input type="email" id="email" name="email"
+                {% if user_email %} value="{{ user_email }}" disabled {% endif %}
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     placeholder="Enter Student's Email" required>
-            </div>
-
-            <button type="submit"
-                class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                Submit
-            </button>
+                
+                {% if not otp_sent %}
+                    <br>
+                    <button type="submit"
+                        name="send-otp"
+                        class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Send OTP
+                    </button>
+                {% elif otp_sent %}
+                    <label for="otp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        OTP
+                    </label>
+                    <input type="number" id="otp" name="otp"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        placeholder="Enter OTP" required>
+                    <input type="text" name="email" value="{{ user_email }}" hidden >
+                    <br>
+                    <button 
+                        type="submit"
+                        name="submit-button"
+                        class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                        Submit
+                    </button>
+                {% endif %}
         </form>
     </div>
 </div>

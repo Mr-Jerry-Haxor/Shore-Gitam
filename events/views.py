@@ -10,6 +10,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.conf import settings
 from .models import College, Event, Team, Participants, Hackathon, HackathonTeam, HackathonParticipants
+from payments.models import nongitamite
 
 
 def send_pass_mail(team_id, event_id):
@@ -76,7 +77,6 @@ def sports_home(request):
     events = Event.objects.filter(event_type="sports")
     context["events"] = events
     context["title"] = "Sports"
-
     return render(request, "eventspage.html", context)
 
 
@@ -290,6 +290,27 @@ def register(request, sport_name):
                     isCaptain=True,
                 )
                 captain.save()
+                # check if the captain mail is in nongitamite table , if yes update rest details and if not insert details
+                if nongitamite.objects.filter(email=captain_email).exists():
+                    member1 = nongitamite.objects.get(email=captain_email)
+                    member1.name = captain_name
+                    member1.mobile = captain_phone_number
+                    member1.college = college.name
+                    member1.accommodation =True if captain_accomdation == "yes" else False
+                    member1.event_name = sport.name
+                    member1.event_type = sport.event_type
+                    member1.save()
+                else:
+                    member1 = nongitamite.objects.create(
+                        name=captain_name,
+                        email=captain_email,
+                        mobile=captain_phone_number,
+                        college=college.name,
+                        accommodation=True if captain_accomdation == "yes" else False,
+                        event_name=sport.name,
+                        event_type=sport.event_type,
+                    )
+                    member1.save()
             except IntegrityError:
                 messages.error(
                     request,
@@ -342,6 +363,26 @@ def register(request, sport_name):
                         team=team,
                     )
                     player.save()
+                    if nongitamite.objects.filter(email=email).exists():
+                        member1 = nongitamite.objects.get(email=email)
+                        member1.name = name
+                        member1.mobile = phone_number
+                        member1.college = college.name
+                        member1.accommodation =True if accomdation == "yes" else False,
+                        member1.event_name = sport.name
+                        member1.event_type = sport.event_type
+                        member1.save()
+                    else:
+                        member1 = nongitamite.objects.create(
+                            name=name,
+                            email=email,
+                            mobile=phone_number,
+                            college=college.name,
+                            accommodation=True if accomdation == "yes" else False,
+                            event_name=sport.name,
+                            event_type=sport.event_type,
+                        )
+                        member1.save()
                 except IntegrityError:
                     messages.error(
                         request,
@@ -376,6 +417,14 @@ def success(request, team_hash):
 
     context["team"] = team
     context["players"] = players
+
+    if request.method == "POST":
+        noc_file = request.FILES.get("noc_file")
+        player_email = request.POST.get("player_email")
+
+        player = Participants.objects.get(email=player_email)
+        player.nocFile = noc_file
+        player.save()
 
     return render(request, "success.html", context)
 
@@ -573,6 +622,26 @@ def register_hackathon(request, hackathon_name):
                 isCaptain=True,
             )
             captain.save()
+            if nongitamite.objects.filter(email=captain_email).exists():
+                member1 = nongitamite.objects.get(email=captain_email)
+                member1.name = captain_name
+                member1.mobile = captain_phone_number
+                member1.college = college.name
+                member1.accommodation = True if captain_accomdation == "yes" else False
+                member1.event_name = hackathon.name
+                member1.event_type = "Hackathon"
+                member1.save()
+            else:
+                member1 = nongitamite.objects.create(
+                    name=captain_name,
+                    email=captain_email,
+                    mobile=captain_phone_number,
+                    college=college.name,
+                    accommodation=True if captain_accomdation == "yes" else False,
+                    event_name = hackathon.name,
+                    event_type = "Hackathon"
+                )
+                member1.save()
         except IntegrityError:
             messages.error(
                 request,
@@ -620,6 +689,26 @@ def register_hackathon(request, hackathon_name):
                     team=team,
                 )
                 player.save()
+                if nongitamite.objects.filter(email=email).exists():
+                    member1 = nongitamite.objects.get(email=email)
+                    member1.name = name
+                    member1.mobile = phone_number
+                    member1.college = college.name
+                    member1.accommodation =True if accomdation == "yes" else False,
+                    member1.event_name = hackathon.name
+                    member1.event_type = "Hackathon"
+                    member1.save()
+                else:
+                    member1 = nongitamite.objects.create(
+                        name=name,
+                        email=email,
+                        mobile=phone_number,
+                        college=college.name,
+                        accommodation=True if accomdation == "yes" else False,
+                        event_name = hackathon.name,
+                        event_type = "Hackathon",
+                    )
+                    member1.save()
             except IntegrityError:
                 messages.error(
                     request,
@@ -668,15 +757,19 @@ def registered_hackathon(request):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def hackathon_admin(request):
-    # should add hackathon staff, hackathon admin
-    context = {}
-    teams = HackathonTeam.objects.all()
-    context["teams"] = teams
-    return render(request, "hackathon/hackathon_admin.html", context)
+    if request.user.events_cultural or request.user.events_cultural_staff:
+        context = {}
+        teams = HackathonTeam.objects.all()
+        context["teams"] = teams
+        return render(request, "hackathon/hackathon_admin.html", context)
+    else:
+        messages.error(request, "You are not authorized to access this page.")
+        return redirect("events:eventshome")
+
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def view_hackathon_team(request, team_hash):
-    # if request.user.events_cultural or request.user.events_cultural_staff:  # change this line
+    if request.user.events_cultural or request.user.events_cultural_staff:
         context = {}
         team = HackathonTeam.objects.get(team_hash=team_hash)
         participants = HackathonParticipants.objects.filter(team=team)
@@ -694,6 +787,6 @@ def view_hackathon_team(request, team_hash):
             return redirect("events:hackathon_admin")
 
         return render(request, "hackathon/hackathon_view_team.html", context)
-    # else:
-    #     messages.error(request, "You are not authorized to access this page.")
-    #     return redirect("events:eventshome")
+    else:
+        messages.error(request, "You are not authorized to access this page.")
+        return redirect("events:eventshome")

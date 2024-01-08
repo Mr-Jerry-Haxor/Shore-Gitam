@@ -1,17 +1,36 @@
 import pytz
+import threading
 from datetime import datetime
 from django.utils import timezone
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
+from django.core.mail import send_mail
+from django.template.loader import get_template
+from django.conf import settings
+from .utils import generate_otp
 from .decorators import email_check_required
 from .models import HospitalityUser, Meal, MealHistory
 from .hash import generate_md5
 
+
+def send_otp_email(user_email, otp):
+    subject = f"SHORE'24 GITAM, OTP {otp}"
+    html_content = get_template('otp_mail.html').render({"user_otp": otp})
+
+    try:
+        send_mail(
+            subject=subject,
+            message="",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[user_email],
+            html_message=html_content,
+        )
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def home(request):
@@ -25,10 +44,9 @@ def food(request):
     context = {}
     email = request.user.email
 
-    desired_timezone = pytz.timezone("Asia/Kolkata")
     user = HospitalityUser.objects.get(email=email)
     context["user_details"] = user
-    server_datetime = timezone.now().astimezone(desired_timezone)
+    server_datetime = timezone.now()
     server_time = server_datetime.time()
     server_date = server_datetime.date()
 
@@ -66,8 +84,6 @@ def food(request):
         context["message"] = "No meal found"
         return render(request, "food.html", context)
 
-    return render(request, "food.html", context)
-
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def scan(request):
@@ -78,8 +94,7 @@ def scan(request):
         count = 0
         context["count"] = count
 
-        desired_timezone = pytz.timezone("Asia/Kolkata")
-        server_datetime = timezone.now().astimezone(desired_timezone)
+        server_datetime = timezone.now()
         server_time = server_datetime.time()
         server_date = server_datetime.date()
 
@@ -169,18 +184,56 @@ def checkInOutHome(request):
         return redirect('corehome')
     else:
         context = {}
+        context["otp_sent"] = False
 
         if request.POST:
-            email = request.POST.get("email")
-            try:
-                user = HospitalityUser.objects.get(email=email)
-                if user.checkout_status:
-                    context["info"] = f"User {email} has already checked out."
+            if 'send-otp' in request.POST:
+                user_email = request.POST.get("email")
+                try:
+                    user = HospitalityUser.objects.get(email=user_email)
+                    if user.checkout_status:
+                            context["info"] = f"User {user_email} has already checked out."
+                            messages.info(request, f"User {user_email} has already checked out.")
+                            return render(request, "checkInOut.html", context)
+
+                    otp = generate_otp()
+                    user.otp = otp
+                    user.save()
+
+                    email_thread = threading.Thread(
+                        target=send_otp_email, args=(user_email, otp)
+                    )
+                    email_thread.start()
+
+                    context["info"] = f"OTP sent to {user_email}"
+                    messages.info(request, f"OTP sent to {user_email}")
+                    context["otp_sent"] = True
+                    context["user_email"] = user_email
                     return render(request, "checkInOut.html", context)
-                return redirect("hospitality:checkInOutForm", email=email)
-            except HospitalityUser.DoesNotExist:
-                context["error"] = f"User with email {email} does not exist."
-                return render(request, "checkInOut.html", context)
+                except HospitalityUser.DoesNotExist:
+                    context["error"] = f"User with email {user_email} does not exist."
+                    messages.error(request, f"User with email {user_email} does not exist.")
+                    return render(request, "checkInOut.html", context)
+            elif 'submit-button' in request.POST:
+                email = request.POST.get("email")
+                otp = request.POST.get("otp")
+                try:
+                    user = HospitalityUser.objects.get(email=email)
+                    if user.otp != int(otp):
+                        context["error"] = "Invalid OTP"
+                        messages.error(request, "Invalid OTP")
+                        return render(request, "checkInOut.html", context)
+                    if user.checkout_status:
+                        context["info"] = f"User {email} has already checked out."
+                        messages.info(request, f"User {email} has already checked out.")
+                        return render(request, "checkInOut.html", context)
+                    return redirect("hospitality:checkInOutForm", email=email)
+                except HospitalityUser.DoesNotExist:
+                    context["error"] = f"User with email {email} does not exist."
+                    messages.error(request, f"User with email {email} does not exist.")
+                    return render(request, "checkInOut.html", context)
+        
+
         return render(request, "checkInOut.html", context)
 
 
@@ -190,7 +243,6 @@ def checkInOutForm(request, email):
         return redirect('corehome')
     else:
         context = {}
-        desired_timezone = pytz.timezone("Asia/Kolkata")
         user = HospitalityUser.objects.get(email=email)
         context["user"] = user
 
@@ -201,13 +253,13 @@ def checkInOutForm(request, email):
 
                 user.hostel = hostel
                 user.room_number = room_no
-                user.checkin = timezone.now().astimezone(desired_timezone)
+                user.checkin = timezone.now()
                 user.checkin_status = True
                 user.save()
 
                 return redirect("hospitality:checkInOutHome")
             elif "checkout" in request.POST:
-                user.checkout = timezone.now().astimezone(desired_timezone)
+                user.checkout = timezone.now()
                 user.checkout_status = True
                 user.save()
 

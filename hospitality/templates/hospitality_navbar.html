@@ -19,7 +19,7 @@
         </button>
         <div class="hidden w-full" id="navbar-hamburger">
             <ul class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                {% if request.user.hospitality_staff or request.user.hospitality_staff or request.user.president %}
+                {% if request.user.hospitality or request.user.hospitality_staff or request.user.president %}
                 <li>
                     <a href="{% url 'hospitality:checkInOutHome' %}"
                         class="block px-4 py-2 hover:bg-gray-100">

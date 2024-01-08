@@ -24,7 +24,7 @@ class HospitalityUser(models.Model):
     phone_number = models.CharField(max_length=255, null=False, unique=True)  # length should be 10
     meal_id = models.IntegerField(null=True, blank=True)
     qr_hash = models.CharField(max_length=255, null=True, blank=True)
-
+    otp = models.IntegerField(null=True, blank=True)
     checkin = models.DateTimeField(null=True, blank=True)
     checkout = models.DateTimeField(null=True, blank=True)
     hostel = models.CharField(

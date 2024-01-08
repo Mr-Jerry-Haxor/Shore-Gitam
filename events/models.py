@@ -103,6 +103,13 @@ class Team(models.Model):
         super().save(*args, **kwargs)
 
 
+def noc_file_upload_path(instance, filename):
+    current_datetime = timezone.now().strftime('%Y%m%d%H%M%S')
+    ext = filename.split('.')[-1]
+    new_filename = f"{instance.name}__NOC__{instance.college.name}__{instance.sport.name}__{current_datetime}.{ext}"
+    domain_folder = f"EventsRegistrations/{instance.sport.name}/{instance.college.name}"
+    return os.path.join(domain_folder, new_filename)
+
 class Participants(models.Model):
     participant_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -116,7 +123,7 @@ class Participants(models.Model):
     isPaid = models.BooleanField(default=False)
     isGitamite = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
-    # nocFile = models.FileField(upload_to="noc/", null=True, blank=True)
+    nocFile = models.FileField(upload_to=noc_file_upload_path, null=True, blank=True)
 
     def __str__(self):
         return self.name

@@ -83,15 +83,15 @@
       ol {
         list-style-type: disc; /* or other list-style-type like disc, circle, etc. */
       }
-
-    </style>
-    <style>
-      .card__content{
+      @media screen and (max-width: 600px) {
+            .title {
+                font-size: 20px;
+            }
+        }
+        .card__content{
         color: white !important;
         background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
       }
-    </style>
-    <style>
       @font-face {
         font-family: 'Samarn';
         font-size: xx-large;
@@ -210,7 +210,7 @@
               <div class="card__content">
                 <i class="card__btn-close fa fa-times"></i>
                 <div class="card__caption">
-                  <h2 class="card__title title " style="color: #ffffff; text-shadow: 0px 4px 10px rgb(0, 0, 0);font-family: 'Samarn' !important;font-size: 50px !important">{{ event.name.title }}</h2>
+                  <h2 class="card__title title " style="color: #ffffff; text-shadow: 0px 4px 10px rgb(0, 0, 0);font-family: 'Samarn' !important;font-size: 35px !important">{{ event.name.title }}</h2>
                   <p class="card__subtitle title" style="color: #ffffff; text-shadow: 0px 4px 10px rgb(0, 0, 0);">{{ event.name.title }} Competition</p>
                 </div>
 
