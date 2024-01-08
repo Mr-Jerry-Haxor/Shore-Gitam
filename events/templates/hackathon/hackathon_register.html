@@ -89,13 +89,15 @@
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div class="flex items-center ps-4 border border-gray-200 rounded">
                     <input id="bordered-radio-1" type="radio" value="yes" name="accomodation_1" required
+                        class="bordered-radio-1"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                     <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900">Yes</label>
                 </div>
                 <div class="flex items-center ps-4 border border-gray-200 rounded">
-                    <input id="bordered-radio-2" type="radio" value="no" name="accomodation_1" required
+                    <input id="bordered-radio-no-1" type="radio" value="no" name="accomodation_1" required
+                        class="bordered-radio-no-1"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                    <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium text-gray-900">No</label>
+                    <label for="bordered-radio-no-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900">No</label>
                 </div>
             </div>
 
@@ -128,14 +130,17 @@
             <h3 id="player1_accomdation" class="mb-4 font-semibold text-gray-900">Do you need accomodation?</h3>
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div class="flex items-center ps-4 border border-gray-200 rounded">
-                    <input id="bordered-radio-1" type="radio" value="yes" name="accomodation_{{ i }}" required
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                    <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900">Yes</label>
+                    <input id="bordered-radio-{{ i }}" type="radio" value="yes" name="accomodation_{{ i }}" required
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                        class="bordered-radio-1"
+                        >
+                    <label for="bordered-radio-{{ i }}" class="w-full py-4 ms-2 text-sm font-medium text-gray-900">Yes</label>
                 </div>
                 <div class="flex items-center ps-4 border border-gray-200 rounded">
-                    <input id="bordered-radio-2" type="radio" value="no" name="accomodation_{{ i }}" required
+                    <input id="bordered-radio-no-{{ i }}" type="radio" value="no" name="accomodation_{{ i }}" required
+                        class="bordered-radio-no-1"
                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                    <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium text-gray-900">No</label>
+                    <label for="bordered-radio-no-{{ i }}" class="w-full py-4 ms-2 text-sm font-medium text-gray-900">No</label>
                 </div>
             </div>
             {% endfor %}
@@ -228,7 +233,6 @@
                                 <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Those with a 1500/- pass will be provided with food coupons and accommodation in the hostel.</li>
                             </ul>
                         </div>
-                        
                         
                         <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                             <button id="acceptButton" data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
@@ -338,15 +342,17 @@
             <h3 id="player1_accomdation" class="mb-4 font-semibold text-gray-900">Do you need accomodation?</h3>
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div class="flex items-center ps-4 border border-gray-200 rounded">
-                        <input id="bordered-radio-1" type="radio" value="yes" name="accomodation_${participantCount}" required
+                        <input id="bordered-radio-${participantCount}" type="radio" value="yes" name="accomodation_${participantCount}" required
+                            class="bordered-radio-1"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                        <label for="bordered-radio-1"
+                        <label for="bordered-radio-${participantCount}"
                             class="w-full py-4 ms-2 text-sm font-medium text-gray-900">Yes</label>
                     </div>
                     <div class="flex items-center ps-4 border border-gray-200 rounded">
-                        <input id="bordered-radio-2" type="radio" value="no" name="accomodation_${participantCount}" required
+                        <input id="bordered-radio-no-${participantCount}" type="radio" value="no" name="accomodation_${participantCount}" required
+                            class="bordered-radio-no-1"
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                        <label for="bordered-radio-2"
+                        <label for="bordered-radio-no-1"
                             class="w-full py-4 ms-2 text-sm font-medium text-gray-900">No</label>
                     </div>
                 </div>

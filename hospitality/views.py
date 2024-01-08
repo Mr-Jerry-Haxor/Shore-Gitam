@@ -35,7 +35,6 @@ def send_otp_email(user_email, otp):
 @login_required(login_url="/auth/login/google-oauth2/")
 def home(request):
     context = {}
-
     return render(request, "home.html", context)
 
 @login_required(login_url="/auth/login/google-oauth2/")

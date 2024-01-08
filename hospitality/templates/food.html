@@ -5,6 +5,9 @@
 Hospitality
 {% endblock title %}
 {% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
 {% if hashed_string %}
 <script>
   setTimeout(() => {
@@ -197,7 +200,7 @@ Hospitality
     <span class="font-medium">Info!</span> {{ message }}
   </div>
   {% elif isMeal %}
-  <h2 class="scantext">Hello, {{ user_details.name }} 👋</h2>
+  <h2 class="scantext">Hello {{ user_details.name }}</h2>
   <center>
     <div class="container1">
       <div class="qr-code">
@@ -210,7 +213,7 @@ Hospitality
                   font-family: Outfit;
                   font-weight: bold;
                 ">
-            {{ meal }} QR
+            {{ meal }} QR &#127834;
           </p>
           <p style="color: #e2e8f0; font-family: Outfit">
             Name: {{ user_details.name }}

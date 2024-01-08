@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+import threading
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.shortcuts import render, redirect
@@ -396,7 +396,11 @@ def register(request, sport_name):
             )
 
             # sending email
-            send_pass_mail(team_id=team.team_id, event_id=sport.event_id)
+            email_thread = threading.Thread(
+                target=send_pass_mail, args=(team.team_id, sport.event_id)
+            )
+            email_thread.start()
+            # send_pass_mail(team_id=team.team_id, event_id=sport.event_id)
 
             return redirect("events:success", team_hash=team.team_hash)
             # return render(request, "success.html", context)
@@ -478,7 +482,11 @@ def view_team(request, team_hash):
             )
 
             # sending emails to all the participants upon status change
-            send_pass_mail_updated(team_id=team.team_id, event_id=team.sport.event_id)
+            email_thread = threading.Thread(
+                target=send_pass_mail_updated, args=(team.team_id, team.sport.event_id)
+            )
+            email_thread.start()
+            # send_pass_mail_updated(team_id=team.team_id, event_id=team.sport.event_id)
 
             if team.sport.event_type == "sports":
                 return redirect("events:registered_sports", sport_name=team.sport.name)

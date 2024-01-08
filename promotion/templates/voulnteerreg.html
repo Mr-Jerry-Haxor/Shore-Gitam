@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <title>Shore24 Gitam | Fest pass</title>
+    <style>
+      body {
+        background-color: rgb(255, 255, 255);
+      }
+      .title {
+        font-size: 40px;
+        font-family: Helvetica;
+        font-weight: 700;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+      }
+      .form-title {
+        font-size: 20px;
+        font-family: Helvetica;
+        font-weight: 700;
+        color: rgb(0, 0, 0);
+        margin-bottom: 1rem;
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+      }
+      body::-webkit-scrollbar {
+        display: none;
+      }
+      body {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .preview-container {
+        margin-top: 10px;
+      }
+
+      .preview-image {
+        max-width: 100%;
+        max-height: 200px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="h-screen flex items-center justify-center">
+      <div
+        style="height: 40rem"
+        class="overflow-y-scroll container mx-auto max-w-2xl p-6 border border-gray-200 rounded-lg shadow-lg"
+      >
+        {% if messages %}
+        {% for message in messages %}
+        <div class="p-4 mb-4 text-sm rounded-lg {% if message.tags == 'info' %}text-blue-800 bg-blue-50{% elif message.tags == 'error' %}text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400{% elif message.tags == 'success' %}text-green-800 bg-green-50{% endif %}"
+            role="alert">
+            <span class="font-medium">{{ message.tags.capitalize }}</span> : {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h1 class="text-center title font-bold mb-5">Volunteer Registration</h1>
+        <form>
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label
+                for="name"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter name"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="email"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter email"
+                required
+              />
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label
+                for="phone_number"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                id="phone_number"
+                name="phone_number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter phone number"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="regno"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Registration Number</label
+              >
+              <input
+                type="text"
+                id="regno"
+                name="regno"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Registration Number"
+                required
+              />
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+                <label
+                  for="gender"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Gender</label
+                >
+                <select
+                  id="gender"
+                  name="gender"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                >
+                  <option selected>Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Others</option>
+                </select>
+              </div>
+            <div>
+              <label
+                for="yearofstudy"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Select Year of Study</label
+              >
+              <select
+                id="yearofstudy"
+                name="yearofstudy"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              >
+                <option selected>Year of Study</option>
+                <option value="First year">1st Year</option>
+                <option value="Second year">2nd Year</option>
+                <option value="Third year">3rd Year</option>
+                <option value="Forth year">4th Year</option>
+                <option value="Fifth year">5th Year</option>
+                <option value="Sixth year">6th Year</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label
+                for="branch"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Branch</label
+              >
+              <input
+                type="text"
+                id="branch"
+                name="branch"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Branch Name"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="Institute"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Institute</label
+              >
+              <input
+                type="text"
+                id="institute"
+                name="institute"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Institute Name"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label
+                for="Department"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Department</label
+              >
+              <input
+                type="text"
+                id="Department"
+                name="Department"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Department Name"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="campus"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Select Campus</label
+              >
+              <select
+                id="campus"
+                name="campus"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              >
+                <option selected>Select</option>
+                <option value="Vizag">Vizag</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Benguluru">Benguluru</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-6">
+            <div>
+              <label
+                for="hosteler"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Are you Hosteler</label
+              >
+              <select
+                id="hosteler"
+                name="hosteler"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              >
+                <option selected>Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+              <label
+                for="previousexp"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Previous Experience</label
+              >
+              <input
+                type="text"
+                id="previousexp"
+                name="previousexp"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter Previous Experience"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="availability"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Availability During Shore24</label
+              >
+              <input
+                type="text"
+                id="availability"
+                name="availability"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter availability"
+                required
+              />
+            </div>
+          </div>
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            
+            <div>
+                <label
+                  for="domain"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Domain Of Interest</label
+                >
+                <select
+                  id="domain"
+                  name="domain"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                >
+                  <option selected>Select</option>
+                  <option value="Security">Security</option>
+                  <option value="Technology">Technology</option>
+                  <option value="Hospitality">Hospitality</option>
+                  <option value="Operations">Operations</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Design">Design</option>
+                  <option value="Other">Other</option>
+
+                </select>
+            </div>
+            <div>
+                <label
+                  for="tshirt"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >T shirt size</label
+                >
+                <select
+                  id="tshirt"
+                  name="tshirt"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                >
+                  <option selected>Select</option>
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                  <option value="Other">Other</option>
+                </select>
+            </div>
+              
+          </div>
+          <div class="mb-6">
+            <div>
+                <label
+                  for="why_you_interested"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Why You Interested?</label
+                >
+                <textarea id="why_you_interested" name="why_you_interested" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+
+              </div>
+          </div>
+          <div class="mb-6">
+            <div
+              class="preview-container"
+              id="previewContainer"
+              style="display: none"
+            >
+              <h2>Preview</h2>
+              <img
+                src="#"
+                alt="Preview"
+                class="preview-image"
+                id="previewImage"
+              />
+              <br />
+            </div>
+            <label
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              for="file_input"
+              >Upload Profile Picture</label
+            >
+            <input
+              class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+              aria-describedby="file_input_help"
+              id="file_input"
+              name="file_input"
+              type="file"
+              accept="image/*"
+              onchange="previewImage(event)"
+            />
+            <p
+              class="mt-1 text-sm text-gray-500 dark:text-gray-300"
+              id="file_input_help"
+            >
+              PNG, JPG, or JPEG (MAX. 800x400px).
+            </p>
+          </div>
+
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              var fileInput = document.getElementById("file_input");
+              var previewContainer =
+                document.getElementById("previewContainer");
+              var previewImage = document.getElementById("previewImage");
+
+              fileInput.addEventListener("change", function (event) {
+                previewImageFile(event);
+              });
+
+              function previewImageFile(event) {
+                var input = event.target;
+
+                if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+
+                  reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = "block";
+                  };
+
+                  reader.readAsDataURL(input.files[0]);
+                }
+              }
+            });
+          </script>
+          <button
+            type="button"
+            class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          >
+            Register as volunteer
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
