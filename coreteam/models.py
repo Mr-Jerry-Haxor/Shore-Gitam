@@ -92,3 +92,22 @@ class Task(models.Model):
     def __str__(self):
         return self.task_title
     
+    
+    
+def upload_file_to(instance, filename):
+    # Get the file extension
+    ext = filename.split('.')[-1]
+
+    # Rename the file using the 'name' field and a UUID
+    filename = f"{instance.name}.{ext}"
+
+    # Return the file path
+    return os.path.join('files/', filename)
+
+class FileUpload(models.Model):
+    name = models.CharField(max_length=100)
+    file = models.FileField(upload_to=upload_file_to)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.name
