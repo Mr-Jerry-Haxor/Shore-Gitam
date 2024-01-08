@@ -69,6 +69,7 @@
         {% endif %}
         <h1 class="text-center title font-bold mb-5">Volunteer Registration</h1>
         <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
           <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
               <label
@@ -349,7 +350,7 @@
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >Why You Interested?</label
                 >
-                <textarea id="why_you_interested" name="why_you_interested" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                <textarea id="why_you_interested" name="why_you_interested" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..." required></textarea>
 
               </div>
           </div>
@@ -381,6 +382,7 @@
               type="file"
               accept="image/*"
               onchange="previewImage(event)"
+              required
             />
             <p
               class="mt-1 text-sm text-gray-500 dark:text-gray-300"
@@ -418,7 +420,7 @@
             });
           </script>
           <button
-            type="button"
+            type="submit"
             class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
           >
             Register as volunteer
