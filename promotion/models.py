@@ -19,7 +19,7 @@ from django.db import models
 def profilepic_upload_path(instance, filename):
     current_datetime = timezone.now().strftime('%Y%m%d%H%M%S')
     ext = filename.split('.')[-1]
-    new_filename = f"{instance.name}__{instance.roll_number}__{current_datetime}.{ext}"
+    new_filename = f"{instance.name}__{instance.regno}__{current_datetime}.{ext}"
     domain_folder = f"volunteer/"
     return os.path.join(domain_folder, new_filename)
 
