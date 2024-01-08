@@ -95,14 +95,12 @@ class Task(models.Model):
     
     
 def upload_file_to(instance, filename):
-    # Get the file extension
+
     ext = filename.split('.')[-1]
+    new_filename = f"{instance.name}.{ext}"
 
-    # Rename the file using the 'name' field and a UUID
-    filename = f"{instance.name}.{ext}"
-
-    # Return the file path
-    return os.path.join('files/', filename)
+    domain_folder = f"guidelines/"
+    return os.path.join(domain_folder, new_filename)
 
 class FileUpload(models.Model):
     name = models.CharField(max_length=100)

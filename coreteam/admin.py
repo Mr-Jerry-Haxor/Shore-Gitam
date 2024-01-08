@@ -48,19 +48,7 @@ admin.site.register(Task, TaskAdmin)
 from .models import FileUpload
 
 class FileUploadAdmin(admin.ModelAdmin):
-    list_display = ('name', 'file', 'uploaded_at')  # Display these fields in the admin list view
-
-    def save_model(self, request, obj, form, change):
-        # Save the model instance
-        obj.save()
-
-        # If a file is uploaded, adjust the filename based on the 'name' field
-        if obj.file:
-            obj.file.name = f"{obj.name}-{obj.file.name}"
-            obj.file.field.upload_to = 'files/'  # Optional: Set the upload_to path
-
-            # Save the updated file name
-            obj.file.save(obj.file.name, obj.file.file, save=True)
+    list_display = ('name', 'file', 'uploaded_at') 
 
 # Register your models here
 admin.site.register(FileUpload, FileUploadAdmin)
