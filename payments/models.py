@@ -59,7 +59,7 @@ class nongitamite(models.Model):
     accommodation = models.BooleanField(default=False)
     payment = models.CharField(max_length=300, blank=True, null=True)
     paid = models.BooleanField(default=False)
-    shoreid = models.CharField(max_length=300, unique=True, editable=False)
+    shoreid = models.CharField(max_length=200, unique=True, editable=False)
 
     def save(self, *args, **kwargs):
         if not self.pk:  # If the object is being created (not updated)
