@@ -29,6 +29,7 @@ urlpatterns = [
     path('prelims/', include('prelims.urls')),
     path('preshore/',include('promotion.urls')),
     path('registrations/' , include('events.urls')),
+    path('festpass/' , include('festpass.urls')),
 ]
 
 

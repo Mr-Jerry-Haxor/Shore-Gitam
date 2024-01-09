@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=
+    , initial-scale=2.0"
+    />
+    <title>SHORE FEST PASS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        height: 100%;
+        display: grid;
+        font-family: "Staatliches", cursive;
+        background: linear-gradient(to bottom right, #276fff, #ce3345, #4575de);
+        color: black;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+      }
+
+      .ticket {
+        margin: auto;
+        display: flex;
+        background: white;
+        margin-top: 10rem;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+          rgba(0, 0, 0, 0.22) 0px 15px 12px;
+      }
+
+      .left {
+        display: flex;
+      }
+
+      .image {
+        height: 300px;
+        width: 250px;
+        background-image: url("https://shore.gitam.edu/home/ubuntuserver/Shore24/media/{{ student.profile_picture }}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.85;
+      }
+
+      .admit-one {
+        position: absolute;
+        color: rgb(0, 0, 0);
+        height: 250px;
+        padding: 0 10px;
+        letter-spacing: 0.15em;
+        display: flex;
+        text-align: center;
+        justify-content: space-between;
+        writing-mode:horizontal-tb;
+      }
+
+      .admit-one span:nth-child(2) {
+        color: rgb(0, 0, 0);
+        font-weight: 700;
+      }
+
+      .left .ticket-number {
+        height: 250px;
+        width: 250px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        padding: 5px;
+      }
+
+      .ticket-info {
+        padding: 10px 30px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .date {
+        border-top: 1px solid gray;
+        border-bottom: 1px solid gray;
+        padding: 5px 0;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      .date span {
+        width: 100px;
+      }
+
+      .date span:first-child {
+        text-align: left;
+      }
+
+      .date span:last-child {
+        text-align: right;
+      }
+
+      .date .feb-3 {
+        color: #d83565;
+        font-size: 15px;
+      }
+
+      .show-name {
+        font-size: 32px;
+        font-family: "Nanum Pen Script", cursive;
+        color: #d83565;
+      }
+
+      .show-name h1 {
+        font-size: 45px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #4a437e;
+      }
+
+      .time {
+        padding: 10px 0;
+        color: #4a437e;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        font-weight: 700;
+      }
+      .details {
+        padding: 10px 0;
+        color: #4a437e;
+        text-align: center;
+        display: flex;
+        font-family: "Ubuntu";
+        flex-direction: column;
+        gap: 1px;
+        font-weight: 700;
+      }
+
+      .time span {
+        font-weight: 400;
+        color: gray;
+      }
+
+      .left .time {
+        font-size: 16px;
+      }
+
+      .location {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding-top: 8px;
+        border-top: 1px solid gray;
+      }
+
+      .location .separator {
+        font-size: 20px;
+      }
+
+      .right {
+        width: 180px;
+        border-left: 1px dashed #404040;
+      }
+
+      .right .admit-one {
+        color: darkgray;
+      }
+
+      .right .admit-one span:nth-child(2) {
+        color: gray;
+      }
+
+      .right .right-info-container {
+        height: 250px;
+        padding: 10px 10px 10px 35px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .right .show-name h1 {
+        font-size: 18px;
+      }
+
+      .barcode {
+        height: 100px;
+      }
+
+      .barcode img {
+        height: 100%;
+      }
+
+      .right .ticket-number {
+        color: gray;
+      }
+      /* Mobile */
+      .mobile-ticket {
+        margin: auto;
+        display: flex;
+        background: white;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+          rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        flex-direction: column; /* Vertical orientation */
+      }
+      @media only screen and (max-width: 600px) {
+        .mobile-ticket {
+          margin: 20px;
+          display: flex;
+          background: white;
+          box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+            rgba(0, 0, 0, 0.22) 0px 15px 12px;
+          flex-direction: column; /* Vertical orientation */
+        }
+      }
+      .mobile-left,
+      .mobile-right {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .mobile-image {
+        height: 300px;
+        width: 300px;
+        background-image: url("https://shore.gitam.edu/home/ubuntuserver/Shore24/media/{{ student.profile_picture }}");
+        background-size: cover;
+        position: relative;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.85;
+        border-radius: 50%;
+        margin-top: 1rem;
+        z-index: 100;
+      }
+
+      .mobile-admit-one {
+        position: absolute;
+        color: rgb(0, 0, 0);
+        height: 250px;
+        padding: 0 10px;
+        letter-spacing: 0.15em;
+        display: flex;
+        text-align: center;
+        justify-content: space-around;
+        writing-mode: vertical-rl;
+        transform: rotate(-180deg);
+      }
+
+      .mobile-admit-one span:nth-child(2) {
+        color: rgb(0, 0, 0);
+        font-weight: 700;
+      }
+
+      .mobile-left .mobile-ticket-number {
+        height: 250px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 5px;
+      }
+
+      .mobile-ticket-info {
+        padding: 20px 40px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .mobile-date {
+        border-top: 1px solid gray;
+        border-bottom: 1px solid gray;
+        padding: 5px 0;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+
+      .mobile-date span {
+        width: 100px;
+      }
+
+      .mobile-date span:first-child {
+        text-align: left;
+      }
+
+      .mobile-date span:last-child {
+        text-align: right;
+      }
+
+      .mobile-date .feb-3 {
+        color: #d83565;
+        font-size: 15px;
+      }
+
+      .mobile-show-name {
+        font-size: 32px;
+        font-family: "Nanum Pen Script", cursive;
+        color: #d83565;
+      }
+
+      .mobile-show-name h1 {
+        font-size: 45px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #4a437e;
+      }
+
+      .mobile-time {
+        padding: 10px 0;
+        color: #4a437e;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        font-weight: 700;
+      }
+      .mobile-details {
+        padding: 20px 0;
+        color: #4a437e;
+        text-align: center;
+        display: flex;
+        font-family: "Ubuntu";
+        flex-direction: column;
+        gap: 2px;
+        font-weight: 700;
+      }
+
+      .mobile-time span {
+        font-weight: 400;
+        color: gray;
+      }
+
+      .mobile-left .mobile-time {
+        font-size: 16px;
+      }
+
+      .mobile-location {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        padding-top: 8px;
+        border-top: 1px solid gray;
+      }
+
+      .mobile-location .mobile-separator {
+        font-size: 20px;
+      }
+
+      .mobile-right {
+        width: 100%;
+        border-top: 1px dashed #404040;
+      }
+
+      .mobile-right .mobile-admit-one {
+        color: darkgray;
+      }
+
+      .mobile-right .mobile-admit-one span:nth-child(2) {
+        color: gray;
+      }
+
+      .mobile-right .mobile-right-info-container {
+        height: 250px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .mobile-right .mobile-show-name h1 {
+        font-size: 18px;
+      }
+
+      .mobile-barcode {
+        height: 100px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .mobile-barcode img {
+        height: 80%;
+      }
+
+      .mobile-right .mobile-ticket-number {
+        color: gray;
+        text-align: center;
+      }
+      .mobile-mobile-details {
+        font-family: Helvetica;
+        font-weight: 500;
+        font-size: 20px;
+      }
+      .mobile-ticket {
+        display: none;
+      }
+      @media screen and (max-width: 767px) {
+        .mobile-ticket {
+          display: block;
+        }
+        .ticket {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    {% include 'passbase.html' %}
+    <div class="ticket" id="pc-view">
+      <div class="left">
+        <div class="image">
+          <p class="admit-one">
+            <span
+              ><img
+                style="width: 60px; height: 60px; margin-right: 50px;"
+                src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706680/shore%2024/shore24%20homepage/shore_logo_dwcevk.png"
+            /></span>
+            <span
+            style="width: 60px; height: 60px; margin-left: 50px; font-size: 2rem; padding-top: 1rem;">G</span>
+          </p>
+          <div class="ticket-number">
+            <!-- <p>#20030220</p> -->
+          </div>
+        </div>
+        <div class="ticket-info">
+          <p class="date">
+            <span>3rd, 4th</span>
+            <span class="feb-3">FEBRUARY</span>
+            <span>2024</span>
+          </p>
+          <div class="show-name">
+            <h1 style="font-family: 'Ubuntu'">SHORE FEST</h1>
+            <h2>PRO NIGHTS</h2>
+          </div>
+          <div class="details">
+            <p>Name: {{ student.name }}</p>
+            <p>Email: {{ student.email }}</p>
+            <p>Contact: {{ student.contact_number }}</p>
+            <p>Campus: {{ student.campus }}</p>
+            {% if student.hosteler %}
+            <p>Accomodation:  Hosteler</p>
+            {% else %}
+            <p>Accomodation:  Day Scholar</p>
+            {% endif %}
+          </div>
+          <p class="location">
+            <span>DENTAL PARKING</span>
+            <span class="separator"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="16"
+                width="12"
+                viewBox="0 0 384 512"
+              >
+                <path
+                  d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
+                /></svg></span
+            ><span>GITAM UNIVERSITY, VSKP</span>
+          </p>
+        </div>
+      </div>
+      <div class="right">
+        <div class="right-info-container">
+          <div class="show-name">
+            <h1 style="font-family: 'Ubuntu'">PRO NIGHTS</h1>
+          </div>
+          <div class="time">
+            <div id="clock" style="font-size: 1rem"></div>
+          </div>
+          <div class="barcode">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ student.passhash }}"
+              alt="QR code"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile -->
+
+    <div class="mobile-ticket" id="mobile-view">
+      <div class="mobile-left">
+        <div class="mobile-image">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-content: space-around;
+            "
+          >
+            <span
+              ><img
+                style="
+                  width: 80px;
+                  height: 80px;
+                  position: relative;
+                  margin-left: -2rem;
+                "
+                src="https://res.cloudinary.com/jerryhaxor/image/upload/v1703706680/shore%2024/shore24%20homepage/shore_logo_dwcevk.png"
+            /></span>
+            <div>
+              <span
+                style="
+                  font-weight: bolder;
+                  font-size: 40px;
+                  padding-right: 0.5rem;
+                  padding-top: 0.5rem;
+                "
+                >NG</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="mobile-ticket-info">
+          <p class="mobile-date">
+            <span>3rd, 4th</span>
+            <span class="mobile-feb-3">FEBRUARY</span>
+            <span>2024</span>
+          </p>
+          <div class="mobile-show-name">
+            <h1
+              style="font-family: 'Ubuntu'; padding-top: 1rem; font-size: 30px"
+            >
+              SHORE FEST PASS
+            </h1>
+            <h2>Pro Nights</h2>
+          </div>
+          <div class="mobile-details">
+            <div class="mobile-barcode">
+              <img
+                src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl={{ student.passhash }}"
+                alt="QR code"
+                style="height: 150px; width: 130px; padding-bottom: 2rem"
+              />
+            </div>
+            <h2>Name: {{ student.name }}</h2>
+          </div>
+          <p class="mobile-location">
+            <span>DENTAL PARKING</span>
+            <span class="mobile-separator"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="16"
+                width="12"
+                viewBox="0 0 384 512"
+              >
+                <path
+                  d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"
+                /></svg></span
+            ><span>GITAM UNIVERSITY, VSKP</span>
+          </p>
+        </div>
+      </div>
+      <div class="mobile-right">
+        <div class="mobile-right-info-container">
+          <div class="mobile-mobile-details">
+            <p>Email: {{ student.email }}</p>
+            <p>Contact: {{ student.contact_number }}</p>
+            <p>Campus: {{ student.campus }}</p>
+            {% if student.hosteler %}
+            <p>Accomodation:  Hosteler</p>
+            {% else %}
+            <p>Accomodation:  Day Scholar</p>
+            {% endif %}
+            <br />
+          </div>
+          <div style="display: flex; justify-content: center">
+            <div id="clock1" style="font-size: 1.2rem"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function updateClock() {
+        const now = new Date();
+        const formattedDateTime = now.toLocaleString();
+        document.getElementById("clock").innerHTML = formattedDateTime;
+      }
+      
+      setInterval(updateClock, 1000);
+      updateClock();
+      
+      function updateClock1() {
+          const now = new Date();
+          const formattedDateTime = now.toLocaleString();
+          document.getElementById("clock1").innerHTML = formattedDateTime;
+      }
+      
+      setInterval(updateClock1, 1000);
+      updateClock1();
+    </script>
+  </body>
+</html>
