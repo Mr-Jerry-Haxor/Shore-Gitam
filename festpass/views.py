@@ -85,3 +85,12 @@ def passhome(request):
             return redirect('passhome')
         else:
             return render(request, 'userdetails.html')
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
+def shoreidcard(request):
+    if Student.objects.filter(email=request.user.email).exists():
+        student = Student.objects.get(email=request.user.email)
+        return render(request, 'passhome.html' , { 'student' : student})
+    else:
+        return redirect('passhome')
