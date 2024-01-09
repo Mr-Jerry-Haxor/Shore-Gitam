@@ -8,7 +8,7 @@ from import_export.admin import ImportExportModelAdmin
 
 @admin.register(College)
 class CollegeAdmin(ImportExportModelAdmin):
-    list_display = ('college_id', 'name', 'abbreviation', 'passkey')
+    list_display = ('college_id', 'name', 'abbreviation', 'passkey' , 'tosend')
 
 @admin.register(Event)
 class EventAdmin(ImportExportModelAdmin):
