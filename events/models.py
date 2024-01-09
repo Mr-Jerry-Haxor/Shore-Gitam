@@ -26,7 +26,7 @@ class College(models.Model):
     name = models.CharField(max_length=100, unique=True)
     abbreviation = models.CharField(max_length=20, unique=True)
     passkey = models.CharField(max_length=100, null=True, blank=True, unique=True)
-    emails = models.CharField(max_length=1000, null=True, blank=True)
+    emails = models.TextField(null=True, blank=True)
     tosend = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
