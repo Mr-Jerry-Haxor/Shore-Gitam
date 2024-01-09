@@ -540,7 +540,7 @@
                   padding-right: 0.5rem;
                   padding-top: 0.5rem;
                 "
-                >NG</span
+                >G</span
               >
             </div>
           </div>
@@ -562,7 +562,7 @@
           <div class="mobile-details">
             <div class="mobile-barcode">
               <img
-                src="https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl={{ student.passhash }}"
+                src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ student.passhash }}"
                 alt="QR code"
                 style="height: 150px; width: 130px; padding-bottom: 2rem"
               />
