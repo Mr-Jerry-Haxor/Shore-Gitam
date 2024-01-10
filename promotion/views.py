@@ -4,6 +4,7 @@ from .models import BGMIPlayer , Volunteer
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 from django.contrib import messages
+import re
 
 @require_http_methods(["GET", "POST"])
 def bgmi_player(request):
@@ -64,6 +65,10 @@ def volunteer_registration(request):
             tshirt_size = request.POST.get('tshirt')
             why_you_interested = request.POST.get('why_you_interested') 
             profile_pic = request.FILES.get('file_input') 
+            
+            if not re.match(r'.+@(?:gitam\.edu|gitam\.in)$', email):
+                messages.error(request, "Invalid email domain. Please use a Gitam email.")
+                return redirect('volunteer')
             
             # Save data to the Volunteer model
             volunteer = Volunteer(
