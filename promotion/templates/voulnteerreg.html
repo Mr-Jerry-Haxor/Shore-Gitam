@@ -53,10 +53,11 @@
       }
     </style>
   </head>
-  <body>
+  <body style="background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);">
+    {% include 'preshorebase.html' %}
     <div class="h-screen flex items-center justify-center">
       <div
-        style="height: 40rem"
+        style="height: 40rem;background:rgba(40, 40, 40, 0.543)"
         class="overflow-y-scroll container mx-auto max-w-2xl p-6 border border-gray-200 rounded-lg shadow-lg"
       >
         {% if messages %}
@@ -67,7 +68,7 @@
         </div>
         {% endfor %}
         {% endif %}
-        <h1 class="text-center title font-bold mb-5">Volunteer Registration</h1>
+        <h1 class="text-center title font-bold mb-5 text-gray-900 dark:text-white">Volunteer Registration</h1>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
           <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -360,19 +361,22 @@
               id="previewContainer"
               style="display: none"
             >
-              <h2>Preview</h2>
+              <h2 
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Preview</h2>
               <img
                 src="#"
                 alt="Preview"
                 class="preview-image"
                 id="previewImage"
+                style="border: 2px solid rgb(255, 255, 255);border-radius: 50%; height:120px;width: 120px;"
               />
               <br />
             </div>
             <label
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               for="file_input"
-              >Upload Profile Picture</label
+              >Upload Profile Picture( If other picture is uploaded, your application will get rejected)</label
             >
             <input
               class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
@@ -388,32 +392,40 @@
               class="mt-1 text-sm text-gray-500 dark:text-gray-300"
               id="file_input_help"
             >
-              PNG, JPG, or JPEG (MAX. 800x400px).
+              PNG, JPG, or JPEG (MAX. 800x400px and Less than 1MB).
             </p>
           </div>
 
           <script>
             document.addEventListener("DOMContentLoaded", function () {
               var fileInput = document.getElementById("file_input");
-              var previewContainer =
-                document.getElementById("previewContainer");
+              var previewContainer = document.getElementById("previewContainer");
               var previewImage = document.getElementById("previewImage");
-
+          
               fileInput.addEventListener("change", function (event) {
                 previewImageFile(event);
               });
-
+          
               function previewImageFile(event) {
                 var input = event.target;
-
+                var fileSize = input.files[0].size; // Get the file size
+          
+                // Check if file size is less than 2MB (2 * 1024 * 1024 bytes)
+                if (fileSize > 1* 1024 * 1024) {
+                  alert("File size exceeds 1MB. Please upload a smaller file.");
+                  input.value = null; // Clear the input field
+                  previewContainer.style.display = "none"; // Hide the preview container
+                  return; // Stop further execution
+                }
+          
                 if (input.files && input.files[0]) {
                   var reader = new FileReader();
-
+          
                   reader.onload = function (e) {
                     previewImage.src = e.target.result;
                     previewContainer.style.display = "block";
                   };
-
+          
                   reader.readAsDataURL(input.files[0]);
                 }
               }
