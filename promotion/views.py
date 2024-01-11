@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 from django.contrib import messages
 import re
+from django.contrib.auth.decorators import login_required
 
 @require_http_methods(["GET", "POST"])
 def bgmi_player(request):
@@ -44,7 +45,7 @@ def bgmi_player(request):
         return redirect('bgmireg')
     
 
-
+@login_required(login_url="/auth/login/google-oauth2/")
 def volunteer_registration(request):
     if request.method == 'POST':
         try:
