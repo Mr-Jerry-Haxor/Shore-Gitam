@@ -19,7 +19,7 @@ from .models import Volunteer
 @admin.register(Volunteer)
 class VolunteerAdmin(admin.ModelAdmin):
     list_display = ['name', 'email', 'year_of_study' , 'created_at']  # Display these fields in the admin list view
-    search_fields = ['name', 'email']  # Enable search functionality in the admin
+    search_fields = ['name', 'email' , 'institute' , 'year_of_study' , 'regno']  # Enable search functionality in the admin
     list_filter = ('Campus' , 'domain_of_interest')
 
     # Add more configurations as per your requirement
