@@ -1,9 +1,10 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
 from .models import Student
 
-class StudentAdmin(admin.ModelAdmin):
+class StudentAdmin(ImportExportModelAdmin):
     list_display = ('name', 'email', 'year_of_study', 'campus', 'hosteler', 'ispaid')
     list_filter = ('year_of_study', 'campus', 'hosteler', 'ispaid')
     search_fields = ('name', 'email', 'branch', 'institute', 'department')
