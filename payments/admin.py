@@ -4,12 +4,13 @@ from .models import FestPass, Registrations
 
 @admin.register(FestPass)
 class FestPassAdmin(ImportExportModelAdmin):
-    list_display = ['name', 'mobile', 'email', 'gender', 'posted_date', 'updated_date']
+    list_display = ['name', 'mobile', 'email', 'gender', 'posted_date', 'updated_date' , 'transaction_status']
+    list_filter = ['transaction_status']
 
 @admin.register(Registrations)
 class RegistrationsAdmin(ImportExportModelAdmin):
-    list_display = ['name', 'mobile', 'email', 'gender', 'posted_date', 'updated_date']
-
+    list_display = ['name', 'mobile', 'email', 'gender', 'posted_date', 'updated_date' ,'transaction_status']
+    list_filter = ['transaction_status']
 
 from import_export import resources
 from .models import nongitamite
