@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'payments',
     'events',
     'festpass',
-    "django_google_sso",
 ]
 
 MIDDLEWARE = [
@@ -184,10 +183,10 @@ CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000','https://shore.gitam.edu']
 
 AUTH_USER_MODEL = 'coreteam.CustomUser' 
 
-# AUTHENTICATION_BACKENDS = [
-#   'social_core.backends.google.GoogleOAuth2',
-#   'django.contrib.auth.backends.ModelBackend',
-# ]
+AUTHENTICATION_BACKENDS = [
+  'social_core.backends.google.GoogleOAuth2',
+  'django.contrib.auth.backends.ModelBackend',
+]
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
@@ -208,11 +207,3 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = str(os.getenv('MAILID'))
 EMAIL_HOST_PASSWORD = str(os.getenv('MAILPASSWORD'))
-
-
-
-GOOGLE_SSO_CLIENT_ID = str(os.getenv('GOOGLE_KEY'))
-GOOGLE_SSO_PROJECT_ID = str(os.getenv('GOOGLE_PROJECTID')) 
-GOOGLE_SSO_CLIENT_SECRET = str(os.getenv('GOOGLE_SECRET'))
-
-GOOGLE_SSO_ALLOWABLE_DOMAINS = ["gmail.com" , "gitam.in" , "gitam.edu"]
