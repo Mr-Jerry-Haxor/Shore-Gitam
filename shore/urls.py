@@ -30,6 +30,7 @@ urlpatterns = [
     path('preshore/',include('promotion.urls')),
     path('registrations/' , include('events.urls')),
     path('festpass/' , include('festpass.urls')),
+    path("google_login/", include("django_google_sso.urls", namespace="django_google_sso"))
 ]
 
 
