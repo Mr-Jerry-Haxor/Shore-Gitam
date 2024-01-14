@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 from payments.models import FestPass
 
 import hashlib
-
+import requests
+import json
 
 def generate_md5(user_string):
     hashed_string = hashlib.md5(user_string.encode("UTF-8"))
@@ -34,7 +35,6 @@ def passhome(request):
                 student.save()
                 return redirect('passhome')
             else:
-                messages.error(request,"You have not paid For the Fest pass yet.")
                 return render(request, 'passhome.html' , { 'student' : student})
         
     else:
@@ -84,7 +84,21 @@ def passhome(request):
             # return HttpResponse("Student details saved successfully!")
             return redirect('passhome')
         else:
-            return render(request, 'userdetails.html')
+            data = {
+                'mail': str(request.user.email),
+            }
+            try:
+                response = requests.post('https://gevents.gitam.edu/registration/data/checkmail', data=data)
+                if response.status_code == 200:
+                    studentdata = json.loads(response.text)
+                    if studentdata['status'] == 'success':
+                        return render(request, 'userdetails.html', {'studentdata': studentdata['data'] })
+                    else:
+                        return render(request, 'userdetails.html')
+                else:
+                    return render(request, 'userdetails.html')
+            except:
+                return render(request, 'userdetails.html')
 
 
 @login_required(login_url="/auth/login/google-oauth2/")

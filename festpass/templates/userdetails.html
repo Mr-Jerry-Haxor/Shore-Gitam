@@ -82,6 +82,7 @@
                 type="text"
                 id="name"
                 name="name"
+                value="{{ studentdata.staff_name }}"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter Your Full name"
                 required
@@ -116,6 +117,7 @@
                 type="tel"
                 id="contact_number"
                 name="contact_number"
+                value="{{ studentdata.staff_mobile }}"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter phone number"
                 required
@@ -131,6 +133,7 @@
                 type="text"
                 id="regno"
                 name="regno"
+                value="{{ studentdata.staffid }}"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter Registration Number"
                 required
@@ -144,17 +147,39 @@
                   class="block mb-2 text-sm font-medium text-gray-900"
                   >Gender</label
                 >
-                <select
-                  id="gender"
-                  name="gender"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                >
-                  <option selected>Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Others</option>
-                </select>
+                {% if studentdata.staff_gender == 'M' %}
+                  <select
+                    id="gender"
+                    name="gender"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  >
+                    <option selected value="Male">Male</option>
+                    <option value="Other">Others</option>
+                  </select>
+                {% elif studentdata.staff_gender == 'F' %}
+                  <select
+                    id="gender"
+                    name="gender"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  >
+                    <option selected value="Female">Female</option>
+                    <option value="Other">Others</option>
+                  </select>
+                {% else %}
+                  <select
+                    id="gender"
+                    name="gender"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  >
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Others</option>
+                  </select>
+                {% endif %}
               </div>
             <div>
               <label
@@ -168,7 +193,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               >
-                <option selected>Year of Study</option>
+                <option value="" disabled selected>select Year of Study</option>
                 <option value="First year">1st Year</option>
                 <option value="Second year">2nd Year</option>
                 <option value="Third year">3rd Year</option>
@@ -190,7 +215,7 @@
                 id="branch"
                 name="branch"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter Branch Name"
+                placeholder="Enter Branch Name(eg: CSE)"
                 required
               />
             </div>
@@ -206,6 +231,7 @@
                 name="institute"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Enter Institute Name( eg: GIT)"
+                value="{{ studentdata.college_code }}"
                 required
               />
             </div>
@@ -238,7 +264,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               >
-              <option selected>Select</option>
+              <option value="" disabled selected>Select campus</option>
               <option value="Visakhapatnam">Visakhapatnam</option>
               <option value="Hyderabad">Hyderabad</option>
               <option value="Bengaluru">Bengaluru</option>
@@ -258,7 +284,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               >
-                <option selected>Select</option>
+                <option value="" disabled selected>Select</option>
                 <option value="True">Yes</option>
                 <option value="False">No</option>
               </select>
