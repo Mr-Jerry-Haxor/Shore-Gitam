@@ -291,6 +291,7 @@
               id="profile_pic"
               name="profile_pic"
               type="file"
+              accept="image/*"
               required
               onchange="previewImage(event)"
             />
@@ -321,6 +322,18 @@
                   input.value = null; // Clear the input field
                   previewContainer.style.display = "none"; // Hide the preview container
                   return; // Stop further execution
+                }
+
+                // Get the file name and check its extension
+                var fileName = input.files[0].name;
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                var allowedExtensions = ['jpg', 'jpeg', 'png'];
+
+                if (allowedExtensions.indexOf(fileExtension) === -1) {
+                    alert("Invalid file format. Please upload a file with a valid extension (jpg, jpeg, png).");
+                    input.value = null; // Clear the input field
+                    previewContainer.style.display = "none"; // Hide the preview container
+                    return; // Stop further execution
                 }
           
                 if (input.files && input.files[0]) {
