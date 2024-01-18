@@ -6,8 +6,8 @@ from .models import Student
 
 class StudentAdmin(ImportExportModelAdmin):
     list_display = ('name', 'email', 'year_of_study', 'campus', 'hosteler', 'ispaid')
-    list_filter = ('year_of_study', 'campus', 'hosteler', 'ispaid')
-    search_fields = ('name', 'email', 'branch', 'institute', 'department')
+    list_filter = ('year_of_study', 'campus', 'hosteler', 'ispaid') 
+    search_fields = ('name', 'email', 'branch', 'institute', 'department' , 'regno' , 'contact_number')
     date_hierarchy = 'registred_at'  # Replace 'created_at' with the appropriate date field in your model
 
 admin.site.register(Student, StudentAdmin)
