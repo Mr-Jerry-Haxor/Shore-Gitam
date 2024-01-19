@@ -6,6 +6,7 @@ from django.db import IntegrityError
 from django.contrib import messages
 import re
 from django.contrib.auth.decorators import login_required
+from events.models import College , Event , Hackathon
 
 @require_http_methods(["GET", "POST"])
 def bgmi_player(request):
@@ -107,4 +108,10 @@ def volunteer_registration(request):
 
 
 def noc_and_travel_tickets(request):
-    return render(request, 'noc_tickets_reg.html')
+    colleges = College.objects.all()
+    context["colleges"] = colleges
+    events = Event.objects.all()
+    hackathons = Hackathon.objects.all()
+    context["events"] = events
+    context["hackathons"] = hackathons
+    return render(request, 'noc_tickets_reg.html',context)

@@ -115,7 +115,7 @@
                 id="phone_number"
                 name="phone_number"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter phone number"
+                placeholder="Enter Contact number"
                 required
               />
             </div>
@@ -173,6 +173,8 @@
                 <option value="Forth year">4th Year</option>
                 <option value="Fifth year">5th Year</option>
                 <option value="Sixth year">6th Year</option>
+                <option value="Alumni">Alumni</option>
+                <option value="Other">Other</option>
               </select>
             </div>
           </div>
@@ -188,7 +190,7 @@
                 id="branch"
                 name="branch"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter Branch Name"
+                placeholder="Enter Branch Name(eg: CSE)"
                 required
               />
             </div>
@@ -203,7 +205,7 @@
                 id="institute"
                 name="institute"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter Institute Name"
+                placeholder="(eg:Gitam school of technology)"
                 required
               />
             </div>
@@ -221,7 +223,7 @@
                 id="Department"
                 name="Department"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter Department Name"
+                placeholder="(eg: Engineering )"
                 required
               />
             </div>
@@ -229,7 +231,7 @@
               <label
                 for="campus"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Select Campus(if you are GITAM, if not? select Other)</label
+                >Select College</label
               >
               <select
                 id="campus"
@@ -238,10 +240,12 @@
                 required
               >
                 <option value="" disabled selected>Select</option>
-                <option value="Vizag">GITAM Vizag</option>
-                <option value="Hyderabad">GITAM Hyderabad</option>
-                <option value="Benguluru">GITAM Benguluru</option>
-                <option value="Other">Other</option>
+                <option value="Gitam Vizag">GITAM Vizag</option>
+                <option value="Gitam Hyderabad">GITAM Hyderabad</option>
+                <option value="Gitam Benguluru">GITAM Benguluru</option>
+                {% for college in colleges %}
+                  <option value="{{ college.name }}">{{ college.name }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
@@ -290,14 +294,20 @@
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Event name</label
               >
-              <input
-                type="text"
-                id="eventname"
-                name="eventname"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter event name(eg : Dance , cricket)"
-                required
-              />
+              <select
+                  id="eventname"
+                  name="eventname"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                >
+                  <option value="" disabled selected>Select</option>
+                  {% for event in events %}
+                    <option value="{{ event.name }}">{{ event.name }}</option>
+                  {% endfor %}
+                  {% for hackathon in hackathons %}
+                    <option value="{{ hackathon.name }}">{{ hackathon.name }}</option>
+                  {% endfor %}
+                </select>
             </div>
           </div>
           <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -305,7 +315,7 @@
                 <label
                   for="teamname"
                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Team name</label
+                  >Team name(Given during Registration)</label
                 >
                 <input
                   type="text"
@@ -362,33 +372,59 @@
               PDF (MAX. 2MB).
             </p>
           </div>
-
           <div class="grid gap-6 mb-6 md:grid-cols-2">
-            <div>
-                <label for="departureDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Departure Datetime
-                </label>
-                <input
-                    type="datetime-local"
-                    id="departureDatetime"
-                    name="departureDatetime"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Select Departure Datetime"
-                    required
-                />
+            
+          </div>
+          <div class="tickets">
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <div>
+                  <label for="departureDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Departure Datetime
+                  </label>
+                  <input
+                      type="datetime-local"
+                      id="departureDatetime"
+                      name="departureDatetime"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Select Departure Datetime"
+                      required
+                  />
+              </div>
+              <div>
+                  <label for="arrivalDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Arrival Datetime
+                  </label>
+                  <input
+                      type="datetime-local"
+                      id="arrivalDatetime"
+                      name="arrivalDatetime"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Select Arrival Datetime"
+                      required
+                  />
+              </div>
             </div>
-            <div>
-                <label for="arrivalDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Arrival Datetime
-                </label>
-                <input
-                    type="datetime-local"
-                    id="arrivalDatetime"
-                    name="arrivalDatetime"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Select Arrival Datetime"
-                    required
-                />
+            <div class="mb-6">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="ticket_file_input"
+                >Upload your Travel tickets in PDF format</label
+              >
+              <input
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                aria-describedby="file_input_help"
+                id="ticket_file_input"
+                name="ticket_file_input"
+                type="file"
+                accept="application/pdf"
+                required
+              />
+              <p
+                class="mt-1 text-sm text-gray-500 dark:text-gray-300"
+                id="file_input_help"
+              >
+                PDF (MAX. 2MB).
+              </p>
             </div>
           </div>
           <div class="mb-6">
@@ -411,14 +447,14 @@
             </div>
             <label
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              for="file_input"
+              for="profile_pic"
               >Upload Profile Picture(If picture seems irrelevant, your application will be rejected)</label
             >
             <input
               class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               aria-describedby="file_input_help"
-              id="file_input"
-              name="file_input"
+              id="profile_pic"
+              name="profile_pic"
               type="file"
               accept="image/*"
               onchange="previewImage(event)"
@@ -432,15 +468,48 @@
             </p>
           </div>
           <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                  // Get the file input element
+                  const fileInput = document.getElementById('noc_file_input');
+          
+                  // Add change event listener to the file input
+                  fileInput.addEventListener('change', function () {
+                      // Get the selected file
+                      const selectedFile = fileInput.files[0];
+          
+                      // Check if a file is selected
+                      if (selectedFile) {
+                          // Check if the file type is PDF
+                          if (selectedFile.type === 'application/pdf') {
+                              // Check if the file size is less than 2MB
+                              if (selectedFile.size <= 2 * 1024 * 1024) {
+                                  // File is a valid PDF with size less than 2MB
+                                  console.log('File is a valid PDF with size less than 2MB.');
+                              } else {
+                                  alert('Please upload a PDF file with a size less than 2MB.');
+                                  // Clear the file input
+                                  fileInput.value = '';
+                              }
+                          } else {
+                              alert('Please upload a PDF file.');
+                              // Clear the file input
+                              fileInput.value = '';
+                          }
+                      }
+                  });
+              });
+          </script>
+
+          <script>
             document.addEventListener('DOMContentLoaded', function () {
                 // Get the file input element
-                const fileInput = document.getElementById('noc_file_input');
-        
+                const fileInput = document.getElementById('ticket_file_input');
+
                 // Add change event listener to the file input
                 fileInput.addEventListener('change', function () {
                     // Get the selected file
                     const selectedFile = fileInput.files[0];
-        
+
                     // Check if a file is selected
                     if (selectedFile) {
                         // Check if the file type is PDF
@@ -462,12 +531,12 @@
                     }
                 });
             });
-        </script>
+          </script>
         
           
           <script>
             document.addEventListener("DOMContentLoaded", function () {
-              var fileInput = document.getElementById("file_input");
+              var fileInput = document.getElementById("profile_pic");
               var previewContainer = document.getElementById("previewContainer");
               var previewImage = document.getElementById("previewImage");
           
@@ -485,6 +554,18 @@
                   input.value = null; // Clear the input field
                   previewContainer.style.display = "none"; // Hide the preview container
                   return; // Stop further execution
+                }
+
+                // Get the file name and check its extension
+                var fileName = input.files[0].name;
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                var allowedExtensions = ['jpg', 'jpeg', 'png'];
+
+                if (allowedExtensions.indexOf(fileExtension) === -1) {
+                    alert("Invalid file format. Please upload a file with a valid extension (jpg, jpeg, png).");
+                    input.value = null; // Clear the input field
+                    previewContainer.style.display = "none"; // Hide the preview container
+                    return; // Stop further execution
                 }
           
                 if (input.files && input.files[0]) {
