@@ -333,17 +333,17 @@
               
           </div>
           <div class="mb-6">
-<!-- upload noc in pdf format -->
+            <!-- upload noc in pdf format -->
             <label
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              for="file_input"
+              for="noc_file_input"
               >Upload NOC in PDF format</label
             >
             <input
               class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               aria-describedby="file_input_help"
-              id="file_input"
-              name="file_input"
+              id="noc_file_input"
+              name="noc_file_input"
               type="file"
               accept="application/pdf"
               required
@@ -395,7 +395,39 @@
               PNG, JPG, or JPEG (MAX. 800x400px and Less than 1MB).
             </p>
           </div>
-          <!-- write script to check the noc file uploded is pdf and less than 2MB-->
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get the file input element
+                const fileInput = document.getElementById('noc_file_input');
+        
+                // Add change event listener to the file input
+                fileInput.addEventListener('change', function () {
+                    // Get the selected file
+                    const selectedFile = fileInput.files[0];
+        
+                    // Check if a file is selected
+                    if (selectedFile) {
+                        // Check if the file type is PDF
+                        if (selectedFile.type === 'application/pdf') {
+                            // Check if the file size is less than 2MB
+                            if (selectedFile.size <= 2 * 1024 * 1024) {
+                                // File is a valid PDF with size less than 2MB
+                                console.log('File is a valid PDF with size less than 2MB.');
+                            } else {
+                                alert('Please upload a PDF file with a size less than 2MB.');
+                                // Clear the file input
+                                fileInput.value = '';
+                            }
+                        } else {
+                            alert('Please upload a PDF file.');
+                            // Clear the file input
+                            fileInput.value = '';
+                        }
+                    }
+                });
+            });
+        </script>
+        
           
           <script>
             document.addEventListener("DOMContentLoaded", function () {
