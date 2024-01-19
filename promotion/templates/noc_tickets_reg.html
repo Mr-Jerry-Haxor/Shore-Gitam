@@ -378,16 +378,32 @@
             </p>
           </div>
           <div class="grid gap-6 mb-6 md:grid-cols-2">
-
             <div>
               <label
                 for="accomodation"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Have you opted for accomodation?</label
               >
-              <select onchange="showDiv('tickets', this)"
+              <select
                 id="accomodation"
                 name="accomodation"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              >
+                <option value="" disabled selected>Select</option>
+                <option value="NO">No</option>
+                <option value="YES">Yes</option>
+              </select>
+            </div>
+            <div>
+              <label
+                for="travelling"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Are you travelling to GITAM Vizag?</label
+              >
+              <select onchange="showDiv('tickets', this)"
+                id="travelling"
+                name="travelling"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               >
@@ -398,6 +414,34 @@
             </div>
           </div>
           <div class="tickets" id="tickets" style="display: none;">
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <div>
+                  <label for="departure" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Departure place
+                  </label>
+                  <input
+                      type="text"
+                      id="departure"
+                      name="departure"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Enter Departure Place"
+                      required
+                  />
+              </div>
+              <div>
+                  <label for="arrival" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Arrival Place
+                  </label>
+                  <input
+                      type="text"
+                      id="arrival"
+                      name="arrival"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Enter Arrival Place"
+                      required
+                  />
+              </div>
+            </div>
             <div class="grid gap-6 mb-6 md:grid-cols-2">
               <div>
                   <label for="departureDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
