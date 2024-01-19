@@ -103,3 +103,8 @@ def volunteer_registration(request):
     else:
         return render(request, 'voulnteerreg.html')
 
+
+
+
+def noc_and_travel_tickets(request):
+    return render(request, 'noc_tickets_reg.html')
