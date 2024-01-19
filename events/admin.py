@@ -22,6 +22,20 @@ class TeamAdmin(ImportExportModelAdmin):
 class ParticipantsAdmin(ImportExportModelAdmin):
     list_display = ('participant_id', 'name', 'email', 'phone_number', 'accomdation', 'college', 'sport', 'team', 'isCaptain', 'isPaid', 'isGitamite', 'transaction_id')
 
-admin.site.register(Hackathon)
-admin.site.register(HackathonTeam)
-admin.site.register(HackathonParticipants)
+
+
+class HackathonAdmin(ImportExportModelAdmin):
+    list_display = ['name', 'event_type', 'min_team_size', 'max_team_size']
+    search_fields = ['name', 'event_type']
+
+class HackathonTeamAdmin(ImportExportModelAdmin):
+    list_display = ['team_name', 'visible_name', 'college', 'hackathon', 'isPaid', 'isQualified', 'registered_at']
+    search_fields = ['team_name', 'visible_name', 'college__name', 'hackathon__name']
+
+class HackathonParticipantsAdmin(ImportExportModelAdmin):
+    list_display = ['name', 'email', 'phone_number', 'college', 'hackathon', 'team', 'isCaptain', 'isPaid', 'isGitamite']
+    search_fields = ['name', 'email', 'phone_number', 'college__name', 'hackathon__name', 'team__team_name']
+
+admin.site.register(Hackathon, HackathonAdmin)
+admin.site.register(HackathonTeam, HackathonTeamAdmin)
+admin.site.register(HackathonParticipants, HackathonParticipantsAdmin)
