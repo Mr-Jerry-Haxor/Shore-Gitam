@@ -91,7 +91,7 @@
               <label
                 for="email"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >GITAM Email</label
+                >College/University Email(should be same as that given while Registration)</label
               >
               <input
                 type="email"
@@ -123,7 +123,7 @@
               <label
                 for="regno"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >GITAM Registration Number</label
+                >College/University Registration Number</label
               >
               <input
                 type="text"
@@ -148,7 +148,7 @@
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 >
-                  <option selected>Select Gender</option>
+                  <option value="" disabled selected>Select Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Other">Others</option>
@@ -166,7 +166,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               >
-                <option selected>Year of Study</option>
+                <option value="" disabled selected>Year of Study</option>
                 <option value="First year">1st Year</option>
                 <option value="Second year">2nd Year</option>
                 <option value="Third year">3rd Year</option>
@@ -229,7 +229,7 @@
               <label
                 for="campus"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Select Campus</label
+                >Select Campus(if you are GITAM, if not? select Other)</label
               >
               <select
                 id="campus"
@@ -237,10 +237,11 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               >
-                <option selected>Select</option>
-                <option value="Vizag">Vizag</option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Benguluru">Benguluru</option>
+                <option value="" disabled selected>Select</option>
+                <option value="Vizag">GITAM Vizag</option>
+                <option value="Hyderabad">GITAM Hyderabad</option>
+                <option value="Benguluru">GITAM Benguluru</option>
+                <option value="Other">Other</option>
               </select>
             </div>
           </div>
@@ -257,40 +258,47 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               >
-                <option selected>Select</option>
+                <option value="" disabled selected>Select</option>
                 <option value="True">Yes</option>
                 <option value="False">No</option>
+                <option value="Non-Gitam">Non-Gitam</option>
               </select>
             </div>
           </div>
           <div class="grid gap-6 mb-6 md:grid-cols-2">
             <div>
-                <label for="departureDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Departure Datetime
-                </label>
-                <input
-                    type="datetime-local"
-                    id="departureDatetime"
-                    name="departureDatetime"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Select Departure Datetime"
-                    required
-                />
+                <label
+                  for="eventtype"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Event Type</label
+                >
+                <select
+                  id="eventtype"
+                  name="eventtype"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                >
+                  <option value="" disabled selected>Select</option>
+                  <option value="Cultural">Cultural</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Technical">Technical</option>
+                </select>
             </div>
             <div>
-                <label for="arrivalDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Arrival Datetime
-                </label>
-                <input
-                    type="datetime-local"
-                    id="arrivalDatetime"
-                    name="arrivalDatetime"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Select Arrival Datetime"
-                    required
-                />
+              <label
+                for="eventname"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Event name</label
+              >
+              <input
+                type="text"
+                id="eventname"
+                name="eventname"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Enter event name(eg : Dance , cricket)"
+                required
+              />
             </div>
-            
           </div>
           <div class="grid gap-6 mb-6 md:grid-cols-2">
               <div>
@@ -320,7 +328,7 @@
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 >
-                  <option selected>Select</option>
+                  <option value="" disabled selected>Select</option>
                   <option value="XS">XS</option>
                   <option value="S">S</option>
                   <option value="M">M</option>
@@ -330,7 +338,6 @@
                   <option value="Other">Other</option>
                 </select>
             </div>
-              
           </div>
           <div class="mb-6">
             <!-- upload noc in pdf format -->
@@ -354,6 +361,35 @@
             >
               PDF (MAX. 2MB).
             </p>
+          </div>
+
+          <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+                <label for="departureDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Departure Datetime
+                </label>
+                <input
+                    type="datetime-local"
+                    id="departureDatetime"
+                    name="departureDatetime"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select Departure Datetime"
+                    required
+                />
+            </div>
+            <div>
+                <label for="arrivalDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Arrival Datetime
+                </label>
+                <input
+                    type="datetime-local"
+                    id="arrivalDatetime"
+                    name="arrivalDatetime"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select Arrival Datetime"
+                    required
+                />
+            </div>
           </div>
           <div class="mb-6">
             <div
