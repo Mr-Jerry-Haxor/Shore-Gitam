@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 @require_http_methods(["GET", "POST"])
 def bgmi_player(request):
     if True:
-        return render(request,'bgmiclose.html')
+        return render(request,'bgmiclose.html',{"titletext":"BGMI Registration Closed"})
     if request.method == 'GET':
         # Render the form template for GET requests
         return render(request, 'bgmireg.html')  # Replace 'player_registration.html' with your template file
@@ -47,6 +47,8 @@ def bgmi_player(request):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def volunteer_registration(request):
+    if True:
+        return render(request,'bgmiclose.html',{"titletext":"Volunteer Registration Closed"})
     if request.method == 'POST':
         try:
             name = request.POST.get('name') 
