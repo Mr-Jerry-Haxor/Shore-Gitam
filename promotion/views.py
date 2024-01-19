@@ -108,6 +108,7 @@ def volunteer_registration(request):
 
 
 def noc_and_travel_tickets(request):
+    context = {}
     colleges = College.objects.all()
     context["colleges"] = colleges
     events = Event.objects.all()
