@@ -286,6 +286,7 @@
                   <option value="Cultural">Cultural</option>
                   <option value="Sports">Sports</option>
                   <option value="Technical">Technical</option>
+                  <option value="DOS/DOSL">DOS/DOSL</option>
                 </select>
             </div>
             <div>
@@ -307,6 +308,10 @@
                   {% for hackathon in hackathons %}
                     <option value="{{ hackathon.name }}">{{ hackathon.name }}</option>
                   {% endfor %}
+                  <option value="SLA">Student Life Associate</option>
+                  <option value="SSA">Student Sports Associate</option>
+                  <option value="SLA_staff">Student Life Staff</option>
+                  <option value="SSA_staff">Student Sports Staff/option>
                 </select>
             </div>
           </div>
@@ -373,9 +378,26 @@
             </p>
           </div>
           <div class="grid gap-6 mb-6 md:grid-cols-2">
-            
+
+            <div>
+              <label
+                for="accomodation"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Have you opted for accomodation?</label
+              >
+              <select onchange="showDiv('tickets', this)"
+                id="accomodation"
+                name="accomodation"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              >
+                <option value="" disabled selected>Select</option>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+              </select>
+            </div>
           </div>
-          <div class="tickets">
+          <div class="tickets" id="tickets" style="display: none;">
             <div class="grid gap-6 mb-6 md:grid-cols-2">
               <div>
                   <label for="departureDatetime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -467,6 +489,12 @@
               PNG, JPG, or JPEG (MAX. 800x400px and Less than 1MB).
             </p>
           </div>
+          <script>
+            function showDiv(divId, element)
+              {
+                  document.getElementById(divId).style.display = element.value == 1 ? 'block' : 'none';
+              }
+          </script>
           <script>
               document.addEventListener('DOMContentLoaded', function () {
                   // Get the file input element
