@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-o8i0@w39$ae86(5*(**!!0wn_g3e&2n6qiu!mo5ukc@n0k3q#@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['shore.gitam.edu', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['shore.gitam.edu', '127.0.0.1']
 
 
 # Application definition
@@ -92,12 +92,12 @@ WSGI_APPLICATION = 'shore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # DATABASES = {
@@ -111,16 +111,16 @@ DATABASES = {
 #     }
 # }
 
-# DATABASES = {
-# 'default': {
-# 'ENGINE': 'django.db.backends.mysql',
-# 'NAME': 'shoredb',
-# 'USER': 'shoremysql',
-# 'PASSWORD': 'shore@123$',
-# 'HOST': '192.168.63.153',
-# 'PORT' : '3306',
-# }
-# }
+DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.mysql',
+'NAME': 'shoredb',
+'USER': 'shoremysql',
+'PASSWORD': 'shore@123$',
+'HOST': '192.168.63.153',
+'PORT' : '3306',
+}
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
