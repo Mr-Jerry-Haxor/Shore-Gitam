@@ -95,6 +95,9 @@ class Task(models.Model):
     
     
 def upload_file_to(instance, filename):
+    
+    if instance.file:
+        instance.file.delete()
 
     ext = filename.split('.')[-1]
     new_filename = f"{instance.name}.{ext}"
