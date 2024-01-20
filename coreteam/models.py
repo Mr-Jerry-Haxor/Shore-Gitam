@@ -104,7 +104,7 @@ def upload_file_to(instance, filename):
 
 class FileUpload(models.Model):
     name = models.CharField(max_length=100)
-    file = models.FileField(upload_to=upload_file_to)
+    file = models.FileField(upload_to=upload_file_to , blank=True , null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

@@ -14,8 +14,8 @@ urlpatterns = [
     path("registered_sports/<str:sport_name>", views.registered_sports, name="registered_sports"),
     path("registered_culturals/<str:sport_name>", views.registered_culturals, name="registered_culturals"),
     path("view_team/<str:team_hash>", views.view_team, name="view_team"),
-    path("sports_events/", views.events_admin_sports, name="events_admin_sports"),
-    path("culturals_events/", views.events_admin_culturals, name="events_admin_culturals"),
+    path("sports/registered_teams", views.events_admin_sports, name="events_admin_sports"),
+    path("culturals/registered_teams", views.events_admin_culturals, name="events_admin_culturals"),
 
     # hackathon urls
     path("hackathon/", views.hackathon_home, name="hackathon_home"),    # URL Working

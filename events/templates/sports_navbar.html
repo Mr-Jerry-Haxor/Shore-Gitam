@@ -41,37 +41,25 @@
                     </a>
                 </li>
                 {% if request.user.is_authenticated %} 
-                {% if request.user.events_sports or request.user.events_sports_staff %}
-                <li>
-                    <a href="{% url 'events:events_admin_sports'  %}" class="block px-4 py-2 hover:bg-gray-100">
-                        Teams Registered - Sports
-                    </a>
-                </li>
-                {% endif %}
-                {% if request.user.events_culturals or request.user.events_culturals_staff %}
-                <li>
-                    <a href="{% url 'events:events_admin_culturals' %}" class="block px-4 py-2 hover:bg-gray-100">
-                        Teams Registered - Culturals
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                        Teams Registered - Hackathon
-                    </a>
-                </li>
-                {% endif %}
-                {% if request.user.events_sports or request.user.events_culturals %}
-                <li>
-                    <a href="{% url 'events:addCollege' %}" class="block px-4 py-2 hover:bg-gray-100">
-                        Add College
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'events:addEvent' %}" class="block px-4 py-2 hover:bg-gray-100">
-                        Add Event
-                    </a>
-                </li>
-                {% endif %}
+                    {% if request.user.events_sports or request.user.events_sports_staff %}
+                    <li>
+                        <a href="{% url 'events:events_admin_sports'  %}" class="block px-4 py-2 hover:bg-gray-100">
+                            Teams Registered - Sports
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if request.user.events_culturals or request.user.events_culturals_staff %}
+                    <li>
+                        <a href="{% url 'events:events_admin_culturals' %}" class="block px-4 py-2 hover:bg-gray-100">
+                            Teams Registered - Culturals
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'events:hackathon_admin' %}" class="block px-4 py-2 hover:bg-gray-100">
+                            Teams Registered - Hackathon
+                        </a>
+                    </li>
+                    {% endif %}
                 {% endif %}
             </ul>
         </div>
