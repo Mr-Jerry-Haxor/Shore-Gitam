@@ -92,13 +92,13 @@ class Task(models.Model):
     def __str__(self):
         return self.task_title
     
-    
-    
-def upload_file_to(instance, filename):
-    
-    if instance.file:
-        instance.file.delete()
 
+import os
+from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+
+def upload_file_to(instance, filename):
     ext = filename.split('.')[-1]
     new_filename = f"{instance.name}.{ext}"
 
@@ -112,3 +112,9 @@ class FileUpload(models.Model):
     
     def __str__(self):
         return self.name
+
+@receiver(pre_delete, sender=FileUpload)
+def file_upload_pre_delete(sender, instance, **kwargs):
+    # Delete the file when the corresponding FileUpload instance is deleted
+    if instance.file:
+        instance.file.delete()
