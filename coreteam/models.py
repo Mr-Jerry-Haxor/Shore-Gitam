@@ -85,8 +85,8 @@ class Task(models.Model):
     status = models.CharField(max_length=20, choices=TASK_STATUSES, default='todo')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    assigned_to = models.CharField(max_length=100)
-    assigned_by = models.CharField(max_length=100)
+    assigned_to = models.CharField(max_length=500)
+    assigned_by = models.CharField(max_length=500)
     advisory = models.BooleanField(default=False)
 
     def __str__(self):
