@@ -43,19 +43,19 @@
                 {% if request.user.is_authenticated %} 
                     {% if request.user.events_sports or request.user.events_sports_staff %}
                     <li>
-                        <a href="{% url 'events:events_admin_sports'  %}" class="block px-4 py-2 hover:bg-gray-100">
+                        <a href="{% url 'events:events_admin_sports'  %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">
                             Teams Registered - Sports
                         </a>
                     </li>
                     {% endif %}
                     {% if request.user.events_culturals or request.user.events_culturals_staff %}
                     <li>
-                        <a href="{% url 'events:events_admin_culturals' %}" class="block px-4 py-2 hover:bg-gray-100">
+                        <a href="{% url 'events:events_admin_culturals' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">
                             Teams Registered - Culturals
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'events:hackathon_admin' %}" class="block px-4 py-2 hover:bg-gray-100">
+                        <a href="{% url 'events:hackathon_admin' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100">
                             Teams Registered - Hackathon
                         </a>
                     </li>
