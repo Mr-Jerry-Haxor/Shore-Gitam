@@ -14,7 +14,7 @@
       rel="stylesheet"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-    <title>Shore24 Gitam | Fest pass</title>
+    <title>Shore24 Gitam | NOC and Tickets</title>
     <style>
       body {
         background-color: rgb(255, 255, 255);
@@ -196,7 +196,7 @@
             </div>
             <div>
               <label
-                for="Institute"
+                for="institute"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Institute</label
               >
@@ -359,8 +359,7 @@
             <label
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               for="noc_file_input"
-              >Upload NOC in PDF format</label
-            >
+              >Upload NOC in PDF format<br>(sample NOC :<a href="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/guidelines/NOC.pdf">click to Download</a>)</label>
             <input
               class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"  
               aria-describedby="file_input_help"
@@ -425,7 +424,6 @@
                       name="departure"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Enter Departure Place"
-                      required
                   />
               </div>
               <div>
@@ -438,7 +436,6 @@
                       name="arrival"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Enter Arrival Place"
-                      required
                   />
               </div>
             </div>
@@ -453,7 +450,6 @@
                       name="departureDatetime"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Select Departure Datetime"
-                      required
                   />
               </div>
               <div>
@@ -466,7 +462,6 @@
                       name="arrivalDatetime"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Select Arrival Datetime"
-                      required
                   />
               </div>
             </div>
@@ -483,7 +478,6 @@
                 name="ticket_file_input"
                 type="file"
                 accept="application/pdf"
-                required
               />
               <p
                 class="mt-1 text-sm text-gray-500 dark:text-gray-300"
@@ -534,10 +528,25 @@
             </p>
           </div>
           <script>
-            function showDiv(divId, element)
-              {
-                  document.getElementById(divId).style.display = element.value == 1 ? 'block' : 'none';
-              }
+            function showDiv(divId, element) {
+              var displayValue = element.value == 1 ? 'block' : 'none';
+          
+              document.getElementById(divId).style.display = displayValue;
+          
+              var departure = document.getElementById("departure");
+              var arrival = document.getElementById("arrival");
+              var departureDatetime = document.getElementById("departureDatetime");
+              var arrivalDatetime = document.getElementById("arrivalDatetime");
+              var ticket_file_input = document.getElementById("ticket_file_input");
+          
+              // Set the 'required' attribute based on the condition
+              departure.required = element.value == 1;
+              arrival.required = element.value == 1;
+              departureDatetime.required = element.value == 1;
+              arrivalDatetime.required = element.value == 1;
+              ticket_file_input.required = element.value == 1;
+          }
+          
           </script>
           <script>
               document.addEventListener('DOMContentLoaded', function () {

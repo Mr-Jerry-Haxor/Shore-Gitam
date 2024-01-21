@@ -12,4 +12,5 @@ urlpatterns = [
     path("checkInOutForm/<str:email>", views.checkInOutForm, name="checkInOutForm"),
     path("checkInOutHistory/", views.checkInOutHistory, name="checkInOutHistory"),
     path("admin_history/<str:date>", views.admin_history, name="admin_history"),
+    path("upload_NOC/" , views.noc_and_travel_tickets, name="hospitalitynoc")
 ]

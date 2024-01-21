@@ -13,9 +13,13 @@ from django.template.loader import get_template
 from django.conf import settings
 from .utils import generate_otp
 from .decorators import email_check_required
-from .models import HospitalityUser, Meal, MealHistory
+from .models import HospitalityUser, Meal, MealHistory , ParticipantsNOC
 from .hash import generate_md5
-
+    
+from django.contrib.auth.decorators import login_required
+from events.models import College , Event , Hackathon 
+from django.db import IntegrityError
+from django.contrib import messages
 
 def send_otp_email(user_email, otp):
     subject = f"SHORE'24 GITAM, OTP {otp}"
@@ -286,3 +290,86 @@ def checkInOutHistory(request):
         context["checked_out_users"] = checked_out_users
         context["all_users"] = all_users
         return render(request, "checkInOutHistory.html", context)
+    
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
+def noc_and_travel_tickets(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
+        regno = request.POST.get('regno')
+        gender = request.POST.get('gender')
+        yearofstudy = request.POST.get('yearofstudy')
+        branch = request.POST.get('branch')
+        institute = request.POST.get('institute')
+        Department = request.POST.get('Department')
+        campus = request.POST.get('campus')
+        hosteler = request.POST.get('hosteler')
+        eventtype = request.POST.get('eventtype')
+        eventname = request.POST.get('eventname')
+        teamname = request.POST.get('teamname')
+        tshirt = request.POST.get('tshirt')
+        noc_file_input = request.FILES.get('noc_file_input')
+        accomodation = request.POST.get('accomodation')
+        travelling = request.POST.get('travelling')
+        profile_pic = request.FILES.get('profile_pic')
+        
+        try:
+            studentnoc = ParticipantsNOC(
+                full_name = name,
+                email = email,
+                phone_number = phone_number,
+                regno = regno,
+                gender = gender,
+                yearofstudy = yearofstudy,
+                branch = branch,
+                institute = institute,
+                department = Department,
+                campus = campus,
+                hosteler = hosteler,
+                eventtype = eventtype,
+                eventname = eventname,
+                teamname = teamname,
+                tshirt = tshirt,
+                accomodation = accomodation,
+                travelling = travelling,
+                noc_file_input = noc_file_input,
+                profile_pic = profile_pic,
+            )
+            studentnoc.save()
+            
+            
+            if travelling == "1":
+                departure = request.POST.get('departure')
+                arrival = request.POST.get('arrival')
+                departureDatetime = request.POST.get('departureDatetime')
+                arrivalDatetime = request.POST.get('arrivalDatetime')
+                ticket_file_input = request.FILES.get('ticket_file_input')
+                
+                
+                studentnoc.departure = departure
+                studentnoc.arrival = arrival
+                studentnoc.departureDatetime = departureDatetime
+                studentnoc.arrivalDatetime = arrivalDatetime
+                studentnoc.ticket_file_input = ticket_file_input
+                
+                studentnoc.save()
+                
+            messages.success(request, "Registration successful")
+            return redirect('noc_and_tickets')
+        except IntegrityError as e:
+            # Catch the specific IntegrityError for unique constraint failure
+            messages.error(request, "Email already exists.Any issues,Contact: shore_tech@gitam.in ")
+            return redirect('noc_and_tickets')
+        
+    else:
+        context = {}
+        colleges = College.objects.all()
+        context["colleges"] = colleges
+        events = Event.objects.all()
+        hackathons = Hackathon.objects.all()
+        context["events"] = events
+        context["hackathons"] = hackathons
+        return render(request, 'noc_tickets_reg.html',context)

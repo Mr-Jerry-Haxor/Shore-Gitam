@@ -105,14 +105,5 @@ def volunteer_registration(request):
         return render(request, 'voulnteerreg.html')
 
 
-
-
-def noc_and_travel_tickets(request):
-    context = {}
-    colleges = College.objects.all()
-    context["colleges"] = colleges
-    events = Event.objects.all()
-    hackathons = Hackathon.objects.all()
-    context["events"] = events
-    context["hackathons"] = hackathons
-    return render(request, 'noc_tickets_reg.html',context)
+def noc(request):
+    return redirect("hospitality:hospitalitynoc")
