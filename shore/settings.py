@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'payments',
     'events',
     'festpass',
+    'sports',
 ]
 
 MIDDLEWARE = [
@@ -75,9 +76,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                # custom context processro for retrieveing dates from meal model
+                # custom context processor for retrieving dates from meal model
                 'hospitality.context_processors.formatted_dates',
-                
+
                 # Add the following two
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
@@ -92,12 +93,24 @@ WSGI_APPLICATION = 'shore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'shoredb',
+    'USER': 'shoremysql',
+    'PASSWORD': 'shore@123$',
+    'HOST': '192.168.63.153',
+    'PORT' : '3306',
+    }
+}
 
 
 # DATABASES = {
@@ -111,16 +124,7 @@ WSGI_APPLICATION = 'shore.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.mysql',
-'NAME': 'shoredb',
-'USER': 'shoremysql',
-'PASSWORD': 'shore@123$',
-'HOST': '192.168.63.153',
-'PORT' : '3306',
-}
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -163,7 +167,7 @@ STATIC_URL = os.path.join(BASE_DIR, 'static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
- 
+
 # MEDIA_URL = "media/"
 MEDIA_URL = os.path.join(BASE_DIR, "media/")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
@@ -181,7 +185,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 1
 
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000','https://shore.gitam.edu']
 
-AUTH_USER_MODEL = 'coreteam.CustomUser' 
+AUTH_USER_MODEL = 'coreteam.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
   'social_core.backends.google.GoogleOAuth2',
@@ -195,7 +199,7 @@ LOGOUT_REDIRECT_URL = 'index'
 
 
 from dotenv import load_dotenv
-load_dotenv() 
+load_dotenv()
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = str(os.getenv('GOOGLE_KEY'))
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = str(os.getenv('GOOGLE_SECRET'))

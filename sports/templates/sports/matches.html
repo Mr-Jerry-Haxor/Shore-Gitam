@@ -1,0 +1,55 @@
+{% extends "sports/base.html" %}
+{% load static %}
+{% block title %} Sports {% endblock %} 
+{% block body %}
+{% include 'sports/navbar.html' %}
+{% include 'messages.html' %}
+<h2 class="text-3xl text-center">{{ type }}</h2>
+<div class="mb-4 border-b border-gray-200">
+  <ul
+    class="flex flex-wrap -mb-px text-sm font-medium text-center"
+    id="default-tab"
+    data-tabs-toggle="#default-tab-content"
+    role="tablist"
+  >
+    {% for sport in sports %}
+    <li class="me-2" role="presentation">
+      <button
+        class="inline-block p-4 border-b-2 rounded-t-lg"
+        id="{{ sport.name }}-tab"
+        data-tabs-target="#{{ sport.name }}"
+        type="button"
+        role="tab"
+        aria-controls="{{ sport.name }}"
+        aria-selected="false"
+      >
+        {{ sport.name }}
+      </button>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+<div id="default-tab-content">
+  {% for sport in sports %}
+  <div
+    class="hidden p-4 rounded-lg bg-gray-50"
+    id="{{ sport.name }}"
+    role="tabpanel"
+    aria-labelledby="{{ sport.name }}-tab"
+  >
+    {% if type == 'Matches' %}
+    <img
+      src="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/Sports/{{ sport.match_img }}"
+      alt="{{ sport.name }} Match Image"
+    />
+    {% else %}
+    <img
+      src="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/Sports/{{ sport.points_img }}"
+      alt="{{ sport.name }} Points Image"
+    />
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock body %}
