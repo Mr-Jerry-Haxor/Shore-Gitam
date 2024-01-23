@@ -15,22 +15,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path , include
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('shoreadmin/', admin.site.urls),
-    path('logout/', auth_views.LogoutView.as_view(),name='logout'),
-    path('auth/', include('social_django.urls', namespace='social')),
-    path('', include('comingsoon.urls')),
-    path('coreteam/', include('coreteam.urls')),
-    path('shore23/' , include('shore23.urls')),
-    path('hospitality/' , include('hospitality.urls')),
-    path('prelims/', include('prelims.urls')),
-    path('preshore/',include('promotion.urls')),
-    path('registrations/' , include('events.urls')),
-    path('festpass/' , include('festpass.urls')),
-    path('sports/' , include('sports.urls')),
+    path("shoreadmin/", admin.site.urls),
+    path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("auth/", include("social_django.urls", namespace="social")),
+    path("", include("comingsoon.urls")),
+    path("coreteam/", include("coreteam.urls")),
+    path("shore23/", include("shore23.urls")),
+    path("hospitality/", include("hospitality.urls")),
+    path("prelims/", include("prelims.urls")),
+    path("preshore/", include("promotion.urls")),
+    path("registrations/", include("events.urls")),
+    path("festpass/", include("festpass.urls")),
+    path("sports/", include("sports.urls")),
+    path("ngusers/", include("ngusers.urls")),
 ]
 
 
@@ -38,12 +39,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 else:
     settings.DEBUG = True
-    urlpatterns += static(
-        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(
-        settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     settings.DEBUG = False
