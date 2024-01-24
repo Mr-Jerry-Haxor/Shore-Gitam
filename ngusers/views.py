@@ -9,6 +9,7 @@ from django.template.loader import get_template
 from django.db import IntegrityError
 
 from coreteam.models import CustomUser
+from festpass.models import Student
 from hospitality.views import generate_otp
 from .models import AllowedParticipants
 
@@ -150,7 +151,16 @@ def set_password(request, email):
 
 
 def update_picture(request):
-    return render(request, "ngusers/update_picture.html")
+    if not request.user.is_authenticated:
+        return redirect("ngusers:login")
+
+    context = {}
+    # email = request.user.email
+    email = "akshit.uriti@gmail.com"
+    student = Student.objects.get(email=email)
+    context['student'] = student
+
+    return render(request, "ngusers/update_picture.html", context)
 
 
 @login_required(login_url="ngusers:login")

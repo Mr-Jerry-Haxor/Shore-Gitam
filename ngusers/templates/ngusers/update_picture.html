@@ -35,7 +35,7 @@
             <div class="mb-6">
                 <div class="beforepreview-container" id="beforepreviewContainer">
                     <img
-                        src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg"
+                        src="{{ student.profile_picture.url }}"
                         alt="Preview"
                         class="beforepreview-image"
                         id="beforeImage"
@@ -43,7 +43,6 @@
                     />
                     <br />
                 </div>
-                
             </div>
         </center>
         <div class="grid gap-6 mb-6 md:grid-cols-2">
@@ -61,6 +60,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter Your Full name"
               required
+              disabled
             />
           </div>
           <div>
@@ -78,6 +78,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter GITAM email"
               required
+              disabled
             />
           </div>
         </div>
@@ -96,6 +97,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter phone number"
               required
+              disabled
             />
           </div>
           <div>
@@ -112,6 +114,7 @@
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Enter Registration Number"
               required
+              disabled
             />
           </div>
         </div>
