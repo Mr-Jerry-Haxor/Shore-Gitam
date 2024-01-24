@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,11 +16,12 @@
       "
     >
       <div style="margin: 50px auto; width: 70%; padding: 20px 0">
-        <div style="border-bottom: 1px solid #eee">
+        <div style="border-bottom: 1px solid rgb(152, 31, 43);">
           <img
-            src="{% static 'img/shore_24_clogo.png' %}"
+            src="https://shore.gitam.edu/home/ubuntuserver/Shore24/static/shore_24_clogo.png"
             class="h-8"
             alt="Logo"
+            style="height: 1rem;"
           />
           <a
             href="https://shore.gitam.edu/"
@@ -32,7 +34,7 @@
             >Shore'24</a
           >
         </div>
-        <p style="font-size: 1.1em">Hi, {{ name }}</p>
+        <p style="font-size: 1.1em">Hi,</p>
         <p>
           Thank you for Registering. Use the following OTP to complete your Sign
           Up procedures.
@@ -47,9 +49,9 @@
             border-radius: 4px;
           "
         >
-          {{ otp }}
+          {{ user_otp }}
         </h2>
-        <hr style="border: none; border-top: 1px solid #eee" />
+        <hr style="border: none; border-top: 1px solid rgb(152, 31, 43);" />
         <div
           style="
             float: right;

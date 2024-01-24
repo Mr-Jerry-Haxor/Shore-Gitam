@@ -7,12 +7,13 @@ from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.db import IntegrityError
-
+from django.conf import settings
 from coreteam.models import CustomUser
 from festpass.models import Student
 from hospitality.views import generate_otp
 from .models import AllowedParticipants, ProfilePicUpdated
-
+import requests
+import json
 
 def send_otp_email(user_email, otp):
     participant = AllowedParticipants.objects.get(email=user_email)
@@ -21,7 +22,6 @@ def send_otp_email(user_email, otp):
     html_content = get_template("ngusers/otp_template.html").render(
         {
             "user_otp": otp,
-            "name": f"{participant.first_name} {participant.last_name}",
         }
     )
 
@@ -48,7 +48,7 @@ def user_login(request):
             participant = AllowedParticipants.objects.get(email=email)
         except AllowedParticipants.DoesNotExist:
             messages.error(request, f"Account with email {email} does not exist")
-            return redirect("ngusers:register")
+            return redirect("ngusers:login")
 
         username = participant.username
         password = request.POST["password"]
@@ -58,10 +58,31 @@ def user_login(request):
             # return redirect("ngusers:home")
             return redirect("corehome")
         else:
-            messages.error(request, "Invalid credentials")
+            messages.error(request, "Invalid Email or Password")
             return redirect("ngusers:login")
 
     return render(request, "ngusers/login.html", context)
+
+
+def verify_edu_email(email):
+    data = {
+                'mail': email,
+            }
+    response = requests.post('https://gevents.gitam.edu/registration/data/checkmail', data=data)
+    if response.status_code == 200:
+        studentdata = json.loads(response.text)
+        if studentdata['status'] == 'success':
+            try:
+                if studentdata['data']['staff_email'] == email:
+                    return True
+                else:
+                    return False
+            except:
+                return False
+        else:
+            return False
+    else:
+        return False
 
 
 def verify_email(request):
@@ -79,19 +100,21 @@ def verify_email(request):
             if not AllowedParticipants.objects.filter(email=email).exists():
                 # check the email domain is @gitam.edu
                 if not email.endswith("@gitam.edu"):
-                    messages.error(request, "Email not allowed")
+                    messages.error(request, "Only participants emails are allowed. If you have doubt,contact: Shore_tech@gitam.in")
                     return redirect("ngusers:register")
                 else:
-                    AllowedParticipants.objects.create(email=email)
+                    if verify_edu_email(email):
+                        AllowedParticipants.objects.create(email=email)
+                    else:
+                        messages.error(request, "Mailid was not valid. If you have doubt,contact: Shore_tech@gitam.in")
+                        return redirect("ngusers:register")
 
             participant = AllowedParticipants.objects.get(email=email)
 
             otp = generate_otp()
-            print(f"\nOTP is: {otp}\n")
 
-            # send otp in email using threading
-            # email_thread = threading.Thread(target=send_otp_email, args=(email, otp))
-            # email_thread.start()
+            email_thread = threading.Thread(target=send_otp_email, args=(email, otp))
+            email_thread.start()
 
             context["otp_sent"] = True
             context["email"] = email
@@ -141,7 +164,7 @@ def set_password(request, email):
                 except IntegrityError:
                     messages.error(request, "User with this username already exists")
                     return redirect("ngusers:set_password", email=email)
-                messages.success(request, "User created successfully")
+                messages.success(request, "Account created successfully")
                 return redirect("ngusers:login")
             else:
                 messages.error(request, "Passwords do not match")
@@ -162,21 +185,24 @@ def update_picture(request):
             request,
             "Profile picture already updated, can only update it once. Contact shore_tech@gitam.in for any queries"
         )
-        return redirect("corehome")
-
-    student = Student.objects.get(email=email)
-    context['student'] = student
-
-    if request.method == "POST":
-        if student.profile_picture:
-            student.profile_picture.delete()
-        student.profile_picture = request.FILES.get("profile_pic")
-        student.save()
-
-        ProfilePicUpdated.objects.create(email=email, updated=True)
-        messages.success(request, "Profile picture updated successfully")
         return redirect("passhome")
-    return render(request, "ngusers/update_picture.html", context)
+    if Student.objects.filter(email=email).exists():
+        student = Student.objects.get(email=email)
+        context['student'] = student
+
+        if request.method == "POST":
+            if student.profile_picture:
+                student.profile_picture.delete()
+            student.profile_picture = request.FILES.get("profile_pic")
+            student.save()
+
+            ProfilePicUpdated.objects.create(email=email, updated=True)
+            messages.success(request, "Profile picture updated successfully")
+            return redirect("passhome")
+        return render(request, "ngusers/update_picture.html", context)
+    else:
+        messages.error(request, "You Haven't register for the Fest pass")
+        return redirect("passhome")
 
 
 @login_required(login_url="ngusers:login")

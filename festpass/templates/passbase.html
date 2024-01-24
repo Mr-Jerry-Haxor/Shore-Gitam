@@ -126,6 +126,13 @@
                 >Shore IDcard</a
               >
             <li>
+            <li>
+              <a
+                href="{% url 'ngusers:update_picture' %}"
+                class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
+                >Update profile picture</a
+              >
+            <li>
             {% if not request.user.is_authenticated %}
             <li>
               <a

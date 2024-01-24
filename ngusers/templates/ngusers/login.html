@@ -52,6 +52,15 @@
           required
         />
       </div>
+      <center class="py-3">
+        <button
+          type="submit"
+          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        >
+          Login
+        </button>
+      </center>
+    </form>
       <p class="text-sm text-black-500">
         Don’t have an account yet?
         <a
@@ -64,27 +73,19 @@
         <hr class="w-64 h-px my-8 bg-gray-200 border-0">
         <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">or</span>
       </div>
-      <p class="text-sm text-black-500">
-        If you are a gitamite,
+      <p class="text-sm text-black-500" style="text-align:center">
+        If you are a gitamite,<br>Use Only your GITAM MailID<br><br>
+        <center>
         <a
           href="{% url 'corehome' %}"
           class="font-medium text-blue-600 hover:underline"
-          >Click here to login</a
-        >
+          >
+          <button class="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+              <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo">
+              <span>Login with Google</span>
+          </button>
+      </a></center>
       </p>
-
-     
-
-      
-      <center class="py-3">
-        <button
-          type="submit"
-          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-        >
-          Login
-        </button>
-      </center>
-    </form>
   </div>
 </div>
 {% endblock %}
