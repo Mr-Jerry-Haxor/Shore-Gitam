@@ -4,10 +4,35 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.core.mail import send_mail
+from django.template.loader import get_template
 
 from coreteam.models import CustomUser
-from hospitality.views import send_otp_email, generate_otp
+from hospitality.views import generate_otp
 from .models import AllowedParticipants
+
+
+def send_otp_email(user_email, otp):
+    participant = AllowedParticipants.objects.get(email=user_email)
+
+    subject = f"SHORE'24 GITAM, Sign Up OTP"
+    html_content = get_template("ngusers/otp_template.html").render(
+        {
+            "user_otp": otp,
+            "name": f"{participant.first_name} {participant.last_name}",
+        }
+    )
+
+    try:
+        send_mail(
+            subject=subject,
+            message="",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[user_email],
+            html_message=html_content,
+        )
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 
 def user_login(request):
@@ -15,12 +40,21 @@ def user_login(request):
         return redirect("ngusers:home")
     context = {}
     if request.method == "POST":
-        username = request.POST["username"]
+        email = request.POST["email"]
+
+        try:
+            participant = AllowedParticipants.objects.get(email=email)
+        except AllowedParticipants.DoesNotExist:
+            messages.error(request, f"Account with email {email} does not exist")
+            return redirect("ngusers:register")
+
+        username = participant.username
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("ngusers:home")
+            # return redirect("ngusers:home")
+            return redirect("corehome")
         else:
             messages.error(request, "Invalid credentials")
             return redirect("ngusers:login")
@@ -38,7 +72,7 @@ def verify_email(request):
             email = request.POST["email"]
             if CustomUser.objects.filter(email=email).exists():
                 messages.info(request, "Email already exists")
-                return redirect("ngusers:register")
+                return redirect("ngusers:login")
 
             if not AllowedParticipants.objects.filter(email=email).exists():
                 messages.error(request, "Email not allowed")
@@ -50,9 +84,7 @@ def verify_email(request):
             print(f"\nOTP is: {otp}\n")
 
             # send otp in email using threading
-            # email_thread = threading.Thread(
-            #     target=send_otp_email, args=(email, otp)
-            # )
+            # email_thread = threading.Thread(target=send_otp_email, args=(email, otp))
             # email_thread.start()
 
             context["otp_sent"] = True
@@ -81,8 +113,8 @@ def set_password(request, email):
         context["email"] = email
         if request.method == "POST":
             username = request.POST["username"]
-            first_name = request.POST["first_name"]
-            last_name = request.POST["last_name"]
+            first_name = request.POST["first_name"].title()
+            last_name = request.POST["last_name"].title()
             password = request.POST["password"]
             confirm_password = request.POST["confirm_password"]
             if password == confirm_password:
@@ -97,7 +129,6 @@ def set_password(request, email):
                     last_name=last_name,
                     email=email,
                     password=password,
-                    is_staff=True,
                 )
                 user.save()
                 messages.success(request, "User created successfully")
@@ -111,5 +142,4 @@ def set_password(request, email):
 
 @login_required(login_url="ngusers:login")
 def home(request):
-    print(f"\n{request.user}\n")
-    return render(request, "ngusers/home.html")
+    return redirect("corehome")

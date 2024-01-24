@@ -13,7 +13,10 @@
     text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
   }
 </style>
-{% endblock %} {% block body %} {% include 'messages.html' %}
+{% endblock %} {% block body %} 
+{% include 'ngusers/navbar.html' %}
+{% include 'messages.html' %} 
+
 <div class="h-screen flex items-center justify-center">
   <div
     class="container mx-auto block max-w-xl p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
@@ -22,15 +25,15 @@
     <form class="max-w-sm mx-auto" method="post">
       {% csrf_token %}
       <div class="mb-5">
-        <label for="username" class="block mb-2 text-sm font-medium text-gray-900"
-          >Username</label
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+          >Email</label
         >
         <input
-          type="text"
-          id="username"
-          name="username"
+          type="email"
+          id="email"
+          name="email"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="Enter registered username"
+          placeholder="Enter registered email"
           required
         />
       </div>
