@@ -15,7 +15,6 @@ def generate_md5(user_string):
     return hashed_string.hexdigest()
 
 
-
 @login_required(login_url="/auth/login/google-oauth2/")
 def passhome(request):
     if Student.objects.filter(email=request.user.email).exists():

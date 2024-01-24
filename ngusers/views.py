@@ -11,7 +11,7 @@ from django.db import IntegrityError
 from coreteam.models import CustomUser
 from festpass.models import Student
 from hospitality.views import generate_otp
-from .models import AllowedParticipants
+from .models import AllowedParticipants, ProfilePicUpdated
 
 
 def send_otp_email(user_email, otp):
@@ -155,11 +155,27 @@ def update_picture(request):
         return redirect("ngusers:login")
 
     context = {}
-    # email = request.user.email
-    email = "akshit.uriti@gmail.com"
+    email = request.user.email
+
+    if ProfilePicUpdated.objects.filter(email=email, updated=True).exists():
+        messages.info(
+            request,
+            "Profile picture already updated, can only update it once. Contact shore_tech@gitam.in for any queries"
+        )
+        return redirect("corehome")
+
     student = Student.objects.get(email=email)
     context['student'] = student
 
+    if request.method == "POST":
+        if student.profile_picture:
+            student.profile_picture.delete()
+        student.profile_picture = request.FILES.get("profile_pic")
+        student.save()
+
+        ProfilePicUpdated.objects.create(email=email, updated=True)
+        messages.success(request, "Profile picture updated successfully")
+        return redirect("passhome")
     return render(request, "ngusers/update_picture.html", context)
 
 
