@@ -164,3 +164,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 promotion/migrations/__init__.py
+
+# Akshit's Python virtual environment
+shore_venv/
+
+.DS_Store
