@@ -1,6 +1,6 @@
 {% if messages %}
 {% for message in messages %}
-<div class="p-4 mb-4 text-sm rounded-lg {% if message.tags == 'info' %}text-blue-800 bg-blue-50{% elif message.tags == 'error' %}text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400{% elif message.tags == 'success' %}text-green-800 bg-green-50{% endif %}"
+<div class="p-4 mb-4 text-sm {% if message.tags == 'info' %}text-blue-800 bg-blue-50{% elif message.tags == 'error' %}text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400{% elif message.tags == 'success' %}text-green-800 bg-green-50{% endif %}"
     role="alert">
     <span class="font-medium">{{ message.tags.capitalize }}</span> {{ message }}
 </div>
