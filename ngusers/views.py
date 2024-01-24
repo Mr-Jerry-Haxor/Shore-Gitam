@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.core.mail import send_mail
 from django.template.loader import get_template
+from django.db import IntegrityError
 
 from coreteam.models import CustomUser
 from hospitality.views import generate_otp
@@ -75,8 +76,12 @@ def verify_email(request):
                 return redirect("ngusers:login")
 
             if not AllowedParticipants.objects.filter(email=email).exists():
-                messages.error(request, "Email not allowed")
-                return redirect("ngusers:register")
+                # check the email domain is @gitam.edu
+                if not email.endswith("@gitam.edu"):
+                    messages.error(request, "Email not allowed")
+                    return redirect("ngusers:register")
+                else:
+                    AllowedParticipants.objects.create(email=email)
 
             participant = AllowedParticipants.objects.get(email=email)
 
@@ -123,14 +128,18 @@ def set_password(request, email):
                 participant.last_name = last_name
                 participant.save()
 
-                user = CustomUser.objects.create_user(
-                    username=username,
-                    first_name=first_name,
-                    last_name=last_name,
-                    email=email,
-                    password=password,
-                )
-                user.save()
+                try:
+                    user = CustomUser.objects.create_user(
+                        username=username,
+                        first_name=first_name,
+                        last_name=last_name,
+                        email=email,
+                        password=password,
+                    )
+                    user.save()
+                except IntegrityError:
+                    messages.error(request, "User with this username already exists")
+                    return redirect("ngusers:set_password", email=email)
                 messages.success(request, "User created successfully")
                 return redirect("ngusers:login")
             else:
