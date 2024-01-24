@@ -19,7 +19,7 @@
 
 <div class="h-screen flex items-center justify-center">
   <div
-    class="container mx-auto block max-w-xl p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+    class="container mx-auto block max-w-xl p-6 bg-white border border-gray-200 rounded-lg shadow"
   >
     <h1 class="text-center title font-bold mb-5">Sign In</h1>
     <form class="max-w-sm mx-auto" method="post">
@@ -52,6 +52,20 @@
           required
         />
       </div>
+      <p class="text-sm text-black-500">
+        If you are a gitamite,
+        <a
+          href="{% url 'corehome' %}"
+          class="font-medium text-blue-600 hover:underline"
+          >Click here to login</a
+        >
+      </p>
+
+      <div class="inline-flex items-center justify-center w-full">
+        <hr class="w-64 h-px my-8 bg-gray-200 border-0">
+        <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">or</span>
+      </div>
+
       <p class="text-sm text-black-500">
         Don’t have an account yet?
         <a
