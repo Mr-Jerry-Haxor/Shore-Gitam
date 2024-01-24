@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'payments',
     'events',
     'festpass',
-    'sports'
+    'sports',
+    'ngusers',
 ]
 
 MIDDLEWARE = [

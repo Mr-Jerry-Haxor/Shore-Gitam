@@ -31,6 +31,7 @@ urlpatterns = [
     path('registrations/' , include('events.urls')),
     path('festpass/' , include('festpass.urls')),
     path('sports/' , include('sports.urls')),
+    path('users/' , include('ngusers.urls')),
 ]
 
 
