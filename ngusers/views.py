@@ -149,6 +149,10 @@ def set_password(request, email):
     return redirect("ngusers:register")
 
 
+def update_picture(request):
+    return render(request, "ngusers/update_picture.html")
+
+
 @login_required(login_url="ngusers:login")
 def home(request):
     return redirect("corehome")

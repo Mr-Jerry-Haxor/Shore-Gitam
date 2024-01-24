@@ -11,4 +11,5 @@ urlpatterns = [
     path("register/", views.verify_email, name="register"),
     path("set_password/<str:email>", views.set_password, name="set_password"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("update_picture/", views.update_picture, name="update_picture"),
 ]
