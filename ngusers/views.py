@@ -173,6 +173,8 @@ def set_password(request, email):
     return redirect("ngusers:register")
 
 
+
+@login_required(login_url="/auth/login/google-oauth2/")
 def update_picture(request):
     if not request.user.is_authenticated:
         return redirect("ngusers:login")
