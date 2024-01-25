@@ -5,7 +5,7 @@
 {% include 'sports/navbar.html' %}
 {% include 'messages.html' %}
 
-<div class="mb-4 border-b border-gray-200">
+<!-- <div class="mb-4 border-b border-gray-200">
   <ul
     class="flex flex-wrap -mb-px text-sm font-medium text-center"
     id="default-tab"
@@ -24,6 +24,44 @@
       >
         Matches
       </button>
+    </li>
+  </ul>
+</div> -->
+
+<div class="mb-4 border-b border-gray-200">
+  <ul
+    class="flex flex-wrap -mb-px text-sm font-medium text-center"
+    id="default-tab"
+    data-tabs-toggle="#default-tab-content"
+    role="tablist"
+  >
+    <li class="w-1/2" role="presentation">
+      <a 
+        href="{% url 'sports:matches' %}"
+        class="inline-block w-full p-4 border-b-2 rounded-t-lg text-blue-500"
+        id="matches-tab"
+        data-tabs-target="#matches"
+        type="button"
+        role="tab"
+        aria-controls="matches"
+        aria-selected="true"
+      >
+          Matches
+      </a>
+    </li>
+    <li class="w-1/2" role="presentation">
+      <a 
+        href="{% url 'sports:points' %}"
+        class="inline-block w-full p-4 border-b-2 rounded-t-lg"
+        id="points-tab"
+        data-tabs-target="#points"
+        type="button"
+        role="tab"
+        aria-controls="points"
+        aria-selected="false"
+      >
+        Points
+      </a>
     </li>
   </ul>
 </div>
