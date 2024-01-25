@@ -3,12 +3,11 @@ from .models import Sport
 
 
 def matches(request):
-    context = {"type": "Matches"}
+    context = {}
     context['sports'] = Sport.objects.all()
     return render(request, 'sports/matches.html', context)
-
 
 def points(request):
-    context = {"type": "Points"}
+    context = {}
     context['sports'] = Sport.objects.all()
-    return render(request, 'sports/matches.html', context)
+    return render(request, 'sports/points.html', context)
