@@ -48,8 +48,8 @@ def bgmi_player(request):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def volunteer_registration(request):
-    if True:
-        return render(request,'bgmiclose.html',{"titletext":"Volunteer Registration Closed"})
+    # if True:
+    #     return render(request,'bgmiclose.html',{"titletext":"Volunteer Registration Closed"})
     if request.method == 'POST':
         try:
             name = request.POST.get('name') 
