@@ -293,7 +293,7 @@ def checkInOutHistory(request):
     
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
+# @login_required(login_url="/auth/login/google-oauth2/")
 def noc_and_travel_tickets(request):
     if request.method == 'POST':
         name = request.POST.get('name')
