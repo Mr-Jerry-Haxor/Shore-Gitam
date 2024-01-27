@@ -38,6 +38,14 @@ View Team
                 Payment Status: {% if team.isPaid %} Paid {% else %} Not Paid {% endif %} <br>
                 Waitlisted: {% if isWaiting %} Yes {% else %} No {% endif %} <br>
                 Status: {% if team.status == "pending" %} Under Review {% else %} {{ team.status }} {% endif %} <br>
+                <br>
+                <a href="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/{{ team.endorsment_file }}" target="_blank" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">View Endorsment File</a>
+                <br>
+                <br>
+                <br>
+                <a href="https://shore.gitam.edu/registrations/success/{{ team.team_hash }}" target="_blank" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none">Team status link</a>
+                <br>
+                <br>
             </p>
         </div>
         <div class="hidden p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="services" role="tabpanel"
