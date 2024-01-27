@@ -29,6 +29,8 @@ class Student(models.Model):
     campus = models.CharField(max_length=100, choices=CAMPUS_CHOICES)
     hosteler = models.BooleanField(default=False)
     ispaid = models.BooleanField(default=False)
+    isrejected = models.BooleanField(default=False)
+    rejected_reason = models.TextField(blank=True, null=True)
     payment_date = models.DateTimeField(blank=True, null=True)
     passhash = models.CharField(max_length=100, blank=True , null=True)
     profile_picture = models.ImageField(upload_to=profilepic_upload_path, null=True, blank=True)
