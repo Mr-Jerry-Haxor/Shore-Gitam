@@ -73,6 +73,7 @@ Hackathon Success
               <th scope="col" class="px-6 py-3">Email</th>
               <th scope="col" class="px-6 py-3">Contact Number</th>
               <th scope="col" class="px-6 py-3">Payment Status</th>
+              <th scope="col" class="px-6 py-3">Upload NOC</th>
               <th scope="col" class="px-6 py-3">College or University</th>
               <th scope="col" class="px-6 py-3">Captain</th>
             </tr>
@@ -109,6 +110,16 @@ Hackathon Success
                 {% else %}
                   Not Paid
                 {% endif %}
+              </td>
+              <td class="px-6 py-4">
+                <a href="https://shore.gitam.edu/hospitality/upload_NOC/">
+                  <button
+                  style="margin-inline-end: -3em;"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-1.5 py-2.5 text-center me-2 mb-2"
+                  >
+                    Upload NOC
+                  </button>
+                </a>
               </td>
               <td class="px-6 py-4">{{ player.college.name }}</td>
               <td class="px-6 py-4">
