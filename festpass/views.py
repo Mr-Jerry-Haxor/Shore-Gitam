@@ -9,6 +9,7 @@ from payments.models import FestPass
 import hashlib
 import requests
 import json
+import datetime
 
 def generate_md5(user_string):
     hashed_string = hashlib.md5(user_string.encode("UTF-8"))
@@ -19,8 +20,15 @@ def generate_md5(user_string):
 @login_required(login_url="/auth/login/google-oauth2/")
 def passhome(request):
     if Student.objects.filter(email=request.user.email).exists():
+        if Student.objects.get(email=request.user.email).isrejected:
+            reason = Student.objects.get(email=request.user.email).rejected_reason
+            return render(request, 'passreject.html' ,{'reason' : reason})
         if Student.objects.get(email=request.user.email).ispaid:
             student = Student.objects.get(email=request.user.email)
+            hashtext = str(student.regno) +  str(student.registred_at) + str(student.email) + str(datetime.datetime.now())
+            hash = generate_md5(hashtext)
+            student.passhash = hash
+            student.save()
             return render(request, 'passes.html' , { 'student' : student})
         else:
             student = Student.objects.get(email=request.user.email)
@@ -29,7 +37,7 @@ def passhome(request):
             
             if y_count > 0:
                 student.ispaid = True
-                hashtext = str(student.regno) +  str(student.registred_at) + str(student.email)
+                hashtext = str(student.regno) +  str(student.registred_at) + str(student.email) + str(datetime.datetime.now())
                 hash = generate_md5(hashtext)
                 student.passhash = hash
                 student.save()
