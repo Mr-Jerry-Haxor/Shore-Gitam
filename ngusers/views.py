@@ -113,8 +113,13 @@ def verify_email(request):
 
             otp = generate_otp()
 
-            email_thread = threading.Thread(target=send_otp_email, args=(email, otp))
-            email_thread.start()
+            try:
+                email_thread = threading.Thread(target=send_otp_email, args=(email, otp))
+                email_thread.start()
+                messages.success(request, f"OTP sent to your email {email}")
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                messages.error(request, f"An error occurred while sending OTP. Please send your concern to shore_tech@gitam.in. \n{e}\n")
 
             context["otp_sent"] = True
             context["email"] = email

@@ -774,6 +774,23 @@ def hackathon_admin(request):
         messages.error(request, "You are not authorized to access this page.")
         return redirect("events:eventshome")
 
+def send_status_update_email(team_id, event_id):
+    # function to send status update for hackathon
+    team = HackathonTeam.objects.get(team_id=team_id)
+    event = Hackathon.objects.get(event_id=event_id)
+
+    # get all the participants of the team
+    participants = HackathonParticipants.objects.filter(team=team)
+    participant_emails = [ participant.email for participant in participants ]
+
+    subject, from_email= f"SHORE'24 GITAM, Team {team.visible_name}'s status updated to {team.status}", settings.EMAIL_HOST_USER
+    html_content1 = get_template('registered_mail.html').render({
+        "event": event, "team": team, "teammates": participants,
+        "status_link":  f'https://shore.gitam.edu/registrations/hackathon/success/{team.team_hash}'
+    })
+    msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
+    msg.content_subtype = "html"
+    msg.send()
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def view_hackathon_team(request, team_hash):
@@ -793,18 +810,16 @@ def view_hackathon_team(request, team_hash):
                 request, f"Team {team.visible_name} status changed to {new_status}."
             )
             
-            
             # sending emails to all the participants upon status change
             try:
-                email_thread = threading.Thread(target=send_pass_mail_updated,
-                                                args=(team.team_id,
-                                                      team.hackathon.event_id))
+                email_thread = threading.Thread(target=send_status_update_email, args=(team.team_id, team.hackathon.event_id))
                 email_thread.start()
+                messages.info(request, "Email sent to all the participants.")
             except Exception as e:
                 print(e)
                 messages.error(
                     request,
-                    f"Error sending email. Please contact the tech team. {e}")
+                    f"Error sending email. Please send your concern to shore_tech@gitam.in {e}")
             return redirect("events:hackathon_admin")
 
         return render(request, "hackathon/hackathon_view_team.html", context)
