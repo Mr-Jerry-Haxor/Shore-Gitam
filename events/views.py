@@ -419,8 +419,14 @@ def success(request, team_hash):
     team = Team.objects.get(team_hash=team_hash)
     players = Participants.objects.filter(team=team)
 
+    for player in players:
+        player_obj = nongitamite.objects.get(email=player.email)
+        player1 = Participants.objects.get(email=player.email)
+        player1.shoreid = player_obj.shoreid
+        player1.save()
+
     context["team"] = team
-    context["players"] = players
+    context["players"] = Participants.objects.filter(team=team)
 
     if request.method == "POST":
         noc_file = request.FILES.get("noc_file")
@@ -749,8 +755,14 @@ def hackathon_success(request, team_hash):
     team = HackathonTeam.objects.get(team_hash=team_hash)
     players = HackathonParticipants.objects.filter(team=team)
 
+    for player in players:
+        player_obj = nongitamite.objects.get(email=player.email)
+        player1 = HackathonParticipants.objects.get(email=player.email)
+        player1.shoreid = player_obj.shoreid
+        player1.save()
+
     context["team"] = team
-    context["players"] = players
+    context["players"] =  HackathonParticipants.objects.filter(team=team)
 
     return render(request, "hackathon/hackathon_success.html", context)
 
@@ -819,10 +831,11 @@ def view_hackathon_team(request, team_hash):
                 print(e)
                 messages.error(
                     request,
-                    f"Error sending email. Please send your concern to shore_tech@gitam.in {e}")
+                    f"Error sending email. Please send your concern to shore_tech@gitam.in")
             return redirect("events:hackathon_admin")
 
         return render(request, "hackathon/hackathon_view_team.html", context)
     else:
         messages.error(request, "You are not authorized to access this page.")
         return redirect("events:eventshome")
+

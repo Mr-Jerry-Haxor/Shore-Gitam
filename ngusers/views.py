@@ -119,7 +119,7 @@ def verify_email(request):
                 messages.success(request, f"OTP sent to your email {email}")
             except Exception as e:
                 print(f"An error occurred: {e}")
-                messages.error(request, f"An error occurred while sending OTP. Please send your concern to shore_tech@gitam.in. \n{e}\n")
+                messages.error(request, f"An error occurred while sending OTP. Please send your concern to shore_tech@gitam.in.")
 
             context["otp_sent"] = True
             context["email"] = email
