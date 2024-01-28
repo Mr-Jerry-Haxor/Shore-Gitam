@@ -20,7 +20,7 @@ class TeamAdmin(ImportExportModelAdmin):
 
 @admin.register(Participants)
 class ParticipantsAdmin(ImportExportModelAdmin):
-    list_display = ('participant_id', 'name', 'email', 'phone_number', 'accomdation', 'college', 'sport', 'team', 'isCaptain', 'isPaid', 'isGitamite', 'transaction_id')
+    list_display = ('participant_id', 'name', 'email', 'phone_number', 'accomdation', 'college', 'sport', 'team', 'isCaptain', 'isPaid', 'isGitamite', 'shoreid')
 
 
 
@@ -33,7 +33,7 @@ class HackathonTeamAdmin(ImportExportModelAdmin):
     search_fields = ['team_name', 'visible_name', 'college__name', 'hackathon__name']
 
 class HackathonParticipantsAdmin(ImportExportModelAdmin):
-    list_display = ['name', 'email', 'phone_number', 'accomdation', 'college', 'hackathon', 'team', 'isCaptain', 'isPaid', 'isGitamite']
+    list_display = ['name', 'email', 'phone_number', 'accomdation', 'college', 'hackathon', 'team', 'isCaptain', 'isPaid', 'isGitamite' , 'shoreid']
     search_fields = ['name', 'email', 'phone_number', 'college__name', 'hackathon__name', 'team__team_name']
 
 admin.site.register(Hackathon, HackathonAdmin)
