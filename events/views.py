@@ -482,7 +482,6 @@ def view_team(request, team_hash):
 
         if request.method == "POST":
             new_status = request.POST.get("status-radio")
-            
             if new_status == "approved":
                 for participant in participants:
                     participantemail = participant.email
@@ -490,9 +489,11 @@ def view_team(request, team_hash):
                         if not AllowedParticipants.objects.filter(email=participantemail).exists():
                             AllowedParticipants.objects.create(email=participantemail)
             else:
-                if AllowedParticipants.objects.filter(email=participantemail).exists():
-                    p = AllowedParticipants.objects.get(email=participantemail)
-                    p.delete()
+                for participant in participants:
+                    participantemail = participant.email
+                    if AllowedParticipants.objects.filter(email=participantemail).exists():
+                        p = AllowedParticipants.objects.get(email=participantemail)
+                        p.delete()
                     
                     
             team.status = new_status
@@ -840,9 +841,11 @@ def view_hackathon_team(request, team_hash):
                         if not AllowedParticipants.objects.filter(email=participantemail).exists():
                             AllowedParticipants.objects.create(email=participantemail)
             else:
-                if AllowedParticipants.objects.filter(email=participantemail).exists():
-                    p = AllowedParticipants.objects.get(email=participantemail)
-                    p.delete()
+                for participant in participants:
+                    participantemail = participant.email
+                    if AllowedParticipants.objects.filter(email=participantemail).exists():
+                        p = AllowedParticipants.objects.get(email=participantemail)
+                        p.delete()
 
             messages.success(
                 request, f"Team {team.visible_name} status changed to {new_status}."
