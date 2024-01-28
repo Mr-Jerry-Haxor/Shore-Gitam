@@ -12,6 +12,7 @@ from django.conf import settings
 from .models import College, Event, Team, Participants, Hackathon, HackathonTeam, HackathonParticipants
 from payments.models import nongitamite
 
+from ngusers.models import AllowedParticipants
 
 def send_pass_mail(team_id, event_id):
     team = Team.objects.get(team_id=team_id)
@@ -481,6 +482,19 @@ def view_team(request, team_hash):
 
         if request.method == "POST":
             new_status = request.POST.get("status-radio")
+            
+            if new_status == "approved":
+                for participant in participants:
+                    participantemail = participant.email
+                    if not participantemail.endswith("@gitam.in"):
+                        if not AllowedParticipants.objects.filter(email=participantemail).exists():
+                            AllowedParticipants.objects.create(email=participantemail)
+            else:
+                if AllowedParticipants.objects.filter(email=participantemail).exists():
+                    p = AllowedParticipants.objects.get(email=participantemail)
+                    p.delete()
+                    
+                    
             team.status = new_status
             team.save()
             messages.success(
@@ -818,6 +832,18 @@ def view_hackathon_team(request, team_hash):
             new_status = request.POST.get("status-radio")
             team.status = new_status
             team.save()
+
+            if new_status == "approved":
+                for participant in participants:
+                    participantemail = participant.email
+                    if not participantemail.endswith("@gitam.in"):
+                        if not AllowedParticipants.objects.filter(email=participantemail).exists():
+                            AllowedParticipants.objects.create(email=participantemail)
+            else:
+                if AllowedParticipants.objects.filter(email=participantemail).exists():
+                    p = AllowedParticipants.objects.get(email=participantemail)
+                    p.delete()
+
             messages.success(
                 request, f"Team {team.visible_name} status changed to {new_status}."
             )
