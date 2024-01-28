@@ -99,9 +99,10 @@ CheckIn & CheckOut Form
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hostel</label>
                     <select name="hostel" id="hostel"
                         class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="" disabled selected>Select</option>
                         <option value="RBS "> Rabindranath Sadan</option>
                         <option value="RBS-AC">Rabindranath Tagore Sadan AC</option>
-                        <option value="VS">RVinay Sadan</option>
+                        <option value="VS">Vinay Sadan</option>
                         <option value="NS">Nirmala Sadan</option>
                         <option value="NS-AC">Nirmala Sadan AC</option>
                         <option value="KS">Kokila Sadan</option>
@@ -122,10 +123,13 @@ CheckIn & CheckOut Form
                             Check In
                         </button>
                         {% else %}
+                        <center>
                         <button type="submit" name="checkout"
+                            style="margin-top:100%"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Check Out
                         </button>
+                        </center>
                         {% endif %}
                     </div>
                 </div>

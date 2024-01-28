@@ -16,6 +16,8 @@ from .decorators import email_check_required
 from .models import HospitalityUser, Meal, MealHistory , ParticipantsNOC
 from .hash import generate_md5
     
+from events.models import Participants, HackathonParticipants
+
 from django.contrib.auth.decorators import login_required
 from events.models import College , Event , Hackathon 
 from django.db import IntegrityError
@@ -36,12 +38,36 @@ def send_otp_email(user_email, otp):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-@login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="ngusers:login")
 def home(request):
     context = {}
+    email = request.user.email
+    if HospitalityUser.objects.filter(email=email).exists():
+        # add a card to show the user's details
+        participant = HospitalityUser.objects.get(email=email)
+        context['name'] = participant.name
+        context['email'] = participant.email
+        context['phone_number'] = participant.phone_number
+        context['hostel'] = participant.hostel
+        context['room_number'] = participant.room_number
+        context['checkin'] = participant.checkin
+        context['checkout'] = participant.checkout
+
+        server_datetime = timezone.now()
+        server_time = server_datetime.time()
+        server_date = server_datetime.date()
+
+        try:
+            meal = Meal.objects.get(
+                date=server_date, start_time__lte=server_time, end_time__gte=server_time
+            )
+            context['meal'] = meal
+        except Meal.DoesNotExist:
+            context['meal'] = None
+
     return render(request, "home.html", context)
 
-@login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="ngusers:login")
 @email_check_required(model=HospitalityUser)
 def food(request):
     context = {}
@@ -52,7 +78,15 @@ def food(request):
     server_datetime = timezone.now()
     server_time = server_datetime.time()
     server_date = server_datetime.date()
-
+    
+    if not user.checkin_status and not user.isfoodonly: 
+        messages.info(request, "You have not checked in yet")
+        return redirect("hospitality:home")
+    
+    if user.checkout_status and not user.isfoodonly: 
+        messages.info(request, "You have already checked out")
+        return redirect("hospitality:home")
+    
     context["isMeal"] = True
     try:
         filtered_meal = Meal.objects.get(
@@ -88,7 +122,7 @@ def food(request):
         return render(request, "food.html", context)
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="ngusers:login")
 def scan(request):
     if not (request.user.hospitality_staff or request.user.hospitality):
         return redirect('corehome')
@@ -136,7 +170,7 @@ def scan(request):
         return render(request, "hospscan.html", context)
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="ngusers:login")
 def admin_history(request, date):
     if not (request.user.hospitality_staff or request.user.hospitality or request.user.president):
         return redirect('corehome')
@@ -168,7 +202,7 @@ def admin_history(request, date):
         return render(request, "admin_history.html", context)
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="ngusers:login")
 @email_check_required(model=HospitalityUser)
 def user_history(request):
     context = {}
@@ -181,7 +215,7 @@ def user_history(request):
     return render(request, "history.html", context)
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="ngusers:login")
 def checkInOutHome(request):
     if not (request.user.hospitality_staff or request.user.hospitality or request.user.president):
         return redirect('corehome')
@@ -192,10 +226,13 @@ def checkInOutHome(request):
         if request.POST:
             if 'send-otp' in request.POST:
                 user_email = request.POST.get("email")
-                try:
-                    user = HospitalityUser.objects.get(email=user_email)
+                user = HospitalityUser.objects.filter(email=user_email)
+                if user.exists():
+                    user = user[0]
+                    if user.isfoodonly:
+                        messages.info(request, f"User {user_email} is only provided with food, not accomdation.")
+                        return render(request, "checkInOut.html", context)
                     if user.checkout_status:
-                            context["info"] = f"User {user_email} has already checked out."
                             messages.info(request, f"User {user_email} has already checked out.")
                             return render(request, "checkInOut.html", context)
 
@@ -208,13 +245,86 @@ def checkInOutHome(request):
                     )
                     email_thread.start()
 
-                    context["info"] = f"OTP sent to {user_email}"
                     messages.info(request, f"OTP sent to {user_email}")
                     context["otp_sent"] = True
                     context["user_email"] = user_email
                     return render(request, "checkInOut.html", context)
-                except HospitalityUser.DoesNotExist:
-                    context["error"] = f"User with email {user_email} does not exist."
+                else:
+                    user_email = user_email.lower()
+                    if Participants.objects.filter(email=user_email).exists():
+                        participant = Participants.objects.get(email=user_email)
+                        
+                        if participant.team.status == 'approved':
+                            if participant.accomdation:
+                                HospitalityUser.objects.create(
+                                    name=participant.name,
+                                    email=participant.email,
+                                    phone_number=participant.phone_number
+                                )
+                                
+                                user = HospitalityUser.objects.get(email=user_email)
+                                if user.checkout_status:
+                                        context["info"] = f"User {user_email} has already checked out."
+                                        messages.info(request, f"User {user_email} has already checked out.")
+                                        return render(request, "checkInOut.html", context)
+
+                                otp = generate_otp()
+                                user.otp = otp
+                                user.save()
+
+                                email_thread = threading.Thread(
+                                    target=send_otp_email, args=(user_email, otp)
+                                )
+                                email_thread.start()
+                                messages.info(request, f"OTP sent to {user_email}")
+                                context["otp_sent"] = True
+                                context["user_email"] = user_email
+                                return render(request, "checkInOut.html", context)
+                            else:
+                                messages.error(request, f"User with email {user_email} have not opted accomodation.")
+                                return render(request, "checkInOut.html", context)
+                        else:
+                            messages.error(request, f"User with email {user_email} Team status is not Approved")
+                            return render(request, "checkInOut.html", context)
+                    
+                    if HackathonParticipants.objects.filter(email=user_email).exists():
+                        participant = HackathonParticipants.objects.get(email=user_email)
+                        
+                        if participant.team.status == 'approved':
+                            if participant.accomdation:
+                                HospitalityUser.objects.create(
+                                    name=participant.name,
+                                    email=participant.email,
+                                    phone_number=participant.phone_number
+                                )
+                                
+                                user = HospitalityUser.objects.get(email=user_email)
+                                if user.checkout_status:
+                                        context["info"] = f"User {user_email} has already checked out."
+                                        messages.info(request, f"User {user_email} has already checked out.")
+                                        return render(request, "checkInOut.html", context)
+
+                                otp = generate_otp()
+                                user.otp = otp
+                                user.save()
+
+                                email_thread = threading.Thread(
+                                    target=send_otp_email, args=(user_email, otp)
+                                )
+                                email_thread.start()
+
+                                context["info"] = f"OTP sent to {user_email}"
+                                messages.info(request, f"OTP sent to {user_email}")
+                                context["otp_sent"] = True
+                                context["user_email"] = user_email
+                                return render(request, "checkInOut.html", context)
+                            else:
+                                messages.error(request, f"User with email {user_email} have not opted accomodation.")
+                                return render(request, "checkInOut.html", context)
+                        else:
+                            messages.error(request, f"User with email {user_email} Team status is not Approved")
+                            return render(request, "checkInOut.html", context)
+                        
                     messages.error(request, f"User with email {user_email} does not exist.")
                     return render(request, "checkInOut.html", context)
             elif 'submit-button' in request.POST:
@@ -240,13 +350,18 @@ def checkInOutHome(request):
         return render(request, "checkInOut.html", context)
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="ngusers:login")
 def checkInOutForm(request, email):
     if not (request.user.hospitality_staff or request.user.hospitality or request.user.president):
         return redirect('corehome')
     else:
         context = {}
         user = HospitalityUser.objects.get(email=email)
+
+        if user.isfoodonly:
+            messages.info(request, f"User {email} is only provided with food, not accomdation.")
+            return redirect("hospitality:checkInOutHome")
+
         context["user"] = user
 
         if request.POST:
@@ -272,7 +387,7 @@ def checkInOutForm(request, email):
         return render(request, "checkInOutForm.html", context)
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="ngusers:login")
 def checkInOutHistory(request):
     if not (request.user.hospitality_staff or request.user.hospitality or request.user.president):
         return redirect('corehome')

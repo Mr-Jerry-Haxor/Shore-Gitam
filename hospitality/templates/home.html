@@ -1,10 +1,55 @@
 {% extends 'hospitality_base.html' %}
-
+{% load static %}
 {% block title %}
 Home Page
 {% endblock title %}
-
 {% block body %}
+{% block head %}
+<style>
+body {
+    background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
+  }
+</style>
+{% endblock head %} 
 {% include 'hospitality_navbar.html' %}
-<h1>Hospitality Home Page</h1>
+<br>
+<div class="h-screen">    
+<center>
+{% if messages %}
+{% for message in messages %}
+<div class="p-4 mb-4 text-sm rounded-lg {% if message.tags == 'info' %}text-blue-800 bg-blue-50{% elif message.tags == 'error' %}text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400{% elif message.tags == 'success' %}text-green-800 bg-green-50{% endif %}"
+    role="alert">
+    <span class="font-medium">{{ message.tags.capitalize }}</span> : {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<div class="max-w-sm mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow"  style="margin:2rem 1rem 0 1rem">
+        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900">Your Profile</h5>
+    <div style="text-align:justify">
+    <p class="mb-3 font-normal text-gray-500"><b>Name: {{ name }}</b> </p>
+    <p class="mb-3 font-normal text-gray-500"><b>Email: {{ email }} </b> </p>
+    <p class="mb-3 font-normal text-gray-500"><b>Phone Number: {{ phone_number }} </b> </p>
+    
+    {% if hostel %}
+        <p class="mb-3 font-normal text-gray-500"><b>Hostel: {{ hostel }} </b> </p>
+        <p class="mb-3 font-normal text-gray-500"><b>Room Number: {{ room_number }} </b> </p>
+        {% if checkin %}
+        <p class="mb-3 font-normal text-gray-500"><b>Checkin Time: {{ checkin }} </b> </p>
+        {% endif %}
+        {% if checkout %}
+        <p class="mb-3 font-normal text-gray-500"><b>Checkout Time: {{ checkout }} </b> </p>
+        {% endif %}
+    {% endif %}
+    {% if meal %}
+    <a href="{% url 'hospitality:food_qr' %}" class="inline-flex items-center text-blue-600 hover:underline">
+        Avail Meal for {{ meal.meal_type }}
+        <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
+        </svg>
+    </a>
+    {% endif %}
+</div>
+</div>
+</center>
+</div>
 {% endblock body %}
