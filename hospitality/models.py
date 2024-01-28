@@ -75,7 +75,7 @@ def profile_pic_file_path(instance, filename):
 
 class ParticipantsNOC(models.Model):
     full_name = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=False)
     phone_number = models.CharField(max_length=15)
     regno = models.CharField(max_length=20)
     gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Others')])
