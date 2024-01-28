@@ -33,8 +33,9 @@ class HackathonTeamAdmin(ImportExportModelAdmin):
     search_fields = ['team_name', 'visible_name', 'college__name', 'hackathon__name']
 
 class HackathonParticipantsAdmin(ImportExportModelAdmin):
-    list_display = ['name', 'email', 'phone_number', 'college', 'hackathon', 'team', 'isCaptain', 'isPaid', 'isGitamite']
+    list_display = ['name', 'email', 'phone_number', 'accomdation', 'college', 'hackathon', 'team', 'isCaptain', 'isPaid', 'isGitamite']
     search_fields = ['name', 'email', 'phone_number', 'college__name', 'hackathon__name', 'team__team_name']
+    list_filter = [ 'college__name']
 
 admin.site.register(Hackathon, HackathonAdmin)
 admin.site.register(HackathonTeam, HackathonTeamAdmin)
