@@ -9,7 +9,7 @@ from import_export.admin import ImportExportModelAdmin
 
 
 class HospitalityUserAdmin(ImportExportModelAdmin):
-    list_display = ('id' , 'name', 'email', 'phone_number', 'isfoodonly', 'meal_id', 'qr_hash', 'otp', 'checkin', 'checkout', 'hostel', 'room_number', 'checkin_status', 'checkout_status')
+    list_display = ('id' , 'name', 'email', 'phone_number', 'meal_id', 'qr_hash', 'otp', 'checkin', 'checkout', 'hostel', 'room_number', 'checkin_status', 'checkout_status')
     list_filter = ('hostel', 'checkin_status', 'checkout_status')
     search_fields = ('name', 'email', 'phone_number')
 
