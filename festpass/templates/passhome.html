@@ -116,6 +116,10 @@
 </head>
 <body style="background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);height:100%;width:100%">
   {% include 'passbase.html' %}
+  <div style="margin:0 5rem">
+    
+  {% include 'messages.html' %} 
+  </div>
   <div class="e-card playing">
     <div class="image"></div>
     
@@ -152,7 +156,7 @@
         {% endif %}
       </div><br>
       {% if not student.ispaid %}
-        <a href="https://gevents.gitam.edu/registration/MjU0?rid={{ student.regno }}">
+        <a href="https://gevents.gitam.edu/registration/MjU0?rid={{ student.regno }}&type=student">
           <button
           class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
           >Pay & Grab pass</button></a>

@@ -288,6 +288,7 @@
                   <option value="Sports">Sports</option>
                   <option value="Technical">Technical</option>
                   <option value="DOS/DOSL">DOS/DOSL</option>
+                  <option value="Gstudio">Gstudio</option>
                 </select>
             </div>
             <div>
@@ -309,6 +310,7 @@
                   {% for hackathon in hackathons %}
                     <option value="{{ hackathon.name }}">{{ hackathon.name }}</option>
                   {% endfor %}
+                  <option value="Gstudio">Gstudio</option>
                   <option value="SLA">Student Life Associate</option>
                   <option value="SSA">Student Sports Associate</option>
                   <option value="SLA_staff">Student Life Staff</option>
@@ -401,7 +403,7 @@
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >Are you travelling to GITAM Vizag?</label
               >
-              <select onchange="showDiv('tickets', this)"
+              <select
                 id="travelling"
                 name="travelling"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -413,7 +415,7 @@
               </select>
             </div>
           </div>
-          <div class="tickets" id="tickets" style="display: none;">
+          <div class="tickets" id="tickets">
             <div class="grid gap-6 mb-6 md:grid-cols-2">
               <div>
                   <label for="departure" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -425,6 +427,7 @@
                       name="departure"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Enter Departure Place"
+                      required
                   />
               </div>
               <div>
@@ -437,6 +440,7 @@
                       name="arrival"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Enter Arrival Place"
+                      required
                   />
               </div>
             </div>
@@ -451,6 +455,7 @@
                       name="departureDatetime"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Select Departure Datetime"
+                      required
                   />
               </div>
               <div>
@@ -463,6 +468,7 @@
                       name="arrivalDatetime"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Select Arrival Datetime"
+                      required
                   />
               </div>
             </div>
@@ -479,6 +485,7 @@
                 name="ticket_file_input"
                 type="file"
                 accept="application/pdf"
+                required
               />
               <p
                 class="mt-1 text-sm text-gray-500 dark:text-gray-300"

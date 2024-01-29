@@ -54,6 +54,9 @@ Hackathon Success
               {{ team.status }}
             {% endif %}
           </h5>
+          <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white whitespace-nowrap">
+            Sample NOC: <a class="text-blue-600" href="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/guidelines/NOC.pdf">Click to View</a>
+          </h5>  
         </div>
       </div>
       <h5
@@ -73,6 +76,7 @@ Hackathon Success
               <th scope="col" class="px-6 py-3">Email</th>
               <th scope="col" class="px-6 py-3">Contact Number</th>
               <th scope="col" class="px-6 py-3">Payment Status</th>
+              <th scope="col" class="px-6 py-3">Upload NOC</th>
               <th scope="col" class="px-6 py-3">College or University</th>
               <th scope="col" class="px-6 py-3">Captain</th>
             </tr>
@@ -97,9 +101,10 @@ Hackathon Success
                   >Paid</span
                 >
                 {% elif team.status == 'eligible_for_payment' %}
-                <a href="https://gevents.gitam.edu/registration/MjU1">
+                <a href="https://gevents.gitam.edu/registration/MjU1?rid={{ player.shoreid }}&type=student">
                   <button
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-0.5 py-0.5 text-center me-2 mb-2"
+                  style="margin-inline-end: -3em;"
+                  class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-1.5 py-2.5 text-center me-2 mb-2"
                   >
                     Click to Pay
                   </button>
@@ -109,6 +114,16 @@ Hackathon Success
                 {% else %}
                   Not Paid
                 {% endif %}
+              </td>
+              <td class="px-6 py-4">
+                <a href="https://shore.gitam.edu/hospitality/upload_NOC/">
+                  <button
+                  style="margin-inline-end: -3em;"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-1.5 py-2.5 text-center me-2 mb-2"
+                  >
+                    Upload NOC
+                  </button>
+                </a>
               </td>
               <td class="px-6 py-4">{{ player.college.name }}</td>
               <td class="px-6 py-4">
@@ -128,6 +143,7 @@ Hackathon Success
             Notes:
           </h5>
           <ul class="list-disc pl-8 text-gray-700 dark:text-gray-400">
+            <li>We will update status of payment and NOC upload with in 24hrs, dont worry if you have already done payment and upload NOC</li>
             <li>Any queries, please contact us at<b> <a href="mailto:shore_tech@gitam.in">shore_tech@gitam.in</a></b></li>
           </ul>
         </div>

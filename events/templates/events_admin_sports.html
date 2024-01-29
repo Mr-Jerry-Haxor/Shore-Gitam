@@ -41,7 +41,7 @@ Events
 {% include 'messages.html' %}
         <div class="flex flex-wrap justify-center mt-20">
             {% for event in events %}
-                <a href="{% url 'events:registered_sports' event.name %}" class="card sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 ">
+                <a href="{% url 'events:registered_sports' event.name %}" class="card sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 " style="margin:2rem">
                     {{ event.name }}
                 </a>
             {% endfor %}

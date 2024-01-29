@@ -76,7 +76,7 @@
     </style>
 </head>
 
-<body class="font-sans dark">
+<body class="h-screen mb-1 font-sans">
   <!-- Navbar -->
   <nav class="" id="shorenav">
     <div
@@ -112,31 +112,10 @@
                 >Home</a
               >
             </li>
-            <li>
-              <a
-                href="{% url 'passhome' %}"
-                class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
-                >Fest Pass</a
-              >
-            <li>
-            <li>
-              <a
-                href="{% url 'shoreidcard' %}"
-                class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
-                >Shore IDcard</a
-              >
-            <li>
-            <li>
-              <a
-                href="{% url 'ngusers:update_picture' %}"
-                class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
-                >Update profile picture</a
-              >
-            <li>
             {% if not request.user.is_authenticated %}
             <li>
               <a
-                href="{% url 'passhome' %}"
+                href="{% url 'ngusers:login' %}"
                 class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
                 >Sign In</a
               >

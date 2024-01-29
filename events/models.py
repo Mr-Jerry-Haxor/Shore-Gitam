@@ -125,6 +125,7 @@ class Participants(models.Model):
     isPaid = models.BooleanField(default=False)
     isGitamite = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
+    shoreid = models.CharField(max_length=100, null=True, blank=True)
     nocFile = models.FileField(upload_to=noc_file_upload_path, null=True, blank=True)
 
     def __str__(self):
@@ -148,6 +149,13 @@ def file_upload_path_hackthon(instance, filename):
     current_datetime = timezone.now().strftime('%Y%m%d%H%M%S')
     ext = filename.split('.')[-1]
     new_filename = f"{instance.visible_name}__{instance.college.name}__{instance.hackathon.name}__{current_datetime}.{ext}"
+    domain_folder = f"EventsRegistrations/{instance.hackathon.name}/{instance.college.name}"
+    return os.path.join(domain_folder, new_filename)
+
+def Hackathon_noc_file_upload_path(instance, filename):
+    current_datetime = timezone.now().strftime('%Y%m%d%H%M%S')
+    ext = filename.split('.')[-1]
+    new_filename = f"{instance.name}__NOC__{instance.college.name}__{instance.hackathon.name}__{current_datetime}.{ext}"
     domain_folder = f"EventsRegistrations/{instance.hackathon.name}/{instance.college.name}"
     return os.path.join(domain_folder, new_filename)
 
@@ -208,7 +216,8 @@ class HackathonParticipants(models.Model):
     isPaid = models.BooleanField(default=False)
     isGitamite = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
-    # nocFile = models.FileField(upload_to="noc/", null=True, blank=True)
+    shoreid = models.CharField(max_length=100, null=True, blank=True)
+    nocFile = models.FileField(upload_to=Hackathon_noc_file_upload_path, null=True, blank=True)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,221 @@
+{% extends 'passbase.html' %}
+{% load static %}
+{% block title %} Update Picture {% endblock %}
+{%block head%}
+<style>
+    .title {
+        font-size: 35px;
+        font-family: Helvetica;
+        font-weight: 700;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+      }
+      body {
+        background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
+      }
+</style>
+{% endblock head %}
+{% block body %}
+<!-- name, email, contact number, reg num, uploaded picture -->
+<div class="h-screen flex items-center justify-center">
+    <div
+      style="height: 40rem;background: white !important; margin: 1rem;"
+      class="overflow-y-scroll container mx-auto max-w-2xl p-6 border border-gray-200 rounded-lg shadow-lg"
+    >
+      {% if messages %}
+      {% for message in messages %}
+      <div class="p-4 mb-4 text-sm rounded-lg {% if message.tags == 'info' %}text-blue-800 bg-blue-50{% elif message.tags == 'error' %}text-red-800 bg-red-50 dark:bg-gray-800 dark:text-red-400{% elif message.tags == 'success' %}text-green-800 bg-green-50{% endif %}"
+          role="alert">
+          <span class="font-medium">{{ message.tags.capitalize }}</span> : {{ message }}
+      </div>
+      {% endfor %}
+      {% endif %}
+      <h1 class="text-center title font-bold mb-5">Update Profile Picture</h1>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <center>
+            <div class="mb-6">
+                <div class="beforepreview-container" id="beforepreviewContainer">
+                    <img
+                        src="{{ student.profile_picture.url }}"
+                        alt="Preview"
+                        class="beforepreview-image"
+                        id="beforeImage"
+                        style="border: 2px solid rgb(255, 255, 255);border-radius: 50%; height:180px;width: 180px;"
+                    />
+                    <br />
+                </div>
+            </div>
+        </center>
+        <div class="grid gap-6 mb-6 md:grid-cols-2">
+          <div>
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Full Name</label
+            >
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value="{{ student.name }}"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter Your Full name"
+              required
+              disabled
+            />
+          </div>
+          <div>
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >GITAM Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value="{{ student.email }}"
+              readonly="readonly"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter GITAM email"
+              required
+              disabled
+            />
+          </div>
+        </div>
+        <div class="grid gap-6 mb-6 md:grid-cols-2">
+          <div>
+            <label
+              for="contact_number"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >Contact Number</label
+            >
+            <input
+              type="tel"
+              id="contact_number"
+              name="contact_number"
+              value="{{ student.contact_number }}"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter phone number"
+              required
+              disabled
+            />
+          </div>
+          <div>
+            <label
+              for="regno"
+              class="block mb-2 text-sm font-medium text-gray-900"
+              >GITAM Registration Number</label
+            >
+            <input
+              type="text"
+              id="regno"
+              name="regno"
+              value="{{ student.regno }}"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Enter Registration Number"
+              required
+              disabled
+            />
+          </div>
+        </div>
+        
+        <div class="mb-6">
+          <div
+            class="preview-container"
+            id="previewContainer"
+            style="display: none"
+          >
+            <h2>Preview</h2>
+            <br>
+            <img
+              src="#"
+              alt="Preview"
+              class="preview-image"
+              id="previewImage"
+              style="border: 2px solid rgb(255, 255, 255);border-radius: 50%; height:120px;width: 120px;"
+            />
+            <br />
+          </div>
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900"
+            for="file_input"
+            >Upload New Profile Picture(Clear profile picture required for FestPass approval.If Other pictures found, your festpass will be rejected. Cannot be updated more than once.)</label
+          >
+          <input
+            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none  dark:border-gray-600 dark:placeholder-gray-400"
+            aria-describedby="file_input_help"
+            id="profile_pic"
+            name="profile_pic"
+            type="file"
+            accept="image/*"
+            required
+            onchange="previewImage(event)"
+          />
+          <p
+            class="mt-1 text-sm text-gray-500 dark:text-gray-500"
+            id="file_input_help"
+          >
+            PNG, JPG, or JPEG (MAX. 800x400px).
+          </p>
+        </div>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            var fileInput = document.getElementById("profile_pic");
+            var previewContainer = document.getElementById("previewContainer");
+            var previewImage = document.getElementById("previewImage");
+        
+            fileInput.addEventListener("change", function (event) {
+              previewImageFile(event);
+            });
+        
+            function previewImageFile(event) {
+              var input = event.target;
+              var fileSize = input.files[0].size; // Get the file size
+        
+              // Check if file size is less than 2MB (2 * 1024 * 1024 bytes)
+              if (fileSize > 1* 1024 * 1024) {
+                alert("File size exceeds 1MB. Please upload a smaller file.");
+                input.value = null; // Clear the input field
+                previewContainer.style.display = "none"; // Hide the preview container
+                return; // Stop further execution
+              }
+
+              // Get the file name and check its extension
+              var fileName = input.files[0].name;
+              var fileExtension = fileName.split('.').pop().toLowerCase();
+              var allowedExtensions = ['jpg', 'jpeg', 'png'];
+
+              if (allowedExtensions.indexOf(fileExtension) === -1) {
+                  alert("Invalid file format. Please upload a file with a valid extension (jpg, jpeg, png).");
+                  input.value = null; // Clear the input field
+                  previewContainer.style.display = "none"; // Hide the preview container
+                  return; // Stop further execution
+              }
+        
+              if (input.files && input.files[0]) {
+                var reader = new FileReader();
+        
+                reader.onload = function (e) {
+                  previewImage.src = e.target.result;
+                  previewContainer.style.display = "block";
+                };
+        
+                reader.readAsDataURL(input.files[0]);
+              }
+            }
+          });
+        </script>
+        
+        <button
+          type="submit"
+          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        >
+          Next
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock body %}

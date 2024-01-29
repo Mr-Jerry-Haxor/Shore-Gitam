@@ -21,7 +21,8 @@ meal_choices = (
 class HospitalityUser(models.Model):
     name = models.CharField(max_length=255, null=False)
     email = models.EmailField(max_length=255, null=False, unique=True)
-    phone_number = models.CharField(max_length=255, null=False, unique=True)  # length should be 10
+    phone_number = models.CharField(max_length=255, null=False, unique=True) 
+    isfoodonly = models.BooleanField(default=False)
     meal_id = models.IntegerField(null=True, blank=True)
     qr_hash = models.CharField(max_length=255, null=True, blank=True)
     otp = models.IntegerField(null=True, blank=True)
@@ -56,9 +57,6 @@ class MealHistory(models.Model):
     def __str__(self):
         return f"{self.user.name} {self.meal_type.meal_type} {self.meal_type.date}"
     
-    
-    
-
 
 from django.db import models
 from django.utils import timezone
@@ -75,7 +73,7 @@ def profile_pic_file_path(instance, filename):
 
 class ParticipantsNOC(models.Model):
     full_name = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=False)
     phone_number = models.CharField(max_length=15)
     regno = models.CharField(max_length=20)
     gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Others')])

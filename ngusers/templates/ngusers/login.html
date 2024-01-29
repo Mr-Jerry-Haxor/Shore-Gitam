@@ -1,0 +1,90 @@
+{% extends 'events_base.html' %} {% load static %} {% block title %} Sign In
+{%endblock %} {% block head %}
+<style>
+  body {
+    background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
+  }
+  .title {
+    font-size: 40px;
+    font-family: Helvetica;
+    font-weight: 700;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    text-shadow: 0px 4px 10px rgba(255, 255, 255, 0.3499999940395355);
+  }
+</style>
+{% endblock %} {% block body %} 
+{% include 'ngusers/navbar.html' %}
+{% include 'messages.html' %} 
+
+<div class="mr-3 ml-3 flex items-center justify-center">
+  <div
+    class="container mx-auto block max-w-xl p-6 bg-white border border-gray-200 rounded-lg shadow"
+  >
+    <h1 class="text-center title font-bold mb-5">Sign In</h1>
+    <form class="max-w-sm mx-auto" method="post">
+      {% csrf_token %}
+      <div class="mb-5">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="Enter registered email"
+          required
+        />
+      </div>
+      <div class="mb-5">
+        <label
+          for="password"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >Password</label
+        >
+        <input
+          type="password"
+          id="password"
+          name="password"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="Enter password"
+          required
+        />
+      </div>
+      <center class="py-3">
+        <button
+          type="submit"
+          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        >
+          Login
+        </button>
+      </center>
+    </form>
+      <p class="text-sm text-black-500">
+        Don’t have an account yet?
+        <a
+          href="{% url 'ngusers:register' %}"
+          class="font-medium text-blue-600 hover:underline"
+          >Sign up</a
+        >
+      </p>
+      <div class="inline-flex items-center justify-center w-full">
+        <hr class="w-64 h-px my-8 bg-gray-200 border-0">
+        <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">or</span>
+      </div>
+      <p class="text-sm text-black-500" style="text-align:center">
+        If you are a GITAM Student,<br>(Use Only your GITAM MailID)<br><br>
+        <center>
+        <a
+          href="{% url 'corehome' %}"
+          >
+          <button class="px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-black-500 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+              <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo">
+              <span>Login with Google</span>
+          </button>
+      </a></center>
+      </p>
+  </div>
+</div>
+{% endblock %}

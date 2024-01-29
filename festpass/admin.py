@@ -5,8 +5,8 @@ from import_export.admin import ImportExportModelAdmin
 from .models import Student
 
 class StudentAdmin(ImportExportModelAdmin):
-    list_display = ('name', 'email', 'year_of_study', 'campus', 'hosteler', 'ispaid')
-    list_filter = ('year_of_study', 'campus', 'hosteler', 'ispaid') 
+    list_display = ('name', 'email', 'year_of_study', 'campus', 'hosteler', 'ispaid' ,'isrejected')
+    list_filter = ('year_of_study', 'campus', 'hosteler', 'ispaid' , 'isrejected') 
     search_fields = ('name', 'email', 'branch', 'institute', 'department' , 'regno' , 'contact_number')
     date_hierarchy = 'registred_at'  # Replace 'created_at' with the appropriate date field in your model
 

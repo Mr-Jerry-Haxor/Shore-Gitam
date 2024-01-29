@@ -1,0 +1,82 @@
+{% extends 'events_base.html' %} {% load static %} {% block title %} Sign Up {%endblock %} 
+{% block head %}
+<style>
+  body {
+    background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
+  }
+  .title {
+    font-size: 40px;
+    font-family: Helvetica;
+    font-weight: 700;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.35);
+  }
+</style>
+{% endblock %} 
+{% block body %} 
+{% include 'ngusers/navbar.html' %} 
+{% include 'messages.html' %}
+
+<div class="h-screen  flex items-center justify-center m-3">
+  <div
+    class="container mx-auto block max-w-xl p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+  >
+    <h1 class="text-center title font-bold mb-5">Sign Up</h1>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-6">
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
+          >Email address</label
+        >
+        <input
+          {% if email %}
+          value="{{ email }}"
+          {% endif %}
+          type="email"
+          name="email"
+          id="email"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="Enter Email"
+          required
+        />
+      </div>
+
+      {% if not otp_sent %}
+      <center class="py-2">
+        <button
+          type="submit"
+          name="send-otp"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+        >
+          Next
+        </button>
+      </center>
+      {% elif otp_sent %}
+      <label for="otp" class="block mb-2 text-sm font-medium text-gray-900">
+        OTP
+      </label>
+      <center>
+        <input
+          type="number"
+          id="otp"
+          name="otp"
+          class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="Enter OTP"
+          required
+        />
+        <br />
+        <button
+          type="submit"
+          name="verify-otp"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+        >
+          Verify
+        </button>
+      </center>
+      {% endif %}
+    </form>
+  </div>
+</div>
+{% endblock %}
