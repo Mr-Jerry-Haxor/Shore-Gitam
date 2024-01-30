@@ -27,8 +27,8 @@ class security_staff(models.Model):
 class Maingate_entries(models.Model):
     fullname = models.CharField(max_length=300, null=True, blank=True)
     email = models.CharField(max_length=100)
-    date = models.DateField()
-    time = models.TimeField()
+    date = models.DateField(auto_now_add=True)
+    time = models.TimeField(auto_now_add=True)
     verifiedby = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=200 , null=True)
     
@@ -82,8 +82,8 @@ class Fest_status_day2(models.Model):
 class Openaudi_entries(models.Model):
     fullname = models.CharField(max_length=300, null=True, blank=True)
     email = models.CharField(max_length=100)
-    date = models.DateField()
-    time = models.TimeField()
+    date = models.DateField(auto_now_add=True)
+    time = models.TimeField(auto_now_add=True)
     verifiedby = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=200 , null=True)
     

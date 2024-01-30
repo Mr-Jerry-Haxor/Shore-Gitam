@@ -42,13 +42,13 @@ def passhome(request):
                 student.passhash = hash
                 student.save()
                 return redirect('passhome')
-            elif  participants_list.objects.filter(email=request.user.email).exists():
+            elif  participants_list.objects.filter(emails=request.user.email).exists():
                 student.ispaid = True
                 hashtext = str(student.regno) +  str(student.registred_at) + str(student.email) + str(datetime.datetime.now())
                 hash = generate_md5(hashtext)
                 student.passhash = hash
                 student.save()
-                participantpass = participants_list.objects.get(email=request.user.email)
+                participantpass = participants_list.objects.get(emails=request.user.email)
                 participantpass.festpass = True
                 participantpass.save()
                 return redirect('passhome')
