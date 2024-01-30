@@ -8,6 +8,7 @@ from django.template.loader import get_template
 from django.conf import settings
 from coreteam.models import CustomUser
 from hospitality.models import *
+from security.models import security_staff
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def coretasks(request , domain_name):
@@ -345,7 +346,8 @@ def home(request):
     if request.user.is_authenticated:
         name = request.user.first_name
         ishospitality = HospitalityUser.objects.filter(email=request.user.email).exists()
-        return render(request, 'corehome.html' , {'name': name , 'ishospitality': ishospitality})
+        issecurity = security_staff.objects.filter(email_id=request.user.email).exists()
+        return render(request, 'corehome.html' , {'name': name , 'ishospitality': ishospitality , 'issecurity': issecurity})
     else:
         return redirect('index')
 

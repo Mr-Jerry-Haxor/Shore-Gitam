@@ -8,13 +8,11 @@ from .models import ParticipantApplication, Domain
 def team(request):
     context = {}
     context['domains'] = Domain.objects.all().order_by('order')
-    # Query all Participant applications
     all_applications = ParticipantApplication.objects.select_related('domain').order_by('domain__order')
 
-    # Group applications by domain and position for easier rendering in the template
     applications_by_domain = {}
     for application in all_applications:
-        domain_name = application.domain.name
+        domain_name = application.domain
         position = application.position
 
         if domain_name not in applications_by_domain:
@@ -75,7 +73,7 @@ def apply(request):
     else:
         messages.info(request, "You have already submitted an application.")
         return redirect("teams:view_application")
-    # return render(request, "teams/apply1.html", context)
+
     return render(request, "teams/apply.html", context)
 
 
@@ -83,7 +81,7 @@ def apply(request):
 def view_application(request):
     context = {}
     context["domains"] = Domain.objects.all()
-    context['positions'] = ['President', 'Vice-President', 'Event Manager' 'Head', 'Co-head', 'Lead', 'Co-lead', 'Member']
+    context['positions'] = ['President', 'Vice-President', 'Event Manager', 'Head', 'Co-head', 'Lead', 'Co-lead', 'Member']
     email = request.user.email
     try:
         application = ParticipantApplication.objects.get(email=email)
@@ -93,10 +91,10 @@ def view_application(request):
         return redirect("teams:apply")
 
     if request.POST:
-        # position = request.POST["position"]
         application.name = request.POST["name"]
         new_domain = request.POST["domain"]
         application.domain = Domain.objects.get(name=new_domain)
+        application.position = request.POST["position"]
         application.designation = request.POST["designation"]
         application.instagram_url = request.POST["instagram_url"]
         application.linkedin_url = request.POST["linkedin_url"]
@@ -115,21 +113,25 @@ def view_application(request):
 def verify_application(request):
     context = {}
     email = request.user.email
-    actual_domain = False
+    matched_domains = []
+
     try:
         all_domains = Domain.objects.all()
+
         for domain in all_domains:
             accepted_emails = domain.head_email.split(",")
+            accepted_emails = [ email.strip() for email in accepted_emails ]
+            
             if email in accepted_emails:
-                actual_domain = domain
+                matched_domains.append(domain)
 
-
-        if not actual_domain:
+        if not matched_domains:
             raise Domain.DoesNotExist
 
-        applications = ParticipantApplication.objects.filter(domain=actual_domain).order_by(
+        applications = ParticipantApplication.objects.filter(domain__in=matched_domains).order_by(
             "verified", "name"
         )
+
         context["applications"] = applications
     except Domain.DoesNotExist:
         messages.info(request, "You are not authorised to verify applications.")
@@ -139,10 +141,9 @@ def verify_application(request):
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
-def verify_individual_application(request, email):
-    logged_in_user_email = request.user.email
+def verify_individual_application(request, domain_id, email):
     try:
-        domain = Domain.objects.get(head_email=logged_in_user_email)
+        domain = Domain.objects.get(id=int(domain_id))
         application = ParticipantApplication.objects.get(email=email)
 
         if application.domain == domain:
@@ -168,10 +169,9 @@ def verify_individual_application(request, email):
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
-def disprove_individual_application(request, email):
-    logged_in_user_email = request.user.email
+def disprove_individual_application(request, domain_id, email):
     try:
-        domain = Domain.objects.get(head_email=logged_in_user_email)
+        domain = Domain.objects.get(id=int(domain_id))
         application = ParticipantApplication.objects.get(email=email)
 
         if application.domain == domain:

@@ -40,3 +40,8 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class participants_list(models.Model):
+    emails = models.EmailField(unique=True)
+    festpass = models.BooleanField(default=False)

@@ -56,7 +56,7 @@
             border-radius: 40px;
             margin: 30px 0px;
             position: fixed;
-            left: -35px;
+            left: -45px;
             top: -8px;
             bottom: 10px;
           
@@ -89,7 +89,7 @@
           .nav-bar a {
             display: block;
             text-decoration: none;
-            padding: 15px 6px;
+            padding: 15px 0px;
             margin-bottom: 15px;
             color: rgb(255, 255, 255);
           }
@@ -135,6 +135,7 @@
           }
           .profile-img {
             background-position: center;
+            object-fit: cover;
             border-radius: 50%;
             width: 11em;
             height: 11em;
@@ -142,9 +143,6 @@
           .img-container:hover {
             transition: filter .4s ease-in;
           }
-          
-          
-           
           
           .card .bg {
               position: absolute;
@@ -285,7 +283,7 @@
           }
           
           .material-symbols-outlined{
-            padding: 6px;
+            padding: 0px;
           }
           
           
@@ -686,7 +684,7 @@
     <!-- Domain 2 -->
     {% for domain_name, positions in applications_by_domain.items %}
       <section id="{{ domain_name }}">
-        {% if domain_name == 'President and Vice President' %}
+        {% if 'president' in domain_name|lower %} 
           <div class="content active-content">
         {% else %}
           <div class="content">
@@ -694,23 +692,26 @@
               <h1 id="op">{{ domain_name }}</h1>
               {% for position, applications in positions.items %}  
                   <div class="row">
+                  {% if not 'manager' in position|lower %}
                     <h1 id="hl">{{ position }}</h1>
+                  {% endif %}
                   </div>
                   <div class="row">
                     <!-- Row 1 Column 1 -->
-                    {% for application in applications %}    
+                    {% for application in applications %}
+                      {% if application.verified %}  
                         <div class="column">
                             <div class="card">
                                 <div class="img-container">
-                                    <img class="profile-img" src="{{ application.profile_pic.url }}" />
-                                    <div class="bg"></div>
+                                  <img class="profile-img" src="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/{{ application.profile_pic }}" />
+                                  <div class="bg"></div>
                                 </div>
                                 <h3>{{ application.name }}</h3>
                                 <p>{{ application.designation }}</p>
                                 <div class="icons">
                                   {% if application.instagram_url %}
                                     <a href="{{ application.instagram_url }}" target="_blank">
-                                        <i class="fab fa-instagram"></i>
+                                      <i class="fab fa-instagram"></i>
                                     </a>
                                   {% endif %}
                                   {% if application.linkedin_url %}
@@ -724,6 +725,7 @@
                                 </div>
                             </div>
                         </div>
+                      {% endif %}
                     {% endfor %}
                     </div>
               {% endfor %}

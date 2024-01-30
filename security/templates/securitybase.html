@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    {% block head %}
+    {% endblock %}
+    <title>
+    {% block title %}
+    {% endblock %}
+    </title>
+    <link rel="icon" type="image/x-icon" href="{% static 'shore_24_clogo.png'%}">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTVGGBL7NF"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FTVGGBL7NF');
+    </script>
+    <script>
+      if (navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
+        var root = document.getElementsByTagName("html")[0];
+        root.setAttribute("class", "ff");
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <style>
+      #shorenav {
+        text-align: center;
+        font-size: 5rem;
+        position: relative;
+
+        font-family: Georgia;
+      }
+      #icon {
+        background: #00000000;
+        color: rgb(0, 0, 0);
+        border-radius: inherit;
+        font-size: 2.5rem;
+        z-index: 10;
+      }
+      #user-dropdown {
+        display: none;
+        position: absolute;
+        z-index: 100; /* Ensure the dropdown is on top */
+        background-color: rgb(0, 0, 0); /* Change background color as needed */
+        color: #ffffff;
+        padding: 10px;
+        /* Other styles for the dropdown menu */
+      }
+
+      #user-dropdown.show {
+        display: block;
+      }
+    </style>
+</head>
+
+<body class="font-sans dark">
+  <!-- Navbar -->
+  <nav class="" id="shorenav">
+    <div
+      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 md:pr-6"
+    >
+      <div class="flex items-center">
+        <img src="{%  static 'shore_24_clogo.png' %}" alt="Logo" class="h-12 w-auto" /> <!-- Replace 'path_to_your_logo_image.png' with the actual path to your logo -->
+      </div>
+      <div
+        class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"
+      >
+        <button
+          type="button"
+          class="flex text-sm md:me-0"
+          id="user-menu-button"
+          aria-expanded="false"
+          data-dropdown-toggle="user-dropdown"
+          data-dropdown-placement="bottom"
+        >
+          <i class="material-icons" id="icon">menu</i>
+        </button>
+        <!-- Dropdown menu -->
+        <div
+          class="z-150 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+          id="user-dropdown"
+          style="z-index: 150 !important;"
+        >
+          <ul class="py-2" aria-labelledby="user-menu-button">
+            <li>
+              <a
+                href="{% url 'index' %}"
+                class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
+                >Home</a
+              >
+            </li>
+            {% if not request.user.is_authenticated %}
+            <li>
+              <a
+                href="{% url 'passhome' %}"
+                class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
+                >Sign In</a
+              >
+            </li>
+            {% else %}
+            {% if request.user.is_staff %}
+            <li>
+              <a
+                href="{% url 'corehome' %}"
+                class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
+                >Core Team</a
+              >
+            </li>
+            {% endif %}
+            <li>
+              <a
+                href="{% url 'logout' %}"
+                class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
+                >Logout</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+      <script>
+        const menuButton = document.getElementById("user-menu-button");
+        const dropdownMenu = document.getElementById("user-dropdown");
+
+        menuButton.addEventListener("click", () => {
+          menuButton.classList.toggle("active");
+          dropdownMenu.classList.toggle("show");
+          <!-- document.body.classList.toggle('blurred-background'); -->
+        });
+
+        // Close the dropdown when clicking outside of it
+        document.addEventListener("click", function (event) {
+          const isClickInsideMenu = dropdownMenu.contains(event.target);
+          const isClickInsideButton = menuButton.contains(event.target);
+          if (!isClickInsideMenu && !isClickInsideButton) {
+            menuButton.classList.remove("active");
+            dropdownMenu.classList.remove("show");
+            document.body.classList.remove("blurred-background");
+          }
+        });
+      </script>
+    {% block body %}
+    {% endblock %}
+</body>
+
+</html>

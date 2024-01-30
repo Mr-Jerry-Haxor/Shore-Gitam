@@ -33,6 +33,7 @@ urlpatterns = [
     path('sports/' , include('sports.urls')),
     path('users/' , include('ngusers.urls')),
     path('team/' , include('teams.urls')),
+    path('security/' , include('security.urls')),
 ]
 
 

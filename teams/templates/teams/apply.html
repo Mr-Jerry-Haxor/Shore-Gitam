@@ -51,11 +51,11 @@
     </div>
     <div class="mb-5">
         <label for="instagram_url" class="block mb-2 text-sm font-medium text-gray-900">Instagram URL</label>
-        <input type="url" id="instagram_url" name="instagram_url" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your Instagram URL" required>
+        <input type="url" id="instagram_url" name="instagram_url" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ex: https://www.instagram.com/abcd">
     </div>
     <div class="mb-5">
         <label for="linkedin_url" class="block mb-2 text-sm font-medium text-gray-900">Linkedin URL</label>
-        <input type="url" id="linkedin_url" name="linkedin_url" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your LinkedIn URL" required>
+        <input type="url" id="linkedin_url" name="linkedin_url" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Ex: https://www.linkedin.com/in/abcd">
     </div>
     <!-- Profile picture with preview -->
     <div class="mb-5">
@@ -71,7 +71,7 @@
             alt="Preview"
             class="preview-image"
             id="previewImage"
-            style="border: 2px solid rgb(255, 255, 255);border-radius: 50%; height:120px;width: 120px;"
+            style="border: 2px solid rgb(255, 255, 255);border-radius: 50%; height:120px;width: 120px;  object-fit: cover;"
           />
           <br />
         </div>
@@ -116,7 +116,7 @@
   
       function previewImageFile(event) {
         var input = event.target;
-        var fileSize = input.files[0].size; // Get the file size
+        var fileSize = input.files[0].size;
   
         // Check if file size is less than 2MB (2 * 1024 * 1024 bytes)
         if (fileSize > 1* 1024 * 1024) {

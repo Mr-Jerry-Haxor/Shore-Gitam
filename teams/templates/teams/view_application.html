@@ -3,7 +3,7 @@
 {% block title %}View{% endblock title %}
 {% block body %}
 {% include 'teams/navbar.html' %}
-{%block head%}
+{% block head%}
 <style>
       body {
         background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
@@ -20,7 +20,9 @@
         {% csrf_token %}
         <div class="mb-5">
             <label for="current_pic" class="block mb-2 text-sm font-medium text-gray-900">Current Picture</label>
-            <img id="current_pic" class="rounded-full w-30 h-30" src="{{ application.profile_pic.url }}" alt="Profile Picture">
+            <center>
+              <img id="current_pic" style="border-radius: 50%; width: 280px; height: 270px;  object-fit: cover;" src="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/{{ application.profile_pic }}" alt="Profile Picture">
+          </center>
         </div>
     
         <div class="mb-5">
@@ -35,7 +37,7 @@
             <label for="domains" class="block mb-2 text-sm font-medium text-gray-900">Domain</label>
             <select id="domains" name="domain" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 {% for domain in domains %}
-                    <option value="{{ domain.name }}" {% if domain.name == application.domain %} selected {% endif %} >{{ domain.name }}</option>
+                  <option value="{{ domain.name }}" {% if domain.name == application.domain.name %} selected {% endif %} >{{ domain.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -44,7 +46,7 @@
           <select id="position" name="position" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
               <option value="dummy" selected disabled>Select your position</option>
               {% for position in positions %}
-                  <option value="{{ position }}" {% if position == application.position %} selected {% endif %} >{{ position }}</option>
+                <option value="{{ position }}" {% if position == application.position %} selected {% endif %} >{{ position }}</option>
               {% endfor %}
           </select>
         </div>
@@ -54,11 +56,11 @@
         </div>
         <div class="mb-5">
             <label for="instagram_url" class="block mb-2 text-sm font-medium text-gray-900">Instagram ID</label>
-            <input type="url" id="instagram_url" name="instagram_url" value="{{ application.instagram_url }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your Instagram ID" required>
+            <input type="url" id="instagram_url" name="instagram_url" value="{% if application.instagram_url  %}{{ application.instagram_url }}{% else %}{% endif %}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your Instagram ID">
         </div>
         <div class="mb-5">
             <label for="linkedin_url" class="block mb-2 text-sm font-medium text-gray-900">Linkedin URL</label>
-            <input type="url" id="linkedin_url" name="linkedin_url" value="{{ application.linkedin_url }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your LinkedIn URL" required>
+            <input type="url" id="linkedin_url" name="linkedin_url" value="{% if application.linkedin_url %}{{ application.linkedin_url }}{% else %}{% endif %}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your LinkedIn URL">
         </div>
         <!-- Update profile picture with preview -->
         <div class="mb-5">
@@ -74,7 +76,7 @@
                 alt="Preview"
                 class="preview-image"
                 id="previewImage"
-                style="border: 2px solid rgb(255, 255, 255);border-radius: 50%; height:120px;width: 120px;"
+                style="border: 2px solid rgb(255, 255, 255);border-radius: 50%; height:120px;width: 120px; object-fit: cover;"
               />
               <br />
             </div>

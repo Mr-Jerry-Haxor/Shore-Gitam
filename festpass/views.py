@@ -1,10 +1,10 @@
 from django.shortcuts import render , redirect
-from .models import Student
+from .models import Student , participants_list
 import re
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-from payments.models import FestPass
+from payments.models import FestPass 
 
 import hashlib
 import requests
@@ -41,6 +41,16 @@ def passhome(request):
                 hash = generate_md5(hashtext)
                 student.passhash = hash
                 student.save()
+                return redirect('passhome')
+            elif  participants_list.objects.filter(email=request.user.email).exists():
+                student.ispaid = True
+                hashtext = str(student.regno) +  str(student.registred_at) + str(student.email) + str(datetime.datetime.now())
+                hash = generate_md5(hashtext)
+                student.passhash = hash
+                student.save()
+                participantpass = participants_list.objects.get(email=request.user.email)
+                participantpass.festpass = True
+                participantpass.save()
                 return redirect('passhome')
             else:
                 return render(request, 'passhome.html' , { 'student' : student})
@@ -119,3 +129,7 @@ def shoreidcard(request):
         return render(request, 'passhome.html' , { 'student' : student})
     else:
         return redirect('passhome')
+    
+
+def participantpass(request):
+    pass

@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security</title>
+</head>
+<body class="bg-gray-100 p-4">
+    {% include 'securitybase.html' %}
+    <h1 class="font-bold text-lg text-center mb-2">Security Verify</h1>
+    <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+
+        <div class="mb-4">
+          <p class="text-gray-600">Phone Num: <span class="font-semibold">{{ student.contact_number }}</span></p>
+          <p class="text-gray-600">Email: <span class="font-semibold">{{ student.email }}</span></p>
+        </div>
+    
+        <div class="mb-4">
+          <p class="text-gray-600">Reg No: <span class="font-semibold">{{ student.regno }}</span></p>
+        </div>
+      </div>
+      <table class="min-w-full bg-white border border-gray-300 mt-4">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border-b p-2">Status</th>
+            <th class="border-b p-2">Time</th>
+            <th class="border-b p-2">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in entries %}
+          <tr class="bg-red-100 odd:bg-green-100">
+            <td class="border-b p-2">{{ entry.status }}</td>
+            <td class="border-b p-2">{{ entry.formatted_time_12hr }}</td>
+            <td class="border-b p-2">{{ entry.formatted_date }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <center>
+        <!-- form -->
+        <form class="max-w-sm mx-auto" action="{% url 'maingateverify' %}" method="post" validate>
+            {% csrf_token %}
+          <div class="mb-5 hidden">
+            <input type="email" id="email" name="email"  value="{{ student.email }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            <input type="text" id="cam" name="cam" value="{{ cam }}">
+          </div>
+      {% if status == "IN" %}
+      <button class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-10 rounded">
+        Check {{ status }}
+      </button>
+      {% else %}
+      <button class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-10 rounded">
+        Check {{ status }}
+      </button>
+      {% endif %}
+      </form>
+    </center>
+</body>
+</html>

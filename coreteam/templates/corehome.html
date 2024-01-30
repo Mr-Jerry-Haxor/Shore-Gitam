@@ -206,19 +206,28 @@
                         <button type="button" class="btn btn-danger">Hospitality</button>
                     </a>
                     {% endif %}
+                    {% if issecurity %} 
+                    <br> 
+                    <a href="{% url 'securityhome' %}">
+                        <button type="button" class="btn btn-danger">Security</button>
+                    </a>
+                    {% endif %}
                     <br>
                     <a href="{% url 'passhome' %}">
                         <button type="button" class="btn btn-danger">Fest Pass</button>
                     </a>
                     <br>
+                    <div class="barcode">
+                        <img
+                            src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.user.email }}"
+                            alt="QR code"
+                        />
+                    </div>
                     <br>
                     <a href="{% url 'logout' %}">
                         <button type="button" class="btn btn-danger">Logout</button>
                     </a>
                     <br>
-
-                    
-
                 </div>
                 <!-- Right column with an image -->
                 <div class="col-12 col-md-7">

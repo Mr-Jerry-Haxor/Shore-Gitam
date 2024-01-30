@@ -16,7 +16,7 @@ def upload_profile_pic(instance, filename):
 class Domain(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     head_email = models.CharField(max_length=500, null=False, blank=False)
-    order = models.IntegerField()
+    order = models.IntegerField(unique=True, null=False, blank=False)
 
     def __str__(self) -> str:
         return self.name
@@ -36,13 +36,8 @@ class ParticipantApplication(models.Model):
 
     name = models.CharField(max_length=100, null=False, blank=False)
     email = models.EmailField(null=False, blank=False, unique=True)
-    profile_pic = models.ImageField(upload_to=upload_profile_pic,
-                                    null=False,
-                                    blank=False)
-    domain = models.ForeignKey(Domain,
-                               on_delete=models.CASCADE,
-                               null=False,
-                               blank=False)
+    profile_pic = models.ImageField(upload_to=upload_profile_pic, null=False, blank=False)
+    domain = models.ForeignKey(Domain, on_delete=models.CASCADE, null=False, blank=False)
     position = models.CharField(max_length=100, choices=position_choices, null=False, blank=False)
     designation = models.CharField(max_length=100, null=False, blank=False)
     instagram_url = models.URLField(null=True, blank=True)
