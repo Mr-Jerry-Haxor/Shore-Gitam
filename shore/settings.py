@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'festpass',
     'sports',
     'ngusers',
+    'teams',
 ]
 
 MIDDLEWARE = [

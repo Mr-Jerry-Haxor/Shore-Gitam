@@ -1,0 +1,96 @@
+{% extends 'sports/base.html' %}
+{% load static %}
+{% block title %}Applications{% endblock title %}
+{% block body %}
+{% include 'teams/navbar.html' %}
+{% include 'messages.html' %}
+
+
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    S.No
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Domain
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Position
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Designation
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Instagram
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    LinkedIn
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Verification Status
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr class="bg-white border-b">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    {{ forloop.counter }}
+                </th>
+                <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
+                    <img class="w-10 h-10 rounded-full" src="{{ application.profile_pic.url }}" alt="{{ application.name }}'s Profile Picture">
+                    <div class="ps-3">
+                        <div class="text-base font-semibold">{{ application.name }}</div>
+                        <div class="font-normal text-gray-500">{{ application.email }}</div>
+                    </div>  
+                </th>
+                <td class="px-6 py-4">
+                    {{ application.domain.name }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ application.position }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ application.designation }}
+                </td>
+                <td class="px-6 py-4">
+                    <a href="{{ application.instagram_url }}" target="_blank" class="text-blue-500 hover:text-blue-700">Instagram</a>
+                </td>
+                <td class="px-6 py-4">
+                    <a href="{{ application.linkedin_url }}" target="_blank" class="text-blue-500 hover:text-blue-700">LinkedIn</a>
+                </td>
+                <td class="px-6 py-4">
+                    {% if application.verified %}
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        Verified
+                    </span>
+                    {% else %}
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                        Not Verified
+                    </span>
+                    {% endif %}
+                </td>
+                {% if application.verified %}
+                    <td class="px-6 py-4">
+                        <a href="{% url 'teams:disprove_individual_application' application.email %}" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Disprove</a>
+                    </td>
+                {% else %}
+                    <td class="px-6 py-4">
+                        <a href="{% url 'teams:verify_individual_application' application.email %}" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Approve</a>
+                    </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

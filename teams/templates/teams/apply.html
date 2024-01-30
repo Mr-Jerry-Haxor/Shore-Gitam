@@ -1,0 +1,154 @@
+{% extends 'sports/base.html' %}
+{% load static %}
+{% block title %}Apply{% endblock title %}
+{% block body %}
+{% include 'teams/navbar.html' %}
+{%block head%}
+<style>
+      body {
+        background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
+      }
+</style>
+{% endblock head %}
+{% include 'messages.html' %}
+<div class="h-screen flex items-center justify-center">
+    <div
+      style="height: 40rem;background: white !important; margin: 1rem;"
+      class="overflow-y-scroll container mx-auto max-w-md p-6 border border-gray-200 rounded-lg shadow-lg"
+    >
+    <h1 class="text-xl text-center font-bold py-2">SHORE'24 Team Application Form</h1>
+    <form class="max-w-sm mx-auto" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-5">
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+        <input type="text" id="name" name="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your name" required>
+    </div>
+    <div class="mb-5">
+      <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+      <input type="email" id="email" name="email" value="{{ email }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="example@gitam.in" disabled required>
+    </div>
+    <div class="mb-5">
+        <label for="domains" class="block mb-2 text-sm font-medium text-gray-900">Domain</label>
+        <select id="domains" name="domain" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            <option value="dummy" selected disabled>Select your domain</option>
+            {% for domain in domains %}
+                <option value="{{ domain.name }}">{{ domain.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-5">
+      <label for="position" class="block mb-2 text-sm font-medium text-gray-900">Position</label>
+      <select id="position" name="position" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <option value="dummy" selected disabled>Select your position</option>
+          {% for position in positions %}
+              <option value="{{ position }}">{{ position }}</option>
+          {% endfor %}
+      </select>
+    </div>
+    <div class="mb-5">
+        <label for="designation" class="block mb-2 text-sm font-medium text-gray-900">Designation</label>
+        <input type="text" id="designation" name="designation" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your designation" required>
+    </div>
+    <div class="mb-5">
+        <label for="instagram_url" class="block mb-2 text-sm font-medium text-gray-900">Instagram URL</label>
+        <input type="url" id="instagram_url" name="instagram_url" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your Instagram URL" required>
+    </div>
+    <div class="mb-5">
+        <label for="linkedin_url" class="block mb-2 text-sm font-medium text-gray-900">Linkedin URL</label>
+        <input type="url" id="linkedin_url" name="linkedin_url" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter your LinkedIn URL" required>
+    </div>
+    <!-- Profile picture with preview -->
+    <div class="mb-5">
+        <div
+          class="preview-container"
+          id="previewContainer"
+          style="display: none"
+        >
+          <h2>Preview</h2>
+          <br>
+          <img
+            src="#"
+            alt="Preview"
+            class="preview-image"
+            id="previewImage"
+            style="border: 2px solid rgb(255, 255, 255);border-radius: 50%; height:120px;width: 120px;"
+          />
+          <br />
+        </div>
+        <label
+          class="block mb-2 text-sm font-medium text-gray-900"
+          for="file_input"
+          >Upload Profile Picture</label
+        >
+        <input
+          class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none  dark:border-gray-600 dark:placeholder-gray-400"
+          aria-describedby="file_input_help"
+          id="profile_pic"
+          name="profile_pic"
+          type="file"
+          accept="image/*"
+          required
+          onchange="previewImage(event)"
+        />
+        <p
+          class="mt-1 text-sm text-gray-500 dark:text-gray-500"
+          id="file_input_help"
+        >
+          PNG, JPG, or JPEG (MAX. 800x400px).
+        </p>
+    </div>
+    <center>
+    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
+    </center>
+</form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var fileInput = document.getElementById("profile_pic");
+      var previewContainer = document.getElementById("previewContainer");
+      var previewImage = document.getElementById("previewImage");
+  
+      fileInput.addEventListener("change", function (event) {
+        previewImageFile(event);
+      });
+  
+      function previewImageFile(event) {
+        var input = event.target;
+        var fileSize = input.files[0].size; // Get the file size
+  
+        // Check if file size is less than 2MB (2 * 1024 * 1024 bytes)
+        if (fileSize > 1* 1024 * 1024) {
+          alert("File size exceeds 1MB. Please upload a smaller file.");
+          input.value = null; // Clear the input field
+          previewContainer.style.display = "none"; // Hide the preview container
+          return; // Stop further execution
+        }
+
+        // Get the file name and check its extension
+        var fileName = input.files[0].name;
+        var fileExtension = fileName.split('.').pop().toLowerCase();
+        var allowedExtensions = ['jpg', 'jpeg', 'png'];
+
+        if (allowedExtensions.indexOf(fileExtension) === -1) {
+            alert("Invalid file format. Please upload a file with a valid extension (jpg, jpeg, png).");
+            input.value = null; // Clear the input field
+            previewContainer.style.display = "none"; // Hide the preview container
+            return; // Stop further execution
+        }
+  
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+  
+          reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewContainer.style.display = "block";
+          };
+  
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+    });
+  </script>
+{% endblock %}
