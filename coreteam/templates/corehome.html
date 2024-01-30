@@ -136,7 +136,13 @@
                         <a href="{% url 'coretasks' 'advisory' %}">
                             <button type="button" class="btn btn-danger">Advisory</button>
                         </a>
-                    {% endif %}  
+                    {% endif %} 
+                    {% if ishospitality %} 
+                    <br> 
+                    <a href="{% url 'hospitality:home' %}">
+                        <button type="button" class="btn btn-danger">Hospitality</button>
+                    </a>
+                    {% endif %}
                     <br>
                     <a href="{% url 'passhome' %}">
                         <button type="button" class="btn btn-danger">Fest Pass</button>

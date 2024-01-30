@@ -7,6 +7,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.conf import settings
 from coreteam.models import CustomUser
+from hospitality.models import *
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def coretasks(request , domain_name):
@@ -343,7 +344,8 @@ def coretasks(request , domain_name):
 def home(request):
     if request.user.is_authenticated:
         name = request.user.first_name
-        return render(request, 'corehome.html' , {'name': name})
+        ishospitality = HospitalityUser.objects.filter(email=request.user.email).exists()
+        return render(request, 'corehome.html' , {'name': name , 'ishospitality': ishospitality})
     else:
         return redirect('index')
 
