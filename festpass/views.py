@@ -46,8 +46,8 @@ def passhome(request):
                 return render(request, 'passhome.html' , { 'student' : student})
         
     else:
-        if True:
-            return render(request, 'passes_sold_out.html')
+        # if True:
+        #     return render(request, 'passes_sold_out.html')
         
         if request.method == 'POST':
             name = request.POST.get('name')
