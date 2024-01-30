@@ -37,7 +37,7 @@ def team(request):
     return render(request, "teams/team.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="/auth/login/google-oauth2/")
 def apply(request):
     context = {}
     email = request.user.email
@@ -79,7 +79,7 @@ def apply(request):
     return render(request, "teams/apply.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="/auth/login/google-oauth2/")
 def view_application(request):
     context = {}
     context["domains"] = Domain.objects.all()
@@ -111,7 +111,7 @@ def view_application(request):
     return render(request, "teams/view_application.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="/auth/login/google-oauth2/")
 def verify_application(request):
     context = {}
     email = request.user.email
@@ -138,7 +138,7 @@ def verify_application(request):
     return render(request, "teams/verify_application.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="/auth/login/google-oauth2/")
 def verify_individual_application(request, email):
     logged_in_user_email = request.user.email
     try:
@@ -167,7 +167,7 @@ def verify_individual_application(request, email):
         return redirect("teams:verify_application")
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="/auth/login/google-oauth2/")
 def disprove_individual_application(request, email):
     logged_in_user_email = request.user.email
     try:
