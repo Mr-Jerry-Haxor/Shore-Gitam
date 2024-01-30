@@ -41,7 +41,7 @@ def team(request):
 def apply(request):
     context = {}
     email = request.user.email
-    context['positions'] = ['Head', 'Co-head', 'Lead', 'Co-lead', 'Member']
+    context['positions'] = ['President', 'Vice-President', 'Event Manager' ,'Head', 'Co-head', 'Lead', 'Co-lead', 'Member']
 
     if not ParticipantApplication.objects.filter(email=email).exists():
         context["email"] = email
