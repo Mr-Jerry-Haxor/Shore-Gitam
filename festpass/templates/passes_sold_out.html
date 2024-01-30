@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Fest Pass</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
+            height: 100vh;
+          }
+          .card {
+            box-sizing: border-box;
+            width: 80vw;
+            height: 60vh;
+            margin-top: 3rem;
+            background: rgba(217, 217, 217, 0.58);
+            border: 1px solid white;
+            box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+            backdrop-filter: blur(6px);
+            border-radius: 17px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            font-weight: bolder;
+            color: black;
+          }
+          
+          .card:hover {
+            border: 1px solid black;
+            transform: scale(1.05);
+          }
+          
+          .card:active {
+            transform: scale(0.95) rotateZ(1.7deg);
+          }
+    </style>
+</head>
+<body>
+    {% include 'passbase.html' %}
+    <center>
+        <div class="card">
+            <h1 style="color:red">Passes are sold out!</h1>
+        </div>
+    </center>
+</body>
+</html>
