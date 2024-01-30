@@ -29,7 +29,9 @@ def festpass_scan(request):
                     status = "IN"
                 else:
                     status = "OUT"
-                return render(request, 'security_fest_verify.html', {'student': student, 'entries': entries ,  'cam' : "cam0"  , "Status" : status})
+                insidecount = Fest_status.objects.filter(status="IN").count()
+                outsidecount = Fest_status.objects.filter(status="OUT").count()
+                return render(request, 'security_fest_verify.html', {'student': student, 'entries': entries ,  'cam' : "cam0"  , "status" : status , "insidecount" : insidecount , "outsidecount" : outsidecount})
             else:
                 messages.error(request, 'This student has not registered for the festpass.')
                 return redirect('festpass_scan')
@@ -54,7 +56,9 @@ def festpass_scan1(request):
                     status = "IN"
                 else:
                     status = "OUT"
-                return render(request, 'security_fest_verify.html', {'student': student, 'entries': entries , 'cam' : "cam1" , "Status" : status})
+                insidecount = Fest_status.objects.filter(status="IN").count()
+                outsidecount = Fest_status.objects.filter(status="OUT").count()
+                return render(request, 'security_fest_verify.html', {'student': student, 'entries': entries ,  'cam' : "cam0"  , "status" : status , "insidecount" : insidecount , "outsidecount" : outsidecount})
             else:
                 messages.error(request, 'This student has not registered for the festpass.')
                 return redirect('festpass_scan1')
@@ -119,7 +123,9 @@ def maingate_scan(request):
                     status = "IN"
                 else:
                     status = "OUT"
-                return render(request, 'security_maingate_verify.html', {'student': student, 'entries': entries ,  'cam' : "cam0"  , "Status" : status})
+                insidecount = Maingate_status.objects.filter(status="IN").count()
+                outsidecount = Maingate_status.objects.filter(status="OUT").count()
+                return render(request, 'security_maingate_verify.html', {'student': student, 'entries': entries ,  'cam' : "cam0"  , "status" : status  , "insidecount" : insidecount , "outsidecount" : outsidecount})
             else:
                 messages.error(request, 'This student has not registered for the festpass.')
                 return redirect('maingate_scan')
@@ -144,7 +150,9 @@ def maingate_scan1(request):
                     status = "IN"
                 else:
                     status = "OUT"
-                return render(request, 'security_maingate_verify.html', {'student': student, 'entries': entries , 'cam' : "cam1" , "Status" : status})
+                insidecount = Maingate_status.objects.filter(status="IN").count()
+                outsidecount = Maingate_status.objects.filter(status="OUT").count()
+                return render(request, 'security_maingate_verify.html', {'student': student, 'entries': entries , 'cam' : "cam1" , "status" : status  , "insidecount" : insidecount , "outsidecount" : outsidecount})
             else:
                 messages.error(request, 'This student has not registered for the festpass.')
                 return redirect('maingate_scan1')
