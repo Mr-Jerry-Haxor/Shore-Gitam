@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'sports',
     'ngusers',
     'teams',
+    'security',
 ]
 
 MIDDLEWARE = [
