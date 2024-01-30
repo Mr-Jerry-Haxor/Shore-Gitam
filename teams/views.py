@@ -122,6 +122,8 @@ def verify_application(request):
             accepted_emails = domain.head_email.split(",")
             if email in accepted_emails:
                 actual_domain = domain
+            else:
+                actual_domain = False
 
         if not actual_domain:
             raise Domain.DoesNotExist
