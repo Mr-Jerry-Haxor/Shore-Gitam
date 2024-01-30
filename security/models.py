@@ -32,6 +32,12 @@ class Maingate_entries(models.Model):
     verifiedby = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=200 , null=True)
     
+    def formatted_time_12hr(self):
+        return self.time.strftime('%I:%M %p')
+    
+    def formatted_date(self):
+        return self.date.strftime('%d-%m-%Y')
+    
     
 class Maingate_status(models.Model):
     fullname = models.CharField(max_length=300, null=True, blank=True)
@@ -86,6 +92,12 @@ class Openaudi_entries(models.Model):
     time = models.TimeField(auto_now_add=True)
     verifiedby = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=200 , null=True)
+    
+    def formatted_time_12hr(self):
+        return self.time.strftime('%I:%M %p')
+    
+    def formatted_date(self):
+        return self.date.strftime('%d-%m-%Y')
     
 class Openaudi_status(models.Model):
     fullname = models.CharField(max_length=300, null=True, blank=True)
