@@ -175,7 +175,7 @@ def maingate_verify(request):
                     messages.success(request, "You have successfully entered.")
             else:
                 student = Student.objects.get(email=email)
-                studentname = student.fullname
+                studentname = student.name
                 Feststatus = Maingate_status(email=email, fullname=studentname, status="IN")
                 Feststatus.save()
                 adding = Maingate_entries(email=email, fullname=studentname, verifiedby=request.user.email , status="IN")
