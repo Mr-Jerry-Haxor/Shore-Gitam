@@ -32,6 +32,7 @@ urlpatterns = [
     path('festpass/' , include('festpass.urls')),
     path('sports/' , include('sports.urls')),
     path('users/' , include('ngusers.urls')),
+    path('team/' , include('teams.urls')),
 ]
 
 

@@ -43,10 +43,18 @@
                         <button type="button" class="btn btn-danger">President</button>
                     </a>
                     <br>
+                    <a href="{% url 'teams:view_application' %}">
+                        <button type="button" class="btn btn-danger">Shore Team</button>
+                    </a>
+                    <br>
                     {% endif %}
                     {% if request.user.vice_president %}
                         <a href="{% url 'coretasks' 'vice_president' %}">
                             <button type="button" class="btn btn-danger">Vice President</button>
+                        </a>
+                        <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
                     {% endif %}
@@ -56,11 +64,19 @@
                             <button type="button" class="btn btn-danger">Head of Technology</button>
                         </a>
                         <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
                     {% endif %}
 
                     {% if request.user.events_cultural %}
                         <a href="{% url 'coretasks' 'events_cultural' %}">
                             <button type="button" class="btn btn-danger">Head of Events Cultural</button>
+                        </a>
+                        <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
                     {% endif %}
@@ -70,6 +86,10 @@
                             <button type="button" class="btn btn-danger">Head of Events Sports</button>
                         </a>
                         <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
                     {% endif %}
 
                     {% if request.user.legal %}
@@ -77,10 +97,18 @@
                             <button type="button" class="btn btn-danger">Head of Legal and documentation</button>
                         </a>
                         <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
                     {% endif %} 
                     {% if request.user.operations %}
                         <a href="{% url 'coretasks' 'operations' %}">
                             <button type="button" class="btn btn-danger">Head of Operations</button>
+                        </a>
+                        <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
                     {% endif %}  
@@ -90,11 +118,19 @@
                             <button type="button" class="btn btn-danger">Head of Marketing</button>
                         </a>
                         <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
                     {% endif %}  
 
                     {% if request.user.sponsorship %}
                         <a href="{% url 'coretasks' 'sponsorship' %}">
                             <button type="button" class="btn btn-danger">Head of Sponsorship</button>
+                        </a>
+                        <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
                     {% endif %}  
@@ -104,11 +140,19 @@
                             <button type="button" class="btn btn-danger">Head of Design & Content</button>
                         </a>
                         <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
                     {% endif %}  
 
                     {% if request.user.finance %}
                         <a href="{% url 'coretasks' 'finance' %}">
                             <button type="button" class="btn btn-danger">Head of Finance</button>
+                        </a>
+                        <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
                     {% endif %}  
@@ -118,24 +162,43 @@
                             <button type="button" class="btn btn-danger">Head of Media</button>
                         </a>
                         <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
                     {% endif %}  
 
                     {% if request.user.security %}
                         <a href="{% url 'coretasks' 'security' %}">
                             <button type="button" class="btn btn-danger">Head of Security</button>
                         </a>
+                        <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
                     {% endif %}  
 
                     {% if request.user.hospitality %}
                         <a href="{% url 'coretasks' 'hospitality' %}">
                             <button type="button" class="btn btn-danger">Head of Hospitality</button>
                         </a>
+                        <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
                     {% endif %}  
 
                     {% if request.user.advisory %}
                         <a href="{% url 'coretasks' 'advisory' %}">
                             <button type="button" class="btn btn-danger">Advisory</button>
                         </a>
+                        <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
                     {% endif %} 
                     {% if ishospitality %} 
                     <br> 
