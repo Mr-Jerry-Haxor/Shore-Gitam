@@ -85,7 +85,7 @@ def festpass_verify(request):
                     messages.success(request, "You have successfully entered.")
             else:
                 student = Student.objects.get(email=email)
-                studentname = student.fullname
+                studentname = student.name
                 Feststatus = Fest_status(email=email, fullname=studentname, status="IN")
                 Feststatus.save()
                 adding = Fest_entries(email=email, fullname=studentname, verifiedby=request.user.email , status="IN")
@@ -174,7 +174,7 @@ def maingate_verify(request):
                     adding.save()
                     messages.success(request, "You have successfully entered.")
             else:
-                student = Student.objects.get(email=email)
+                student = HospitalityUser.objects.get(email=email)
                 studentname = student.name
                 Feststatus = Maingate_status(email=email, fullname=studentname, status="IN")
                 Feststatus.save()
