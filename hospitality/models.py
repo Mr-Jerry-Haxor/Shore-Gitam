@@ -8,6 +8,9 @@ hostel_choices = (
     ("NS-AC", "Nirmala Sadan AC"),
     ("KS", "Kokila Sadan"),
     ("KS-AC", "Kokila Sadan AC"),
+    ("DDS", "DDS"),
+    ("DDS-AC", "DDS AC"),
+    ("Nursing-hostel", "Nursing Hostel"),
 )
 
 meal_choices = (
