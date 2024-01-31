@@ -74,6 +74,8 @@ def event_home(request):
 
 
 def sports_home(request):
+    if True:
+        return render(request, "regclose.html" , {"titletext" : "Sports Registrations are closed"})
     context = {}
     events = Event.objects.filter(event_type="sports")
     context["events"] = events
