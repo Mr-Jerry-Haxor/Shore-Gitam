@@ -549,6 +549,8 @@ def events_admin_culturals(request):
 
 """ Hackathon Views """
 def hackathon_home(request):
+    if True:
+        return render(request, "regclose.html" , {"title-text" : "Hackathon Registrations are closed"})
     context = {}
     hackathons = Hackathon.objects.all()
     

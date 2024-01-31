@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title-text }}</title>
+</head>    
+<body style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #ffffff;">
+    {% include 'dropnav.html' %}
+    {% include 'messages.html' %}
+    <div style="max-width: 80%; text-align: center;">
+      <img src="https://oraltherapy.dentalcongress.com/2021/images/Registration-Closed.jpg" alt="{{ titletext }}" style="max-width: 100%; height: auto; animation: fadeEffect 4s ease infinite;">
+      <p style="font-family: Arial, sans-serif; font-size: 34px; color: #333;">{{ title-text }}</p>
+    </div>
+    <style>
+      @keyframes fadeEffect {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+  
+      /* Add infinite loop to the animation */
+      img {
+        animation-iteration-count: infinite;
+      }
+    </style>
+  </body>
+</html>
