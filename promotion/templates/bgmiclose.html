@@ -7,17 +7,20 @@
 </head>
 <body style="margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #ffffff;">
   <div style="max-width: 80%; text-align: center;">
-    <img src="https://oraltherapy.dentalcongress.com/2021/images/Registration-Closed.jpg" alt="{{ titletext }}" style="max-width: 100%; height: auto; animation: fadeIn 2s ease forwards;">
+    <img src="https://oraltherapy.dentalcongress.com/2021/images/Registration-Closed.jpg" alt="{{ titletext }}" style="max-width: 100%; height: auto; animation: fadeEffect 4s ease infinite;">
     <p style="font-family: Arial, sans-serif; font-size: 34px; color: #333;">{{ titletext }}</p>
   </div>
 
   <style>
-    @keyframes fadeIn {
-      from {
+    @keyframes fadeEffect {
+      0% {
         opacity: 0;
       }
-      to {
+      50% {
         opacity: 1;
+      }
+      100% {
+        opacity: 0;
       }
     }
   </style>
