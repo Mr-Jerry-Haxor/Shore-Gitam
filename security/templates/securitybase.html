@@ -109,7 +109,14 @@
               <a
                 href="{% url 'index' %}"
                 class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
-                >Home</a
+                >Shore Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="{% url 'securityhome' %}"
+                class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
+                >Security Home</a
               >
             </li>
             {% if not request.user.is_authenticated %}

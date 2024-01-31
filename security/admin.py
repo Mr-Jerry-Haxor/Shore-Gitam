@@ -23,9 +23,9 @@ class FestEntriesAdmin(ImportExportModelAdmin):
     search_fields = ('fullname', 'email')
 
 class FestStatusAdmin(ImportExportModelAdmin):
-    list_display = ('fullname', 'email', 'status')
+    list_display = ('fullname', 'email', 'status' , 'iscoke')
     list_filter = ('status',)
-    search_fields = ('fullname', 'email')
+    search_fields = ('fullname', 'email' , 'iscoke')
     
 class FestEntriesDay2Admin(ImportExportModelAdmin):
     list_display = ('fullname', 'email', 'date', 'time', 'verifiedby', 'status')

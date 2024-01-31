@@ -9,7 +9,8 @@ from festpass.models import *
 @login_required(login_url="/auth/login/google-oauth2/")
 def security_home(request):
     if security_staff.objects.filter(email_id=request.user.email).exists():
-        return render(request, 'securityhome.html')
+        staff = security_staff.objects.get(email_id=request.user.email)
+        return render(request, 'securityhome.html' , {'secstaff' : staff})
     else:
         messages.error(request, 'You are not authorized to access this page.')
         return redirect('index')
@@ -195,6 +196,38 @@ def maingate_verify(request):
                 return redirect('maingate_scan1')
             else:
                 return redirect('maingate_scan')
+    else:
+        messages.error(request, 'You are not authorized to access this page.')
+        return redirect('index')
+    
+
+# Coke scan , scan 1 , verify 
+@login_required(login_url="/auth/login/google-oauth2/")
+def coke_scan(request):
+    if security_staff.objects.filter(email_id=request.user.email).exists() and security_staff.objects.get(email_id=request.user.email).is_coke:
+        if request.method == 'POST':
+            qrhash = request.POST.get('qrhash')
+            if Student.objects.filter(passhash=qrhash).exists():
+                student = Student.objects.get(passhash=qrhash)
+                email = student.email
+                if Fest_status.objects.filter(email=email).exists():
+                    user = Fest_status.objects.get(email=email)
+                    if user.iscoke:
+                        messages.error(request, 'This student has already Taken coke.')
+                        return redirect('coke_scan')
+                    else:
+                        user.iscoke = True
+                        user.save()
+                        messages.success(request, 'This student has successfully Grabbed coke.')
+                        return redirect('coke_scan')
+                else:
+                    messages.error(request, 'This student has not scanned for festpass.')
+                    return redirect('coke_scan')
+            else:
+                messages.error(request, 'This student has not registered for the festpass.')
+                return redirect('coke_scan')
+        else:
+            return render(request, 'securityscan.html')
     else:
         messages.error(request, 'You are not authorized to access this page.')
         return redirect('index')

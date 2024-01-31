@@ -22,6 +22,7 @@ class security_staff(models.Model):
     is_main_gate = models.BooleanField(default=False)
     is_fest = models.BooleanField(default=False)
     is_open_audi = models.BooleanField(default=False)
+    is_coke = models.BooleanField(default=False)
     
     
 class Maingate_entries(models.Model):
@@ -63,6 +64,7 @@ class Fest_status(models.Model):
     fullname = models.CharField(max_length=300, null=True, blank=True)
     email = models.EmailField(max_length=200 , unique=True)
     status = models.CharField(max_length=200)
+    iscoke = models.BooleanField(default=False)
     
     
 class Fest_entries_day2(models.Model):
