@@ -45,3 +45,4 @@ class Student(models.Model):
 class participants_list(models.Model):
     emails = models.EmailField(unique=True)
     festpass = models.BooleanField(default=False)
+    notfree = models.BooleanField(default=False)

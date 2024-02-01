@@ -14,7 +14,7 @@ admin.site.register(Student, StudentAdmin)
 
 
 class ParticipantsListAdmin(ImportExportModelAdmin):
-    list_display = ('emails', 'festpass')
+    list_display = ('emails', 'festpass' , 'notfreepass')
     list_filter = ('festpass',)
     search_fields = ('emails',)
 
