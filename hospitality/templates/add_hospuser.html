@@ -1,0 +1,35 @@
+{% extends 'events_base.html' %}
+{% load static %}
+
+{% block title %}
+Add Hospitality User
+{% endblock %}
+
+
+{% block body %}
+{% include 'hospitality_navbar.html' %}
+{% include 'notification.html' %}
+{% include 'messages.html' %}
+<div class="h-screen flex items-center justify-center">
+    <div
+        class="container mx-auto block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+        <form class="max-w-sm mx-auto" method="post">
+            {% csrf_token %}
+            <div class="mb-5">
+                <h1 class="text-xl font-bold">Add Hospitality User</h1>
+                <br />
+                <label for="user_email" class="block mb-2 text-sm font-medium text-gray-900">
+                    User Email
+                </label>
+                <input type="email" id="user_email" name="user_email"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="Enter User Email" required />
+            </div>
+            <button type="submit"
+                class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                Add User
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

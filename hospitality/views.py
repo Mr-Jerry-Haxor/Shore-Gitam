@@ -23,6 +23,20 @@ from events.models import College , Event , Hackathon
 from django.db import IntegrityError
 from django.contrib import messages
 
+@login_required(login_url="ngusers:login")
+def add_hospitality_user(request):
+    if not (request.user.hospitality_staff or request.user.hospitality):
+        return redirect('corehome')
+    else:
+        if request.POST:
+            user_email = request.POST.get("user_email")
+            user = CustomUser.objects.create(username=user_email ,email=user_email)
+            user.hospitality_staff = True
+            user.save()
+            messages.success(request, 'User added successfully')
+        return render(request, 'add_hospuser.html')
+
+
 def send_otp_email(user_email, otp):
     subject = f"SHORE'24 GITAM, OTP {otp}"
     html_content = get_template('otp_mail.html').render({"user_otp": otp})
@@ -142,31 +156,32 @@ def scan(request):
             context["meal"] = meal
             context["count"] = MealHistory.objects.filter(meal_type=meal).count()
         except Meal.DoesNotExist:
-            context["error"] = "No meal found"
+            messages.error(request, 'No meal found')
             return render(request, "hospscan.html", context)
 
         if request.method == "POST":
             qr_hash = request.POST.get("qr_hash")
-            user_id = qr_hash[-1]
+            user_id = qr_hash.split('_')[-1]
             try:
                 user = HospitalityUser.objects.get(id=user_id)
             except HospitalityUser.DoesNotExist:
-                context["error"] = "User does not exist"
+                messages.error(request, 'User does not exist')
                 return render(request, "hospscan.html", context)
 
             if user.qr_hash == qr_hash:
                 """Check if the user has already scanned the QR code for the meal"""
                 if MealHistory.objects.filter(user=user, meal_type=meal).exists():
-                    context["error"] = "User already availed this meal"
+                    messages.error(request, 'User already availed this meal')
                     return render(request, "hospscan.html", context)
                 else:
                     meal_history = MealHistory.objects.create(user=user, meal_type=meal)
                     meal_history.save()
-                    context["success"] = "Meal availed successfully"
+                    messages.success(request, 'Meal availed successfully')
                     context["user_detail"] = user
                     return render(request, "hospscan.html", context)
-
-            return render(request, "hospscan.html", context)
+            else:
+                messages.error(request, 'Invalid QR code')
+                return render(request, "hospscan.html", context)
         return render(request, "hospscan.html", context)
 
 
@@ -488,3 +503,51 @@ def noc_and_travel_tickets(request):
         context["events"] = events
         context["hackathons"] = hackathons
         return render(request, 'noc_tickets_reg.html',context)
+
+
+@login_required(login_url="ngusers:login")
+def scan1(request):
+    if not (request.user.hospitality_staff or request.user.hospitality):
+        return redirect('corehome')
+    else:
+        context = {}
+        count = 0
+        context["count"] = count
+
+        server_datetime = timezone.now()
+        server_time = server_datetime.time()
+        server_date = server_datetime.date()
+
+        try:
+            meal = Meal.objects.get(
+                date=server_date, start_time__lte=server_time, end_time__gte=server_time
+            )
+            context["meal"] = meal
+            context["count"] = MealHistory.objects.filter(meal_type=meal).count()
+        except Meal.DoesNotExist:
+            messages.error(request, "No meal found")
+            return render(request, "scan_qr.html", context)
+
+        if request.method == "POST":
+            qr_hash = request.POST.get("qr_hash")
+            user_id = qr_hash[-1]
+            try:
+                user = HospitalityUser.objects.get(id=user_id)
+            except HospitalityUser.DoesNotExist:
+                messages.error(request, "User does not exist")
+                return render(request, "scan_qr.html", context)
+
+            if user.qr_hash == qr_hash:
+                """Check if the user has already scanned the QR code for the meal"""
+                if MealHistory.objects.filter(user=user, meal_type=meal).exists():
+                    messages.error(request, "User already availed this meal")
+                    return render(request, "scan_qr.html", context)
+                else:
+                    meal_history = MealHistory.objects.create(user=user, meal_type=meal)
+                    meal_history.save()
+                    messages.success(request, "Meal availed successfully")
+                    context["user_detail"] = user
+                    return render(request, "scan_qr.html", context)
+
+            return render(request, "scan_qr.html", context)
+        return render(request, "scan_qr.html", context)

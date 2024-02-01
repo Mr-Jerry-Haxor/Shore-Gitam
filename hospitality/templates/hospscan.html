@@ -1,10 +1,8 @@
 {% extends 'hospitality_base.html' %}
 {% load static %}
-
 {% block title %}
 Scan QR
 {% endblock title %}
-
 {% block head %}
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <style>
@@ -150,14 +148,14 @@ Scan QR
   .scanner {
     width: 300px;
     height: 300px;
-    margin-top: 10rem;
+    margin-top: 5rem;
   }
 
   .rectangleitem {
     position: absolute;
     width: 185px;
     height: 39px;
-    margin-top: 3.5rem;
+    margin-top: 0.5rem;
     margin-left: 25%;
     background-color: rgba(0, 70, 194, 1);
     border-radius: 15px;
@@ -172,20 +170,21 @@ Scan QR
   }
 
   .qrform {
-    padding-top: 2rem;
+    padding-top: 0;
   }
 </style>
 {% endblock head %}
 
 {% block body %}
-<div class="container">
+<div class="container overflow">
   {% include 'hospitality_navbar.html' %}
   {% include 'notification.html' %}
+  {% include 'messages.html' %}
   <h3 style="
           text-align: center;
           font-size: 2rem;
           font-weight: bold;
-          margin-top: 2rem;
+          margin-top: 0rem;
         " class="font-sans text-center text-xl font-bold">
     Scan QR Code
   </h3>
@@ -201,20 +200,19 @@ Scan QR
 
   <center>
     <div class="scanner">
-      <div id="reader" width="300px"></div>
+      <div id="reader" width="300px" height="200px"></div>
     </div>
-    {% if count %}
-    <h3 class="font-sans text-xl text-center">No. of user scanned for {{ meal.meal_type }}: {{ count }}</h3>
-    {% endif %}
-
-    <form id="qr_form" method="post" class="qrform">
-      {% csrf_token %}
-      <input type="text" name="qr_hash" id="qr_hash" hidden />
-      <!-- <input type="submit" class="" id="qr_submit" value="Submit" disabled /> -->
-      <button type="submit" id="qr_submit" disabled
-        class="font-sans text-black bg-white-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
-    </form>
   </center>
+  <div style="position: relative;">
+    <div class="mt-60" style="text-align: center;">
+      <form id="qr_form" method="post" class="qrform">
+        {% csrf_token %}
+        <input type="text" name="qr_hash" id="qr_hash" hidden />
+        <button type="submit" id="qr_submit" disabled
+          class="font-sans text-black bg-white-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
+      </form>
+    </div>
+  </div>
 </div>
 <script>
   var qrHashInput = document.getElementById("qr_hash");

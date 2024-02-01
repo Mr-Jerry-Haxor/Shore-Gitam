@@ -1,0 +1,80 @@
+{% extends 'scanner_base.html' %}
+
+
+{% block title %}
+    CYSEC GITAM
+{% endblock title %}
+    
+
+{% block content %}
+<style>
+    input{
+        border: none;
+      }
+    h2{
+    color: red;
+    }
+    h3{
+    color:green;
+    }
+</style>
+<div class="container text-center mt-8" style="margin-top:25%">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="{% if message.tags %} {{ message.tags }} {% endif %}">
+                <h2>{{ message }}</h2>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+<div class="container text-center mt-8" >
+    <div id="reader" class="w-100"></div>
+</div>
+
+<div class="container text-center mt-4">
+    <div class="form-group">
+        <form action="" method="post" validate>
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.qrtext }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.registrar.id_for_label }}"><b>Verification By:</b></label>
+                {{ form.registrar }}
+            </div>
+            <button class="btn btn-primary mt-3" id="submitbtn" type="submit" value="" disabled="autofocus">Verify</button>
+            <div class="eventdata text-center mt-2">
+                <h3>IN: {{ admitted }}</h3>
+                <h3>OUT: {{ out }}</h3>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", { fps: 30, qrbox: 250 });
+            
+    function onScanSuccess(decodedText, decodedResult) {
+        // Handle on success condition with the decoded text or result.
+        console.log(`Scan result: ${decodedText}`, decodedResult);
+        document.getElementById("id_qrtext").value = decodedText;
+        document.getElementById("submitbtn").disabled = false;
+        //document.getElementById("submitbtn").click();
+        // ...
+        // html5QrcodeScanner.clear();
+        // ^ this will stop the scanner (video feed) and clear the scan area.
+    }
+    function onScanError(errorMessage) {
+        // handle on error condition, with error message
+    }
+    html5QrcodeScanner.render(onScanSuccess, onScanError);
+    
+</script>
+
+{% endblock content %}
