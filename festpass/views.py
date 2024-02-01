@@ -42,7 +42,7 @@ def passhome(request):
                 student.passhash = hash
                 student.save()
                 return redirect('passhome')
-            elif  participants_list.objects.filter(emails=request.user.email).exists() and participants_list.objects.get(emails=request.user.email).notfree == False:
+            elif  participants_list.objects.filter(emails=request.user.email).exists() and not participants_list.objects.get(emails=request.user.email).notfree:
                 student.ispaid = True
                 hashtext = str(student.regno) +  str(student.registred_at) + str(student.email) + str(datetime.datetime.now())
                 hash = generate_md5(hashtext)
@@ -52,8 +52,8 @@ def passhome(request):
                 participantpass.festpass = True
                 participantpass.save()
                 return redirect('passhome')
-            elif participants_list.objects.filter(emails=request.user.email).exists() and participants_list.objects.get(emails=request.user.email).notfree == True:
-                if participants_list.objects.get(emails=request.user.email).exists():
+            elif participants_list.objects.filter(emails=request.user.email).exists() and participants_list.objects.get(emails=request.user.email).notfree:
+                if participants_list.objects.filter(emails=request.user.email).exists():
                     notfreepass = True
                     return render(request, 'passhome.html' , { 'student' : student , 'notfreepass' : notfreepass})
             else:
@@ -62,7 +62,7 @@ def passhome(request):
     else:
         if not participants_list.objects.filter(emails=request.user.email).exists():
             return render(request, 'passes_sold_out.html')
-        elif participants_list.objects.get(emails=request.user.email).exists():
+        elif participants_list.objects.filter(emails=request.user.email).exists():
             if request.method == 'POST':
                 name = request.POST.get('name')
                 regno = request.POST.get('regno')
