@@ -17,10 +17,7 @@ open audi entries / status
 
 """
 
-STATUS_CHOICES = [
-        ('IN', 'In'),
-        ('OUT', 'Out'),
-    ]
+
 
 class security_staff(models.Model):
     email_id = models.EmailField()
@@ -59,6 +56,10 @@ class Maingate_status(models.Model):
     
     
 class Fest_entries(models.Model):
+    STATUS_CHOICES = [
+        ('IN', 'In'),
+        ('OUT', 'Out'),
+    ]
     fullname = models.CharField(max_length=300, null=True, blank=True)
     email = models.CharField(max_length=100)
     date = models.DateField(auto_now_add=True)
