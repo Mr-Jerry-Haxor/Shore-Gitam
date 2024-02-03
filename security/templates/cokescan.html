@@ -30,16 +30,20 @@ Scan QR Code
         <video id="camera" width="100%" height="30%" playsinline autoplay></video>
         <canvas id="preview-canvas" style="display:none;"></canvas>
     </div>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="qrhash" id="qrhash" required hidden>
-        <input type="submit" id="submit_qr" name="submit" value="submit" disabled>
-    </form>
+    
     <div style="margin-bottom:5rem">
 
     </div>
 </div>
 <div id="result" class="text-center"></div>
+<center>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="qrhash" id="qrhash" required hidden>
+        <input type="submit" id="submit_qr" name="submit" value="submit" disabled>
+    </form>
+</center>
+
 <div class="text-center m-2">
     <h1 class="font-bold text-sm">Users Inside: {{ insidecount }}</h1>
     <h1 class="font-bold text-sm">Users Outside: {{ outsidecount }}</h1>
