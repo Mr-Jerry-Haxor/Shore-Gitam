@@ -92,7 +92,7 @@
               <label
                 for="email"
                 class="block mb-2 text-sm font-medium text-gray-900"
-                >GITAM Email</label
+                >Email</label
               >
               <input
                 type="email"
@@ -127,7 +127,7 @@
               <label
                 for="regno"
                 class="block mb-2 text-sm font-medium text-gray-900"
-                >GITAM Registration Number</label
+                >College Registration Number</label
               >
               <input
                 type="text"
@@ -202,6 +202,7 @@
                 <option value="Sixth year">6th Year</option>
                 <option value="Seventh year">7th Year</option>
                 <option value="Alumni">Alumni</option>
+                <option value="Other">Other</option>
               </select>
             </div>
           </div>
@@ -225,14 +226,14 @@
               <label
                 for="institute"
                 class="block mb-2 text-sm font-medium text-gray-900"
-                >Institute</label
+                >Institute/Department</label
               >
               <input
                 type="text"
                 id="institute"
                 name="institute"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter Institute Name( eg: GIT)"
+                placeholder="eg: Engeneering or MBA"
                 value="{{ studentdata.college_code }}"
                 required
               />
@@ -243,14 +244,14 @@
               <label
                 for="department"
                 class="block mb-2 text-sm font-medium text-gray-900"
-                >Department</label
+                >College Name</label
               >
               <input
                 type="text"
                 id="department"
                 name="department"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Enter Department Name(eg: Btech)"
+                placeholder="Enter College Name"
                 required
               />
             </div>
@@ -270,6 +271,7 @@
               <option value="Visakhapatnam">Visakhapatnam</option>
               <option value="Hyderabad">Hyderabad</option>
               <option value="Bengaluru">Bengaluru</option>
+              <option value="nongitamite">Non-GITAM student</option>
               </select>
             </div>
           </div>
@@ -289,6 +291,7 @@
                 <option value="" disabled selected>Select</option>
                 <option value="True">Yes</option>
                 <option value="False">No</option>
+                <option value="nongitamite">nongitamite</option>
               </select>
             </div>
           </div>
