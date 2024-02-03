@@ -32,7 +32,6 @@ def festpass_scan(request):
                     status = "OUT"
                 insidecount = Fest_status.objects.filter(status="IN").count()
                 outsidecount = Fest_status.objects.filter(status="OUT").count()
-                messages.error(request, f'This student has{insidecount}')
                 return render(request, 'security_fest_verify.html', {'student': student, 'entries': entries ,  'cam' : "cam0"  , "status" : status , "insidecount" : insidecount , "outsidecount" : outsidecount})
             else:
                 messages.error(request, 'This student has not registered for the festpass.')
