@@ -25,6 +25,13 @@ class security_staff(models.Model):
     is_coke = models.BooleanField(default=False)
     
     
+class coke_list(models.Model):
+    email = models.EmailField(unique=True)
+    status = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.email
+    
 class Maingate_entries(models.Model):
     fullname = models.CharField(max_length=300, null=True, blank=True)
     email = models.CharField(max_length=100)

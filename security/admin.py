@@ -56,3 +56,13 @@ admin.site.register(Fest_entries_day2, FestEntriesDay2Admin)
 admin.site.register(Fest_status_day2, FestStatusDay2Admin)
 admin.site.register(Openaudi_entries, OpenaudiEntriesAdmin)
 admin.site.register(Openaudi_status, OpenaudiStatusAdmin)
+
+
+
+from .models import coke_list
+
+class CokeListAdmin(ImportExportModelAdmin):
+    list_display = ('email', 'status')
+    search_fields = ('email',)
+
+admin.site.register(coke_list, CokeListAdmin)

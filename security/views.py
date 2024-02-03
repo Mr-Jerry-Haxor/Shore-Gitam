@@ -211,13 +211,10 @@ def coke_scan(request):
                 student = Student.objects.get(passhash=qrhash)
                 email = student.email
                 if Fest_status.objects.filter(email=email).exists():
-                    user = Fest_status.objects.get(email=email)
-                    if user.iscoke:
+                    if coke_list.objects.filter(email=email).exists():
                         messages.error(request, 'This student has already Taken coke.')
                         return redirect('cokescan')
                     else:
-                        user.iscoke = True
-                        user.save()
                         messages.success(request, 'This student has successfully Grabbed coke.')
                         return render(request, 'securitycoco.html')
                 else:
