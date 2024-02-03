@@ -214,7 +214,7 @@ def coke_scan(request):
                     user = Fest_status.objects.get(email=email)
                     if user.iscoke:
                         messages.error(request, 'This student has already Taken coke.')
-                        return redirect('coke_scan')
+                        return redirect('cokescan')
                     else:
                         user.iscoke = True
                         user.save()
@@ -222,10 +222,10 @@ def coke_scan(request):
                         return render(request, 'securitycoco.html')
                 else:
                     messages.error(request, 'This student has not scanned for festpass.')
-                    return redirect('coke_scan')
+                    return redirect('cokescan')
             else:
                 messages.error(request, 'This student has not registered for the festpass.')
-                return redirect('coke_scan')
+                return redirect('cokescan')
         else:
             return render(request, 'securityscan.html')
     else:
