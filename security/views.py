@@ -215,6 +215,7 @@ def coke_scan(request):
                         messages.error(request, 'This student has already Taken coke.')
                         return redirect('cokescan')
                     else:
+                        coke_list.create(email=email, status="Taken")
                         messages.success(request, 'This student has successfully Grabbed coke.')
                         return render(request, 'securitycoco.html')
                 else:
