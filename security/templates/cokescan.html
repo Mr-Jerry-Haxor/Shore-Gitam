@@ -40,7 +40,7 @@ Scan QR Code
     <form method="post">
         {% csrf_token %}
         <input type="text" name="qrhash" id="qrhash" required hidden>
-        <input type="submit" id="submit_qr" name="submit" value="submit" disabled>
+        <input type="submit" id="submit_qr" name="submit" value="submit" disabled class="font-sans text-black bg-white-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">
     </form>
 </center>
 
