@@ -17,6 +17,11 @@ open audi entries / status
 
 """
 
+STATUS_CHOICES = [
+        ('IN', 'In'),
+        ('OUT', 'Out'),
+    ]
+
 class security_staff(models.Model):
     email_id = models.EmailField()
     is_main_gate = models.BooleanField(default=False)
@@ -59,7 +64,7 @@ class Fest_entries(models.Model):
     date = models.DateField(auto_now_add=True)
     time = models.TimeField(auto_now_add=True)
     verifiedby = models.CharField(max_length=200, null=True)
-    status = models.CharField(max_length=200 , null=True)
+    status = models.CharField(max_length=200 , null=True , choices=STATUS_CHOICES)
     
     def formatted_time_12hr(self):
         return self.time.strftime('%I:%M %p')
