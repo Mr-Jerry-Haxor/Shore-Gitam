@@ -219,7 +219,7 @@ def coke_scan(request):
                         user.iscoke = True
                         user.save()
                         messages.success(request, 'This student has successfully Grabbed coke.')
-                        return redirect('coke_scan')
+                        return render(request, 'securitycoco.html')
                 else:
                     messages.error(request, 'This student has not scanned for festpass.')
                     return redirect('coke_scan')

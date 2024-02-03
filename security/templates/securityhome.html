@@ -7,7 +7,7 @@
 </head>
 <body class="bg-gray-100 p-4">
     {% include 'securitybase.html' %}
-    <div class="flex items-center justify-center mt-8">
+    <div class="flex items-center justify-center mt-14">
     <div class="text-center">
       <h1 class="text-3xl font-bold mb-4">Security Team</h1>
       
@@ -32,25 +32,10 @@
         Fest Pass Scan Cam 2</a>
       <br>
       {% endif %}
-      {% if secstaff.is_open_audi %}
-      <br>
-      <a href="#" class="text-black bg-[#FF8080] hover:bg-[#FF8080]/80 focus:ring-4 focus:outline-none focus:ring-[#FF8080]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 24 24" style="fill: rgb(0, 0, 0);"><path d="M12 9c-1.626 0-3 1.374-3 3s1.374 3 3 3 3-1.374 3-3-1.374-3-3-3z"></path><path d="M20 5h-2.586l-2.707-2.707A.996.996 0 0 0 14 2h-4a.996.996 0 0 0-.707.293L6.586 5H4c-1.103 0-2 .897-2 2v11c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm-8 12c-2.71 0-5-2.29-5-5s2.29-5 5-5 5 2.29 5 5-2.29 5-5 5z"></path></svg>
-        Open Audi Scan Cam 1</a>
-      <br>
-      <a href="#" class="text-black bg-[#FF8080] hover:bg-[#FF8080]/80 focus:ring-4 focus:outline-none focus:ring-[#FF8080]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 24 24" style="fill: rgb(0, 0, 0);"><path d="M12 9c-1.626 0-3 1.374-3 3s1.374 3 3 3 3-1.374 3-3-1.374-3-3-3z"></path><path d="M20 5h-2.586l-2.707-2.707A.996.996 0 0 0 14 2h-4a.996.996 0 0 0-.707.293L6.586 5H4c-1.103 0-2 .897-2 2v11c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm-8 12c-2.71 0-5-2.29-5-5s2.29-5 5-5 5 2.29 5 5-2.29 5-5 5z"></path></svg>
-        Open Audi Scan Cam 2</a>
-      <br>
-      {% endif %}
       {% if secstaff.is_coke %}
-        <a href="#" class="text-black bg-[#7BD3EA] hover:bg-[#7BD3EA]/80 focus:ring-4 focus:outline-none focus:ring-[#7BD3EA]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
+        <a href="{% url 'cokescan' %}" class="text-black bg-[#7BD3EA] hover:bg-[#7BD3EA]/80 focus:ring-4 focus:outline-none focus:ring-[#7BD3EA]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 24 24" style="fill: rgb(0, 0, 0);"><path d="M12 9c-1.626 0-3 1.374-3 3s1.374 3 3 3 3-1.374 3-3-1.374-3-3-3z"></path><path d="M20 5h-2.586l-2.707-2.707A.996.996 0 0 0 14 2h-4a.996.996 0 0 0-.707.293L6.586 5H4c-1.103 0-2 .897-2 2v11c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm-8 12c-2.71 0-5-2.29-5-5s2.29-5 5-5 5 2.29 5 5-2.29 5-5 5z"></path></svg>
-          Coke Scan Cam 1</a>
-        <br>
-        <a href="#" class="text-black bg-[#7BD3EA] hover:bg-[#7BD3EA]/80 focus:ring-4 focus:outline-none focus:ring-[#7BD3EA]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 24 24" style="fill: rgb(0, 0, 0);"><path d="M12 9c-1.626 0-3 1.374-3 3s1.374 3 3 3 3-1.374 3-3-1.374-3-3-3z"></path><path d="M20 5h-2.586l-2.707-2.707A.996.996 0 0 0 14 2h-4a.996.996 0 0 0-.707.293L6.586 5H4c-1.103 0-2 .897-2 2v11c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V7c0-1.103-.897-2-2-2zm-8 12c-2.71 0-5-2.29-5-5s2.29-5 5-5 5 2.29 5 5-2.29 5-5 5z"></path></svg>
-          Coke Scan Cam 2</a>
+          Coke Scan</a>
         <br>
       {% endif %}
     </div>
