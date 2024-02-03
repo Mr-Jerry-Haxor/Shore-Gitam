@@ -227,7 +227,7 @@ def coke_scan(request):
                 return redirect('cokescan')
         else:
             cokecount = coke_list.objects.filter(status="Taken").count()
-            return render(request, 'securityscan.html' , {'cokecount': cokecount})
+            return render(request, 'cokescan.html' , {'cokecount': cokecount})
     else:
         messages.error(request, 'You are not authorized to access this page.')
         return redirect('index')
