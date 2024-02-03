@@ -3,7 +3,7 @@ from import_export.admin import ImportExportModelAdmin
 from .models import *
 
 class SecurityStaffAdmin(ImportExportModelAdmin):
-    list_display = ('email_id', 'is_main_gate', 'is_fest', 'is_open_audi')
+    list_display = ('email_id', 'is_main_gate', 'is_fest', 'is_open_audi' , 'is_coke')
     list_filter = ('is_main_gate', 'is_fest', 'is_open_audi')
     search_fields = ('email_id',)
 
