@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <style>
+        body {
+          background-color: #f7fafc;
+          font-family: "Outfit";
+        }
+      
+        .container {
+          position: relative;
+        }
+      
+        .container1 {
+          max-width: 28rem;
+          padding: 1rem;
+          background-color: #fff;
+          border: 1px solid #e2e8f0;
+          border-radius: 0.375rem;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -1px rgba(0, 0, 0, 0.06);
+          margin: 3rem 1rem 1rem 1rem;
+        }
+      
+        .item {
+          position: absolute;
+          width: 39px;
+          height: 39px;
+        }
+      
+        .shore {
+          font-size: 24px;
+          text-align: center;
+          font-family: "Outfit";
+          font-weight: SemiBold;
+          color: rgba(0, 0, 0, 1);
+          margin-bottom: 3rem;
+        }
+      
+        .scantext {
+          font-size: 24px;
+          text-align: center;
+          font-family: "Outfit";
+          font-weight: SemiBold;
+          color: rgba(0, 0, 0, 1);
+          margin-bottom: 4rem;
+        }
+      
+        .box {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 284px;
+          height: auto;
+          background-color: rgb(255, 255, 255);
+          margin-bottom: 1.5rem;
+          filter: drop-shadow(0px -2px 11px #919191);
+        }
+      
+        .qrcode {
+          position: absolute;
+          width: 39px;
+          height: 39px;
+          margin-right: 12rem;
+        }
+      
+        h3 {
+          font-size: 14px;
+          font-family: "Outfit";
+          color: rgb(0, 0, 0);
+          line-height: 20px;
+          text-align: start;
+        }
+      
+        .header {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 1rem;
+        }
+      
+        .header h5 {
+          font-size: 1.5rem;
+          font-weight: bold;
+          color: #2d3748;
+        }
+      
+        .view-all-link {
+          font-size: 0.875rem;
+          font-weight: medium;
+          color: #3182ce;
+          text-decoration: none;
+        }
+      
+        .view-all-link:hover {
+          text-decoration: underline;
+        }
+      
+        .list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+      
+        .item1 {
+          padding: 1rem 0;
+          border-bottom: 1px solid #edf2f7;
+        }
+      
+        .item1:last-child {
+          border-bottom: none;
+        }
+      
+        .info {
+          display: flex;
+          align-items: center;
+        }
+      
+        .image {
+          width: 1.5rem;
+          height: 1.5rem;
+          border-radius: 50%;
+          margin-right: 0.5rem;
+        }
+      
+        .name {
+          font-size: 1rem;
+          font-weight: medium;
+          color: #2d3748;
+          text-align: start;
+        }
+      
+        .email {
+          font-size: 0.875rem;
+          color: #4a5568;
+        }
+      
+        .meal-type {
+          font-size: 1rem;
+          font-weight: bold;
+          color: #2d3748;
+        }
+      
+        .scanner {
+          width: 300px;
+          height: 300px;
+          margin-top: 4rem;
+        }
+      
+        .qrform {
+          padding-top: 0rem;
+        }
+      </style>
+</head>
+<body>
+    {% include 'securitybase.html' %}
+    {% include 'messages.html' %}
+<div class="container">
+  <h3 
+    style="
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 2rem;" 
+    class="font-sans text-center text-xl font-bold">
+    Scan QR Code
+  </h3>
+
+  <div class="text-center mt-5">
+    <h3 class="text-md bg-blue-500 text-white font-bold py-2 px-4 rounded-full inline-block">Hello</h3>
+  </div>
+
+  <center>
+    <div class="scanner">
+      <div id="reader" width="300px"></div>
+    </div>
+    <div style="position: relative;">
+        <div class="mt-60" style="text-align: center;">
+          <form id="qr_form" method="post" class="qrform">
+            {% csrf_token %}
+            <input type="text" name="qr_hash" id="qr_hash" hidden />
+            <button type="submit" id="qr_submit" disabled
+              class="font-sans text-black bg-white-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
+          </form>
+        </div>
+      </div>
+    <h1 class="font-bold text-sm">Users Inside: {{ insidecount }}</h1>
+    <h1 class="font-bold text-sm">Users Outside: {{ outsidecount }}</h1>
+  </center>
+</div>
+  <script>
+    var qrHashInput = document.getElementById("qrhash");
+    var qrSubmit = document.getElementById("qr_submit");
+
+    function onScanSuccess(decodedText, decodedResult) {
+      qrHashInput.value = decodedText;
+      qrSubmit.disabled = false;
+      qrSubmit.classList.remove("text-black");
+      qrSubmit.classList.remove("bg-white-700");
+      qrSubmit.classList.add("text-white");
+      qrSubmit.classList.add("bg-green-700");
+
+      qrSubmit.click();
+    }
+
+    function onScanFailure(error) {
+      console.warn(`Code scan error = ${error}`);
+    }
+
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+      "reader",
+      { fps: 60, qrbox: { width: 250, height: 250 } },
+          /* verbose= */ false
+    );
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+  </script>
+</body>
+</html>
