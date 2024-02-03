@@ -14,7 +14,8 @@ class Student(models.Model):
     CAMPUS_CHOICES = (
         ('Visakhapatnam', 'Visakhapatnam'),
         ('Hyderabad', 'Hyderabad'),
-        ('Bengaluru', 'Bangalore'),  # Updated choice spelling
+        ('Bengaluru', 'Bangalore'), 
+        ('nongitamite' , 'Nongitamite'),
     )
 
     name = models.CharField(max_length=100)
