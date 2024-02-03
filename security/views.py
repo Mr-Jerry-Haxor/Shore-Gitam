@@ -226,7 +226,8 @@ def coke_scan(request):
                 messages.error(request, 'This student has not registered for the festpass.')
                 return redirect('cokescan')
         else:
-            return render(request, 'securityscan.html')
+            cokecount = coke_list.objects.filter(status="Taken").count()
+            return render(request, 'securityscan.html' , {'cokecount': cokecount})
     else:
         messages.error(request, 'You are not authorized to access this page.')
         return redirect('index')
