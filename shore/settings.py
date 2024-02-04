@@ -179,7 +179,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-SESSION_COOKIE_AGE = 60 * 60 * 1
+SESSION_COOKIE_AGE = 60 * 60 * 4
 
 
 
