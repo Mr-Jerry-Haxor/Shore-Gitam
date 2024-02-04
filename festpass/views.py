@@ -25,10 +25,10 @@ def passhome(request):
             return render(request, 'passreject.html' ,{'reason' : reason})
         if Student.objects.get(email=request.user.email).ispaid:
             student = Student.objects.get(email=request.user.email)
-            hashtext = str(student.regno) +  str(student.registred_at) + str(student.email) + str(datetime.datetime.now())
-            hash = generate_md5(hashtext)
-            student.passhash = hash
-            student.save()
+            # hashtext = str(student.regno) +  str(student.registred_at) + str(student.email) + str(datetime.datetime.now())
+            # hash = generate_md5(hashtext)
+            # student.passhash = hash
+            # student.save()
             return render(request, 'passes.html' , { 'student' : student})
         else:
             student = Student.objects.get(email=request.user.email)
