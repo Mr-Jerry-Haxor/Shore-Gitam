@@ -119,14 +119,17 @@ WSGI_APPLICATION = 'shore.wsgi.application'
 # }
 
 DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.mysql',
-'NAME': 'shoredb',
-'USER': 'shoremysql',
-'PASSWORD': 'shore@123$',
-'HOST': '192.168.63.153',
-'PORT' : '3306',
-}
+    'default': {
+        'ATOMIC_REQUESTS': False,
+        'AUTOCOMMIT': True,
+        'CONN_MAX_AGE': 0,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'shoredb',
+        'USER': 'shoremysql',
+        'PASSWORD': 'shore@123$',
+        'HOST': '192.168.63.153',
+        'PORT' : '3306',
+    }
 }
 
 # Password validation

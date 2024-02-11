@@ -1,0 +1,40 @@
+{% extends 'samyukta_base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'messages.html'%}
+    <div class="container mt-5">
+        <h2 class="text-center">Registrations</h2>
+        <form method="GET" class="form-inline my-4 justify-content-center">
+            <input type="text" name="q" class="form-control mr-sm-2" placeholder="Search by name, email, or mobile">
+            <input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0">
+        </form>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Email Sent</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registration in object_list %}
+                    <tr>
+                        <td>{{ registration.name }}</td>
+                        <td>{{ registration.email }}</td>
+                        <td>{{ registration.mobile }}</td>
+                        <td>{{ registration.email_sent }}</td>
+                        <td>
+                            <a href="{% url 'samyukta:resend_email' registration.email %}" class="btn btn-primary">Resend Email</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No registrations found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
