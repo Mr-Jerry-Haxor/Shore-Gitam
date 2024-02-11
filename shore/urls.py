@@ -34,6 +34,7 @@ urlpatterns = [
     path('users/' , include('ngusers.urls')),
     path('team/' , include('teams.urls')),
     path('security/' , include('security.urls')),
+    path('timeline/' , include('timeline.urls')),
     path('samyukta/' , include('samyukta.urls')),
 ]
 

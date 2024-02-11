@@ -53,7 +53,9 @@ INSTALLED_APPS = [
     'ngusers',
     'teams',
     'security',
+    'timeline',
     'samyukta',
+    
 ]
 
 MIDDLEWARE = [

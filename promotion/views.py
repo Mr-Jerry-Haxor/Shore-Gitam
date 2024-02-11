@@ -7,6 +7,7 @@ from django.contrib import messages
 import re
 from django.contrib.auth.decorators import login_required
 from events.models import College , Event , Hackathon
+from hospitality.models import HospitalityUser
 
 @require_http_methods(["GET", "POST"])
 def bgmi_player(request):
@@ -107,3 +108,4 @@ def volunteer_registration(request):
 
 def noc(request):
     return redirect("hospitality:hospitalitynoc")
+

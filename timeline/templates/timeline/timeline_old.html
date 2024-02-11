@@ -1,0 +1,481 @@
+{% extends 'sports/base.html' %}
+{% load static %}
+{% block title %} Timeline {% endblock title %}
+{% block head %}
+<style>
+  body {
+    background: linear-gradient(to bottom right, #276fff, #ce3345, #4575de);
+    min-width: 100vw;
+    min-height: 100vh;
+  }
+
+  .modal-content {
+    position: relative;
+  }
+
+  #smallImage {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    height: auto;
+    z-index: 1;
+  }
+
+  .parent-container {
+    position: relative;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .modal-image {
+    max-width: 100%;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  @media (min-width: 768px) {
+    .modal-content {
+      width: 50%;
+    }
+  }
+
+  #card1 {
+    height: 150px;
+    border-radius: 15px;
+  }
+
+  .card-content {
+    background-color: black;
+    color: white;
+    width: calc(100% - 6rem);
+  }
+
+  .card-content .font-bold {
+    color: white;
+  }
+
+  :root {
+    --primary-btn: #808080;
+    --primary-btn-text: #fff;
+    --secondary-btn: white;
+    --secondary-btn-text: #000;
+  }
+
+  .switches {
+    background-color: #f8f9fa;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    width: calc(120px * 3);
+  }
+
+  .switches1 {
+    background-color: #f8f9fa;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    width: calc(120px * 2);
+  }
+
+  .card-background {
+    background-color: rgba(245, 245, 245, 0.9);
+  }
+
+  .btn {
+    padding: 8px 5px 8px 5px;
+    width: 120px;
+    border-radius: 100px;
+    border-color: transparent;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 290ms ease-in-out;
+  }
+
+  .btn-primary {
+    background-color: var(--primary-btn);
+    color: var(--primary-btn-text);
+  }
+
+  .btn-secondary {
+    background-color: var(--secondary-btn);
+    color: var(--secondary-btn-text);
+  }
+
+  section {
+    display: none;
+  }
+</style>
+{% endblock head %}
+{% block body %}
+{% include 'messages.html' %}
+    <nav class="border-gray-200">
+      <div
+        class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4"
+      >
+        <a class="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src="{% static 'img/shore_24_clogo.png' %}" alt="Logo" class="h-8" />
+          <span
+            class="self-center text-2xl font-semibold whitespace-nowrap"
+            >Shore'24</span
+          >
+        </a>
+        <div class="flex items-center space-x-6 rtl:space-x-reverse"></div>
+      </div>
+    </nav>
+
+    <center>
+      <br />
+      <div class="switches">
+        <div class="slider-indicator"></div>
+        {% for day in days %}
+          {% if day == selected_day %}
+          <a href="{% url 'timeline:timeline' day %}" class="btn btn-primary">DAY - {{ day }}</a>
+          {% else %}
+          <a href="{% url 'timeline:timeline' day %}" class="btn btn-secondary">DAY - {{ day }}</a> 
+          {% endif %}
+        {% endfor %}
+        </div>
+      <br />
+      <div class="switches">
+        {% for event_type in event_types %}
+          {% if event_type == 'Culturals' %}
+          <a href="#" class="btn btn-primary" id="btn_{{ event_type }}"
+            onclick="toggleSection('{{ event_type }}', 'btn_{{ event_type }}')"
+          >
+            {{ event_type }}
+          </a>
+          {% else %}
+          <a href="#" class="btn btn-secondary" id="btn_{{ event_type }}"
+            onclick="toggleSection('{{ event_type }}', 'btn_{{ event_type }}')"
+          >
+            {{ event_type }}
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <br />
+    </center>
+
+      <section id="Culturals" style="display: block;" class="event-content">    
+        <div
+          style="margin: 2rem"
+          class="relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent"
+        >
+        {% for event in timeline %}
+        {% if event.event_type == 'Culturals' %}
+          <div
+            class="card-class relative flex items-center justify-between md:justify-normal odd:flex-row-reverse group is-active cursor-pointer"
+            id="card_culturals{{ forloop.counter }}"
+            
+            data-date-time="{{ event.formatted_event_date }}T{{ event.formatted_start_time }}"
+            data-end-time="{{ event.formatted_event_date }}T{{ event.formatted_end_time }}"
+          >
+            <div
+              class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-emerald-500 text-slate-500 group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2"
+            >
+              <svg
+                id="preEventSvg"
+                class="fill-current hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="10"
+              >
+                <path
+                  fill-rule="nonzero"
+                  d="M10.422 1.257 4.655 7.025 2.553 4.923A.916.916 0 0 0 1.257 6.22l2.75 2.75a.916.916 0 0 0 1.296 0l6.415-6.416a.916.916 0 0 0-1.296-1.296Z"
+                />
+              </svg>
+
+              <svg
+                id="postEventSvg"
+                aria-hidden="true"
+                class="inline w-8 h-8 text-gray-200 animate-spin fill-gray-600"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill"
+                />
+              </svg>
+            </div>
+
+            <!-- Card Content -->
+            <div
+              data-modal-target="default-modal-{{ event.name }}" data-modal-toggle="default-modal-{{ event.name }}"
+              class="card-content w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-black text-white p-4 rounded border border-slate-200 shadow"
+            >
+              <div class="flex items-center justify-between space-x-2 mb-1">
+                <div class="font-bold text-white">
+                  <div>
+                    Event Name:
+                    <span class="font-normal">{{ event.name }}</span>
+                  </div>
+                  <div>
+                    Venue: <span class="font-normal">{{ event.venue }}</span>
+                  </div>
+                  <div>Time: <span class="font-normal">{{ event.formatted_start_time_12hr }} – {{ event.formatted_end_time_12hr }}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+      <section id="Sports" class="event-content">    
+        <div
+          style="margin: 2rem"
+          class="relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent"
+        >
+        {% for event in timeline %}
+        {% if event.event_type == 'Sports' %}
+          <div
+            class="card-class relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer"
+            id="card_sports{{ forloop.counter }}"
+            data-date-time="{{ event.formatted_event_date }}T{{ event.formatted_start_time }}"
+            data-end-time="{{ event.formatted_event_date }}T{{ event.formatted_end_time }}"
+          >
+            <div
+              class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-emerald-500 text-slate-500 group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2"
+            >
+              <svg
+                id="preEventSvg"
+                class="fill-current hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="10"
+              >
+                <path
+                  fill-rule="nonzero"
+                  d="M10.422 1.257 4.655 7.025 2.553 4.923A.916.916 0 0 0 1.257 6.22l2.75 2.75a.916.916 0 0 0 1.296 0l6.415-6.416a.916.916 0 0 0-1.296-1.296Z"
+                />
+              </svg>
+              <svg
+                id="postEventSvg"
+                aria-hidden="true"
+                class="inline w-8 h-8 text-gray-200 animate-spin fill-gray-600"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill"
+                />
+              </svg>
+            </div>
+
+            <!-- Card Content -->
+            <div
+              data-modal-target="default-modal-{{ event.name }}" data-modal-toggle="default-modal-{{ event.name }}"
+              class="card-content w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-black text-white p-4 rounded border border-slate-200 shadow"
+            >
+              <div class="flex items-center justify-between space-x-2 mb-1">
+                <div class="font-bold text-white">
+                  <div>
+                    Event Name:
+                    <span class="font-normal">{{ event.name }}</span>
+                  </div>
+                  <div>
+                    Venue: <span class="font-normal">{{ event.venue }}</span>
+                  </div>
+                  <div>Time: <span class="font-normal">{{ event.formatted_start_time_12hr }} – {{ event.formatted_end_time_12hr }}</span></div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+      <section id="Minor" class="event-content">
+        <div
+          style="margin: 2rem"
+          class="relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent"
+        >
+        {% for event in timeline %}
+        {% if event.event_type == 'Minor' %}
+          <div
+            class="card-class relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active cursor-pointer"
+            id="card_minor{{ forloop.counter }}"
+            data-date-time="{{ event.formatted_event_date }}T{{ event.formatted_start_time }}"
+            data-end-time="{{ event.formatted_event_date }}T{{ event.formatted_end_time }}"
+          >
+            <div
+              class="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-300 group-[.is-active]:bg-emerald-500 text-slate-500 group-[.is-active]:text-emerald-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2"
+            >
+              <svg
+                id="preEventSvg"
+                class="fill-current hidden"
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="10"
+              >
+                <path
+                  fill-rule="nonzero"
+                  d="M10.422 1.257 4.655 7.025 2.553 4.923A.916.916 0 0 0 1.257 6.22l2.75 2.75a.916.916 0 0 0 1.296 0l6.415-6.416a.916.916 0 0 0-1.296-1.296Z"
+                />
+              </svg>
+              <svg
+                id="postEventSvg"
+                aria-hidden="true"
+                class="inline w-8 h-8 text-gray-200 animate-spin fill-gray-600"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentFill"
+                />
+              </svg>
+            </div>
+
+            <!-- Card Content -->
+            <div
+              data-modal-target="default-modal-{{ event.name }}" data-modal-toggle="default-modal-{{ event.name }}"
+              class="card-content w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-black text-white p-4 rounded border border-slate-200 shadow"
+            >
+              <div class="flex items-center justify-between space-x-2 mb-1">
+                <div class="font-bold text-white">
+                  <div>
+                    Event Name:
+                    <span class="font-normal">{{ event.name }}</span>
+                  </div>
+                  <div>
+                    Venue: <span class="font-normal">{{ event.venue }}</span>
+                  </div>
+                  <div>Time: <span class="font-normal">{{ event.formatted_start_time_12hr }} – {{ event.formatted_end_time_12hr }}</span></div>
+                </div>
+              </div>
+            </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+      </section>
+    <script>
+      function toggleSection(sectionId, btnId) {
+        if (btnId == 'btn_Culturals') {
+          {% if 'Culturals' in event_types %}
+            document.getElementById("btn_Culturals").classList.remove("btn-secondary");
+            document.getElementById("btn_Culturals").classList.add("btn-primary");
+          {% endif %}
+          {% if 'Sports' in event_types %}
+            document.getElementById("btn_Sports").classList.remove("btn-primary");
+            document.getElementById("btn_Sports").classList.add("btn-secondary");
+          {% endif %}
+          {% if 'Minor' in event_types %}
+            document.getElementById("btn_Minor").classList.remove("btn-primary");
+            document.getElementById("btn_Minor").classList.add("btn-secondary");
+          {% endif %}
+        } else if (btnId == 'btn_Sports') {
+          {% if 'Culturals' in event_types %}
+            document.getElementById("btn_Culturals").classList.remove("btn-primary");
+            document.getElementById("btn_Culturals").classList.add("btn-secondary");
+          {% endif %}
+          {% if 'Sports' in event_types %}
+            document.getElementById("btn_Sports").classList.remove("btn-secondary");
+            document.getElementById("btn_Sports").classList.add("btn-primary");
+          {% endif %}
+          {% if 'Minor' in event_types %}
+            document.getElementById("btn_Minor").classList.remove("btn-primary");
+            document.getElementById("btn_Minor").classList.add("btn-secondary");
+          {% endif %}
+        } else if (btnId == 'btn_Minor') {
+          {% if 'Culturals' in event_types %}
+            document.getElementById("btn_Culturals").classList.remove("btn-primary");
+            document.getElementById("btn_Culturals").classList.add("btn-secondary");
+          {% endif %}
+          {% if 'Sports' in event_types %}
+            document.getElementById("btn_Sports").classList.remove("btn-primary");
+            document.getElementById("btn_Sports").classList.add("btn-secondary");
+          {% endif %}
+          {% if 'Minor' in event_types %}
+            document.getElementById("btn_Minor").classList.remove("btn-secondary");
+            document.getElementById("btn_Minor").classList.add("btn-primary");
+          {% endif %}
+        }
+
+          document.querySelectorAll("section").forEach(function (section) {
+            section.style.display = "none";
+          });
+  
+          document.getElementById(sectionId).style.display = "block";
+        }
+      
+        document.addEventListener("DOMContentLoaded", function () {
+          function updateCardSvgVisibility(cardId) {
+              var card = document.getElementById(cardId);
+              var startTime = new Date(card.getAttribute("data-date-time"));
+              var endTime = new Date(card.getAttribute("data-end-time"));
+              var now = new Date();
+
+              var preEventSvg = card.querySelector("#preEventSvg"); // tick
+              var postEventSvg = card.querySelector("#postEventSvg"); // loading
+
+              if (now < startTime) {
+                  preEventSvg.classList.add("hidden");
+                  postEventSvg.classList.add("hidden");
+              } else if (now >= startTime && now < endTime) {
+                  preEventSvg.classList.add("hidden");
+                  postEventSvg.classList.remove("hidden");
+              } else {
+                  preEventSvg.classList.remove("hidden");
+                  postEventSvg.classList.add("hidden");
+              }
+          }
+
+          let cardIds = [];
+          {% for event in timeline %}
+            {% if event.event_type == 'Culturals' %}
+              cardIds.push("card_culturals{{ forloop.counter }}");
+            {% elif event.event_type == 'Sports' %}
+              cardIds.push("card_sports{{ forloop.counter }}");
+            {% elif event.event_type == 'Minor' %}
+              cardIds.push("card_minor{{ forloop.counter }}");
+            {% endif %}
+          {% endfor %}
+
+          cardIds.forEach(updateCardSvgVisibility);
+
+          setInterval(function () {
+              cardIds.forEach(updateCardSvgVisibility);
+          }, 60000); // Updating every minute
+      });
+  </script>
+{% endblock body %}
