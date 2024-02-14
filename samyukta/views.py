@@ -42,7 +42,6 @@ def import_payments_to_registrations(request):
 
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
 class SendEmailsView(View):
     def get(self, request, *args, **kwargs):
         thread = threading.Thread(target=self.send_emails, args=())
@@ -79,7 +78,7 @@ class SendEmailsView(View):
                 registration.email_sent_error = f"An error occurred: {e}"
                 registration.save()
 
-@login_required(login_url="/auth/login/google-oauth2/")
+
 class ReSendEmailsView(View):
     def get(self, request, *args, **kwargs):
         thread = threading.Thread(target=self.send_emails, args=())
