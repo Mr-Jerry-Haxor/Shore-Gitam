@@ -151,7 +151,7 @@ def send_email_to_particular_email(request, email):
         registration.sent_count += 1
         registration.save()
         print(f"Email to {registration.email} sent successfully")
-        messages.success(f"Email sent successfully to {email}")
+        messages.success(f"Email sent successfully to {registration.email}")
     except Exception as e:
         registration.email_sent_error = f"An error occurred: {e}"
         registration.save()
