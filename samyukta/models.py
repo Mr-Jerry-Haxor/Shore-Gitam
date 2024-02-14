@@ -17,7 +17,7 @@ food scan
 
 from django.db import models
 
-class payments(models.Model):
+class payments_samyukta(models.Model):
     cnf_id = models.CharField(max_length=50)
     txn_id = models.CharField(max_length=50)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -30,7 +30,7 @@ class payments(models.Model):
         return f"{self.name}"
 
 
-class registrations(models.Model):
+class registrations_samyukta(models.Model):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=100)
     mobile = models.CharField(max_length=15)
@@ -44,7 +44,7 @@ class registrations(models.Model):
     def __str__(self):
         return f"{self.name}"
         
-class Fest_entries(models.Model):
+class Fest_entries_samyukta(models.Model):
     STATUS_CHOICES = [
         ('IN', 'In'),
         ('OUT', 'Out'),
@@ -62,8 +62,15 @@ class Fest_entries(models.Model):
     def formatted_date(self):
         return self.date.strftime('%d-%m-%Y')
     
-class Fest_status(models.Model):
+class Fest_status_samyukta(models.Model):
     fullname = models.CharField(max_length=300, null=True, blank=True)
     email = models.EmailField(max_length=200 , unique=True)
     status = models.CharField(max_length=200)
     food = models.BooleanField(default=False)  
+
+class coke_list_samyukta(models.Model):
+    email = models.EmailField(unique=True)
+    status = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return self.email

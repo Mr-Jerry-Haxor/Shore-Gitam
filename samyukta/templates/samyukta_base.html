@@ -22,6 +22,26 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'samyukta:registrations_list' %}">Registrations</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'samyukta:send_emails' %}">Send E-tickets</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url 'samyukta:festpass_scan' %}">FEST QR Scan</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url'samyukta:cokescan' %}">Beverages Scan</a>
+                </li>
+                {% if request.user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'samyukta:resend_emails' %}">Resend Emails again</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url'samyukta:import_registrations' %}">Import Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'corehome' %}">Home</a>
+                    </li>
+                {% endif %}
                 <!-- Add more navigation items here -->
             </ul>
         </div>
