@@ -160,7 +160,6 @@ def send_email_to_particular_email(request, email):
 
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
 class RegistrationListView(ListView):
     model = registrations_samyukta
     template_name = 'samyukta_registrations.html'
