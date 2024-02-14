@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var imagePopup = document.querySelector('.image-popup');
+            var popupContent = document.querySelector('.popup-content');
+            imagePopup.addEventListener('click', function () {
+
+                imagePopup.style.display = 'none';
+            });
+    
+
+            popupContent.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+ 
+            var clickableImages = document.querySelectorAll('#clickable-image');
+
+            clickableImages.forEach(function (image) {
+                image.addEventListener('click', function () {
+               
+                    var popupImage = document.querySelector('.popup-content');
+                    popupImage.src = image.src;
+    
+
+                    imagePopup.style.display = 'flex';
+                });
+            });
+        });
+    </script>
+    
+    <style>
+       .image-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .popup-content {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
+    {% include 'samyukta_base.html' %}
+    <h1 class="font-bold text-lg text-center mb-2">Security Verify</h1>
+    <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+        <div class="text-center mb-4">
+          <p class="font-bold text-xl text-center">{{ student.name }}</p>
+        </div>
+    
+        <div class="mb-4">
+          <p class="text-gray-600">Phone Num: <span class="font-semibold">{{ student.mobile }}</span></p>
+          <p class="text-gray-600">Email: <span class="font-semibold">{{ student.email }}</span></p>
+        </div>
+      </div>
+      <table class="min-w-full bg-white border border-gray-300 mt-4">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border-b p-2">Status</th>
+            <th class="border-b p-2">Time</th>
+            <th class="border-b p-2">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in entries %}
+          <tr class="bg-red-100 odd:bg-green-100">
+            <td class="border-b p-2">{{ entry.status }}</td>
+            <td class="border-b p-2">{{ entry.formatted_time_12hr }}</td>
+            <td class="border-b p-2">{{ entry.formatted_date }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <center>
+        <!-- form -->
+        <form class="max-w-sm mx-auto" action="{% url 'festpassverify' %}" method="post" validate>
+            {% csrf_token %}
+          <div class="mb-5 hidden">
+            <input type="email" id="email" name="email"  value="{{ student.email }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            <input type="text" id="cam" name="cam" value="{{ cam }}">
+          </div>
+      {% if status == "IN" %}
+      <button class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-10 rounded">
+        Check {{ status }}
+      </button>
+      {% else %}
+      <button class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-10 rounded">
+        Check {{ status }}
+      </button>
+      {% endif %}
+      </form>
+    </center>
+</body>
+</html>

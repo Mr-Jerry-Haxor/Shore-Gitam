@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegistrationListView, send_email_to_particular_email , import_payments_to_registrations , SendEmailsView , ReSendEmailsView , festpass_scan_samyukta , festpass_verify_samyukta , coke_scan_samyukta
+from .views import RegistrationListView, send_email_to_particular_email , import_payments_to_registrations , SendEmailsView , ReSendEmailsView , festpass_scan_samyukta , festpass_verify_samyukta , coke_scan_samyukta , samyuktahome
 
 app_name = "samyukta"
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('festpass/' , festpass_scan_samyukta , name='festpass_scan'),
     path('festverify/', festpass_verify_samyukta, name='festpassverify'),
     path('cokescan/', coke_scan_samyukta , name='cokescan'),
+    path("" , samyuktahome , name='samyuktahome')
 ]

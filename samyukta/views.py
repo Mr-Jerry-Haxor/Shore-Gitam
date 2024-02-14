@@ -14,7 +14,10 @@ import hashlib
 import threading
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
+def samyuktahome(request):
+    return render(request,'samyukta_home.html')
+
+
 def import_payments_to_registrations(request):
     # Get all payments
     all_payments = payments_samyukta.objects.all()
@@ -122,7 +125,7 @@ class ReSendEmailsView(View):
 
 # now write a function to send email to particular email which is sent as a parameter
 
-@login_required(login_url="/auth/login/google-oauth2/")
+
 def send_email_to_particular_email(request, email):
     # Get the registration with the given email
     registration = registrations_samyukta.objects.get(email=email)
@@ -190,12 +193,12 @@ def festpass_scan_samyukta(request):
                 status = "OUT"
             insidecount = Fest_status_samyukta.objects.filter(status="IN").count()
             outsidecount = Fest_status_samyukta.objects.filter(status="OUT").count()
-            return render(request, 'security_fest_verify.html', {'student': student, 'entries': entries ,  'cam' : "cam0"  , "status" : status , "insidecount" : insidecount , "outsidecount" : outsidecount})
+            return render(request, 'samyukta_qrverify.html', {'student': student, 'entries': entries ,  'cam' : "cam0"  , "status" : status , "insidecount" : insidecount , "outsidecount" : outsidecount})
         else:
             messages.error(request, 'This student has not registered for the festpass.')
             return redirect('samyukta:festpass_scan')
     else:
-        return render(request, 'securityscan.html')
+        return render(request, 'samyukta_scan.html')
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
@@ -226,8 +229,6 @@ def festpass_verify_samyukta(request):
             messages.success(request, "You have successfully entered.")
         if cam == "cam0":
             return redirect('samyukta:festpass_scan')
-        elif cam == "cam1":
-            return redirect('samyukta:festpass_scan1')
         else:
             return redirect('samyukta:festpass_scan')
 
