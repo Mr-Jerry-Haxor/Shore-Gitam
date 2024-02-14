@@ -209,9 +209,8 @@ def festpass_verify_samyukta(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         cam = request.POST.get('cam')
-        fest_status = Fest_status_samyukta.objects.get(email=email)
-        if fest_status.exists():
-            status = fest_status.status
+        if Fest_status_samyukta.objects.filter(email=email).exists():
+            status = Fest_status_samyukta.objects.get(email=email).status
             if status == 'IN':
                 Fest_status_samyukta.objects.filter(email=email).update(status='OUT')
                 adding = Fest_entries_samyukta(email=email, fullname=Fest_status_samyukta.objects.get(email=email).fullname, verifiedby=request.user.email , status="OUT")
