@@ -152,12 +152,13 @@ def send_email_to_particular_email(request, email):
         registration.save()
         print(f"Email to {registration.email} sent successfully")
         messages.success(request, f"Email sent successfully to {registration.email}")
+        redirect("samyukta:registrations_list")
     except Exception as e:
         registration.email_sent_error = f"An error occurred: {e}"
         registration.save()
         messages.error(request, f"An error occurred: {e}")
+        redirect("samyukta:registrations_list")
 
-    redirect("samyukta:registrations_list")
 
 
 
