@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import * #RegistrationListView, send_email_to_particular_email , import_payments_to_registrations , SendEmailsView , ReSendEmailsView
+from .views import RegistrationListView, send_email_to_particular_email , import_payments_to_registrations , SendEmailsView , ReSendEmailsView , festpass_scan_samyukta , festpass_verify_samyukta , coke_scan_samyukta
 
 app_name = "samyukta"
 
