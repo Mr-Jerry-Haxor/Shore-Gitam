@@ -39,8 +39,8 @@ def import_payments_to_registrations(request):
                 passhash=passhash
             )
             registration.save()
-
-    return HttpResponse("Data imported successfully")
+    messages.success(request, "Data imported successfully")
+    return redirect("samyukta:registrations_list")
 
 
 
@@ -50,7 +50,8 @@ class SendEmailsView(View):
         thread = threading.Thread(target=self.send_emails, args=())
         thread.daemon = True
         thread.start()
-        return JsonResponse({"message": "Emails are being sent in the background to the audience who didn't received yet."})
+        messages.success(request, "Emails are being sent in the background to the audience who didn't received yet.")
+        return redirect("samyukta:registrations_list")
 
     @staticmethod
     def send_emails():
@@ -87,7 +88,8 @@ class ReSendEmailsView(View):
         thread = threading.Thread(target=self.send_emails, args=())
         thread.daemon = True
         thread.start()
-        return JsonResponse({"message": "Emails are being sent again to all in the background to the audience who didn't received yet."})
+        messages.success(request, "Emails are being sent again to all in the background to the audience who didn't received yet.")
+        return redirect("samyukta:registrations_list")
 
     @staticmethod
     def send_emails():
@@ -152,12 +154,12 @@ def send_email_to_particular_email(request, email):
         registration.save()
         print(f"Email to {registration.email} sent successfully")
         messages.success(request, f"Email sent successfully to {registration.email}")
-        redirect("samyukta:registrations_list")
+        return redirect("samyukta:registrations_list")
     except Exception as e:
         registration.email_sent_error = f"An error occurred: {e}"
         registration.save()
         messages.error(request, f"An error occurred: {e}")
-        redirect("samyukta:registrations_list")
+        return redirect("samyukta:registrations_list")
 
 
 
