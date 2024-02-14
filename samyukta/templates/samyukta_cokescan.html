@@ -88,7 +88,7 @@ Scan QR Code
                 if (code) {
                     qrHashInput.value = code.data;
                     submitButton.disabled = false;
-                    
+                    submitButton.click();
                 }
 
                 requestAnimationFrame(scan);
