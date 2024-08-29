@@ -1,0 +1,91 @@
+{% extends 'ezperanza_base.html' %}
+{% load static %}
+{% block content %}
+{% include 'messages.html'%}
+    <div class="container mt-5">
+        <h2 class="text-center">Registrations</h2>
+        <form method="GET" class="form-inline my-4 justify-content-center">
+            <input type="text" name="q" class="form-control mr-sm-2" placeholder="Search by name, email, or mobile">
+            <input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0">
+        </form>
+        <table class="table table-striped" id="registrationTable">
+            <thead>
+                <tr>
+                    <th class="sortable">Name</th>
+                    <th class="sortable">Email</th>
+                    <th class="sortable">Mobile</th>
+                    <th class="sortable">Email Sent</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registration in object_list %}
+                    <tr>
+                        <td>{{ registration.name }}</td>
+                        <td>{{ registration.email }}</td>
+                        <td>{{ registration.mobile }}</td>
+                        <td>{{ registration.email_sent }}</td>
+                        <td>
+                            {% if registration.email_sent %}
+                                <a href="{% url 'ezperanza:resend_email' registration.email %}" class="btn btn-primary">Resend Email</a>
+                            {% else %}
+                                <a href="{% url 'ezperanza:resend_email' registration.email %}" class="btn btn-primary">Send Email</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No registrations found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        window.onload = function () {
+            // Get the table and headers
+            var table = document.getElementById('registrationTable');
+            var headers = table.querySelectorAll('th.sortable');
+
+            // Add a click event listener to each header
+            headers.forEach(function (header, index) {
+                header.addEventListener('click', function () {
+                    // Get the current sort direction
+                    var direction = header.getAttribute('data-sort') || 'asc';
+
+                    // Reverse the sort direction
+                    direction = (direction === 'asc') ? 'desc' : 'asc';
+
+                    // Store the sort direction on the header
+                    header.setAttribute('data-sort', direction);
+
+                    // Get the table rows
+                    var rows = Array.from(table.querySelectorAll('tbody tr'));
+
+                    // Sort the rows
+                    rows.sort(function (rowA, rowB) {
+                        var cellA = rowA.children[index].textContent;
+                        var cellB = rowB.children[index].textContent;
+
+                        // Compare the cells
+                        if (direction === 'asc') {
+                            return cellA.localeCompare(cellB);
+                        } else {
+                            return cellB.localeCompare(cellA);
+                        }
+                    });
+
+                    // Remove the existing rows
+                    rows.forEach(function (row) {
+                        table.querySelector('tbody').removeChild(row);
+                    });
+
+                    // Add the sorted rows
+                    rows.forEach(function (row) {
+                        table.querySelector('tbody').appendChild(row);
+                    });
+                });
+            });
+        };
+    </script>
+{% endblock %}
