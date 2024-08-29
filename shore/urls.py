@@ -36,7 +36,6 @@ urlpatterns = [
     path('security/' , include('security.urls')),
     path('timeline/' , include('timeline.urls')),
     path('samyukta/' , include('samyukta.urls')),
-    path('kalakrithi/' , include('kalakrithi.urls')),
 ]
 
 
