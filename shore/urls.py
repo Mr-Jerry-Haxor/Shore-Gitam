@@ -35,7 +35,7 @@ urlpatterns = [
     path('team/' , include('teams.urls')),
     path('security/' , include('security.urls')),
     path('timeline/' , include('timeline.urls')),
-    path('samyukta/' , include('samyukta.urls')),
+    # path('samyukta/' , include('samyukta.urls')),
     path('ezperanza/' , include('ezperanza.urls')),
 ]
 
