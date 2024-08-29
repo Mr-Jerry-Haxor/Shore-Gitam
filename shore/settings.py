@@ -55,8 +55,7 @@ INSTALLED_APPS = [
     'security',
     'timeline',
     'samyukta',
-    'kalakrithi',
-    
+    'ezperanza',
 ]
 
 MIDDLEWARE = [
