@@ -124,7 +124,7 @@ DATABASES = {
         'AUTOCOMMIT': True,
         'CONN_MAX_AGE': 0,
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shore25db',
+        'NAME': 'shoredb',
         'USER': 'shoremysql',
         'PASSWORD': 'shore@123$',
         'HOST': '192.168.63.153',
