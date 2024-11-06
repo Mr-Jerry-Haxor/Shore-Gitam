@@ -32104,7 +32104,7 @@
                   children: [
                     " ",
                     (0, Gx.jsx)("img", {
-                      src: "/home/ubuntuserver/Shore24/static/img/logo.png",
+                      src: "/home/ubuntuserver/Shore25/static/img/logo.png",
                       alt: "LOGO",
                     }),
                     " ",
@@ -32172,7 +32172,7 @@
                         },
                         children: [
                           (0, Gx.jsx)("img", {
-                            src: "/home/ubuntuserver/Shore24/static/img/instagram.png",
+                            src: "/home/ubuntuserver/Shore25/static/img/instagram.png",
                             alt: "instagram logo",
                             width: "30px",
                             height: "30px",
@@ -32193,7 +32193,7 @@
                         },
                         children: [
                           (0, Gx.jsx)("img", {
-                            src: "/home/ubuntuserver/Shore24/static/img/facebook.png",
+                            src: "/home/ubuntuserver/Shore25/static/img/facebook.png",
                             alt: "facebook logo",
                             width: "30px",
                             height: "30px",
@@ -32214,7 +32214,7 @@
                         },
                         children: [
                           (0, Gx.jsx)("img", {
-                            src: "/home/ubuntuserver/Shore24/static/img/linkedin.png",
+                            src: "/home/ubuntuserver/Shore25/static/img/linkedin.png",
                             alt: "linkedIn logo",
                             width: "30px",
                             height: "30px",
@@ -32235,7 +32235,7 @@
                         },
                         children: [
                           (0, Gx.jsx)("img", {
-                            src: "/home/ubuntuserver/Shore24/static/img/snapchat.png",
+                            src: "/home/ubuntuserver/Shore25/static/img/snapchat.png",
                             alt: "snapchatlogo",
                             width: "30px",
                             height: "30px",
@@ -32258,7 +32258,7 @@
                   children: [
                     " ",
                     (0, Gx.jsx)("img", {
-                      src: "/home/ubuntuserver/Shore24/static/img/logo.png",
+                      src: "/home/ubuntuserver/Shore25/static/img/logo.png",
                       alt: "LOGO",
                       height: "100%",
                       width: "100%",
@@ -32278,21 +32278,21 @@
                 (0, Gx.jsx)("div", {
                   className: "center",
                   children: (0, Gx.jsx)("img", {
-                    src: "/home/ubuntuserver/Shore24/static/img/goals.png",
+                    src: "/home/ubuntuserver/Shore25/static/img/goals.png",
                     alt: "goals image",
                   }),
                 }),
                 (0, Gx.jsx)("div", {
                   className: "deg45",
                   children: (0, Gx.jsx)("img", {
-                    src: "/home/ubuntuserver/Shore24/static/img/goal1.png",
+                    src: "/home/ubuntuserver/Shore25/static/img/goal1.png",
                     alt: "goals image",
                   }),
                 }),
                 (0, Gx.jsx)("div", {
                   className: "deg135",
                   children: (0, Gx.jsx)("img", {
-                    src: "/home/ubuntuserver/Shore24/static/img/goal2.png",
+                    src: "/home/ubuntuserver/Shore25/static/img/goal2.png",
                     alt: "goals image",
                   }),
                 }),
@@ -32300,7 +32300,7 @@
                   className: "deg225",
                   children: [
                     (0, Gx.jsx)("img", {
-                      src: "/home/ubuntuserver/Shore24/static/img/goal3.png",
+                      src: "/home/ubuntuserver/Shore25/static/img/goal3.png",
                       alt: "goals image",
                     }),
                     " ",
@@ -32309,14 +32309,14 @@
                 (0, Gx.jsx)("div", {
                   className: "deg270",
                   children: (0, Gx.jsx)("img", {
-                    src: "/home/ubuntuserver/Shore24/static/img/goal4.png",
+                    src: "/home/ubuntuserver/Shore25/static/img/goal4.png",
                     alt: "goals image",
                   }),
                 }),
                 (0, Gx.jsx)("div", {
                   className: "deg315",
                   children: (0, Gx.jsx)("img", {
-                    src: "/home/ubuntuserver/Shore24/static/img/goal5.png",
+                    src: "/home/ubuntuserver/Shore25/static/img/goal5.png",
                     alt: "goals image",
                   }),
                 }),
@@ -32336,7 +32336,7 @@
                   justifyContent: "center",
                   alignItems: "center",
                   children: (0, Gx.jsx)("img", {
-                    src: "/home/ubuntuserver/Shore24/static/img/goals.png",
+                    src: "/home/ubuntuserver/Shore25/static/img/goals.png",
                   }),
                 }),
                 (0, Gx.jsxs)(mx, {
@@ -32349,15 +32349,15 @@
                       height: "550px",
                       children: [
                         (0, Gx.jsx)("img", {
-                          src: "/home/ubuntuserver/Shore24/static/img/goal1.png",
+                          src: "/home/ubuntuserver/Shore25/static/img/goal1.png",
                           alt: "goals image",
                         }),
                         (0, Gx.jsx)("img", {
-                          src: "/home/ubuntuserver/Shore24/static/img/goal2.png",
+                          src: "/home/ubuntuserver/Shore25/static/img/goal2.png",
                           alt: "goals image",
                         }),
                         (0, Gx.jsx)("img", {
-                          src: "/home/ubuntuserver/Shore24/static/img/goal3.png",
+                          src: "/home/ubuntuserver/Shore25/static/img/goal3.png",
                           alt: "goals image",
                         }),
                       ],
@@ -32368,12 +32368,12 @@
                       height: "558px",
                       children: [
                         (0, Gx.jsx)("img", {
-                          src: "/home/ubuntuserver/Shore24/static/img/goal4.png",
+                          src: "/home/ubuntuserver/Shore25/static/img/goal4.png",
                           alt: "goals image",
                           className: "img1",
                         }),
                         (0, Gx.jsx)("img", {
-                          src: "/home/ubuntuserver/Shore24/static/img/goal5.png",
+                          src: "/home/ubuntuserver/Shore25/static/img/goal5.png",
                           alt: "goals image",
                           className: "img2",
                         }),
@@ -32671,14 +32671,14 @@
                 heading: "Events",
                 heads: [
                   {
-                    image: "/pictures/home/ubuntuserver/Shore24/static/img/head-Ogrima Mukherjee.jpg",
+                    image: "/pictures/home/ubuntuserver/Shore25/static/img/head-Ogrima Mukherjee.jpg",
                     name: "Ogrima Mukherjee",
                     domain: "Events",
                     role: "Head Of Culturals",
                     linkedin: "#",
                   },
                   {
-                    image: "/pictures/home/ubuntuserver/Shore24/static/img/Head-Charan Raj Manthena.jpg",
+                    image: "/pictures/home/ubuntuserver/Shore25/static/img/Head-Charan Raj Manthena.jpg",
                     name: "Charan Raj Manthena",
                     domain: "Events",
                     role: "Head Of Sports",
@@ -32687,7 +32687,7 @@
                 ],
                 leads: [
                   {
-                    image: "/pictures/home/ubuntuserver/Shore24/static/img/Lead-Prerana Andra.jpg",
+                    image: "/pictures/home/ubuntuserver/Shore25/static/img/Lead-Prerana Andra.jpg",
                     name: "Prerana Andra",
                     domain: "Events",
                     role: "Lead of Recreational",
@@ -32695,28 +32695,28 @@
                   },
                   {
                     image:
-                      "/pictures/home/ubuntuserver/Shore24/static/img/Lead-Anirvin Nidasanametla.jpg",
+                      "/pictures/home/ubuntuserver/Shore25/static/img/Lead-Anirvin Nidasanametla.jpg",
                     name: "Anirvin Nidasanametla",
                     domain: "Events",
                     role: "Lead of Sports",
                     linkedin: "#",
                   },
                   {
-                    image: "/pictures/home/ubuntuserver/Shore24/static/img/Lead-G S S Shreyas.jpg",
+                    image: "/pictures/home/ubuntuserver/Shore25/static/img/Lead-G S S Shreyas.jpg",
                     name: "PG S S Shreyas",
                     domain: "Events",
                     role: "Lead of Sports",
                     linkedin: "#",
                   },
                   {
-                    image: "/pictures/home/ubuntuserver/Shore24/static/img/Lead-Laxmi Usha Padmini.jpg",
+                    image: "/pictures/home/ubuntuserver/Shore25/static/img/Lead-Laxmi Usha Padmini.jpg",
                     name: "Laxmi Usha Padmini",
                     domain: "Events",
                     role: "Lead of Cultural",
                     linkedin: "#",
                   },
                   {
-                    image: "/pictures/home/ubuntuserver/Shore24/static/img/Lead-Yogita Achary.jpg",
+                    image: "/pictures/home/ubuntuserver/Shore25/static/img/Lead-Yogita Achary.jpg",
                     name: "Yogita Achary",
                     domain: "Events",
                     role: "Lead of Recreational",
@@ -37033,7 +37033,7 @@
                                       children: (0, Gx.jsx)("img", {
                                         width: "30px",
                                         height: "30px",
-                                        src: "/home/ubuntuserver/Shore24/static/img/website.png",
+                                        src: "/home/ubuntuserver/Shore25/static/img/website.png",
                                       }),
                                     }),
                                     (0, Gx.jsx)(mx, {
@@ -37267,7 +37267,7 @@
             date: "3 Feb 2023",
             time: "5:30PM - 6:30PM",
             venue: "Open Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/narthana.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/narthana.jpg",
           },
           {
             name: "Groove Theory ",
@@ -37275,7 +37275,7 @@
             date: "3 Feb 2023",
             time: "6:30PM - 9:00PM",
             venue: "Open Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/groove.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/groove.jpg",
           },
           {
             name: "Act-o-Mania (Stage Play)",
@@ -37283,7 +37283,7 @@
             date: "3 Feb 2023",
             time: "1:00PM - 3:00PM",
             venue: "Mother Teresa Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/act_mania.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/act_mania.jpg",
           },
           {
             name: "Rang (Mural Wall Art)",
@@ -37291,7 +37291,7 @@
             date: "3,4 Feb 2023",
             time: "8:00AM - 3:00PM",
             venue: "Stadium Wall",
-            img: "/home/ubuntuserver/Shore24/static/img/rang.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/rang.jpg",
           },
           {
             name: "Battle of Bands ",
@@ -37299,7 +37299,7 @@
             date: "4 Feb 2023",
             time: "4:30PM to 7:30PM",
             venue: "Mother Teresa Parking",
-            img: "/home/ubuntuserver/Shore24/static/img/bandBattle.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/bandBattle.jpg",
           },
           {
             name: "Just for Laughs",
@@ -37307,7 +37307,7 @@
             date: "4 Feb 2023",
             time: "11:00AM - 2:00PM",
             venue: "Mother Teresa Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/just_laugh.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/just_laugh.jpg",
           },
           {
             name: "Khoj (Treasure Hunt)",
@@ -37315,7 +37315,7 @@
             date: "5 Feb 2023",
             time: "9:00AM - 1:00PM",
             venue: "All Campus",
-            img: "/home/ubuntuserver/Shore24/static/img/khoj.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/khoj.jpg",
           },
           {
             name: "Verbattle ",
@@ -37323,7 +37323,7 @@
             date: "3 & 5 Feb 2023",
             time: "9:00AM - 12:00PM & 1:00PM - 3:00PM",
             venue: "KRC Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/verbattle.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/verbattle.jpg",
           },
         ],
         RE = [
@@ -37333,7 +37333,7 @@
             date: "3 Feb 2023",
             time: "9:00AM - 12:00PM",
             venue: "Mother Teresa Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/solo_dance.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/solo_dance.jpg",
           },
           {
             name: "Duet Dance",
@@ -37341,7 +37341,7 @@
             date: "5 Feb 2023",
             time: "9:00AM - 11:00AM",
             venue: "Mother Teresa Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/duet_dance.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/duet_dance.jpg",
           },
           {
             name: "Dance Battle",
@@ -37349,7 +37349,7 @@
             date: "5 Feb 2023",
             time: "1:00PM - 3:00PM",
             venue: "Open Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/dance_battle.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/dance_battle.jpg",
           },
           {
             name: "Mono Act",
@@ -37357,7 +37357,7 @@
             date: "4 Feb 2023",
             time: "10:00AM - 11:00PM",
             venue: "Open Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/mono_act.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/mono_act.jpg",
           },
           {
             name: "Mime Act",
@@ -37365,7 +37365,7 @@
             date: "4 Feb 2023",
             time: "10:00AM - 11:00AM",
             venue: "Open Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/mime_act.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/mime_act.jpg",
           },
           {
             name: "Acapella",
@@ -37373,7 +37373,7 @@
             date: "5 Feb 2023",
             time: "11:00AM - 1:00PM",
             venue: "Mother Teresa Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/acapella.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/acapella.jpg",
           },
           {
             name: "Solo Singing",
@@ -37381,7 +37381,7 @@
             date: "5 Feb 2023",
             time: "11:00AM - 1:00PM",
             venue: "Mother Teresa Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/solo_sing.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/solo_sing.jpg",
           },
           {
             name: "Face Paint",
@@ -37389,7 +37389,7 @@
             date: "4 Feb 2023",
             time: "1:00PM - 2:00PM",
             venue: "GIM Seminar Hall",
-            img: "/home/ubuntuserver/Shore24/static/img/face_paint.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/face_paint.jpg",
           },
           {
             name: "Poetry",
@@ -37397,7 +37397,7 @@
             date: "4 Feb 2023",
             time: "9:00AM - 10:00AM",
             venue: "Talent Cafe",
-            img: "/home/ubuntuserver/Shore24/static/img/poetry.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/poetry.jpg",
           },
           {
             name: "Short Film",
@@ -37405,7 +37405,7 @@
             date: "5 Feb 2023",
             time: "2:00PM - 3:00PM",
             venue: "Mother Teresa Park",
-            img: "/home/ubuntuserver/Shore24/static/img/short_film.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/short_film.jpg",
           },
           {
             name: "Split Screen (Western)",
@@ -37413,7 +37413,7 @@
             date: "4 Feb 2023",
             time: "10:00AM - 11:00AM",
             venue: "Open Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/split_screen.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/split_screen.jpg",
           },
           {
             name: "Rap Battle",
@@ -37421,7 +37421,7 @@
             date: "5 Feb 2023",
             time: "5:00PM - 6:00PM",
             venue: "MT Parking",
-            img: "/home/ubuntuserver/Shore24/static/img/rap_battle.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/rap_battle.jpg",
           },
           {
             name: "JAM - Just A Minute",
@@ -37429,7 +37429,7 @@
             date: "4 Feb 2023",
             time: "3:00PM - 4:00PM",
             venue: "KRC Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/jam.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/jam.jpg",
           },
           {
             name: "69 Seconds to Fame",
@@ -37437,7 +37437,7 @@
             date: "3 Feb 2023",
             time: "10:00AM - 11:00AM",
             venue: "Open Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/69.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/69.jpg",
           },
           {
             name: "Scavenger hunt",
@@ -37445,7 +37445,7 @@
             date: "3 Feb 2023",
             time: "1:00PM - 3:00PM",
             venue: "All Campus",
-            img: "/home/ubuntuserver/Shore24/static/img/Scanvenger.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/Scanvenger.jpg",
           },
           {
             name: "Ad Masters",
@@ -37453,7 +37453,7 @@
             date: "5 Feb 2023",
             time: "10:00AM - 12:00PM",
             venue: "VDC Room",
-            img: "/home/ubuntuserver/Shore24/static/img/AdMaster.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/AdMaster.jpg",
           },
           {
             name: "Pitch Off",
@@ -37461,7 +37461,7 @@
             date: "4 Feb 2023",
             time: "3:00PM - 4:00PM",
             venue: "VDC Room",
-            img: "/home/ubuntuserver/Shore24/static/img/pitch.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/pitch.jpg",
           },
         ],
         NE = [
@@ -37497,12 +37497,12 @@
                 venue: "Shivaji Auditorium",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/E-Sports.png",
+            img: "/home/ubuntuserver/Shore25/static/img/E-Sports.png",
           },
           {
             name: "Cricket Stars",
             desc: "Cricket Stars is a strategy card game designed for the avid cricket lover in us. The game has tournaments for some spicy competition to prove who is the best while promoting a chess-like strategy needed to win over the opponents. So build your decks with the best cards to get the title of CRICKETSTAR!",
-            img: "/home/ubuntuserver/Shore24/static/video/cricket_stars.mp4",
+            img: "/home/ubuntuserver/Shore25/static/video/cricket_stars.mp4",
           },
           {
             name: "Cricket",
@@ -37536,7 +37536,7 @@
                 venue: "GITAM Cricket Stadium",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/cricket.png",
+            img: "/home/ubuntuserver/Shore25/static/img/cricket.png",
           },
           {
             name: "Football",
@@ -37570,7 +37570,7 @@
                 venue: "GITAM Cricket Stadium",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/football.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/football.jpg",
           },
           {
             name: "Badminton",
@@ -37604,7 +37604,7 @@
                 venue: "Indoor stadium",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/badminton.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/badminton.jpg",
           },
           {
             name: "Table Tennis",
@@ -37638,7 +37638,7 @@
                 venue: "Behind KRC",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/tabletennis.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/tabletennis.jpg",
           },
           {
             name: "Chess",
@@ -37672,7 +37672,7 @@
                 venue: "Behind KRC",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/chess.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/chess.jpg",
           },
           {
             name: "Athletics",
@@ -37697,7 +37697,7 @@
                 venue: "GIMSR ground",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/athletics.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/athletics.jpg",
           },
           {
             name: "Volleyball",
@@ -37731,7 +37731,7 @@
                 venue: "Indoor stadium",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/volleyball.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/volleyball.jpg",
           },
           {
             name: "Kabaddi",
@@ -37765,7 +37765,7 @@
                 venue: "Tennis Court",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/Kabbadi.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/Kabbadi.jpg",
           },
           {
             name: "Basketball",
@@ -37799,7 +37799,7 @@
                 venue: "Indoor stadium",
               },
             ],
-            img: "/home/ubuntuserver/Shore24/static/img/basketball.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/basketball.jpg",
           },
         ],
         OE = [
@@ -37809,7 +37809,7 @@
             date: "3 Feb 2023",
             time: "5:30PM - 9:00PM",
             venue: "Open Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/cultural.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/cultural.jpg",
           },
           {
             name: "Band Night",
@@ -37817,7 +37817,7 @@
             date: "4 Feb 2023",
             time: "7:30PM - 9:30PM",
             venue: "Mother Teresa Parking",
-            img: "/home/ubuntuserver/Shore24/static/img/band.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/band.jpg",
           },
           {
             name: "DJ Night",
@@ -37825,7 +37825,7 @@
             date: "5 Feb 2023",
             time: "6:00PM - 9:00PM",
             venue: "Mother Teresa Parking",
-            img: "/home/ubuntuserver/Shore24/static/img/dj.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/dj.jpg",
           },
           {
             name: "Standup Show",
@@ -37833,7 +37833,7 @@
             date: "4 Feb 2023",
             time: "2:00PM - 3:00PM",
             venue: "Mother Teresa Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/standup.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/standup.jpg",
           },
           {
             name: "Rap Cypher",
@@ -37841,7 +37841,7 @@
             date: "5 Feb 2023",
             time: "5:00PM - 6:00PM",
             venue: "Mother Teresa Parking",
-            img: "/home/ubuntuserver/Shore24/static/img/rap.png",
+            img: "/home/ubuntuserver/Shore25/static/img/rap.png",
           },
           {
             name: "Live Graffiti",
@@ -37849,7 +37849,7 @@
             date: "3 Feb 2023",
             time: "4:30PM - 5:30PM",
             venue: "Open Auditorium",
-            img: "/home/ubuntuserver/Shore24/static/img/graffiti.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/graffiti.jpg",
           },
         ],
         zE = [
@@ -37859,7 +37859,7 @@
             date: "4 Feb 2023",
             time: "2:00PM - 3:00PM",
             venue: "Cricket Stadium",
-            img: "/home/ubuntuserver/Shore24/static/img/tugofwar.jpeg",
+            img: "/home/ubuntuserver/Shore25/static/img/tugofwar.jpeg",
           },
           {
             name: "Hit the Wicket",
@@ -37867,7 +37867,7 @@
             date: "4 Feb 2023",
             time: "10:00AM - 11:00AM",
             venue: "Coke Station road",
-            img: "/home/ubuntuserver/Shore24/static/img/hit-the-wicket.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/hit-the-wicket.jpg",
           },
           {
             name: "Dribble the Ball",
@@ -37875,7 +37875,7 @@
             date: "4 Feb 2023",
             time: "1:00PM - 2:00PM",
             venue: "Coke Station road",
-            img: "/home/ubuntuserver/Shore24/static/img/dribbletheball.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/dribbletheball.jpg",
           },
           {
             name: "Penalty Goal",
@@ -37883,7 +37883,7 @@
             date: "4 Feb 2023",
             time: "11:00AM - 12:00PM",
             venue: "Coke Station road",
-            img: "/home/ubuntuserver/Shore24/static/img/penalty.jpg",
+            img: "/home/ubuntuserver/Shore25/static/img/penalty.jpg",
           },
         ],
         IE = function (t) {
@@ -38169,7 +38169,7 @@
               muted: !0,
               playsInline: !0,
               children: (0, Gx.jsx)("source", {
-                src: "/home/ubuntuserver/Shore24/static/video/shorefest.mp4",
+                src: "/home/ubuntuserver/Shore25/static/video/shorefest.mp4",
                 type: "video/mp4",
                 alt: "logo video",
               }),
@@ -38210,7 +38210,7 @@
               muted: "true",
               playsInline: "true",
               children: (0, Gx.jsx)("source", {
-                src: "/home/ubuntuserver/Shore24/static/video/about.mp4",
+                src: "/home/ubuntuserver/Shore25/static/video/about.mp4",
                 type: "video/mp4",
                 alt: "about video",
               }),
@@ -38345,7 +38345,7 @@
                           children: (0, Gx.jsx)(dw, {
                             width: "100%",
                             height: "100%",
-                            src: "/home/ubuntuserver/Shore24/static/img/store.png",
+                            src: "/home/ubuntuserver/Shore25/static/img/store.png",
                             alt: "store image",
                           }),
                         }),
@@ -38367,7 +38367,7 @@
                     (0, Gx.jsx)(dw, {
                       width: "100%",
                       height: "100%",
-                      src: "/home/ubuntuserver/Shore24/static/img/store.png",
+                      src: "/home/ubuntuserver/Shore25/static/img/store.png",
                       alt: "store image",
                     }),
                     (0, Gx.jsx)(mx, {
@@ -38413,7 +38413,7 @@
                       justifyContent: "center",
                       children: (0, Gx.jsx)(dw, {
                         marginTop: "8%",
-                        src: "/home/ubuntuserver/Shore24/static/img/team.jpg",
+                        src: "/home/ubuntuserver/Shore25/static/img/team.jpg",
                         width: "60%",
                       }),
                     }),
@@ -38460,7 +38460,7 @@
                       children: (0, Gx.jsx)("p", { children: "TEAM SHORE" }),
                     }),
                     (0, Gx.jsx)(dw, {
-                      src: "/home/ubuntuserver/Shore24/static/img/team.jpg",
+                      src: "/home/ubuntuserver/Shore25/static/img/team.jpg",
                       alt: "team image",
                       width: "100%",
                       height: "90%",
@@ -38480,14 +38480,14 @@
         },
         WE = [
           {
-            image: "/home/ubuntuserver/Shore24/static/img/Marcos_Vishal2",
+            image: "/home/ubuntuserver/Shore25/static/img/Marcos_Vishal2",
             type: "Official Gaming Partners",
           },
-          { image: "/home/ubuntuserver/Shore24/static/img/YoVizag", type: "Official Media Partner" },
-          { image: "/home/ubuntuserver/Shore24/static/img/RadissonBlu1", type: "Official Stay Partner" },
-          { image: "/home/ubuntuserver/Shore24/static/img/Standy1", type: "Official Valuable Sponsor" },
+          { image: "/home/ubuntuserver/Shore25/static/img/YoVizag", type: "Official Media Partner" },
+          { image: "/home/ubuntuserver/Shore25/static/img/RadissonBlu1", type: "Official Stay Partner" },
+          { image: "/home/ubuntuserver/Shore25/static/img/Standy1", type: "Official Valuable Sponsor" },
           {
-            image: "/home/ubuntuserver/Shore24/static/img/SaveSoil",
+            image: "/home/ubuntuserver/Shore25/static/img/SaveSoil",
             type: "Official Sustainability Partner",
           },
         ],
@@ -38509,7 +38509,7 @@
                 justifyContent: "center",
                 alignItems: "center",
                 children: [
-                  (0, Gx.jsx)(dw, { src: "/home/ubuntuserver/Shore24/static/img/Cococola.jpg" }),
+                  (0, Gx.jsx)(dw, { src: "/home/ubuntuserver/Shore25/static/img/Cococola.jpg" }),
                   (0, Gx.jsxs)("p", {
                     className: e.value
                       ? "sponser-type type-mobile"
