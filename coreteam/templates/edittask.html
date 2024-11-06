@@ -123,7 +123,7 @@
         <input type="text" id="assigned_by" name="assigned_by" value="{{ task.assigned_by }}" required readonly><br><br>
         {% if request.user.president %}
         <input type="checkbox" id="advisory" name="advisory" {% if task.advisory %} checked {% endif %}>
-        <label for="advisory">Advisory</label><br><br>
+        <label for="advisory">Co-ordinator</label><br><br>
         {% endif %}
         <input type="submit" value="Submit">
       </form>     
