@@ -5,36 +5,80 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shore24 Task Edited</title>
+    <title>Shore25 Task Created</title>
     <style>
-        /* Add your CSS styles here */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #ffffff;
+            background-color: #f4f4f4;
         }
 
         .container {
             width: 80%;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
-            background-color: #fff;
-            color: rgb(0, 0, 0);
+            background-color: #ffffff;
+            color: #333333;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
-        h1,
-        h2,
-        h3,
-        p {
-            margin-bottom: 10px;
+        h1 {
+            color: #0073e6;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #333333;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #dddddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #777777;
         }
 
         @media only screen and (max-width: 600px) {
             .container {
-                width: 100%;
+                width: 90%;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            table, th, td {
+                font-size: 14px;
             }
         }
     </style>
@@ -42,19 +86,45 @@
 
 <body>
     <div class="container">
-        <h1>Shore24</h1>
+        <h1>Shore25</h1>
         <h2>Task Created</h2>
-        <p>Task Title: {{ task_title }}</p>
-        <p>Domain: {{ domain }}</p>
-        <p>Description: {{ description }}</p>
-        <p>Priority: {{ priority }}</p>
-        <p>Due Date: {{ due_date }}</p>
-        <p>Status: {{ status }}</p>
-        <p>Assigned To: {{ assigned_to }}</p>
-        <p>Assigned By: {{ assigned_by }}</p>
-        <br>
-        <br>
-        <h3>Team Shore24</h3>
+        <table>
+            <tr>
+                <th>Task Title</th>
+                <td>{{ task_title }}</td>
+            </tr>
+            <tr>
+                <th>Domain</th>
+                <td>{{ domain }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ description }}</td>
+            </tr>
+            <tr>
+                <th>Priority</th>
+                <td>{{ priority }}</td>
+            </tr>
+            <tr>
+                <th>Due Date</th>
+                <td>{{ due_date }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ status }}</td>
+            </tr>
+            <tr>
+                <th>Assigned To</th>
+                <td>{{ assigned_to }}</td>
+            </tr>
+            <tr>
+                <th>Assigned By</th>
+                <td>{{ assigned_by }}</td>
+            </tr>
+        </table>
+        <div class="footer">
+            <p>Team Shore25</p>
+        </div>
     </div>
 </body>
 

@@ -115,7 +115,6 @@ def home(request):
 
 
 def sendmail_create(taskid):
-    return True
     task = Task.objects.filter(id=taskid).values()[0]
     
     task_title = task['task_title']
@@ -156,7 +155,7 @@ def sendmail_create(taskid):
     
     emails_list = list(emails_list)
     
-    subject = f"Shore24 Tasks: {task_title} Created"
+    subject = f"Shore25 Tasks: {task_title} Created"
     from_email = settings.EMAIL_HOST_USER
     html_content = get_template('createtaskmail.html').render({
         'task_title': task_title,
@@ -279,7 +278,6 @@ def createtask(request , domain_name):
 
 
 def sendmail_edit(taskid):
-    return True
     task = Task.objects.filter(id=taskid).values()[0]
     
     task_title = task['task_title']
@@ -320,7 +318,7 @@ def sendmail_edit(taskid):
     
     emails_list = list(emails_list)
     
-    subject = f"Shore24 Tasks: {task_title} edited"
+    subject = f"Shore25 Tasks: {task_title} edited"
     from_email = settings.EMAIL_HOST_USER
     html_content = get_template('edittaskmail.html').render({
         'task_title': task_title,
