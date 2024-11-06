@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import ParticipantApplication, Domain
+from import_export.admin import ImportExportModelAdmin
 
-class ParticipantApplicationAdmin(admin.ModelAdmin):
+class ParticipantApplicationAdmin(ImportExportModelAdmin):
     list_display = ('name', 'email', 'domain', 'position', 'designation', 'verified')
     list_filter = ('domain', 'position', 'verified')
     search_fields = ('name', 'email', 'designation')
@@ -9,7 +10,7 @@ class ParticipantApplicationAdmin(admin.ModelAdmin):
 admin.site.register(ParticipantApplication, ParticipantApplicationAdmin)
 
 
-class DomainAdmin(admin.ModelAdmin):
+class DomainAdmin(ImportExportModelAdmin):
     list_display = ('name', 'head_email', 'order')
     search_fields = ('name', 'head_email')
 
