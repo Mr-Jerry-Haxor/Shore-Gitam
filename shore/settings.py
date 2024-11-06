@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'teams',
     'security',
     'timeline',
-    'samyukta',
     'ezperanza',
 ]
 
