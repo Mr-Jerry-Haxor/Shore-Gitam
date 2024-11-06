@@ -7,6 +7,7 @@ import os
 from django.utils import timezone
 
 class CustomUser(AbstractUser):
+    coordinator = models.BooleanField(default=False)
     president = models.BooleanField(default=False)
     vice_president = models.BooleanField(default=False)
     technology = models.BooleanField(default=False)
@@ -60,10 +61,10 @@ class Task(models.Model):
     
     DOMAIN_CHOICES = [
         ('president', 'President'),
-        ('vice-president', 'Vice President'),
+        ('vice_president', 'Vice President'),
         ('technology', 'Technology'),
-        ('events-cultural', 'Events - Cultural'),
-        ('events-sports', 'Events - Sports'),
+        ('events_cultural', 'Events - Cultural'),
+        ('events_sports', 'Events - Sports'),
         ('legal', 'Legal'),
         ('operations', 'Operations'),
         ('marketing', 'Marketing'),
@@ -87,7 +88,7 @@ class Task(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     assigned_to = models.CharField(max_length=500)
     assigned_by = models.CharField(max_length=500)
-    advisory = models.BooleanField(default=False)
+    coordinator = models.BooleanField(default=False)
 
     def __str__(self):
         return self.task_title

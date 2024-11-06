@@ -26,7 +26,12 @@
                     <i class="fas fa-qrcode"></i>
                     <span>Dashboard</span>
                 </a>
-                {% if request.user.president %}
+                {% if request.user.coordinator %}
+                <a href="{% url 'coretasks' 'coordinator' %}">
+                    <span>Coordinator</span>
+                </a>
+                {% endif %}
+                {% if  request.user.president %}
                 <a href="{% url 'coretasks' 'alltasks' %}">
                     <span>All domain Tasks</span>
                 </a>
@@ -50,12 +55,12 @@
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.events_cultural %}
-                <a href="{% url 'coretasks' 'events-cultural' %}">
+                <a href="{% url 'coretasks' 'events_cultural' %}">
                     <span>Events clutural</span>
                 </a>
                 {% endif %}
                 {% if request.user.president or request.user.vice_president or request.user.events_sports %}
-                <a href="{% url 'coretasks' 'events-sports' %}">
+                <a href="{% url 'coretasks' 'events_sports' %}">
                     <span>Event Sports</span>
                 </a>
                 {% endif %}
@@ -114,7 +119,9 @@
             </div>
         </div>
             <div id="wrapper-text">
-                {% if domain  == 'president' %}
+                {% if domain  == 'coordinator' %}
+                Coordinator
+                {% elif domain  == 'president' %}
                 President
                 {% elif  domain == 'vice_president' %}
                 Vice President
@@ -212,7 +219,7 @@
                 <table class="table">
                     <tr>
                         <th class="name">Task_title</th>
-                        {% if domain == 'alltasks' %}
+                        {% if domain == 'alltasks' or domain == 'coordinator' %}
                             <th class="name">Domain</th>
                         {% endif %}
                         <th class="name">Task_description</th>
@@ -224,12 +231,15 @@
                         <th class="name">Assigned_to</th>
                         <th class="name">Assigned_by</th>
                         <th class="name">File Attached</th>
+                        {% if not request.user.coordinator  or domain != 'coordinator' %}
+
                         <th class="name">Edit</th>
+                        {% endif %}
                     </tr>
                     {% for task in tasks %}
                     <tr>
                         <td>{{ task.task_title }}</td>
-                        {% if domain == 'alltasks' %}
+                        {% if domain == 'alltasks' or domain == 'coordinator' %}
                         <td>{{ task.domain }}</td>
                         {% endif %}
                         <td>{{ task.description }}</td>
@@ -247,12 +257,13 @@
                                 </a>
                             {% endif %}
                         </td>
-                        
+                        {% if not request.user.coordinator or domain != 'coordinator' %}
                         <td>
                             <a href="{% url 'edittask' domain_name=domain taskid=task.id %}">
                                 <button type="button" class="btn btn-danger">Edit</button>
                             </a>
                         </td>
+                        {% endif %}
                         
                     </tr>
                     {% endfor %}

@@ -109,10 +109,13 @@
         
         <label for="assigned_by">Assigned By:</label>
         <input type="text" id="assigned_by" name="assigned_by" value="{{ assigned_by }}" required readonly><br><br>
-        {% if request.user.president %}
-        <input type="checkbox" id="advisory" name="advisory">
-        <label for="advisory">Advisory</label><br><br>
-        {% endif %}
+
+        <div style="display: flex;align-items:flex-start">
+            <input type="checkbox" id="coordinator" name="coordinator">
+            <label for="coordinator">Access to Co-Ordinator</label>
+        </div>
+        <br><br>
+
         <input type="submit" value="Submit">
       </form>     
 </body>

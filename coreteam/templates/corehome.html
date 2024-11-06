@@ -38,6 +38,12 @@
                         <span style="color: red;">Shore 24</span>
                     </h5>
                     <br>
+                    {% if request.user.coordinator %}
+                    <a href="{% url 'coretasks' 'coordinator' %}">
+                        <button type="button" class="btn btn-danger">Co-ordinator</button>
+                    </a>
+                    <br>
+                    {% endif %}
                     {% if request.user.president %}
                     <a href="{% url 'coretasks' 'president' %}">
                         <button type="button" class="btn btn-danger">President</button>

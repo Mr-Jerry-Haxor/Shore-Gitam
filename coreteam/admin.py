@@ -7,18 +7,18 @@ from django.contrib.auth.models import Permission
 from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email','first_name', 'last_name','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory' ,  'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')
-    list_filter = ('president' , 'vice_president' ,'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' ,  'advisory',  'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')
+    list_display = ('username', 'email','first_name', 'last_name', 'coordinator','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory' ,  'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')
+    list_filter = ('coordinator','president' , 'vice_president' ,'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' ,  'advisory',  'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         ('Personal Info', {'fields': ('first_name', 'last_name', 'email')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory', 'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff' , 'groups' ,'user_permissions')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','coordinator','president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory', 'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff' , 'groups' ,'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'password1', 'password2', 'is_staff', 'is_superuser', 'president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory'  , 'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')}
+            'fields': ('username', 'email', 'password1', 'password2', 'is_staff', 'is_superuser','coordinator', 'president' , 'vice_president' , 'technology', 'events_cultural', 'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 'design', 'finance', 'media', 'security', 'hospitality' , 'advisory'  , 'hospitality_staff' , 'events_cultural_staff' , 'events_sports_staff' , 'security_staff')}
         ),
     )
     search_fields = ('username', 'email')
