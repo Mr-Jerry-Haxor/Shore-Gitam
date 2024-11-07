@@ -7,6 +7,7 @@ urlpatterns = [
     path("", home, name="corehome"),
     path("createtask/<str:domain_name>/", createtask, name="createtask"),
     path("edittask/<str:domain_name>/<int:taskid>", edit_task, name="edittask"),\
-    
+    path("submit_task/<int:task_id>", submit_task, name="submit_task"),
+
     path("domain_heads/", give_access_to_domain_head, name="domain_heads"),
 ]

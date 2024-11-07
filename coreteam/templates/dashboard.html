@@ -275,6 +275,7 @@
                         <th class="name">File Attached</th>
                         {% if not request.user.coordinator  or domain != 'coordinator' %}
 
+                        <th class="name">Submission URL</th>
                         <th class="name">Edit</th>
                         {% endif %}
                     </tr>
@@ -299,10 +300,20 @@
                                 </a>
                             {% endif %}
                         </td>
+                        {% if task.submission_url %}
+                            <td><a href="{{ task.submission_url }}" target="_blank">View Submission</a></td>
+                        {% else %}
+                            <td>Not Submitted</td>
+                        {% endif %}
                         {% if not request.user.coordinator or domain != 'coordinator' %}
                         <td>
                             <a href="{% url 'edittask' domain_name=domain taskid=task.id %}">
                                 <button type="button" class="btn btn-danger">Edit</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'submit_task' task_id=task.id %}">
+                                <button type="button" class="btn btn-success">Submit</button>
                             </a>
                         </td>
                         {% endif %}

@@ -12,6 +12,31 @@ from security.models import security_staff
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
+def submit_task(request, task_id):
+    context = {}
+    if request.method == "POST":
+        submission_url = request.POST.get("submission_url")
+
+        if submission_url is None or submission_url == "":
+            messages.error(request, "Submission URL is required")
+            return redirect("submit_task", task_id=task_id)
+
+        task = Task.objects.get(id=task_id)
+        task.status = "Completed"
+        task.submission_url = submission_url
+        task.save()
+
+        # send email about task submission
+
+        messages.success(request, "Task submitted successfully")
+        return redirect("coretasks", domain_name=task.domain)
+    task = Task.objects.get(id=task_id)
+    context["task"] = task
+
+    return render(request, "submit_task.html", context)
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
 def give_access_to_domain_head(request):
     access_emails = []
     if (request.user.is_superuser or request.user.president or (request.user.email in access_emails)):
@@ -387,7 +412,8 @@ def createtask(request, domain_name):
                 assigned_by=assigned_by,
                 coordinator=coordinator,
             )
-            sendmail_create(task.id)
+            # sendmail_create(task.id)
+
             messages.success(request, "Task Created Successfully")
             return redirect("coretasks", domain_name=domain_name)
         else:
@@ -540,7 +566,9 @@ def edit_task(request, domain_name, taskid):
                 task.assigned_by = request.POST.get("assigned_by")
                 task.coordinator = "coordinator" in request.POST
                 task.save()
-                sendmail_edit(taskid)
+
+                # sendmail_edit(taskid)
+                
                 return redirect("coretasks", domain_name=domain_name)
             else:
                 return redirect("corehome")

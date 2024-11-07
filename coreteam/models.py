@@ -89,6 +89,7 @@ class Task(models.Model):
     assigned_to = models.CharField(max_length=500)
     assigned_by = models.CharField(max_length=500)
     coordinator = models.BooleanField(default=False)
+    submission_url = models.URLField(max_length=500, blank=True, null=True)
 
     def __str__(self):
         return self.task_title
