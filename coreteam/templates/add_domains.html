@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Domain</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="container">
+        <center>
+            <img style="width: 7rem; height: 7rem; "
+                src="https://res.cloudinary.com/dgtzotq7a/image/upload/v1730969795/shore25logo_th1138.jpg"
+                alt="Shore25 Logo">
+        </center>
+        <h1>Add Domain Heads</h1>
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <label for="domain-head-email">Domain Head Email</label>
+            <input type="email" id="domain-head-email" name="domain_head_email" required>
+
+            <label for="domain">Domain</label>
+            <select id="domain" name="domain" required>
+                <option value="coordinator">Coordinator</option>
+                <option value="president">President</option>
+                <option value="vice_president">Vice President</option>
+                <option value="technology">Technology</option>
+                <option value="events_cultural">Events - Cultural</option>
+                <option value="events_sports">Events - Sports</option>
+                <option value="legal">Legal</option>
+                <option value="operations">Operations</option>
+                <option value="marketing">Marketing</option>
+                <option value="sponsorship">Sponsorship</option>
+                <option value="design">Design</option>
+                <option value="finance">Finance</option>
+                <option value="media">Media</option>
+                <option value="security">Security</option>
+                <option value="hospitality">Hospitality</option>
+                <option value="advisory">Advisory</option>
+                <option value="hospitality_staff">Hospitality Staff</option>
+                <option value="events_cultural_staff">Events - Cultural Staff</option>
+                <option value="events_sports_staff">Events - Sports Staff</option>
+                <option value="security_staff">Security Staff</option>
+            </select>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

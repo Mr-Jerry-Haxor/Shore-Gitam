@@ -11,6 +11,36 @@ from hospitality.models import *
 from security.models import security_staff
 
 
+@login_required(login_url="/auth/login/google-oauth2/")
+def give_access_to_domain_head(request):
+    access_emails = []
+    if (request.user.is_superuser or request.user.president or (request.user.email in access_emails)):
+        if request.method == "POST":
+            head_email = request.POST.get("domain_head_email")
+            domain = request.POST.get("domain")
+
+            try:
+                user = CustomUser.objects.get(email=head_email)
+
+                if user.__dict__[domain]:
+                    messages.error(request, f"User with email {head_email} already has access to {domain}")
+                    return redirect("domain_heads")
+
+                user.__dict__[domain] = True
+                user.save()
+
+                messages.success(request, f"User with email {head_email} has been given access to {domain}")
+                return redirect("domain_heads")
+            except CustomUser.DoesNotExist:
+                messages.error(request, f"User with email {head_email} does not exist")
+                return redirect("domain_heads")
+            except Exception as e:
+                messages.error(request, f"An error occurred: {e}")
+                return redirect("domain_heads")
+        
+        return render(request, "add_domains.html")
+    return render(request, "add_domains.html")
+
 # Define accessible domains by role, including 'coordinator' and 'alltasks' permissions
 role_domains = {
     "coordinator": [
