@@ -5,80 +5,147 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shore25 Task Created</title>
+    <title>Shore24 Task Notification</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
+            background-color: #f4f7f9;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
         }
 
         .container {
-            width: 80%;
+            max-width: 600px;
             margin: 20px auto;
-            padding: 20px;
             background-color: #ffffff;
             color: #333333;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            overflow: hidden;
+            font-size: 16px;
         }
 
-        h1 {
-            color: #0073e6;
+        .header {
+            background: #007367;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .header h1 {
+            margin: 0;
             font-size: 24px;
-            margin-bottom: 20px;
+            letter-spacing: 1px;
         }
 
-        h2 {
-            color: #333333;
-            font-size: 20px;
+        .alert {
+            background-color: #ffffff;
+            border-left: 6px solid #009142;
+            color: #006442;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-top: 1px solid #e6e9ed;
+            border-bottom: 1px solid #e6e9ed;
+            margin: 20px 0;
+        }
+
+        .content {
+            padding: 30px;
+            line-height: 1.6;
+            color: #4a4a4a;
+        }
+
+        .content h2 {
+            color: #007367;
+            font-size: 22px;
             margin-bottom: 15px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        .content p {
+            margin: 10px 0;
         }
 
-        table, th, td {
-            border: 1px solid #dddddd;
+        .label {
+            font-weight: bold;
+            color: #007367;
         }
 
-        th, td {
-            padding: 8px;
-            text-align: left;
+        .highlight {
+            color: #009142;
+            font-weight: bold;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .button {
+            display: inline-block;
+            background-color: #009142;
+            color: #ffffff;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            width: 94%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #007367;
         }
 
         .footer {
-            margin-top: 20px;
+            background-color: #f9fafc;
+            color: #777777;
+            padding: 20px;
             text-align: center;
             font-size: 14px;
-            color: #777777;
+            border-top: 1px solid #e6e9ed;
+        }
+
+        .footer h3 {
+            color: #007367;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer a {
+            color: #009142;
+            text-decoration: none;
         }
 
         @media only screen and (max-width: 600px) {
             .container {
                 width: 90%;
-                padding: 10px;
+                margin: 10px auto;
             }
 
-            h1 {
-                font-size: 20px;
+            .content {
+                padding: 20px;
             }
 
-            h2 {
-                font-size: 18px;
+            .header, .footer {
+                padding: 15px;
             }
 
-            table, th, td {
-                font-size: 14px;
+            .button {
+                width: auto;
+                padding: 12px 25px;
             }
         }
     </style>
@@ -86,44 +153,33 @@
 
 <body>
     <div class="container">
-        <h1>Shore25</h1>
-        <h2>Task Created</h2>
-        <table>
-            <tr>
-                <th>Task Title</th>
-                <td>{{ task_title }}</td>
-            </tr>
-            <tr>
-                <th>Domain</th>
-                <td>{{ domain }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ description }}</td>
-            </tr>
-            <tr>
-                <th>Priority</th>
-                <td>{{ priority }}</td>
-            </tr>
-            <tr>
-                <th>Due Date</th>
-                <td>{{ due_date }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ status }}</td>
-            </tr>
-            <tr>
-                <th>Assigned To</th>
-                <td>{{ assigned_to }}</td>
-            </tr>
-            <tr>
-                <th>Assigned By</th>
-                <td>{{ assigned_by }}</td>
-            </tr>
-        </table>
+        <div class="header">
+            <img src="https://example.com/logo.png" alt="Shore24 Logo">
+            <h1>Shore'25 Task Notification</h1>
+        </div>
+
+        <div class="alert">
+            Important: This task has been marked as <strong>High Priority</strong> and requires immediate attention.
+        </div>
+
+        <div class="content">
+            <h2>Task Details</h2>
+            <p><span class="label">Task Title:</span> <span class="highlight">{{ task_title }}</span></p>
+            <p><span class="label">Domain:</span> {{ domain }}</p>
+            <p><span class="label">Description:</span> {{ description }}</p>
+            <p><span class="label">Priority:</span> {{ priority }}</p>
+            <p><span class="label">Due Date:</span> {{ due_date }}</p>
+            <p><span class="label">Status:</span> {{ status }}</p>
+            <p><span class="label">Assigned To:</span> {{ assigned_to }}</p>
+            <p><span class="label">Assigned By:</span> {{ assigned_by }}</p>
+
+            <a href="{{ task_url }}" class="button">View Task</a>
+        </div>
+
         <div class="footer">
-            <p>Team Shore25</p>
+            <h3>Team Shore'25</h3>
+            <p>If you have any questions, please contact us at <a href="mailto:shore_tech@gitam.in">shore_tech@gitam.in</a>.</p>
+            <p>Thank you for your dedication and hard work.</p>
         </div>
     </div>
 </body>
