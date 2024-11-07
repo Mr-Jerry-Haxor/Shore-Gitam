@@ -108,7 +108,7 @@ def home(request):
         name = request.user.first_name
         ishospitality = HospitalityUser.objects.filter(email=request.user.email).exists()
         issecurity = security_staff.objects.filter(email_id=request.user.email).exists()
-        return render(request, 'corehome.html' , {'name': name , 'ishospitality': ishospitality , 'issecurity': issecurity})
+        return render(request, 'corehome_new.html' , {'name': name , 'ishospitality': ishospitality , 'issecurity': issecurity})
     else:
         return redirect('index')
 

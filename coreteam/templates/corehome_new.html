@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore'25 Homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .bg-gradient {
+            background: linear-gradient(135deg, #007367, #009142, #006442);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .glass-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gradient font-sans min-h-screen text-white flex items-center justify-center">
+
+    <nav class="w-full bg-opacity-50 p-4 flex items-center justify-between fixed top-0 left-0 right-0 z-10 bg-black">
+        <div class="flex items-center space-x-4 px-6">
+            <img src="https://res.cloudinary.com/dgtzotq7a/image/upload/v1730969795/shore25logo_th1138.jpg " alt="Logo" class="w-10 h-10 rounded-full">
+            <h1 class="text-2xl font-bold text-white">
+                Shore'25
+            </h1>
+        </div>
+    </nav>
+
+    <div class="flex flex-col md:flex-row items-center justify-center min-h-screen w-full max-w-6xl p-6 space-y-8 md:space-y-0 md:space-x-10 mt-20">
+
+        <div class="flex flex-col items-center justify-center space-y-6 md:w-1/2 w-full">
+            <header class="text-center block mb-4">
+                <h2 class="text-3xl font-extrabold text-white">
+                    Welcome, <span class="text-[#009142]">{{ request.user.first_name }}</span> to <span class="text-[#009142]">Shore'25</span>
+                </h2>
+            </header>
+
+            <div class="space-y-4 w-full max-w-xs text-center">
+                {% if request.user.president %}
+    <a href="{% url 'coretasks' 'president' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        President
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.vice_president %}
+    <a href="{% url 'coretasks' 'vice_president' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Vice President
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.technology %}
+    <a href="{% url 'coretasks' 'technology' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Technology
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.events_cultural %}
+    <a href="{% url 'coretasks' 'events_cultural' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Events Cultural
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.events_sports %}
+    <a href="{% url 'coretasks' 'events_sports' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Events Sports
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.legal %}
+    <a href="{% url 'coretasks' 'legal' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Legal and Documentation
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.operations %}
+    <a href="{% url 'coretasks' 'operations' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Operations
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.marketing %}
+    <a href="{% url 'coretasks' 'marketing' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Marketing
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.sponsorship %}
+    <a href="{% url 'coretasks' 'sponsorship' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Sponsorship
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.design %}
+    <a href="{% url 'coretasks' 'design' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Design & Content
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.media %}
+    <a href="{% url 'coretasks' 'media' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Media
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.security %}
+    <a href="{% url 'coretasks' 'security' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Security
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.hospitality %}
+    <a href="{% url 'coretasks' 'hospitality' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Head of Hospitality
+    </a>
+
+    <br>
+    {% endif %}
+
+    {% if request.user.advisory %}
+    <a href="{% url 'coretasks' 'advisory' %}" class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+        Advisory
+    </a>
+
+    <br>
+    {% endif %}
+    <br>
+            </div>
+
+            <div class="mt-8">
+                <a href="{% url 'logout' %}" class="glass-card w-full max-w-xs py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+                    Logout
+                </a>
+            </div>
+        </div>
+
+        <div class="hidden md:flex flex-col items-center justify-center space-y-6 md:w-1/2 w-full">
+            <h1 class="text-4xl font-bold text-[#FFFFFF] drop-shadow-lg text-center">
+                Welcome to Shore'25
+            </h1>
+            <p class="text-lg text-white text-opacity-90 text-center leading-relaxed px-4 max-w-lg">
+                Shore'25 is a premier event that brings together students, faculty, and enthusiasts to celebrate a blend of talent, innovation, and culture. Join us for a memorable experience filled with exciting activities, networking opportunities, and unforgettable moments.
+            </p>
+            <div class="glass-card mt-8 overflow-hidden rounded-xl shadow-lg transform transition duration-300 hover:scale-105">
+                <img src="https://res.cloudinary.com/dgtzotq7a/image/upload/v1730969795/shore25logo_th1138.jpg " alt="Shore'25 Photo" class="w-full h-auto object-cover">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
