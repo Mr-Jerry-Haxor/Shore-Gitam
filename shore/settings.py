@@ -8,14 +8,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '46@af3(3oeqpg%o3fg%0n0qiw7sy!ap57tn!ly*q%_evev@zox'
+from dotenv import load_dotenv
+load_dotenv() 
+
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 DEVELOPMENT = False
 
 if DEVELOPMENT:
     DEBUG = True
-
+    ALLOWED_HOSTS = ["*"]
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -24,22 +26,20 @@ if DEVELOPMENT:
     }
 else:
     DEBUG = False
-
+    ALLOWED_HOSTS = ['shore.gitam.edu', '127.0.0.1']
     DATABASES = {
         'default': {
             'ATOMIC_REQUESTS': False,
             'AUTOCOMMIT': True,
             'CONN_MAX_AGE': 0,
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'shore25db',
-            'USER': 'shoremysql',
-            'PASSWORD': 'shore@123$',
-            'HOST': '192.168.63.153',
-            'PORT' : '3306',
+            'NAME': str(os.getenv('DB_NAME')),
+            'USER': str(os.getenv('DB_USER')),
+            'PASSWORD': str(os.getenv('DB_PASSWORD')),
+            'HOST': str(os.getenv('DB_HOST')),
+            'PORT' : str(os.getenv('DB_PORT')),
         }
     }
-
-ALLOWED_HOSTS = ['shore.gitam.edu', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -147,8 +147,6 @@ USE_TZ = False
 STATIC_URL = os.path.join(BASE_DIR, 'static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-
- 
 # MEDIA_URL = "media/"
 MEDIA_URL = os.path.join(BASE_DIR, "media/")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
@@ -158,11 +156,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
 SESSION_COOKIE_AGE = 60 * 60 * 4
-
-
 
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000','https://shore.gitam.edu']
 
@@ -178,9 +172,6 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'index'
 
-
-from dotenv import load_dotenv
-load_dotenv() 
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = str(os.getenv('GOOGLE_KEY'))
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = str(os.getenv('GOOGLE_SECRET'))
