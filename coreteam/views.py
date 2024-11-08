@@ -26,7 +26,10 @@ def submit_task(request, task_id):
         task.submission_url = submission_url
         task.save()
 
-        # send email about task submission
+        if not settings.DEVELOPMENT:
+            sendmail_submission(task_id)
+        else:
+            print("\nEmails not sent in development mode\n")
 
         messages.success(request, "Task submitted successfully")
         return redirect("coretasks", domain_name=task.domain)
@@ -39,7 +42,11 @@ def submit_task(request, task_id):
 @login_required(login_url="/auth/login/google-oauth2/")
 def give_access_to_domain_head(request):
     access_emails = []
-    if (request.user.is_superuser or request.user.president or (request.user.email in access_emails)):
+    if (
+        request.user.is_superuser
+        or request.user.president
+        or (request.user.email in access_emails)
+    ):
         if request.method == "POST":
             head_email = request.POST.get("domain_head_email")
             domain = request.POST.get("domain")
@@ -48,13 +55,19 @@ def give_access_to_domain_head(request):
                 user = CustomUser.objects.get(email=head_email)
 
                 if user.__dict__[domain]:
-                    messages.error(request, f"User with email {head_email} already has access to {domain}")
+                    messages.error(
+                        request,
+                        f"User with email {head_email} already has access to {domain}",
+                    )
                     return redirect("domain_heads")
 
                 user.__dict__[domain] = True
                 user.save()
 
-                messages.success(request, f"User with email {head_email} has been given access to {domain}")
+                messages.success(
+                    request,
+                    f"User with email {head_email} has been given access to {domain}",
+                )
                 return redirect("domain_heads")
             except CustomUser.DoesNotExist:
                 messages.error(request, f"User with email {head_email} does not exist")
@@ -62,9 +75,10 @@ def give_access_to_domain_head(request):
             except Exception as e:
                 messages.error(request, f"An error occurred: {e}")
                 return redirect("domain_heads")
-        
+
         return render(request, "add_domains.html")
     return render(request, "add_domains.html")
+
 
 # Define accessible domains by role, including 'coordinator' and 'alltasks' permissions
 role_domains = {
@@ -217,6 +231,94 @@ def home(request):
         )
     else:
         return redirect("index")
+
+
+def sendmail_submission(taskid):
+    task = Task.objects.filter(id=taskid).values()[0]
+
+    task_title = task["task_title"]
+    domain = task["domain"]
+    description = task["description"]
+    priority = task["priority"]
+    due_date = task["due_date"]
+    status = task["status"]
+    assigned_to = task["assigned_to"]
+    assigned_by = task["assigned_by"]
+    coordinator = task["coordinator"]
+    submission_url = task["submission_url"]
+
+    president_emails = CustomUser.objects.filter(president=True).values_list(
+        "email", flat=True
+    )
+    vicepresident_emails = CustomUser.objects.filter(vice_president=True).values_list(
+        "email", flat=True
+    )
+    domain_email_queries = {
+        "technology": CustomUser.objects.filter(technology=True).values_list(
+            "email", flat=True
+        ),
+        "events-cultural": CustomUser.objects.filter(events_cultural=True).values_list(
+            "email", flat=True
+        ),
+        "events-sports": CustomUser.objects.filter(events_sports=True).values_list(
+            "email", flat=True
+        ),
+        "legal": CustomUser.objects.filter(legal=True).values_list("email", flat=True),
+        "operations": CustomUser.objects.filter(operations=True).values_list(
+            "email", flat=True
+        ),
+        "marketing": CustomUser.objects.filter(marketing=True).values_list(
+            "email", flat=True
+        ),
+        "sponsorship": CustomUser.objects.filter(sponsorship=True).values_list(
+            "email", flat=True
+        ),
+        "design": CustomUser.objects.filter(design=True).values_list(
+            "email", flat=True
+        ),
+        "finance": CustomUser.objects.filter(finance=True).values_list(
+            "email", flat=True
+        ),
+        "media": CustomUser.objects.filter(media=True).values_list("email", flat=True),
+        "security": CustomUser.objects.filter(security=True).values_list(
+            "email", flat=True
+        ),
+        "hospitality": CustomUser.objects.filter(hospitality=True).values_list(
+            "email", flat=True
+        ),
+    }
+
+    domain_emails = domain_email_queries.get(domain, president_emails)
+
+    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails)
+
+    if coordinator:
+        coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(
+            "email", flat=True
+        )
+        emails_list |= set(coordinator_emails)
+
+    emails_list = list(emails_list)
+
+    subject = f"Shore25 Tasks: {task_title} Submitted"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("submittaskmail.html").render(
+        {
+            "task_title": task_title,
+            "domain": domain,
+            "description": description,
+            "priority": priority,
+            "due_date": due_date,
+            "status": status,
+            "assigned_to": assigned_to,
+            "assigned_by": assigned_by,
+            "submission_url": submission_url,
+        }
+    )
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, emails_list)
+    msg.content_subtype = "html"
+    msg.send()
 
 
 def sendmail_create(taskid):
@@ -412,7 +514,11 @@ def createtask(request, domain_name):
                 assigned_by=assigned_by,
                 coordinator=coordinator,
             )
-            # sendmail_create(task.id)
+
+            if not settings.DEVELOPMENT:
+                sendmail_create(task.id)
+            else:
+                print("\nEmails not sent in development mode\n")
 
             messages.success(request, "Task Created Successfully")
             return redirect("coretasks", domain_name=domain_name)
@@ -567,8 +673,11 @@ def edit_task(request, domain_name, taskid):
                 task.coordinator = "coordinator" in request.POST
                 task.save()
 
-                # sendmail_edit(taskid)
-                
+                if not settings.DEVELOPMENT:
+                    sendmail_edit(taskid)
+                else:
+                    print("\nEmails not sent in development mode\n")
+
                 return redirect("coretasks", domain_name=domain_name)
             else:
                 return redirect("corehome")
