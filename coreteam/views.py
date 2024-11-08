@@ -477,8 +477,8 @@ def createtask(request, domain_name):
         "hospitality": getattr(request.user, "hospitality", False),
     }
     Domain_choice = {
-        "president": "president",
-        "vice_president": "vice_president",
+        "president": "President",
+        "vice_president": "Vice President",
         "campus_head_hyd": "Campus Head - Hyderabad",
         "campus_head_blr": "Campus Head - Bangalore",
         "technology": "Technology",

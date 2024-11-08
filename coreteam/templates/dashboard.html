@@ -395,9 +395,13 @@
                             {% endif %}
                         </td>
                         <td>
+                            {% if not task.submission_url %}
                             <a href="{% url 'edittask' domain_name=domain taskid=task.id %}">
                                 <button class="status-button status-overdue">Edit</button>
                             </a>
+                            {% else %}
+                            <p>NA</p>
+                            {% endif %}
                         </td>
                         {% if task.submission_url %}
                         <td><a href="{{ task.submission_url }}" target="_blank">View Submission</a></td>
