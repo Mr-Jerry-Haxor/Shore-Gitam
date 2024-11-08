@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore25 Task Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            color: #333333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 16px;
+        }
+
+        .header {
+            background: #007367;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .alert {
+            background-color: #ffffff;
+            border-left: 6px solid #009142;
+            color: #006442;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-top: 1px solid #e6e9ed;
+            border-bottom: 1px solid #e6e9ed;
+            margin: 20px 0;
+        }
+
+        .content {
+            padding: 30px;
+            line-height: 1.6;
+            color: #4a4a4a;
+        }
+
+        .content h2 {
+            color: #007367;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            margin: 10px 0;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #007367;
+        }
+
+        .highlight {
+            color: #009142;
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #009142;
+            color: #ffffff;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            width: 94%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #007367;
+        }
+
+        .footer {
+            background-color: #f9fafc;
+            color: #777777;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            border-top: 1px solid #e6e9ed;
+        }
+
+        .footer h3 {
+            color: #007367;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer a {
+            color: #009142;
+            text-decoration: none;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+                margin: 10px auto;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .header, .footer {
+                padding: 15px;
+            }
+
+            .button {
+                width: auto;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Shore'25 Task Notification</h1>
+        </div>
+
+        <div class="alert">
+            Important: This task has been submitted. Please review the details below.
+        </div>
+
+        <div class="content">
+            <h2>Task Details</h2>
+            <p><span class="label">Task Title:</span> <span class="highlight">{{ task_title }}</span></p>
+            <p><span class="label">Domain:</span> {{ domain }}</p>
+            <p><span class="label">Description:</span> {{ description }}</p>
+            <p><span class="label">Priority:</span> {{ priority }}</p>
+            <p><span class="label">Due Date:</span> {{ due_date }}</p>
+            <p><span class="label">Status:</span> {{ status }}</p>
+            <p><span class="label">Assigned To:</span> {{ assigned_to }}</p>
+            <p><span class="label">Assigned By:</span> {{ assigned_by }}</p>
+            <a href="{{ submission_url }}" class="button">View Task Submission</a>
+        </div>
+
+        <div class="footer">
+            <center>
+                <img style="width: 7rem; height: 7rem; " src="https://res.cloudinary.com/dgtzotq7a/image/upload/v1730969795/shore25logo_th1138.jpg" alt="Shore25 Logo">
+            </center>
+            <h3>Team Shore'25</h3>
+            <p>If you have any questions, please contact us at <a href="mailto:shore_tech@gitam.in">shore_tech@gitam.in</a>.</p>
+            <p>Thank you for your dedication and hard work.</p>
+        </div>
+    </div>
+</body>
+
+</html>
