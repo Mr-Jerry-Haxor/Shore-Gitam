@@ -2,7 +2,7 @@
 {%endblock %} {% block head %}
 <style>
   body {
-    background: linear-gradient(to bottom right, #06399d, #9a1525, #153477);
+    background: linear-gradient(135deg, #007367, #009142, #006442);
   }
   .title {
     font-size: 40px;
@@ -34,7 +34,10 @@
         </button>
     </a></center>
     </p>
-    <br><hr> <center><h1>(or)</h1></center> <hr><br>
+    <div class="inline-flex items-center justify-center w-full">
+      <hr class="w-64 h-px my-8 bg-gray-200 border-0">
+      <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">or</span>
+    </div>
     <form class="max-w-sm mx-auto" method="post">
       {% csrf_token %}
       <div class="mb-5">
@@ -74,6 +77,11 @@
         </button>
       </center>
     </form>
+    <div class="inline-flex items-center justify-center w-full">
+      <hr class="w-64 h-px my-8 bg-gray-200 border-0">
+      <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">or</span>
+    </div>
+    <center>
       <p class="text-sm text-black-500">
         Don’t have an account yet?
         <a
@@ -82,10 +90,7 @@
           >Sign up</a
         >
       </p>
-      <div class="inline-flex items-center justify-center w-full">
-        <hr class="w-64 h-px my-8 bg-gray-200 border-0">
-        <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">or</span>
-      </div>
+      <center>
       
   </div>
 </div>

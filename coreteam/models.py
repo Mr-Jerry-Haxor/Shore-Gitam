@@ -9,6 +9,8 @@ from django.utils import timezone
 
 
 class CustomUser(AbstractUser):
+    campus_head_hyd = models.BooleanField(default=False)
+    campus_head_blr = models.BooleanField(default=False)
     coordinator = models.BooleanField(default=False)
     president = models.BooleanField(default=False)
     vice_president = models.BooleanField(default=False)
@@ -63,6 +65,8 @@ class Task(models.Model):
     DOMAIN_CHOICES = [
         ("president", "President"),
         ("vice_president", "Vice President"),
+        ("campus_head_hyd", "Campus Head - Hyderabad"),
+        ("campus_head_blr", "Campus Head - Bangalore"),
         ("technology", "Technology"),
         ("events_cultural", "Events - Cultural"),
         ("events_sports", "Events - Sports"),

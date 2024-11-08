@@ -4,68 +4,124 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>otp</title>
+    <title>OTP Verification</title>
+    <style>
+      body {
+        font-family: Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        color: #333333;
+      }
+
+      .header {
+        border-bottom: 4px solid #006442;
+        padding-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header img {
+        height: 40px;
+      }
+
+      .header a {
+        font-size: 1.5em;
+        color: #007367;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .content {
+        padding-top: 20px;
+        font-size: 1em;
+        color: #333333;
+      }
+
+      .content p {
+        margin: 15px 0;
+      }
+
+      .otp {
+        background-color: #009142;
+        color: #ffffff;
+        padding: 10px 20px;
+        display: inline-block;
+        font-size: 1.4em;
+        font-weight: bold;
+        border-radius: 4px;
+        letter-spacing: 1.5px;
+        margin: 20px 0;
+      }
+
+      .alert {
+        background-color: #eaf5ea;
+        padding: 10px;
+        border-left: 4px solid #009142;
+        color: #006442;
+        margin-bottom: 20px;
+        font-size: 0.9em;
+      }
+
+      .footer {
+        border-top: 1px solid #eaeaea;
+        margin-top: 20px;
+        padding-top: 15px;
+        text-align: center;
+        font-size: 0.9em;
+        color: #666666;
+      }
+
+      .footer p {
+        margin: 5px 0;
+      }
+
+      .footer a {
+        color: #009142;
+        text-decoration: none;
+      }
+    </style>
   </head>
   <body>
-    <div
-      style="
-        font-family: Helvetica, Arial, sans-serif;
-        min-width: 1000px;
-        overflow: auto;
-        line-height: 2;
-      "
-    >
-      <div style="margin: 50px auto; width: 70%; padding: 20px 0">
-        <div style="border-bottom: 1px solid rgb(152, 31, 43);">
-          <img
-            src="https://shore.gitam.edu/home/ubuntuserver/Shore25/static/shore_24_clogo.png"
-            class="h-8"
-            alt="Logo"
-            style="height: 1rem;"
-          />
-          <a
-            href="https://shore.gitam.edu/"
-            style="
-              font-size: 1.4em;
-              color: #00466a;
-              text-decoration: none;
-              font-weight: 600;
-            "
-            >Shore'24</a
-          >
-        </div>
-        <p style="font-size: 1.1em">Hi,</p>
+    <div class="container">
+      <div class="header">
+        <img
+          src="https://shore.gitam.edu/home/ubuntuserver/Shore25/static/shore_24_clogo.png"
+          alt="Shore'24 Logo"
+        />
+        <a href="https://shore.gitam.edu/">Shore'25</a>
+      </div>
+      <div class="alert">
+        <strong>Important:</strong> Please use the OTP below to complete your registration. The OTP is valid only for a short time.
+      </div>
+
+      <div class="content">
+        <p>Dear User,</p>
         <p>
-          Thank you for Registering. Use the following OTP to complete your Sign
-          Up procedures.
+          Thank you for registering with Shore'25. To complete your sign-up,
+          please use the One-Time Password (OTP) provided below:
         </p>
-        <h2
-          style="
-            background: rgb(152, 31, 43);
-            margin: 0 auto;
-            width: max-content;
-            padding: 0 10px;
-            color: #fff;
-            border-radius: 4px;
-          "
-        >
-          {{ user_otp }}
-        </h2>
-        <hr style="border: none; border-top: 1px solid rgb(152, 31, 43);" />
-        <div
-          style="
-            float: right;
-            padding: 8px 0;
-            color: #aaa;
-            font-size: 0.8em;
-            line-height: 1;
-            font-weight: 300;
-          "
-        >
-          <p>Shore'24</p>
-          <p>GITAM UNIVERSITY</p>
-          <p>Visakhapatnam</p>
-        </div>
+        <div class="otp">{{ user_otp }}</div>
+
+        <p>
+          If you did not request this OTP or need assistance, please contact our
+          support team.
+        </p>
+      </div>
+      <div class="footer">
+        <p>Shore'25</p>
+        <p>GITAM University, Visakhapatnam</p>
+        <p>Contact: <a href="mailto:shore_tech@gitam.in">shore_tech@gitam.in</a></p>
       </div>
     </div>
   </body>

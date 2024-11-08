@@ -40,6 +40,24 @@ def submit_task(request, task_id):
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
+def remove_submission(request, task_id):
+    task = Task.objects.get(id=task_id)
+
+    if not getattr(request.user, task.domain, False):
+        print("\nUser does not have permission to remove this submission\n")
+
+        messages.error(request, "You do not have permission to remove this submission")
+        return redirect("coretasks", domain_name=task.domain)
+
+    task.status = "In Progress"
+    task.submission_url = ""
+    task.save()
+
+    messages.success(request, "Submission removed successfully")
+    return redirect("coretasks", domain_name=task.domain)
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
 def give_access_to_domain_head(request):
     access_emails = []
     if (
@@ -77,7 +95,9 @@ def give_access_to_domain_head(request):
                 return redirect("domain_heads")
 
         return render(request, "add_domains.html")
-    return render(request, "add_domains.html")
+    else:
+        messages.error(request, "You do not have permission to access this page")
+        return redirect("corehome")
 
 
 # Define accessible domains by role, including 'coordinator' and 'alltasks' permissions
@@ -86,6 +106,8 @@ role_domains = {
         "alltasks",
         "president",
         "vice_president",
+        "campus_head_hyd",
+        "campus_head_blr",
         "technology",
         "events_cultural",
         "events_sports",
@@ -103,6 +125,8 @@ role_domains = {
         "alltasks",
         "president",
         "vice_president",
+        "campus_head_hyd",
+        "campus_head_blr",
         "technology",
         "events_cultural",
         "events_sports",
@@ -118,6 +142,8 @@ role_domains = {
     ],
     "vice_president": [
         "vice_president",
+        "campus_head_hyd",
+        "campus_head_blr",
         "technology",
         "events_cultural",
         "events_sports",
@@ -151,6 +177,8 @@ def coretasks(request, domain_name):
 
     # Map each domain to its Task domain value for querying
     domain_mapping = {
+        "campus_head_hyd": "campus_head_hyd",
+        "campus_head_blr": "campus_head_blr",
         "president": "president",
         "vice_president": "vice_president",
         "technology": "technology",
@@ -170,9 +198,10 @@ def coretasks(request, domain_name):
 
     # Define user permissions based on their role attributes
     user_permissions = {
+        "campus_head_hyd": getattr(request.user, "campus_head_hyd", False),
+        "campus_head_blr": getattr(request.user, "campus_head_blr", False),
         "coordinator": getattr(request.user, "coordinator", False),
-        "president": request.user.is_staff
-        and getattr(request.user, "president", False),
+        "president": request.user.is_staff and getattr(request.user, "president", False),
         "vice_president": getattr(request.user, "vice_president", False),
         "technology": getattr(request.user, "technology", False),
         "events_cultural": getattr(request.user, "events_cultural", False),
@@ -187,6 +216,22 @@ def coretasks(request, domain_name):
         "security": getattr(request.user, "security", False),
         "hospitality": getattr(request.user, "hospitality", False),
     }
+
+    if request.user.campus_head_hyd and domain_name == "campus_head_hyd":
+        tasks = Task.objects.filter(domain="campus_head_hyd").order_by("-due_date")
+        dashcontext = {
+            "tasks": tasks,
+            "domain": domain_name,
+        }
+        return render(request, "dashboard.html", dashcontext)
+    
+    if request.user.campus_head_blr and domain_name == "campus_head_blr":
+        tasks = Task.objects.filter(domain="campus_head_blr").order_by("-due_date")
+        dashcontext = {
+            "tasks": tasks,
+            "domain": domain_name,
+        }
+        return render(request, "dashboard.html", dashcontext)
 
     if request.user.coordinator and domain_name == "coordinator":
         tasks = Task.objects.filter(coordinator=True).order_by("-due_date")
@@ -413,6 +458,8 @@ def createtask(request, domain_name):
     # Define user permissions based on their role attributes
     user_permissions = {
         "coordinator": getattr(request.user, "coordinator", False),
+        "campus_head_hyd": getattr(request.user, "campus_head_hyd", False),
+        "campus_head_blr": getattr(request.user, "campus_head_blr", False),
         "president": request.user.is_staff
         and getattr(request.user, "president", False),
         "vice_president": getattr(request.user, "vice_president", False),
@@ -432,6 +479,8 @@ def createtask(request, domain_name):
     Domain_choice = {
         "president": "president",
         "vice_president": "vice_president",
+        "campus_head_hyd": "Campus Head - Hyderabad",
+        "campus_head_blr": "Campus Head - Bangalore",
         "technology": "Technology",
         "events_cultural": "Events - Cultural",
         "events_sports": "Events - Sports",
@@ -622,6 +671,7 @@ def edit_task(request, domain_name, taskid):
         return redirect("index")
 
     user_roles = {
+        "coordinator": request.user.coordinator,
         "president": request.user.president,
         "vice_president": request.user.vice_president,
         "technology": request.user.technology,

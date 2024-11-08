@@ -50,10 +50,26 @@
             </header>
 
             <div class="space-y-4 w-full max-w-xs text-center">
+                {% if request.user.campus_head_hyd %}
+                <a href="{% url 'coretasks' 'campus_head_hyd' %}"
+                    class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+                    Campus Head Hyderabad
+                </a>
+
+                <br>
+                {% endif %}
+                {% if request.user.campus_head_blr %}
+                <a href="{% url 'coretasks' 'campus_head_blr' %}"
+                    class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+                    Campus Head Bangalore
+                </a>
+
+                <br>
+                {% endif %}
                 {% if request.user.coordinator %}
                 <a href="{% url 'coretasks' 'coordinator' %}"
                     class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
-                    Chief Coordinator
+                    Coordinator
                 </a>
 
                 <br>

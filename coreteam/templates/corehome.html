@@ -21,7 +21,7 @@
     </style>
 </head>
 <body>
-
+{% include 'messages.html' %}
 <div class="container-fluid">
     <div class="row mt-3">
         <!-- Logo on the top left -->
@@ -38,6 +38,18 @@
                         <span style="color: red;">Shore 25</span>
                     </h5>
                     <br>
+                    {% if request.user.campus_head_hyd %}
+                    <a href="{% url 'coretasks' 'campus_head_hyd' %}">
+                        <button type="button" class="btn btn-danger">Campus Head Hyderabad</button>
+                    </a>
+                    <br>
+                    {% endif %}
+                    {% if request.user.campus_head_blr %}
+                    <a href="{% url 'coretasks' 'campus_head_blr' %}">
+                        <button type="button" class="btn btn-danger">Campus Head Bangalore</button>
+                    </a>
+                    <br>
+                    {% endif %}
                     {% if request.user.coordinator %}
                     <a href="{% url 'coretasks' 'coordinator' %}">
                         <button type="button" class="btn btn-danger">Co-ordinator</button>
