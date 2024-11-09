@@ -424,7 +424,7 @@ def sendmail_submission(taskid):
 
     emails_list = list(emails_list)
 
-    subject = f"Shore25 Tasks: {task_title} Submitted"
+    subject = f"Shore25 Tasks: {task_title} Submitted by {domain} domain"
     from_email = settings.EMAIL_HOST_USER
     html_content = get_template("submittaskmail.html").render(
         {
@@ -512,7 +512,7 @@ def sendmail_create(taskid):
 
     emails_list = list(emails_list)
 
-    subject = f"Shore25 Tasks: {task_title} Created"
+    subject = f"Shore25 Tasks: {task_title} Created by {domain} domain"
     from_email = settings.EMAIL_HOST_USER
     html_content = get_template("createtaskmail.html").render(
         {
@@ -724,7 +724,7 @@ def sendmail_edit(taskid):
 
     emails_list = list(emails_list)
 
-    subject = f"Shore25 Tasks: {task_title} edited"
+    subject = f"Shore25 Tasks: {task_title} edited by {domain} domain"
     from_email = settings.EMAIL_HOST_USER
     html_content = get_template("edittaskmail.html").render(
         {

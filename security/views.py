@@ -8,7 +8,7 @@ from festpass.models import *
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def security_home(request):
-    if security_staff.objects.filter(email_id=request.user.email).exists():
+    if request.user.is_superuser or security_staff.objects.filter(email_id=request.user.email).exists():
         staff = security_staff.objects.get(email_id=request.user.email)
         return render(request, 'securityhome.html' , {'secstaff' : staff})
     else:
