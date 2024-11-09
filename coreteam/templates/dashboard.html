@@ -158,12 +158,12 @@
                     <span>Vice president</span>
                 </a>
                 {% endif %}
-                {% if request.user.president or request.user.vice_president or request.user.coordinator or request.user.campus_head_hyd %}
+                {% if request.user.president or request.user.vice_president or request.user.campus_head_hyd %}
                 <a href="{% url 'coretasks' 'campus_head_hyd' %}">
                     <span>CH Hyd</span>
                 </a>
                 {% endif %}
-                {% if request.user.president or request.user.vice_president or request.user.coordinator or request.user.campus_head_blr %}
+                {% if request.user.president or request.user.vice_president or request.user.campus_head_blr %}
                 <a href="{% url 'coretasks' 'campus_head_blr' %}">
                     <span>CH Blr</span>
                 </a>
