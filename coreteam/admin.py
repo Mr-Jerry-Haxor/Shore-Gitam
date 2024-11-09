@@ -4,7 +4,20 @@ from django.contrib import admin
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Permission
-from .models import CustomUser
+from .models import CustomUser, DomainLead
+
+
+class DomainLeadAdmin(admin.ModelAdmin):
+    list_display = (
+        "domain",
+        "leads",
+    )
+    list_filter = ("domain", "leads")
+    search_fields = ("domain", "leads")
+    ordering = ("domain",)
+
+
+admin.site.register(DomainLead, DomainLeadAdmin)
 
 
 class CustomUserAdmin(UserAdmin):
@@ -35,6 +48,7 @@ class CustomUserAdmin(UserAdmin):
         "events_cultural_staff",
         "events_sports_staff",
         "security_staff",
+        "isLead",
     )
     list_filter = (
         "campus_head_hyd",
@@ -59,6 +73,7 @@ class CustomUserAdmin(UserAdmin):
         "events_cultural_staff",
         "events_sports_staff",
         "security_staff",
+        "isLead",
     )
     fieldsets = (
         (None, {"fields": ("username", "password")}),
@@ -92,6 +107,7 @@ class CustomUserAdmin(UserAdmin):
                     "events_cultural_staff",
                     "events_sports_staff",
                     "security_staff",
+                    "isLead",
                     "groups",
                     "user_permissions",
                 )
@@ -133,6 +149,7 @@ class CustomUserAdmin(UserAdmin):
                     "events_cultural_staff",
                     "events_sports_staff",
                     "security_staff",
+                    "isLead",
                 ),
             },
         ),

@@ -1,6 +1,7 @@
-{% load static  %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,57 +17,58 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            
+
         }
     </style>
 </head>
+
 <body>
-{% include 'messages.html' %}
-<div class="container-fluid">
-    <div class="row mt-3">
-        <!-- Logo on the top left -->
-        <div class="col-12 col-md-2">
-            <img src="https://www.gitam.edu/themes/custom/gitam/logo.png" alt="Logo" class="img-fluid">
-        </div>
-        <!-- Two columns layout -->
-        <div class="col-12 col-md-10">
-            <div class="row">
-                <!-- Left column with vertically and horizontally aligned text -->
-                <div class="col-12 col-md-5 align-center">
-                    <h5 class="text-center fw-bold" style="margin-top:50px">
-                        Welcoming {{ name }} to
-                        <span style="color: red;">Shore 25</span>
-                    </h5>
-                    <br>
-                    {% if request.user.campus_head_hyd %}
-                    <a href="{% url 'coretasks' 'campus_head_hyd' %}">
-                        <button type="button" class="btn btn-danger">Campus Head Hyderabad</button>
-                    </a>
-                    <br>
-                    {% endif %}
-                    {% if request.user.campus_head_blr %}
-                    <a href="{% url 'coretasks' 'campus_head_blr' %}">
-                        <button type="button" class="btn btn-danger">Campus Head Bangalore</button>
-                    </a>
-                    <br>
-                    {% endif %}
-                    {% if request.user.coordinator %}
-                    <a href="{% url 'coretasks' 'coordinator' %}">
-                        <button type="button" class="btn btn-danger">Co-ordinator</button>
-                    </a>
-                    <br>
-                    {% endif %}
-                    {% if request.user.president %}
-                    <a href="{% url 'coretasks' 'president' %}">
-                        <button type="button" class="btn btn-danger">President</button>
-                    </a>
-                    <br>
-                    <a href="{% url 'teams:view_application' %}">
-                        <button type="button" class="btn btn-danger">Shore Team</button>
-                    </a>
-                    <br>
-                    {% endif %}
-                    {% if request.user.vice_president %}
+    {% include 'messages.html' %}
+    <div class="container-fluid">
+        <div class="row mt-3">
+            <!-- Logo on the top left -->
+            <div class="col-12 col-md-2">
+                <img src="https://www.gitam.edu/themes/custom/gitam/logo.png" alt="Logo" class="img-fluid">
+            </div>
+            <!-- Two columns layout -->
+            <div class="col-12 col-md-10">
+                <div class="row">
+                    <!-- Left column with vertically and horizontally aligned text -->
+                    <div class="col-12 col-md-5 align-center">
+                        <h5 class="text-center fw-bold" style="margin-top:50px">
+                            Welcoming {{ name }} to
+                            <span style="color: red;">Shore 25</span>
+                        </h5>
+                        <br>
+                        {% if request.user.campus_head_hyd %}
+                        <a href="{% url 'coretasks' 'campus_head_hyd' %}">
+                            <button type="button" class="btn btn-danger">Campus Head Hyderabad</button>
+                        </a>
+                        <br>
+                        {% endif %}
+                        {% if request.user.campus_head_blr %}
+                        <a href="{% url 'coretasks' 'campus_head_blr' %}">
+                            <button type="button" class="btn btn-danger">Campus Head Bangalore</button>
+                        </a>
+                        <br>
+                        {% endif %}
+                        {% if request.user.coordinator %}
+                        <a href="{% url 'coretasks' 'coordinator' %}">
+                            <button type="button" class="btn btn-danger">Co-ordinator</button>
+                        </a>
+                        <br>
+                        {% endif %}
+                        {% if request.user.president %}
+                        <a href="{% url 'coretasks' 'president' %}">
+                            <button type="button" class="btn btn-danger">President</button>
+                        </a>
+                        <br>
+                        <a href="{% url 'teams:view_application' %}">
+                            <button type="button" class="btn btn-danger">Shore Team</button>
+                        </a>
+                        <br>
+                        {% endif %}
+                        {% if request.user.vice_president %}
                         <a href="{% url 'coretasks' 'vice_president' %}">
                             <button type="button" class="btn btn-danger">Vice President</button>
                         </a>
@@ -75,9 +77,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}
+                        {% endif %}
 
-                    {% if request.user.technology %}
+                        {% if request.user.technology %}
                         <a href="{% url 'coretasks' 'technology' %}">
                             <button type="button" class="btn btn-danger">Head of Technology</button>
                         </a>
@@ -86,9 +88,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}
+                        {% endif %}
 
-                    {% if request.user.events_cultural %}
+                        {% if request.user.events_cultural %}
                         <a href="{% url 'coretasks' 'events_cultural' %}">
                             <button type="button" class="btn btn-danger">Head of Events Cultural</button>
                         </a>
@@ -97,9 +99,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}
+                        {% endif %}
 
-                    {% if request.user.events_sports %}
+                        {% if request.user.events_sports %}
                         <a href="{% url 'coretasks' 'events_sports' %}">
                             <button type="button" class="btn btn-danger">Head of Events Sports</button>
                         </a>
@@ -108,9 +110,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}
+                        {% endif %}
 
-                    {% if request.user.legal %}
+                        {% if request.user.legal %}
                         <a href="{% url 'coretasks' 'legal' %}">
                             <button type="button" class="btn btn-danger">Head of Legal and documentation</button>
                         </a>
@@ -119,8 +121,8 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %} 
-                    {% if request.user.operations %}
+                        {% endif %}
+                        {% if request.user.operations %}
                         <a href="{% url 'coretasks' 'operations' %}">
                             <button type="button" class="btn btn-danger">Head of Operations</button>
                         </a>
@@ -129,9 +131,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}  
+                        {% endif %}
 
-                    {% if request.user.marketing %}
+                        {% if request.user.marketing %}
                         <a href="{% url 'coretasks' 'marketing' %}">
                             <button type="button" class="btn btn-danger">Head of Marketing</button>
                         </a>
@@ -140,9 +142,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}  
+                        {% endif %}
 
-                    {% if request.user.sponsorship %}
+                        {% if request.user.sponsorship %}
                         <a href="{% url 'coretasks' 'sponsorship' %}">
                             <button type="button" class="btn btn-danger">Head of Sponsorship</button>
                         </a>
@@ -151,9 +153,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}  
+                        {% endif %}
 
-                    {% if request.user.design %}
+                        {% if request.user.design %}
                         <a href="{% url 'coretasks' 'design' %}">
                             <button type="button" class="btn btn-danger">Head of Design & Content</button>
                         </a>
@@ -162,9 +164,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}  
+                        {% endif %}
 
-                    {% if request.user.finance %}
+                        {% if request.user.finance %}
                         <a href="{% url 'coretasks' 'finance' %}">
                             <button type="button" class="btn btn-danger">Head of Finance</button>
                         </a>
@@ -173,9 +175,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}  
+                        {% endif %}
 
-                    {% if request.user.media %}
+                        {% if request.user.media %}
                         <a href="{% url 'coretasks' 'media' %}">
                             <button type="button" class="btn btn-danger">Head of Media</button>
                         </a>
@@ -184,9 +186,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}  
+                        {% endif %}
 
-                    {% if request.user.security %}
+                        {% if request.user.security %}
                         <a href="{% url 'coretasks' 'security' %}">
                             <button type="button" class="btn btn-danger">Head of Security</button>
                         </a>
@@ -195,9 +197,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}  
+                        {% endif %}
 
-                    {% if request.user.hospitality %}
+                        {% if request.user.hospitality %}
                         <a href="{% url 'coretasks' 'hospitality' %}">
                             <button type="button" class="btn btn-danger">Head of Hospitality</button>
                         </a>
@@ -206,9 +208,9 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %}  
+                        {% endif %}
 
-                    {% if request.user.advisory %}
+                        {% if request.user.advisory %}
                         <a href="{% url 'coretasks' 'advisory' %}">
                             <button type="button" class="btn btn-danger">Advisory</button>
                         </a>
@@ -217,47 +219,46 @@
                             <button type="button" class="btn btn-danger">Shore Team</button>
                         </a>
                         <br>
-                    {% endif %} 
-                    {% if ishospitality %} 
-                    <br> 
-                    <a href="{% url 'hospitality:home' %}">
-                        <button type="button" class="btn btn-danger">Hospitality</button>
-                    </a>
-                    {% endif %}
-                    {% if issecurity %} 
-                    <br> 
-                    <a href="{% url 'securityhome' %}">
-                        <button type="button" class="btn btn-danger">Security</button>
-                    </a>
-                    {% endif %}
-                    <br>
-                    <a href="{% url 'passhome' %}">
-                        <button type="button" class="btn btn-danger"> click to get Fest Pass</button>
-                    </a>
-                    <br>
-                    <div class="barcode">
-                        <img
-                            src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.user.email }}"
-                            alt="QR code"
-                        />
+                        {% endif %}
+                        {% if ishospitality %}
+                        <br>
+                        <a href="{% url 'hospitality:home' %}">
+                            <button type="button" class="btn btn-danger">Hospitality</button>
+                        </a>
+                        {% endif %}
+                        {% if issecurity %}
+                        <br>
+                        <a href="{% url 'securityhome' %}">
+                            <button type="button" class="btn btn-danger">Security</button>
+                        </a>
+                        {% endif %}
+                        <br>
+                        <a href="{% url 'passhome' %}">
+                            <button type="button" class="btn btn-danger"> click to get Fest Pass</button>
+                        </a>
+                        <br>
+                        <div class="barcode">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.user.email }}"
+                                alt="QR code" />
+                        </div>
+                        <br>
+                        <a href="{% url 'logout' %}">
+                            <button type="button" class="btn btn-danger">Logout</button>
+                        </a>
+                        <br>
                     </div>
-                    <br>
-                    <a href="{% url 'logout' %}">
-                        <button type="button" class="btn btn-danger">Logout</button>
-                    </a>
-                    <br>
-                </div>
-                <!-- Right column with an image -->
-                <div class="col-12 col-md-7">
-                    <img src="{% static 'shore25.png' %}" alt="Image" class="img-fluid" style="height:100%">
+                    <!-- Right column with an image -->
+                    <div class="col-12 col-md-7">
+                        <img src="{% static 'shore25.png' %}" alt="Image" class="img-fluid" style="height:100%">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Include Bootstrap JS (Optional) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Include Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

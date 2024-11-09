@@ -244,6 +244,9 @@
             </div>
         </div>
         <div id="wrapper-text">
+            {% if isLead %}
+            Lead - 
+            {% endif %}
             {% if domain == 'campus_head_hyd' %}
             Campus Head Hyderabad
             {% elif domain == 'campus_head_blr' %}
@@ -367,7 +370,8 @@
                         <th class="name">Edit</th>
                         <th class="name">Submission URL</th>
                         {% if not request.user.coordinator or domain != 'coordinator' %}
-                        <th class="name">Submit</th>
+                        <th class="name">Submission Actions</th>
+                        <th class="name">Submitted By</th>
                         {% endif %}
                     </tr>
                     {% for task in tasks %}
@@ -400,7 +404,7 @@
                                 <button class="status-button status-overdue">Edit</button>
                             </a>
                             {% else %}
-                            <p>NA</p>
+                            <p>Please remove your submission to edit</p>
                             {% endif %}
                         </td>
                         {% if task.submission_url %}
@@ -423,6 +427,7 @@
                             </a>
                         </td>
                         {% endif %}
+                        <td>{{ task.submitted_by }}</td>
                         {% endif %}
 
                     </tr>

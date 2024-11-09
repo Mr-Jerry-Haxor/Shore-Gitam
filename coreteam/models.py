@@ -31,6 +31,7 @@ class CustomUser(AbstractUser):
     events_cultural_staff = models.BooleanField(default=False)
     events_sports_staff = models.BooleanField(default=False)
     security_staff = models.BooleanField(default=False)
+    isLead = models.BooleanField(default=False)
     # Add other role fields as needed
 
 
@@ -94,9 +95,37 @@ class Task(models.Model):
     assigned_by = models.CharField(max_length=500)
     coordinator = models.BooleanField(default=False)
     submission_url = models.URLField(max_length=500, blank=True, null=True)
+    submitted_by = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.task_title
+
+
+class DomainLead(models.Model):
+    DOMAIN_CHOICES = [
+        ("president", "President"),
+        ("vice_president", "Vice President"),
+        ("campus_head_hyd", "Campus Head - Hyderabad"),
+        ("campus_head_blr", "Campus Head - Bangalore"),
+        ("technology", "Technology"),
+        ("events_cultural", "Events - Cultural"),
+        ("events_sports", "Events - Sports"),
+        ("legal", "Legal"),
+        ("operations", "Operations"),
+        ("marketing", "Marketing"),
+        ("sponsorship", "Sponsorship"),
+        ("design", "Design"),
+        ("finance", "Finance"),
+        ("media", "Media"),
+        ("security", "Security"),
+        ("hospitality", "Hospitality"),
+    ]
+
+    domain = models.CharField(max_length=50, choices=DOMAIN_CHOICES)
+    leads = models.CharField(max_length=500)  # csv of email ids
+
+    def __str__(self):
+        return self.domain
 
 
 import os

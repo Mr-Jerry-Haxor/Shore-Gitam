@@ -24,6 +24,7 @@ def submit_task(request, task_id):
         task = Task.objects.get(id=task_id)
         task.status = "Completed"
         task.submission_url = submission_url
+        task.submitted_by = f"{request.user.first_name} {request.user.last_name}"
         task.save()
 
         if not settings.DEVELOPMENT:
@@ -41,20 +42,26 @@ def submit_task(request, task_id):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def remove_submission(request, task_id):
-    task = Task.objects.get(id=task_id)
+    if request.user.is_authenticated:
+        task = Task.objects.get(id=task_id)
 
-    if not getattr(request.user, task.domain, False):
-        print("\nUser does not have permission to remove this submission\n")
+        if getattr(request.user, task.domain, False) or request.user.isLead:
+            task.status = "In Progress"
+            task.submission_url = ""
+            task.submitted_by = ""
+            task.save()
 
-        messages.error(request, "You do not have permission to remove this submission")
-        return redirect("coretasks", domain_name=task.domain)
+            messages.success(request, "Submission removed successfully")
+            return redirect("coretasks", domain_name=task.domain)
+        else:
+            print("\nUser does not have permission to remove this submission\n")
 
-    task.status = "In Progress"
-    task.submission_url = ""
-    task.save()
+            messages.error(
+                request, "You do not have permission to remove this submission"
+            )
+            return redirect("coretasks", domain_name=task.domain)
 
-    messages.success(request, "Submission removed successfully")
-    return redirect("coretasks", domain_name=task.domain)
+    return redirect("corehome")
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
@@ -63,6 +70,7 @@ def give_access_to_domain_head(request):
     if (
         request.user.is_superuser
         or request.user.president
+        or request.user.vice_president
         or (request.user.email in access_emails)
     ):
         if request.method == "POST":
@@ -95,6 +103,45 @@ def give_access_to_domain_head(request):
                 return redirect("domain_heads")
 
         return render(request, "add_domains.html")
+    else:
+        messages.error(request, "You do not have permission to access this page")
+        return redirect("corehome")
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
+def add_domain_leads(request):
+    access_emails = []
+    if (
+        request.user.is_superuser
+        or request.user.president
+        or request.user.vice_president
+        or (request.user.email in access_emails)
+    ):
+        if request.method == "POST":
+            domain = request.POST.get("domain")
+            leads = request.POST.get("domain_lead_emails")
+
+            try:
+                domain_lead = DomainLead.objects.get(domain=domain)
+                domain_lead.leads = leads
+                domain_lead.save()
+
+                messages.success(
+                    request,
+                    f"Domain leads for {domain} have been updated successfully. The leads are {leads}",
+                )
+                return redirect("add_domain_leads")
+            except DomainLead.DoesNotExist:
+                DomainLead.objects.create(domain=domain, leads=leads)
+                messages.success(
+                    request, f"Domain leads for {domain} have been added successfully"
+                )
+                return redirect("add_domain_leads")
+            except Exception as e:
+                messages.error(request, f"An error occurred: {e}")
+                return redirect("add_domain_leads")
+
+        return render(request, "add_domain_leads.html")
     else:
         messages.error(request, "You do not have permission to access this page")
         return redirect("corehome")
@@ -174,6 +221,14 @@ role_domains = {
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def coretasks(request, domain_name):
+    if request.user.isLead:
+        tasks = Task.objects.filter(domain=domain_name).order_by("-due_date")
+        context = {
+            "tasks": tasks,
+            "domain": domain_name,
+            "isLead": True,
+        }
+        return render(request, "dashboard.html", context)
 
     # Map each domain to its Task domain value for querying
     domain_mapping = {
@@ -201,7 +256,8 @@ def coretasks(request, domain_name):
         "campus_head_hyd": getattr(request.user, "campus_head_hyd", False),
         "campus_head_blr": getattr(request.user, "campus_head_blr", False),
         "coordinator": getattr(request.user, "coordinator", False),
-        "president": request.user.is_staff and getattr(request.user, "president", False),
+        "president": request.user.is_staff
+        and getattr(request.user, "president", False),
         "vice_president": getattr(request.user, "vice_president", False),
         "technology": getattr(request.user, "technology", False),
         "events_cultural": getattr(request.user, "events_cultural", False),
@@ -224,7 +280,7 @@ def coretasks(request, domain_name):
             "domain": domain_name,
         }
         return render(request, "dashboard.html", dashcontext)
-    
+
     if request.user.campus_head_blr and domain_name == "campus_head_blr":
         tasks = Task.objects.filter(domain="campus_head_blr").order_by("-due_date")
         dashcontext = {
@@ -269,6 +325,29 @@ def home(request):
             email=request.user.email
         ).exists()
         issecurity = security_staff.objects.filter(email_id=request.user.email).exists()
+
+        user_email = request.user.email
+        domain_leads = {}
+        leads = DomainLead.objects.all()
+
+        for lead in leads:
+            domain_leads[lead.domain] = [x.strip() for x in lead.leads.split(",")]
+
+        # check if the user email is matching with any of the domain leads email in every domain, if yes then set the domain name in the context and mark isLead to True
+        for domain, leads in domain_leads.items():
+            if user_email in leads:
+                user = CustomUser.objects.get(email=user_email)
+                user.isLead = True
+                user.save()
+                context = {
+                    "name": name,
+                    "ishospitality": ishospitality,
+                    "issecurity": issecurity,
+                    "domain": domain,
+                    "isLead": True,
+                }
+                return render(request, "corehome_new.html", context)
+
         return render(
             request,
             "corehome_new.html",

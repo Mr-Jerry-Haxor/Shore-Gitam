@@ -75,7 +75,7 @@
                 src="https://res.cloudinary.com/dgtzotq7a/image/upload/v1730969795/shore25logo_th1138.jpg"
                 alt="Shore25 Logo">
         </center>
-        <h1>Add Domain Heads</h1>
+        <h1>Add Domain Leads</h1>
         {% if messages %}
         <ul>
             {% for message in messages %}
@@ -85,14 +85,13 @@
         {% endif %}
         <form method="post">
             {% csrf_token %}
-            <label for="domain-head-email">Domain Head Email</label>
-            <input type="email" id="domain-head-email" name="domain_head_email" required>
+            <label for="domain_lead_emails-head-email">Domain Lead Emails</label>
+            <p>Please ensure that the emails are valid and separated by commas.</p>
+            <input type="text" id="domain_lead_emails-head-email" name="domain_lead_emails" required
+                placeholder="Eg: abc@email.com, xyz@email.com">
 
             <label for="domain">Domain</label>
             <select id="domain" name="domain" required>
-                <option value="coordinator">Coordinator</option>
-                <option value="president">President</option>
-                <option value="vice_president">Vice President</option>
                 <option value="technology">Technology</option>
                 <option value="events_cultural">Events - Cultural</option>
                 <option value="events_sports">Events - Sports</option>
