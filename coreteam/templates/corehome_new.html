@@ -50,6 +50,14 @@
             </header>
 
             <div class="space-y-4 w-full max-w-xs text-center">
+                {% if request.user.is_superuser %}
+                <a href="{% url 'production_admin:index' %}"
+                    class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+                    Production Admin
+                </a>
+
+                <br>
+                {% endif %}
                 {% if request.user.is_superuser or request.user.president or request.user.vice_president %}
                 <a href="{% url 'domain_heads' %}"
                     class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
