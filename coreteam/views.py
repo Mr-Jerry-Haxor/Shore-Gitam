@@ -228,7 +228,7 @@ def coretasks(request, domain_name):
             "domain": domain_name,
             "isLead": True,
         }
-        return render(request, "dashboard_new.html", context)
+        return render(request, "dashboard.html", context)
 
     # Map each domain to its Task domain value for querying
     domain_mapping = {
@@ -279,7 +279,7 @@ def coretasks(request, domain_name):
             "tasks": tasks,
             "domain": domain_name,
         }
-        return render(request, "dashboard_new.html", dashcontext)
+        return render(request, "dashboard.html", dashcontext)
 
     if request.user.campus_head_blr and domain_name == "campus_head_blr":
         tasks = Task.objects.filter(domain="campus_head_blr").order_by("-due_date")
@@ -287,7 +287,7 @@ def coretasks(request, domain_name):
             "tasks": tasks,
             "domain": domain_name,
         }
-        return render(request, "dashboard_new.html", dashcontext)
+        return render(request, "dashboard.html", dashcontext)
 
     if request.user.coordinator and domain_name == "coordinator":
         tasks = Task.objects.filter(coordinator=True).order_by("-due_date")
@@ -295,7 +295,7 @@ def coretasks(request, domain_name):
             "tasks": tasks,
             "domain": domain_name,
         }
-        return render(request, "dashboard_new.html", dashcontext)
+        return render(request, "dashboard.html", dashcontext)
 
     # Check if the user has access to the requested domain
     for role, domains in role_domains.items():
@@ -311,7 +311,7 @@ def coretasks(request, domain_name):
                 "tasks": tasks,
                 "domain": domain_name,
             }
-            return render(request, "dashboard_new.html", dashcontext)
+            return render(request, "dashboard.html", dashcontext)
 
     # Redirect if the user doesn't have permission for the requested domain
     return redirect("index")
