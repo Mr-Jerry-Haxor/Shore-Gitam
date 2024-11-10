@@ -44,24 +44,28 @@ def pull_and_restart(request):
             )
             messages.success(request, f"Git pull results: {git_pull_result.stdout}")
 
-            # Use pexpect to handle the sudo password prompt
+            # Try using echo to pipe the password to sudo
             server_password = os.getenv('SERVER_PASSWORD')
+            restart_command = f"echo {server_password} | sudo -S systemctl restart gunicorn.socket"
+            
             try:
-                child = pexpect.spawn('sudo systemctl restart gunicorn.socket')
-                # Wait for password prompt
-                i = child.expect(['password for.*:', pexpect.EOF, pexpect.TIMEOUT], timeout=5)
-                if i == 0:  # Password prompt received
-                    child.sendline(server_password)
-                    child.expect(pexpect.EOF, timeout=5)
-                    messages.success(request, "Gunicorn service restarted successfully")
-                elif i == 1:  # EOF before password prompt
-                    messages.error(request, "Unexpected EOF while restarting Gunicorn")
-                else:  # Timeout
-                    messages.error(request, "Timeout while waiting for password prompt")
-                child.close()
-            except pexpect.ExceptionPexpect as e:
+                # Use shell=True because we're using pipe
+                restart_result = subprocess.run(
+                    restart_command,
+                    shell=True,
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                    timeout=5
+                )
+                messages.success(request, "Gunicorn service restarted successfully")
+            except subprocess.CalledProcessError as e:
                 messages.error(
-                    request, f"Error restarting Gunicorn: {str(e)}"
+                    request, f"Error restarting Gunicorn: {e.stderr}"
+                )
+            except subprocess.TimeoutExpired:
+                messages.error(
+                    request, "Timeout while trying to restart Gunicorn"
                 )
 
             return redirect("production_admin:index")
