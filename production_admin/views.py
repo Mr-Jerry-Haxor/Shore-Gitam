@@ -44,42 +44,35 @@ def pull_and_restart(request):
             )
             messages.success(request, f"Git pull results: {git_pull_result.stdout}")
 
-            # Try first without pexpect (for cases where sudo doesn't need password)
+            # Try using echo to pipe the password to sudo
+            server_password = os.getenv('SERVER_PASSWORD')
+            restart_command = f"echo {server_password} | sudo -S systemctl restart gunicorn.socket"
+            
             try:
+                # Use shell=True because we're using pipe
                 restart_result = subprocess.run(
-                    ["sudo", "systemctl", "restart", "gunicorn.socket"],
+                    restart_command,
+                    shell=True,
                     check=True,
                     capture_output=True,
                     text=True,
-                    timeout=5  # Add timeout to prevent hanging
+                    timeout=5
                 )
                 messages.success(request, "Gunicorn service restarted successfully")
-                return redirect("production_admin:index")
-            
-            except subprocess.CalledProcessError:
-                # If the above fails, try with pexpect for password prompt
-                sudo_command = "sudo systemctl restart gunicorn.socket"
-                child = pexpect.spawn(sudo_command)
-                
-                # Wait for password prompt or EOF
-                i = child.expect(['password for.*:', pexpect.EOF], timeout=5)
-                if i == 0:  # Password prompt received
-                    child.sendline(os.getenv('SERVER_PASSWORD'))
-                    child.expect(pexpect.EOF)
-                    messages.success(request, "Gunicorn service restarted successfully")
-                elif i == 1:  # EOF received without password prompt
-                    messages.error(request, "Failed to restart Gunicorn service")
+            except subprocess.CalledProcessError as e:
+                messages.error(
+                    request, f"Error restarting Gunicorn: {e.stderr}"
+                )
+            except subprocess.TimeoutExpired:
+                messages.error(
+                    request, "Timeout while trying to restart Gunicorn"
+                )
 
             return redirect("production_admin:index")
             
         except subprocess.CalledProcessError as e:
             messages.error(
                 request, f"Error during git pull: {e.stderr}"
-            )
-            return redirect("production_admin:index")
-        except (pexpect.ExceptionPexpect, pexpect.TIMEOUT) as e:
-            messages.error(
-                request, f"Error during Gunicorn restart: {str(e)}"
             )
             return redirect("production_admin:index")
     else:
