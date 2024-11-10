@@ -1,0 +1,432 @@
+{% load static  %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Core Team</title>
+    <!-- <link rel="stylesheet" href="dasboard.css"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <style>
+        body {
+            font-family: 'Outfit';
+        }
+        .status-todo
+        {
+            background-color: #FFD700;
+        }
+        .status-in_progress
+        {
+            background-color: #FFA500;
+        }
+        .status-In
+        {
+            background-color: #FFA500;
+        }
+        .status-completed
+        {
+            background-color: #008000;
+        }
+        .status-Completed
+        {
+            background-color: #008000;
+            color: white;
+        }
+        .status-overdue
+        {
+            background-color: #FF0000;
+            color: white;
+        }
+        </style>
+
+</head>
+
+<body>
+
+ <div id="drawer-navigation" class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-navigation-label">
+     <h5 id="drawer-navigation-label" class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">Menu</h5>
+     <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+             <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+         </svg>
+         <span class="sr-only">Close menu</span>
+     </button>
+     <div class="py-4 overflow-y-auto">
+         <ul class="space-y-2 font-medium">
+
+            {% if request.user.coordinator %}
+            <a href="{% url 'coretasks' 'coordinator' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Coordinator</span>
+            </a>
+            {% endif %}
+            {% if request.user.president %}
+            <a href="{% url 'coretasks' 'alltasks' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>All domain Tasks</span>
+            </a>
+            <a href="{% url 'coretasks' 'president' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>President</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president %}
+            <a href="{% url 'coretasks' 'vice_president' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Vice president</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.campus_head_hyd %}
+            <a href="{% url 'coretasks' 'campus_head_hyd' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Campus Head Hyderabad</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.campus_head_blr %}
+            <a href="{% url 'coretasks' 'campus_head_blr' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Campus Head Bangalore</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.technology %}
+            <a href="{% url 'coretasks' 'technology' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Technology</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.operations %}
+            <a href="{% url 'coretasks' 'operations' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Operations</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.events_cultural %}
+            <a href="{% url 'coretasks' 'events_cultural' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Events clutural</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.events_sports %}
+            <a href="{% url 'coretasks' 'events_sports' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Event Sports</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.marketing %}
+            <a href="{% url 'coretasks' 'marketing' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Marketing</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.sponsorship %}
+            <a href="{% url 'coretasks' 'sponsorship' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Sponsorship</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.legal %}
+            <a href="{% url 'coretasks' 'legal' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Legal</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.design %}
+            <a href="{% url 'coretasks' 'design' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Design&content</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.finance %}
+            <a href="{% url 'coretasks' 'finance' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Finance</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.media %}
+            <a href="{% url 'coretasks' 'media' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Media</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.security %}
+            <a href="{% url 'coretasks' 'security' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>security</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.hospitality %}
+            <a href="{% url 'coretasks' 'hospitality' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Hospitality</span>
+            </a>
+            {% endif %}
+
+
+         </ul>
+     </div>
+ </div>
+
+ 
+        
+
+
+<nav class="bg-white border-b border-gray-200 shadow-lg">
+    
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+  
+    <div class="text-left">
+        <button class="text-gray-500 hover:bg-white-800 font-medium rounded-lg text-sm px-5 py-2.5" type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+        </button>
+     </div>
+  <a href="{% url 'index' %}" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="https://res.cloudinary.com/dgtzotq7a/image/upload/v1730969795/shore25logo_th1138.jpg " class="h-8" alt="Logo" />
+      <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SHORE'25</span>
+  </a>
+  <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+      <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+        <span class="sr-only">Open user menu</span>
+        <img class="w-8 h-8 rounded-full" src="https://th.bing.com/th/id/OIP.h2-ipRWocBrclWhDMsTIfAHaHa?pid=ImgDet&w=474&h=474&rs=1" alt="user photo">
+      </button>
+      <!-- Dropdown menu -->
+      <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+        <div class="px-4 py-3">
+          <span class="block text-sm text-gray-900 dark:text-white">{{ request.user.first_name }}</span>
+          <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">{{ request.user.email }}</span>
+        </div>
+        <ul class="py-2" aria-labelledby="user-menu-button">
+            <li>
+            <a href="{% url 'index' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Home</a>
+        </li>
+        <li> <a href="https://shore.gitam.edu/shoreadmin" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Admin</a></li>
+        <li><a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a></li>
+        </ul>
+      </div>
+  </div>
+
+  </div>
+</nav>
+<main class="container mx-auto mt-8">
+    <center>
+    <div class=" text-2xl font-semibold mb-4">
+        {% if isLead %}
+        <h2 class="text-2xl font-semibold">
+        Lead - </h2>
+        {% endif %}
+        {% if domain == 'campus_head_hyd' %}
+        <h2 class="text-2xl font-semibold">
+        Campus Head Hyderabad</h2>
+        {% elif domain == 'campus_head_blr' %}
+        <h2 class="text-2xl font-semibold">
+        Campus Head Bangalore</h2>
+        {% elif domain == 'coordinator' %}
+        <h2 class="text-2xl font-semibold">
+        Coordinator</h2>
+        {% elif domain == 'president' %}
+        <h2 class="text-2xl font-semibold">
+        President</h2>
+        {% elif domain == 'vice_president' %}
+        <h2 class="text-2xl font-semibold">
+        Vice President</h2>
+        {% elif domain == 'technology' %}
+        <h2 class="text-2xl font-semibold">
+        Technology</h2>
+        {% elif domain == 'operations' %}
+        <h2 class="text-2xl font-semibold">
+        Operations</h2>
+        {% elif domain == 'events_cultural' %}
+        <h2 class="text-2xl font-semibold">
+        Events Cultural</h2>
+        {% elif domain == 'events_sports' %}
+        <h2 class="text-2xl font-semibold">
+        Events Sports</h2>
+        {% elif domain == 'marketing' %}
+        <h2 class="text-2xl font-semibold">
+        Marketing</h2>
+        {% elif domain == 'sponsorship' %}
+        <h2 class="text-2xl font-semibold">
+        Sponsorship</h2>
+        {% elif domain == 'legal' %}
+        <h2 class="text-2xl font-semibold">
+        Legal and documentation</h2>
+        {% elif domain == 'design' %}
+        <h2 class="text-2xl font-semibold">
+        Design and Content</h2>
+        {% elif domain == 'finance' %}
+        <h2 class="text-2xl font-semibold">
+        Finance</h2>
+        {% elif domain == 'media' %}
+        <h2 class="text-2xl font-semibold">
+        Media</h2>
+        {% elif domain == 'security' %}
+        <h2 class="text-2xl font-semibold">
+        Security</h2>
+        {% elif domain == 'hospitality' %}
+        <h2 class="text-2xl font-semibold">
+        Hospitality</h2>
+        {% elif domain == 'alltasks' %}
+        <h2 class="text-2xl font-semibold">
+        All Domain Tasks</h2>
+        {% endif %}
+    </div>
+
+</center>
+    <div class="bg-white shadow-lg rounded-lg p-4">
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center">
+                <span class="text-lg font-semibold text-gray-700">Tasks</span>
+            </div>
+            {% if request.user.coordinator and domain == 'coordinator' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.president and domain == 'president' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.president and domain == 'alltasks' %}
+        <a href="{% url 'createtask' domain_name='president' %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.vice_president and domain == 'vice_president'%}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.technology and domain == 'technology' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.operations and domain == 'operations' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.events_cultural and domain == 'events_cultural' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.events_sports and domain == 'events_sports' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.marketing and domain == 'marketing' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.sponsorship and domain == 'sponsorship' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.legal and domain == 'legal' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.design and domain == 'design' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.finance and domain == 'finance' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.media and domain == 'media' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.security and domain == 'security' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.hospitality and domain == 'hospitality' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% endif %}
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6">Task_Title</th>
+                            {% if domain == 'alltasks' or domain == 'coordinator' %}
+                                <th class="py-3 px-6">Domain</th>
+                            {% endif %}
+                            <th class="py-3 px-6">Task_description</th>
+                            <th class="py-3 px-6">Priority</th>
+                            <th class="py-3 px-6">Due_date</th>
+                            <th class="py-3 px-6">Status</th>
+                            <th class="py-3 px-6">Created_at</th>
+                            <th class="py-3 px-6">Updated_at</th>
+                            <th class="py-3 px-6">Assigned_to</th>
+                            <th class="py-3 px-6">Assigned_by</th>
+                            <th class="py-3 px-6">File_Attached</th>
+                            {% if not request.user.coordinator  or domain != 'coordinator' %}
+    
+                            <th class="py-3 px-6">Submission_URL</th>
+                            <th class="py-3 px-6">Edit</th>
+                            <th class="py-3 px-6">Submit</th>
+                            <th class="py-3 px-6">Submitted By</th>
+                            {% endif %}
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                        {% for task in tasks %}
+                        <tr class="bg-white border-b border-gray-200">
+                        <td class="py-3 px-6">{{ task.task_title }}</td>
+                        {% if domain == 'alltasks' or domain == 'coordinator' %}
+                        {% load custom_filters %}
+                        <td class="py-3 px-6">{{ task.domain|format_text }}</td>
+                        {% endif %}
+                        <td class="py-3 px-6">{{ task.description }}</td>
+                        <td class="py-3 px-6">{{ task.priority }}</td>
+                        <td class="py-3 px-6">{{ task.due_date }}</td>
+                        <td class="py-3 px-6">
+                        <span class="px-2 py-1 text-dark rounded-lg shadow-lg status-{{ task.status }}">{{ task.status }}</span></td>
+                        <td class="py-3 px-6">{{ task.created_at }}</td>
+                        <td class="py-3 px-6">{{ task.updated_at }}</td>
+                        <td class="py-3 px-6">{{ task.assigned_to }}</td>
+                        <td class="py-3 px-6">{{ task.assigned_by }}</td>
+                        <td class="py-3 px-6">
+                            {% if task.attached_file %}
+                                <a href="https://shore.gitam.edu/home/ubuntuserver/Shore25/media/{{ task.attached_file }}">
+                                    <button class="text-blue-500">Download</button>
+                                </a>
+                            {% else %}
+                                No File_Attached
+                            {% endif %}
+                        </td>
+                        {% if task.submission_url %}
+                            <td class="py-3 px-6"><a href="{{ task.submission_url }}" target="_blank"><button class="text-blue-500">Submission URL</button></a></td>
+                        {% else %}
+                            <td class="py-3 px-6">Not Submitted</td>
+                        {% endif %}
+                        {% if not request.user.coordinator or domain != 'coordinator' %}
+                        <td class="py-3 px-6">
+                        {% if not task.submission_url %}
+                        <a href="{% url 'edittask' domain_name=domain taskid=task.id %}">
+                            <button class="text-blue-500">Edit</button>
+                        </a>
+                            {% else %}
+                            <p>Please remove your submission to edit</p>
+                            {% endif %}
+                        </td>
+
+                        {% if task.submission_url %}
+                        <td>
+                            <a href="{% url 'remove_submission' task_id=task.id %}">
+                                <button type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Remove_Submission</button>
+                            </a>
+                        </td>
+                        {% else %}
+                        <td>
+                            <a href="{% url 'submit_task' task_id=task.id %}">
+                                <button type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Submit</button>
+                            </a>
+                        </td>
+                        {% endif %}
+                        <td class="py-3 px-6">{{ task.submitted_by }}</td>
+                        {% endif %}
+                        
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>
