@@ -13,7 +13,7 @@ load_dotenv()
 
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
-DEVELOPMENT = True
+DEVELOPMENT = False
 
 if DEVELOPMENT:
     DEBUG = True
