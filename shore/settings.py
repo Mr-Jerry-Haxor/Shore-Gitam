@@ -25,7 +25,7 @@ if DEVELOPMENT:
         }
     }
 else:
-    DEBUG = True
+    DEBUG = False
     ALLOWED_HOSTS = ['shore.gitam.edu', '127.0.0.1']
     DATABASES = {
         'default': {
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
+    # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'social_django',
     'import_export',
@@ -70,7 +70,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -169,12 +169,12 @@ AUTHENTICATION_BACKENDS = [
   'django.contrib.auth.backends.ModelBackend',
 ]
 
-STORAGES = {
-    'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
-    'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
-    }
-}
+# STORAGES = {
+#     'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+#     'staticfiles': {
+#         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+#     }
+# }
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
