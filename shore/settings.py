@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'social_django',
     'import_export',
@@ -167,6 +168,13 @@ AUTHENTICATION_BACKENDS = [
   'social_core.backends.google.GoogleOAuth2',
   'django.contrib.auth.backends.ModelBackend',
 ]
+
+STORAGES = {
+    'default': {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    }
+}
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
