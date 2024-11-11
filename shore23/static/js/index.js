@@ -32104,7 +32104,7 @@
                   children: [
                     " ",
                     (0, Gx.jsx)("img", {
-                      src: "/home/ubuntuserver/Shore25/static/img/logo1.png",
+                      src: "/home/ubuntuserver/Shore25/static/img/logo.png",
                       alt: "LOGO",
                     }),
                     " ",
@@ -32258,7 +32258,7 @@
                   children: [
                     " ",
                     (0, Gx.jsx)("img", {
-                      src: "/home/ubuntuserver/Shore25/static/img/logo1.png",
+                      src: "/home/ubuntuserver/Shore25/static/img/logo.png",
                       alt: "LOGO",
                       height: "100%",
                       width: "100%",
