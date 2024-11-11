@@ -68,7 +68,7 @@
 
                 <br>
                 {% endif %}
-                {% if request.user.is_superuser or request.user.president or request.user.vice_president %}
+                {% if request.user.is_superuser %}
                 <a href="{% url 'add_domain_leads' %}"
                     class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
                     Add Domain Leads
