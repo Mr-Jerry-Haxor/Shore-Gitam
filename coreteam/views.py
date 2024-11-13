@@ -11,6 +11,14 @@ from hospitality.models import *
 from security.models import security_staff
 
 
+def get_domain_leads_emails(domain):
+    try:
+        domain_lead = DomainLead.objects.get(domain=domain)
+        return [email.strip() for email in domain_lead.leads.split(',')]
+    except DomainLead.DoesNotExist:
+        return []
+
+
 @login_required(login_url="/auth/login/google-oauth2/")
 def submit_task(request, task_id):
     context = {}
@@ -37,7 +45,7 @@ def submit_task(request, task_id):
     task = Task.objects.get(id=task_id)
     context["task"] = task
 
-    return render(request, "submit_task.html", context)
+    return render(request, "coreteam/submit_task.html", context)
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
@@ -102,7 +110,7 @@ def give_access_to_domain_head(request):
                 messages.error(request, f"An error occurred: {e}")
                 return redirect("domain_heads")
 
-        return render(request, "add_domains.html")
+        return render(request, "coreteam/add_domains.html")
     else:
         messages.error(request, "You do not have permission to access this page")
         return redirect("corehome")
@@ -141,7 +149,7 @@ def add_domain_leads(request):
                 messages.error(request, f"An error occurred: {e}")
                 return redirect("add_domain_leads")
 
-        return render(request, "add_domain_leads.html")
+        return render(request, "coreteam/add_domain_leads.html")
     else:
         messages.error(request, "You do not have permission to access this page")
         return redirect("corehome")
@@ -228,7 +236,7 @@ def coretasks(request, domain_name):
             "domain": domain_name,
             "isLead": True,
         }
-        return render(request, "dashboard_new.html", context)
+        return render(request, "coreteam/dashboard_new.html", context)
 
     # Map each domain to its Task domain value for querying
     domain_mapping = {
@@ -279,7 +287,7 @@ def coretasks(request, domain_name):
             "tasks": tasks,
             "domain": domain_name,
         }
-        return render(request, "dashboard_new.html", dashcontext)
+        return render(request, "coreteam/dashboard_new.html", dashcontext)
 
     if request.user.campus_head_blr and domain_name == "campus_head_blr":
         tasks = Task.objects.filter(domain="campus_head_blr").order_by("-due_date")
@@ -287,7 +295,7 @@ def coretasks(request, domain_name):
             "tasks": tasks,
             "domain": domain_name,
         }
-        return render(request, "dashboard_new.html", dashcontext)
+        return render(request, "coreteam/dashboard_new.html", dashcontext)
 
     if request.user.coordinator and domain_name == "coordinator":
         tasks = Task.objects.filter(coordinator=True).order_by("-due_date")
@@ -295,7 +303,7 @@ def coretasks(request, domain_name):
             "tasks": tasks,
             "domain": domain_name,
         }
-        return render(request, "dashboard_new.html", dashcontext)
+        return render(request, "coreteam/dashboard_new.html", dashcontext)
 
     # Check if the user has access to the requested domain
     for role, domains in role_domains.items():
@@ -346,11 +354,11 @@ def home(request):
                     "domain": domain,
                     "isLead": True,
                 }
-                return render(request, "corehome_new.html", context)
+                return render(request, "coreteam/corehome_new.html", context)
 
         return render(
             request,
-            "corehome_new.html",
+            "coreteam/corehome_new.html",
             {"name": name, "ishospitality": ishospitality, "issecurity": issecurity},
         )
     else:
@@ -414,7 +422,9 @@ def sendmail_submission(taskid):
 
     domain_emails = domain_email_queries.get(domain, president_emails)
 
-    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails)
+    # Add domain leads to email list
+    domain_leads_emails = get_domain_leads_emails(domain)
+    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails)
 
     if coordinator:
         coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(
@@ -426,7 +436,7 @@ def sendmail_submission(taskid):
 
     subject = f"Shore25 Tasks: {task_title} Submitted by {domain} domain"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("submittaskmail.html").render(
+    html_content = get_template("coreteam/submittaskmail.html").render(
         {
             "task_title": task_title,
             "domain": domain,
@@ -502,7 +512,9 @@ def sendmail_create(taskid):
 
     domain_emails = domain_email_queries.get(domain, president_emails)
 
-    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails)
+    # Add domain leads to email list
+    domain_leads_emails = get_domain_leads_emails(domain)
+    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails)
 
     if coordinator:
         coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(
@@ -514,7 +526,7 @@ def sendmail_create(taskid):
 
     subject = f"Shore25 Tasks: {task_title} Created by {domain} domain"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("createtaskmail.html").render(
+    html_content = get_template("coreteam/createtaskmail.html").render(
         {
             "task_title": task_title,
             "domain": domain,
@@ -585,7 +597,7 @@ def createtask(request, domain_name):
             for key, value in Domain_choice.items():
                 DOMAIN_CHOICES.append((key, value))
             context = {"DOMAIN_CHOICES": DOMAIN_CHOICES, "assigned_by": assigned_by}
-            return render(request, "createtask.html", context)
+            return render(request, "coreteam/createtask.html", context)
         elif (
             request.user.technology
             or request.user.events_cultural
@@ -605,7 +617,7 @@ def createtask(request, domain_name):
                 if value:
                     DOMAIN_CHOICES.append((key, Domain_choice[key]))
             context = {"DOMAIN_CHOICES": DOMAIN_CHOICES, "assigned_by": assigned_by}
-            return render(request, "createtask.html", context)
+            return render(request, "coreteam/createtask.html", context)
         else:
             return redirect("corehome")
     elif request.method == "POST":
@@ -714,7 +726,9 @@ def sendmail_edit(taskid):
 
     domain_emails = domain_email_queries.get(domain, president_emails)
 
-    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails)
+    # Add domain leads to email list
+    domain_leads_emails = get_domain_leads_emails(domain)
+    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails)
 
     if coordinator:
         coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(
@@ -726,7 +740,7 @@ def sendmail_edit(taskid):
 
     subject = f"Shore25 Tasks: {task_title} edited by {domain} domain"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("edittaskmail.html").render(
+    html_content = get_template("coreteam/edittaskmail.html").render(
         {
             "task_title": task_title,
             "domain": domain,
@@ -777,7 +791,7 @@ def edit_task(request, domain_name, taskid):
                 return redirect("corehome")
             if request.method == "GET":
                 taskdetails = Task.objects.filter(id=taskid).values()[0]
-                return render(request, "edittask.html", {"task": taskdetails})
+                return render(request, "coreteam/edittask.html", {"task": taskdetails})
             elif request.method == "POST":
                 now_attached_file = request.FILES.get("attached_file")
                 task = Task.objects.get(id=taskid)

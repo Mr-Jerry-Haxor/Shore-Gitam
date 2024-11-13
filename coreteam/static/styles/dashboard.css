@@ -86,7 +86,7 @@ label #cancel {
     color: white;
     border-radius: 5px;
     font-size: 20px;
-    background-color: #b1040e;
+    background-color: #007367; 
     height: 35px;
     width: 35px;
     text-align: center;
@@ -121,7 +121,7 @@ label #cancel {
     position: sticky;
     top: 0px;
     width: auto;
-    background-color: #b1040e;
+    background: linear-gradient(135deg, #007367, #009142, #006442);
 }
 
 #main-title {
@@ -131,7 +131,7 @@ label #cancel {
 }
 
 .dropbtn {
-    background-color: #b1040e;
+    background-color: #006442;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -218,6 +218,6 @@ tr:nth-child(even) {
 #add-task {
     float: right !important;
     margin-right: 1rem;
-    background-color: #b1040e;
+    background-color: #006442;
     color: white;
 }
