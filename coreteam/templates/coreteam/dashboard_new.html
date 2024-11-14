@@ -67,7 +67,7 @@
                 <span>Coordinator</span>
             </a>
             {% endif %}
-            {% if request.user.president %}
+            {% if request.user.president or request.user.vice_president %}
             <a href="{% url 'coretasks' 'alltasks' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>All domain Tasks</span>
             </a>
