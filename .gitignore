@@ -172,3 +172,6 @@ promotion/migrations/__init__.py
 shore_venv/
 
 .DS_Store
+
+# ignoring staticfiles
+staticfiles/
