@@ -16,7 +16,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 DEVELOPMENT = os.getenv('DEVELOPMENT') == 'True'
 
 if DEVELOPMENT:
-    DEBUG = True
+    DEBUG = False
     ALLOWED_HOSTS = ["*"]
     DATABASES = {
         'default': {
@@ -25,7 +25,7 @@ if DEVELOPMENT:
         }
     }
 else:
-    DEBUG = False
+    DEBUG = True
     ALLOWED_HOSTS = ['shore.gitam.edu', '127.0.0.1']
     DATABASES = {
         'default': {
