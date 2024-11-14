@@ -9,50 +9,82 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .bg-gradient {
-            background: linear-gradient(135deg, #007367, #009142, #006442);
+            background: linear-gradient(135deg, #007367 0%, #009142 50%, #006442 100%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
 
         .glass-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-blur {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+        }
+
+        .welcome-text {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-glow {
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .logo-glow:hover {
             transform: scale(1.05);
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
         }
     </style>
 </head>
 
-<body class="bg-gradient font-sans min-h-screen text-white flex items-center justify-center">
+<body class="bg-gradient font-sans min-h-screen text-white flex items-center justify-center bg-[size:400%_400%]">
 
-    <nav class="w-full bg-opacity-50 p-4 flex items-center justify-between fixed top-0 left-0 right-0 z-10 bg-black">
+    <nav class="w-full nav-blur p-4 flex items-center justify-between fixed top-0 left-0 right-0 z-10">
         <div class="flex items-center space-x-4 px-6">
             <img src="{% static 'img/shore25logo.png' %}" alt="Logo"
-                class="w-10 h-10 rounded-full">
-            <h1 class="text-2xl font-bold text-white">
+                class="w-12 h-12 rounded-full logo-glow">
+            <h1 class="text-2xl font-bold text-white welcome-text">
                 Shore'25
             </h1>
         </div>
+        <div class="px-6">
+            <a href="{% url 'logout' %}"
+                class="glass-card py-2 px-6 font-semibold text-lg transition-all duration-300 inline-block bg-red-500 bg-opacity-20 hover:bg-opacity-30 text-red-100">
+                Logout
+            </a>
+        </div>
     </nav>
 
-    <div
-        class="flex flex-col md:flex-row items-center justify-center min-h-screen w-full max-w-6xl p-6 space-y-8 md:space-y-0 md:space-x-10 mt-20">
-
-        <div class="flex flex-col items-center justify-center space-y-6 md:w-1/2 w-full">
-            <header class="text-center block mb-4">
-                <h2 class="text-3xl font-extrabold text-white">
-                    Welcome, <span class="text-[#009142]">{{ request.user.first_name }}</span> to <span
-                        class="text-[#009142]">Shore'25</span>
+    <div class="flex flex-col md:flex-row items-center justify-center min-h-screen w-full max-w-7xl p-6 space-y-8 md:space-y-0 md:space-x-12 mt-20">
+        <div class="flex flex-col items-center justify-center space-y-8 md:w-1/2 w-full">
+            <header class="text-center block mb-6">
+                <h2 class="text-4xl font-extrabold welcome-text">
+                    Welcome, <span class="text-[#00ff9d]">{{ request.user.first_name }}</span>
                 </h2>
             </header>
 
-            <div class="space-y-4 w-full max-w-xs text-center">
-                <!-- Add a heading specifying Superuser Access -->
+            <div class="space-y-4 w-full max-w-sm text-center">
+                <!-- Existing if conditions and links with updated glass-card class -->
                 {% if request.user.is_superuser %}
-                <h3 class="text-lg font-semibold text-white">Superuser Access</h3>
+                <h3 class="text-xl font-semibold text-white mb-4 welcome-text">Superuser Access</h3>
                 <a href="{% url 'production_admin:index' %}"
                     class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
                     Production Admin
@@ -237,26 +269,26 @@
             </div>
 
             <div class="mt-8">
-                <a href="{% url 'logout' %}"
-                    class="glass-card w-full max-w-xs py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+                {% comment %}
+                <a href="{% url 'ngusers:logout' %}"
+                    class="glass-card py-4 px-8 font-semibold text-xl transition-all duration-300 inline-block hover:bg-red-500 hover:bg-opacity-20">
                     Logout
                 </a>
+                {% endcomment %}
             </div>
         </div>
 
-        <div class="hidden md:flex flex-col items-center justify-center space-y-6 md:w-1/2 w-full">
-            <h1 class="text-4xl font-bold text-[#FFFFFF] drop-shadow-lg text-center">
-                Welcome to Shore'25
+        <div class="hidden md:flex flex-col items-center justify-center space-y-8 md:w-1/2 w-full">
+            <h1 class="text-5xl font-bold text-white welcome-text text-center leading-tight">
+                Welcome to <span class="text-[#00ff9d]">Shore'25</span>
             </h1>
-            <p class="text-lg text-white text-opacity-90 text-center leading-relaxed px-4 max-w-lg">
+            <img src="{% static 'img/shore25logo.png' %}" alt="Shore'25 Photo" 
+                 class="w-72 h-auto object-contain mb-6 logo-glow">
+            <p class="text-xl text-white text-opacity-90 text-center leading-relaxed px-6 max-w-xl">
                 Shore'25 is a premier event that brings together students, faculty, and enthusiasts to celebrate a blend
                 of talent, innovation, and culture. Join us for a memorable experience filled with exciting activities,
                 networking opportunities, and unforgettable moments.
             </p>
-            <div
-                class="glass-card mt-8 overflow-hidden rounded-xl shadow-lg transform transition duration-300 hover:scale-105">
-                <img src="{% static 'img/shore25.png' %}" alt="Shore'25 Photo" alt="Shore'25 Photo" class="w-full h-auto object-cover">
-            </div>
         </div>
     </div>
 

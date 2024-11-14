@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 from dotenv import load_dotenv
-load_dotenv() 
+load_dotenv()
 
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
@@ -147,7 +147,7 @@ USE_TZ = False
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
