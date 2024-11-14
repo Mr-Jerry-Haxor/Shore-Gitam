@@ -319,7 +319,7 @@ def coretasks(request, domain_name):
                 "tasks": tasks,
                 "domain": domain_name,
             }
-            return render(request, "dashboard_new.html", dashcontext)
+            return render(request, "coreteam/dashboard_new.html", dashcontext)
 
     # Redirect if the user doesn't have permission for the requested domain
     return redirect("index")
