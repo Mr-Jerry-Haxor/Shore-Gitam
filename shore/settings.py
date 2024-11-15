@@ -16,7 +16,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 DEVELOPMENT = os.getenv('DEVELOPMENT') == 'True'
 
 if DEVELOPMENT:
-    DEBUG = False
+    DEBUG = True
     ALLOWED_HOSTS = ["*"]
     DATABASES = {
         'default': {

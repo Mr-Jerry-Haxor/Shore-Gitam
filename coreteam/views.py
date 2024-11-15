@@ -161,6 +161,7 @@ role_domains = {
         "alltasks",
         "president",
         "vice_president",
+        "event_manager"
         "campus_head_hyd",
         "campus_head_blr",
         "technology",
@@ -180,6 +181,7 @@ role_domains = {
         "alltasks",
         "president",
         "vice_president",
+        "event_manager",
         "campus_head_hyd",
         "campus_head_blr",
         "technology",
@@ -198,6 +200,23 @@ role_domains = {
     "vice_president": [
         "alltasks",
         "vice_president",
+        "event_manager",
+        "campus_head_hyd",
+        "campus_head_blr",
+        "technology",
+        "events_cultural",
+        "events_sports",
+        "legal",
+        "operations",
+        "marketing",
+        "sponsorship",
+        "design",
+        "finance",
+        "media",
+        "security",
+        "hospitality",
+    ],
+    "event_manager": [
         "campus_head_hyd",
         "campus_head_blr",
         "technology",
@@ -241,10 +260,12 @@ def coretasks(request, domain_name):
 
     # Map each domain to its Task domain value for querying
     domain_mapping = {
+        "event_manager": "event_manager",
         "campus_head_hyd": "campus_head_hyd",
         "campus_head_blr": "campus_head_blr",
         "president": "president",
         "vice_president": "vice_president",
+        "event_manager": "event_manager",
         "technology": "technology",
         "events_cultural": "events_cultural",
         "events_sports": "events_sports",
@@ -262,6 +283,7 @@ def coretasks(request, domain_name):
 
     # Define user permissions based on their role attributes
     user_permissions = {
+        "event_manager":  getattr(request.user, "event_manager", False),
         "campus_head_hyd": getattr(request.user, "campus_head_hyd", False),
         "campus_head_blr": getattr(request.user, "campus_head_blr", False),
         "coordinator": getattr(request.user, "coordinator", False),
@@ -300,6 +322,14 @@ def coretasks(request, domain_name):
 
     if request.user.coordinator and domain_name == "coordinator":
         tasks = Task.objects.filter(coordinator=True).order_by("-due_date")
+        dashcontext = {
+            "tasks": tasks,
+            "domain": domain_name,
+        }
+        return render(request, "coreteam/dashboard_new.html", dashcontext)
+
+    if request.user.event_manager and domain_name == "event_manager":
+        tasks = Task.objects.filter(domain="event_manager").order_by("-due_date")
         dashcontext = {
             "tasks": tasks,
             "domain": domain_name,
@@ -386,6 +416,10 @@ def sendmail_submission(taskid):
     vicepresident_emails = CustomUser.objects.filter(vice_president=True).values_list(
         "email", flat=True
     )
+    event_manager_emails = CustomUser.objects.filter(event_manager=True).values_list(
+        "email", flat=True
+    )
+
     domain_email_queries = {
         "technology": CustomUser.objects.filter(technology=True).values_list(
             "email", flat=True
@@ -423,9 +457,9 @@ def sendmail_submission(taskid):
 
     domain_emails = domain_email_queries.get(domain, president_emails)
 
-    # Add domain leads to email list
+    # Add domain leads and event managers to email list
     domain_leads_emails = get_domain_leads_emails(domain)
-    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails)
+    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails) | set(event_manager_emails)
 
     if coordinator:
         coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(
@@ -475,6 +509,9 @@ def sendmail_create(taskid):
     vicepresident_emails = CustomUser.objects.filter(vice_president=True).values_list(
         "email", flat=True
     )
+    event_manager_emails = CustomUser.objects.filter(event_manager=True).values_list(
+        "email", flat=True
+    )
 
     domain_email_queries = {
         "technology": CustomUser.objects.filter(technology=True).values_list(
@@ -513,9 +550,9 @@ def sendmail_create(taskid):
 
     domain_emails = domain_email_queries.get(domain, president_emails)
 
-    # Add domain leads to email list
+    # Add domain leads and event managers to email list
     domain_leads_emails = get_domain_leads_emails(domain)
-    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails)
+    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails) | set(event_manager_emails)
 
     if coordinator:
         coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(
@@ -549,6 +586,7 @@ def sendmail_create(taskid):
 def createtask(request, domain_name):
     # Define user permissions based on their role attributes
     user_permissions = {
+        "event_manager": getattr(request.user, "event_manager", False),
         "coordinator": getattr(request.user, "coordinator", False),
         "campus_head_hyd": getattr(request.user, "campus_head_hyd", False),
         "campus_head_blr": getattr(request.user, "campus_head_blr", False),
@@ -569,8 +607,10 @@ def createtask(request, domain_name):
         "hospitality": getattr(request.user, "hospitality", False),
     }
     Domain_choice = {
+        "coordinator": "Coordinator",
         "president": "President",
         "vice_president": "Vice President",
+        "event_manager": "Event Manager",
         "campus_head_hyd": "Campus Head - Hyderabad",
         "campus_head_blr": "Campus Head - Bangalore",
         "technology": "Technology",
@@ -593,6 +633,7 @@ def createtask(request, domain_name):
             request.user.coordinator
             or request.user.president
             or request.user.vice_president
+            or request.user.event_manager
         ):
             DOMAIN_CHOICES = []
             for key, value in Domain_choice.items():
@@ -689,6 +730,9 @@ def sendmail_edit(taskid):
     vicepresident_emails = CustomUser.objects.filter(vice_president=True).values_list(
         "email", flat=True
     )
+    event_manager_emails = CustomUser.objects.filter(event_manager=True).values_list(
+        "email", flat=True
+    )
 
     domain_email_queries = {
         "technology": CustomUser.objects.filter(technology=True).values_list(
@@ -727,9 +771,9 @@ def sendmail_edit(taskid):
 
     domain_emails = domain_email_queries.get(domain, president_emails)
 
-    # Add domain leads to email list
+    # Add domain leads and event managers to email list
     domain_leads_emails = get_domain_leads_emails(domain)
-    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails)
+    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails) | set(event_manager_emails)
 
     if coordinator:
         coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(
@@ -768,6 +812,7 @@ def edit_task(request, domain_name, taskid):
         "coordinator": request.user.coordinator,
         "president": request.user.president,
         "vice_president": request.user.vice_president,
+        "event_manager": request.user.event_manager,
         "technology": request.user.technology,
         "events_cultural": request.user.events_cultural,
         "events_sports": request.user.events_sports,

@@ -26,6 +26,7 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "first_name",
         "last_name",
+        "event_manager",
         "campus_head_hyd",
         "campus_head_blr",
         "coordinator",
@@ -51,6 +52,7 @@ class CustomUserAdmin(UserAdmin):
         "isLead",
     )
     list_filter = (
+        "event_manager",
         "campus_head_hyd",
         "campus_head_blr",
         "coordinator",
@@ -85,6 +87,7 @@ class CustomUserAdmin(UserAdmin):
                     "is_active",
                     "is_staff",
                     "is_superuser",
+                    "event_manager",
                     "campus_head_hyd",
                     "campus_head_blr",
                     "coordinator",
@@ -127,6 +130,7 @@ class CustomUserAdmin(UserAdmin):
                     "password2",
                     "is_staff",
                     "is_superuser",
+                    "event_manager",
                     "campus_head_hyd",
                     "campus_head_blr",
                     "coordinator",

@@ -9,6 +9,7 @@ from django.utils import timezone
 
 
 class CustomUser(AbstractUser):
+    event_manager = models.BooleanField(default=False)
     campus_head_hyd = models.BooleanField(default=False)
     campus_head_blr = models.BooleanField(default=False)
     coordinator = models.BooleanField(default=False)

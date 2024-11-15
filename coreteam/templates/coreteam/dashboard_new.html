@@ -61,13 +61,17 @@
      </button>
      <div class="py-4 overflow-y-auto">
          <ul class="space-y-2 font-medium">
-
+            {% if request.user.director %}
+            <a href="{% url 'coretasks' 'director' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Director</span>
+            </a>
+            {% endif %}
             {% if request.user.coordinator %}
             <a href="{% url 'coretasks' 'coordinator' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Coordinator</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president %}
+            {% if request.user.president or request.user.vice_president or request.user.director %}
             <a href="{% url 'coretasks' 'alltasks' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>All domain Tasks</span>
             </a>
@@ -75,83 +79,86 @@
                 <span>President</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president %}
+            {% if request.user.president or request.user.vice_president or request.user.director %}
             <a href="{% url 'coretasks' 'vice_president' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Vice president</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.campus_head_hyd %}
+            {% if request.user.president or request.user.vice_president or request.user.event_manager %}
+            <a href="{% url 'coretasks' 'event_manager' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                <span>Event Manager</span>
+            </a>
+            {% endif %}
+            {% if request.user.president or request.user.vice_president or request.user.campus_head_hyd or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'campus_head_hyd' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Campus Head Hyderabad</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.campus_head_blr %}
+            {% if request.user.president or request.user.vice_president or request.user.campus_head_blr or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'campus_head_blr' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Campus Head Bangalore</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.technology %}
+            {% if request.user.president or request.user.vice_president or request.user.technology or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'technology' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Technology</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.operations %}
+            {% if request.user.president or request.user.vice_president or request.user.operations or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'operations' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Operations</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.events_cultural %}
+            {% if request.user.president or request.user.vice_president or request.user.events_cultural or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'events_cultural' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Events clutural</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.events_sports %}
+            {% if request.user.president or request.user.vice_president or request.user.events_sports or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'events_sports' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Event Sports</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.marketing %}
+            {% if request.user.president or request.user.vice_president or request.user.marketing or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'marketing' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Marketing</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.sponsorship %}
+            {% if request.user.president or request.user.vice_president or request.user.sponsorship or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'sponsorship' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Sponsorship</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.legal %}
+            {% if request.user.president or request.user.vice_president or request.user.legal or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'legal' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Legal</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.design %}
+            {% if request.user.president or request.user.vice_president or request.user.design or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'design' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Design&content</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.finance %}
+            {% if request.user.president or request.user.vice_president or request.user.finance or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'finance' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Finance</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.media %}
+            {% if request.user.president or request.user.vice_president or request.user.media or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'media' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Media</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.security %}
+            {% if request.user.president or request.user.vice_president or request.user.security or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'security' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>security</span>
             </a>
             {% endif %}
-            {% if request.user.president or request.user.vice_president or request.user.hospitality %}
+            {% if request.user.president or request.user.vice_president or request.user.hospitality or request.user.event_manager or request.user.director %}
             <a href="{% url 'coretasks' 'hospitality' %}" class="active flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
                 <span>Hospitality</span>
             </a>
             {% endif %}
-
-
          </ul>
      </div>
  </div>
@@ -207,7 +214,13 @@
         <h2 class="text-2xl font-semibold">
         Lead - </h2>
         {% endif %}
-        {% if domain == 'campus_head_hyd' %}
+        {% if domain == 'director' %}
+        <h2 class="text-2xl font-semibold">
+            Director</h2>
+        {% elif domain == 'event_manager' %}
+        <h2 class="text-2xl font-semibold">
+            Event Manager</h2>
+        {% elif domain == 'campus_head_hyd' %}
         <h2 class="text-2xl font-semibold">
         Campus Head Hyderabad</h2>
         {% elif domain == 'campus_head_blr' %}
@@ -270,7 +283,15 @@
             <div class="flex items-center">
                 <span class="text-lg font-semibold text-gray-700">Tasks</span>
             </div>
-            {% if request.user.coordinator and domain == 'coordinator' %}
+        {% if request.user.coordinator and domain == 'coordinator' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.director and domain == 'director' %}
+        <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
+            Create Task
+        </a>
+        {% elif request.user.event_manager and domain == 'event_manager' %}
         <a href="{% url 'createtask' domain_name=domain %}" class="px-2 py-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white rounded-md hover:bg-blue-700">
             Create Task
         </a>
@@ -353,9 +374,8 @@
                             <th class="py-3 px-6">Assigned_to</th>
                             <th class="py-3 px-6">Assigned_by</th>
                             <th class="py-3 px-6">File_Attached</th>
-                            {% if not request.user.coordinator  or domain != 'coordinator' %}
-    
                             <th class="py-3 px-6">Submission_URL</th>
+                            {% if not request.user.coordinator  or domain != 'coordinator' %}
                             <th class="py-3 px-6">Edit</th>
                             <th class="py-3 px-6">Submit</th>
                             <th class="py-3 px-6">Submitted By</th>

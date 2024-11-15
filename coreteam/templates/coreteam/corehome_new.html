@@ -116,6 +116,14 @@
 
                 <br>
                 {% endif %}
+                {% if request.user.director %}
+                <a href="{% url 'coretasks' 'director' %}"
+                    class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+                    Director
+                </a>
+
+                <br>
+                {% endif %}
                 {% if request.user.campus_head_hyd %}
                 <a href="{% url 'coretasks' 'campus_head_hyd' %}"
                     class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
@@ -153,6 +161,14 @@
                 <a href="{% url 'coretasks' 'vice_president' %}"
                     class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
                     Vice President
+                </a>
+
+                <br>
+                {% endif %}
+                {% if request.user.event_manager %}
+                <a href="{% url 'coretasks' 'event_manager' %}"
+                    class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+                    Event Manager
                 </a>
 
                 <br>
