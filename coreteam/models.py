@@ -7,6 +7,11 @@ from django.contrib.auth.models import AbstractUser
 import os
 from django.utils import timezone
 
+gender_choices = [
+    ('male', 'Male'),
+    ('female', 'Female'),
+    ('other', 'Other')
+]
 
 class CustomUser(AbstractUser):
     event_manager = models.BooleanField(default=False)
@@ -34,6 +39,14 @@ class CustomUser(AbstractUser):
     security_staff = models.BooleanField(default=False)
     isLead = models.BooleanField(default=False)
     # Add other role fields as needed
+
+    phone_number = models.IntegerField(null=True, blank=True)
+    age = models.IntegerField(null=True, blank=True)
+    gender = models.CharField(max_length=255, choices=gender_choices, blank=True, null=True)
+    college = models.CharField(max_length=255, null=True, blank=True)
+    year_of_study = models.CharField(max_length=255, null=True, blank=True)
+    course = models.CharField(max_length=255, null=True, blank=True)
+    branch = models.CharField(max_length=255, null=True, blank=True)
 
 
 def file_upload_path(instance, filename):

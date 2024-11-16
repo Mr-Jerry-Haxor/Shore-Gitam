@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHORE Fest - Pass Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-image: url('{% static "img/bg_shore_blur.png" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .form-input {
+            @apply w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 text-sm;
+        }
+        .form-label {
+            @apply block text-sm font-medium text-gray-600 mb-1;
+        }
+        .preview-image {
+            max-height: 150px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 font-sans antialiased">
+    <div class="w-full max-w-3xl my-12">
+        <div class="bg-white shadow-2xl rounded-xl overflow-hidden">
+            <div class="p-6 text-center border-b border-gray-200">
+                <img src="{% static 'img/shore25logo.png' %}"
+                     alt="SHORE Fest Logo"
+                     class="h-16 mx-auto mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Get Your SHORE Fest Pass</h1>
+                <p class="text-sm text-gray-600">Complete the form below to secure your spot at SHORE Fest 25</p>
+            </div>
+
+            <div class="p-6">
+                <div class="mb-6 bg-white border-4 border-green-500 rounded-xl overflow-hidden shadow-lg transform hover:scale-102 transition-transform duration-300">
+                    <div class="bg-gradient-to-r from-green-600 to-green-500 p-4 flex justify-between items-center">
+                        <img src="{% static 'img/shore25logo.png' %}"
+                             alt="SHORE Fest Logo"
+                             class="h-10 w-10 bg-white rounded-full p-1">
+                        <h2 class="text-2xl font-bold text-white drop-shadow-md">SHORE Fest 25</h2>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <h3 class="text-xl font-semibold text-green-800">GITAM Student Pass</h3>
+                        <p class="text-green-700">Access to all events</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <p class="text-2xl font-bold text-green-800">₹299</p>
+                            <div class="h-8 w-8 bg-green-500 rounded-full flex items-center justify-center shadow-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-green-50 p-3 flex justify-between items-center">
+                        <span class="text-green-800 font-medium text-sm">Valid for SHORE Fest 25</span>
+                        <span class="text-green-800 font-medium text-sm">One-time use</span>
+                    </div>
+                </div>
+
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label for="firstName" class="block text-sm font-semibold text-gray-700">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   placeholder="John">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="lastName" class="block text-sm font-semibold text-gray-700">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   placeholder="Doe">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="email" class="block text-sm font-semibold text-gray-700">Email Address</label>
+                            <input type="email" id="email" name="email" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   placeholder="you@example.com">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="phone" class="block text-sm font-semibold text-gray-700">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   placeholder="1234567890">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="institute" class="block text-sm font-semibold text-gray-700">Institute</label>
+                            <input type="text" id="institute" name="institute" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   placeholder="GITAM University">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="branch" class="block text-sm font-semibold text-gray-700">Branch</label>
+                            <input type="text" id="branch" name="branch" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   placeholder="e.g., CSE, ECE">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="yearOfStudy" class="block text-sm font-semibold text-gray-700">Year of Study</label>
+                            <select id="yearOfStudy" name="yearOfStudy" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
+                                <option value="">Select Year</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
+                                <option value="5">5th Year</option>
+                                <option value="6">6th Year</option>
+                                <option value="7">7th Year</option>
+                                <option value="alumni">Alumni</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="campus" class="block text-sm font-semibold text-gray-700">Campus</label>
+                            <select id="campus" name="campus" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
+                                <option value="">Select Campus</option>
+                                <option value="hyd">Hyderabad</option>
+                                <option value="vizag">Visakhapatnam</option>
+                                <option value="blr">Bengaluru</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="hostler" class="block text-sm font-semibold text-gray-700">Are you a hostler?</label>
+                            <select id="hostler" name="hostler" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
+                                <option value="">Select Option</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2 col-span-full">
+                            <label for="profilePic" class="block text-sm font-semibold text-gray-700">Profile Picture</label>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <!-- Warning icon -->
+                                        <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm text-yellow-700">
+                                            <strong>Important:</strong> Upload a clear photo from head to shoulders only (like a passport photo).
+                                        </p>
+                                        <p class="text-sm text-yellow-700 mt-1">
+                                            Maximum size: 2MB. Incorrect profile pictures will result in pass cancellation without refund.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="file" id="profilePic" name="profilePic" accept="image/*" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   onchange="validateAndPreviewImage(event)">
+                        </div>
+                        <div class="col-span-full">
+                            <div id="previewContainer" class="hidden">
+                                <p class="block text-sm font-medium text-gray-700 mb-2">Preview:</p>
+                                <img id="imagePreview" src="#" alt="Profile Picture Preview" 
+                                     class="preview-image rounded-lg border border-gray-300">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mt-6">
+                        <input id="terms" name="terms" type="checkbox" required
+                               class="h-5 w-5 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                        <label for="terms" class="ml-3 block text-base text-gray-700">
+                            I agree to the <a href="#" class="text-green-600 hover:text-green-500 font-medium">Terms and Conditions</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-green-600 to-green-500 text-white py-4 px-6 rounded-lg hover:from-green-700 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200 text-lg font-semibold flex items-center justify-center shadow-lg">
+                        <span>Purchase Fest Pass</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <p class="mt-8 text-center text-base text-white">
+            Need help? <a href="#" class="font-medium text-white hover:text-green-200 underline">Contact our support team</a>
+        </p>
+    </div>
+
+    <script>
+        function validateAndPreviewImage(event) {
+            const file = event.target.files[0];
+            const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+            const previewContainer = document.getElementById('previewContainer');
+            const output = document.getElementById('imagePreview');
+
+            // Check file size
+            if (file.size > maxSize) {
+                alert('File size exceeds 2MB. Please choose a smaller file.');
+                event.target.value = ''; // Clear the file input
+                previewContainer.classList.add('hidden');
+                return false;
+            }
+
+            // Preview the image
+            const reader = new FileReader();
+            reader.onload = function() {
+                output.src = reader.result;
+                previewContainer.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>

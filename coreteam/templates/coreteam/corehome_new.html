@@ -66,7 +66,7 @@
             </h1>
         </div>
         <div class="px-6">
-            <a href="{% url 'logout' %}"
+            <a href="{% url 'ngusers:logout' %}"
                 class="glass-card py-2 px-6 font-semibold text-lg transition-all duration-300 inline-block bg-red-500 bg-opacity-20 hover:bg-opacity-30 text-red-100">
                 Logout
             </a>
@@ -88,6 +88,10 @@
                 <a href="{% url 'production_admin:index' %}"
                     class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
                     Production Admin
+                </a>
+                <a href="/shoreadmin"
+                    class="glass-card w-full py-3 px-6 font-semibold text-xl transition-transform duration-300 ease-in-out block mb-4">
+                    Django Admin
                 </a>
 
                 <br>

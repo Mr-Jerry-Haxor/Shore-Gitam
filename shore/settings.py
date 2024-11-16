@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'security',
     'timeline',
     "production_admin",
+    "home",
 ]
 
 MIDDLEWARE = [
@@ -146,12 +147,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
-STATIC_ROOT = BASE_DIR / "static"
-
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 MEDIA_URL = '/media/'
 

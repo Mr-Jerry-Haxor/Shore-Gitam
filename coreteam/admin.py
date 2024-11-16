@@ -50,6 +50,13 @@ class CustomUserAdmin(UserAdmin):
         "events_sports_staff",
         "security_staff",
         "isLead",
+        "phone_number",
+        "age",
+        "gender",
+        "college",
+        "year_of_study",
+        "course",
+        "branch",
     )
     list_filter = (
         "event_manager",
@@ -76,10 +83,31 @@ class CustomUserAdmin(UserAdmin):
         "events_sports_staff",
         "security_staff",
         "isLead",
+        "gender",
+        "college",
+        "year_of_study",
+        "course",
+        "branch",
     )
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        ("Personal Info", {"fields": ("first_name", "last_name", "email")}),
+        (
+            "Personal Info", 
+            {
+                "fields": (
+                    "first_name", 
+                    "last_name", 
+                    "email",
+                    "phone_number",
+                    "age",
+                    "gender",
+                    "college",
+                    "year_of_study", 
+                    "course",
+                    "branch",
+                )
+            }
+        ),
         (
             "Permissions",
             {
@@ -128,6 +156,13 @@ class CustomUserAdmin(UserAdmin):
                     "email",
                     "password1",
                     "password2",
+                    "phone_number",
+                    "age",
+                    "gender",
+                    "college",
+                    "year_of_study",
+                    "course",
+                    "branch",
                     "is_staff",
                     "is_superuser",
                     "event_manager",
@@ -158,7 +193,7 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
-    search_fields = ("username", "email")
+    search_fields = ("username", "email", "college", "course", "branch")
     ordering = ("username",)
 
 
@@ -171,10 +206,33 @@ from .models import Task
 
 
 class TaskAdmin(ImportExportModelAdmin):
-    list_display = ("task_title", "assigned_to", "status", "due_date")
-    list_filter = ("status", "due_date", "domain")
-    search_fields = ("task_title", "assigned_to", "assigned_by")
+    list_display = (
+        "task_title", 
+        "domain",
+        "assigned_to", 
+        "assigned_by",
+        "status", 
+        "priority",
+        "due_date",
+        "coordinator",
+        "submitted_by",
+    )
+    list_filter = (
+        "status", 
+        "priority",
+        "due_date", 
+        "domain",
+        "coordinator",
+    )
+    search_fields = (
+        "task_title", 
+        "assigned_to", 
+        "assigned_by",
+        "description",
+        "submitted_by",
+    )
     date_hierarchy = "due_date"
+    readonly_fields = ("created_at", "updated_at")
 
 
 admin.site.register(Task, TaskAdmin)

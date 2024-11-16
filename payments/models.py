@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 
 class FestPass(models.Model):
     name = models.CharField(max_length=300, blank=True , null=True)
