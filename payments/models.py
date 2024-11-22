@@ -2,6 +2,7 @@ from django.db import models
 
 
 class FestPass(models.Model):
+    """Model for GITAM Students Festpass"""
     name = models.CharField(max_length=300, blank=True , null=True)
     mobile = models.CharField(max_length=300, blank=True , null=True)
     email = models.CharField(max_length=300, blank=True , null=True)
@@ -22,6 +23,7 @@ class FestPass(models.Model):
 
     
 class Registrations(models.Model):
+    """Model for Non-GITAM Students sports """
     name = models.CharField(max_length=300, blank=True , null=True)
     mobile = models.CharField(max_length=300, blank=True , null=True)
     email = models.CharField(max_length=300, blank=True , null=True)
@@ -43,6 +45,7 @@ class Registrations(models.Model):
 
 
 class nongitamite(models.Model):
+    """Model for Non-GITAM festpass"""
     name = models.CharField(max_length=300, blank=True, null=True)
     mobile = models.CharField(max_length=300, blank=True, null=True)
     email = models.CharField(max_length=300, blank=True, null=True)
@@ -72,8 +75,3 @@ class nongitamite(models.Model):
             self.shoreid = f'shore{new_shore_id:05d}024'
 
         super().save(*args, **kwargs)
-
-    
-    
-    
-    

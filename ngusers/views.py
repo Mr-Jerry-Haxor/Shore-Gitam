@@ -18,7 +18,7 @@ import json
 def send_otp_email(user_email, otp):
     participant = AllowedParticipants.objects.get(email=user_email)
 
-    subject = f"SHORE'24 GITAM, Sign Up OTP"
+    subject = f"SHORE'25 GITAM, Sign Up OTP"
     html_content = get_template("ngusers/otp_template.html").render(
         {
             "user_otp": otp,

@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@900&display=swap" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <title>SHORE 24</title>
+    <title>SHORE 25</title>
     <link rel="icon" type="image/x-icon" href="{% static 'shore_24_clogo.png'%}">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTVGGBL7NF"></script>
@@ -1457,7 +1457,9 @@
         <li class="nav1"><a href="{% url 'index' %}">Home</a></li>
         <li><a href="{% url 'passhome' %}">Fest Pass</a></li>
         <li><a href="{% url 'shore23' %}">Shore'23</a></li>
-        <li><a href="{% url 'events:eventshome' %}">Registrations</li>
+        {% comment %}
+        <!-- <li><a href="{% url 'events:eventshome' %}">Registrations</li> -->
+        {% endcomment %}
         <li><a href="{% url 'ngusers:login' %}">Login</a></li>
       </ul>
     </nav>

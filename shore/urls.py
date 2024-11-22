@@ -20,9 +20,9 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('shoreadmin/', admin.site.urls, name='django_admin'),
-    path('logout/', auth_views.LogoutView.as_view(),name='logout'),
+    # path('logout/', auth_views.LogoutView.as_view(),name='logout'),
     path('auth/', include('social_django.urls', namespace='social')),
-    path('', include('comingsoon.urls')),
+    # path('comingsoon/', include('comingsoon.urls')),
     path('coreteam/', include('coreteam.urls')),
     path('shore23/' , include('shore23.urls')),
     path('hospitality/' , include('hospitality.urls')),
@@ -36,7 +36,7 @@ urlpatterns = [
     path('security/' , include('security.urls')),
     path('timeline/' , include('timeline.urls')),
     path("productionadmin/" , include("production_admin.urls")),
-    path("home/", include("home.urls")),
+    path("", include("home.urls")),
 ]
 
 

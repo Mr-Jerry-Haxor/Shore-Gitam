@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Fest '25 E-Ticket</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="max-w-md w-full">
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden relative">
+            <!-- Background -->
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-800"></div>
+                <img src="{% static 'img/bg1.png' %}"
+                    alt="Marble Background" class="w-full h-full object-cover mix-blend-overlay opacity-50">
+            </div>
+
+            <!-- Threads -->
+            <div class="absolute inset-0 z-10 pointer-events-none">
+                <!-- Horizontal threads -->
+                <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-50"></div>
+                <div class="absolute top-0.5 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-30"></div>
+                <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-50"></div>
+                <div class="absolute bottom-0.5 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-30"></div>
+                
+                <!-- Vertical threads -->
+                <div class="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-yellow-400 to-transparent opacity-50"></div>
+                <div class="absolute top-0 left-0.5 w-px h-full bg-gradient-to-b from-transparent via-blue-400 to-transparent opacity-30"></div>
+                <div class="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-yellow-400 to-transparent opacity-50"></div>
+                <div class="absolute top-0 right-0.5 w-px h-full bg-gradient-to-b from-transparent via-blue-400 to-transparent opacity-30"></div>
+            </div>
+
+            <!-- Lanyard Hole -->
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white rounded-full shadow-inner z-20"></div>
+            <div class="absolute top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-gray-200 rounded-full shadow-inner z-20"></div>
+
+            <!-- Content -->
+            <div class="relative z-10 p-6 pt-10 flex flex-col items-center">
+                <!-- Logo -->
+                <div class="mb-6">
+                    <img src="{% static 'img/shore25_letter.png' %}"
+                        alt="Shore Fest '25 Logo" class="w-32 h-auto">
+                </div>
+
+                <!-- White Background for Content -->
+                <div class="bg-white rounded-3xl p-6 border-2 border-emerald-500 w-full relative overflow-hidden">
+                    <!-- Holographic Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-transparent via-white to-transparent opacity-20 animate-pulse"></div>
+
+                    <!-- Attendee Details -->
+                    <div class="flex items-center space-x-4 mb-6 relative z-10">
+                        <div class="w-16 h-16 bg-emerald-100 rounded-full border-2 border-emerald-500 flex items-center justify-center text-2xl font-bold text-emerald-600">
+                            <img src="{{ request.user.profile_picture.url }}" alt="Profile Picture" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-xl text-emerald-700">{{ request.user.first_name|capfirst }}</h2>
+                            <p class="text-emerald-600">{% if request.user.is_gitamite %} GITAM Student {% else %}Non-GITAM Student{% endif %}</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-y-4 text-sm mb-6 relative z-10">
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
+                                Registration No.
+                            </p>
+                            <p class="font-mono font-bold text-emerald-800">{{ request.user.registration_number }}</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
+                                Gender
+                            </p>
+                            <p class="font-mono font-bold text-emerald-800">{{ request.user.gender|capfirst }}</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
+                                Phone Number
+                            </p>
+                            <p class="font-bold text-emerald-800">{{ request.user.phone_number }}</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
+                                Year of Study
+                            </p>
+                            <p class="font-bold text-emerald-800">{{ request.user.year_of_study }}</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
+                                Course
+                            </p>
+                            <p class="font-bold text-emerald-800">{{ request.user.course }}</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
+                                Branch
+                            </p>
+                            <p class="font-bold text-emerald-800">{{ request.user.branch }}</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
+                                Campus
+                            </p>
+                            <p class="font-bold text-emerald-800">{{ request.user.campus|capfirst }}</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
+                                Date
+                            </p>
+                            <p class="font-bold text-emerald-800">January 3-5, 2025</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
+                                Entry Time
+                            </p>
+                            <p class="font-bold text-emerald-800">5:00 PM</p>
+                        </div>
+                    </div>
+
+                    <!-- QR Code -->
+                    <div class="flex justify-center relative z-10">
+                        <div class="p-4 bg-emerald-100 rounded-xl">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.user.passhash }}" alt="QR Code" class="w-32 h-32">
+                        </div>
+                    </div>
+
+                  
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="mt-6 w-full bg-emerald-100 rounded-xl p-4 border border-emerald-200">
+                    <div class="text-center text-emerald-800 text-sm">
+                        <p class="font-semibold mb-1">This ticket is non-transferable and valid for all 3 days.</p>
+                        <p>Please present this ticket at the entrance gate for admission.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Button -->
+        <button class="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
+            Download E-Ticket
+        </button>
+    </div>
+</body>
+</html>

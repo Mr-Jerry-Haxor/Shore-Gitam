@@ -39,6 +39,7 @@
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-6 font-sans antialiased">
+    {% include 'messages.html' %}
     <div class="w-full max-w-3xl my-12">
         <div class="bg-white shadow-2xl rounded-xl overflow-hidden">
             <div class="p-6 text-center border-b border-gray-200">
@@ -58,10 +59,10 @@
                         <h2 class="text-2xl font-bold text-white drop-shadow-md">SHORE Fest 25</h2>
                     </div>
                     <div class="p-6 space-y-2">
-                        <h3 class="text-xl font-semibold text-green-800">GITAM Student Pass</h3>
+                        <h3 class="text-xl font-semibold text-green-800">{% if request.user.is_gitamite %}GITAM{% else %}Non-GITAM{% endif %} Student Pass</h3>
                         <p class="text-green-700">Access to all events</p>
                         <div class="flex justify-between items-center mt-3">
-                            <p class="text-2xl font-bold text-green-800">₹299</p>
+                            <p class="text-2xl font-bold text-green-800">{% if request.user.is_gitamite %}₹299{% else %}₹499{% endif %}</p>
                             <div class="h-8 w-8 bg-green-500 rounded-full flex items-center justify-center shadow-md">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -75,78 +76,128 @@
                     </div>
                 </div>
 
-                <form class="space-y-6">
+                <form class="space-y-6" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label for="firstName" class="block text-sm font-semibold text-gray-700">First Name</label>
                             <input type="text" id="firstName" name="firstName" required
+                                   value="{{ request.user.first_name|default:'' }}" 
+                                   {% if request.user.first_name %} readonly {% endif %}
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
                                    placeholder="John">
                         </div>
                         <div class="space-y-2">
                             <label for="lastName" class="block text-sm font-semibold text-gray-700">Last Name</label>
                             <input type="text" id="lastName" name="lastName" required
+                                   value="{{ request.user.last_name|default:'' }}" 
+                                   {% if request.user.last_name %} readonly {% endif %}
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
                                    placeholder="Doe">
                         </div>
                         <div class="space-y-2">
                             <label for="email" class="block text-sm font-semibold text-gray-700">Email Address</label>
                             <input type="email" id="email" name="email" required
+                                   value="{{ request.user.email|default:'' }}" 
+                                   {% if request.user.email %} readonly {% endif %}
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
                                    placeholder="you@example.com">
                         </div>
                         <div class="space-y-2">
+                            <label for="registrationNumber" class="block text-sm font-semibold text-gray-700">Registration Number</label>
+                            <input type="text" id="registrationNumber" name="registrationNumber" required
+                                   value="{{ request.user.registration_number|default:'' }}" 
+                                   {% if request.user.registration_number %} readonly {% endif %}
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   placeholder="e.g., 321710303001">
+                        </div>
+                        <div class="space-y-2">
                             <label for="phone" class="block text-sm font-semibold text-gray-700">Phone Number</label>
                             <input type="tel" id="phone" name="phone" required
+                                   value="{{ request.user.phone_number|default:'' }}" 
+                                   {% if request.user.phone_number %} readonly {% endif %}
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
                                    placeholder="1234567890">
                         </div>
                         <div class="space-y-2">
-                            <label for="institute" class="block text-sm font-semibold text-gray-700">Institute</label>
-                            <input type="text" id="institute" name="institute" required
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
-                                   placeholder="GITAM University">
-                        </div>
-                        <div class="space-y-2">
                             <label for="branch" class="block text-sm font-semibold text-gray-700">Branch</label>
                             <input type="text" id="branch" name="branch" required
+                                   value="{{ request.user.branch|default:'' }}" 
+                                   {% if request.user.branch %} readonly {% endif %}
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
                                    placeholder="e.g., CSE, ECE">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="course" class="block text-sm font-semibold text-gray-700">Course</label>
+                            <input type="text" id="course" name="course" required
+                                   value="{{ request.user.course|default:'' }}"
+                                   {% if request.user.course %} readonly {% endif %}
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   placeholder="e.g., B.Tech, M.Sc">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="gender" class="block text-sm font-semibold text-gray-700">Gender</label>
+                            <select id="gender" name="gender" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
+                                <option value="">Select Gender</option>
+                                <option value="male" {% if request.user.gender == 'male' %} selected {% endif %}>Male</option>
+                                <option value="female" {% if request.user.gender == 'female' %} selected {% endif %}>Female</option>
+                                <option value="other" {% if request.user.gender == 'other' %} selected {% endif %}>Other</option>
+                            </select>
                         </div>
                         <div class="space-y-2">
                             <label for="yearOfStudy" class="block text-sm font-semibold text-gray-700">Year of Study</label>
                             <select id="yearOfStudy" name="yearOfStudy" required
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
                                 <option value="">Select Year</option>
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="3">3rd Year</option>
-                                <option value="4">4th Year</option>
-                                <option value="5">5th Year</option>
-                                <option value="6">6th Year</option>
-                                <option value="7">7th Year</option>
-                                <option value="alumni">Alumni</option>
+                                <option value="1" {% if request.user.year_of_study == '1' %} selected {% endif %}>1st Year</option>
+                                <option value="2" {% if request.user.year_of_study == '2' %} selected {% endif %}>2nd Year</option>
+                                <option value="3" {% if request.user.year_of_study == '3' %} selected {% endif %}>3rd Year</option>
+                                <option value="4" {% if request.user.year_of_study == '4' %} selected {% endif %}>4th Year</option>
+                                <option value="5" {% if request.user.year_of_study == '5' %} selected {% endif %}>5th Year</option>
+                                <option value="6" {% if request.user.year_of_study == '6' %} selected {% endif %}>6th Year</option>
+                                <option value="7" {% if request.user.year_of_study == '7' %} selected {% endif %}>7th Year</option>
+                                <option value="alumni" {% if request.user.year_of_study == 'alumni' %} selected {% endif %}>Alumni</option>
                             </select>
                         </div>
+                        {% if request.user.is_gitamite %}
                         <div class="space-y-2">
                             <label for="campus" class="block text-sm font-semibold text-gray-700">Campus</label>
                             <select id="campus" name="campus" required
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
                                 <option value="">Select Campus</option>
-                                <option value="hyd">Hyderabad</option>
-                                <option value="vizag">Visakhapatnam</option>
-                                <option value="blr">Bengaluru</option>
+                                <option value="hyderabad" {% if request.user.campus == 'hyderabad' %} selected {% endif %}>Hyderabad</option>
+                                <option value="visakhapatnam" {% if request.user.campus == 'visakhapatnam' %} selected {% endif %}>Visakhapatnam</option>
+                                <option value="bengaluru" {% if request.user.campus == 'bengaluru' %} selected {% endif %}>Bengaluru</option>
+                            </select>
+                        </div>
+                        {% else %}
+                        <div class="space-y-2">
+                            <label for="college" class="block text-sm font-semibold text-gray-700">College</label>
+                            <select id="college" name="college" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
+                                <option value="{{ request.user.college }}">{{ request.user.college }}</option>
                             </select>
                         </div>
                         <div class="space-y-2">
-                            <label for="hostler" class="block text-sm font-semibold text-gray-700">Are you a hostler?</label>
-                            <select id="hostler" name="hostler" required
+                            <label for="participatingInSports" class="block text-sm font-semibold text-gray-700">Are you participating in sports?</label>
+                            <select id="participatingInSports" name="participatingInSports" required
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
-                                <option value="">Select Option</option>
+                                <option value="">Select Yes or No</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                             </select>
                         </div>
+                        <div class="space-y-2">
+                            <label for="needAccommodation" class="block text-sm font-semibold text-gray-700">Do you need accommodation?</label>
+                            <select id="needAccommodation" name="needAccommodation" required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
+                                <option value="">Select Yes or No</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        {% endif %}
                         <div class="space-y-2 col-span-full">
                             <label for="profilePic" class="block text-sm font-semibold text-gray-700">Profile Picture</label>
                             <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
@@ -167,15 +218,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="file" id="profilePic" name="profilePic" accept="image/*" required
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
-                                   onchange="validateAndPreviewImage(event)">
-                        </div>
-                        <div class="col-span-full">
-                            <div id="previewContainer" class="hidden">
-                                <p class="block text-sm font-medium text-gray-700 mb-2">Preview:</p>
-                                <img id="imagePreview" src="#" alt="Profile Picture Preview" 
-                                     class="preview-image rounded-lg border border-gray-300">
+                            <div class="col-span-full">
+                                <div id="previewContainer" class="hidden">
+                                    <p class="block text-sm font-medium text-gray-700 mb-2">Preview:</p>
+                                    <img id="imagePreview" src="#" alt="Profile Picture Preview" 
+                                         class="preview-image rounded-lg border border-gray-300">
+                                </div>
+                                {% if request.user.profile_picture %}
+                                    <div class="mt-4">
+                                        <p class="block text-sm font-medium text-gray-700 mb-2">Existing Profile Picture:</p>
+                                        <img src="{{ request.user.profile_picture.url }}" alt="Existing Profile Picture" 
+                                             class="preview-image rounded-lg border border-gray-300">
+                                    </div>
+                                    <input type="file" id="profilePic" name="profilePic" accept=".png, .jpg, .jpeg"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                           onchange="validateAndPreviewImage(event)">
+                                {% else %}
+                                    <input type="file" id="profilePic" name="profilePic" accept=".png, .jpg, .jpeg" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                           onchange="validateAndPreviewImage(event)">
+                                {% endif %}
                             </div>
                         </div>
                     </div>
