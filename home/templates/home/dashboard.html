@@ -66,9 +66,17 @@
                         View E-Ticket
                     </a>
                 {% else %}
+
+                {% comment %}
                 <p class="mb-4 text-emerald-700">You've not purchased your pass yet.</p>
                     <a href="{% url 'home:festpass' %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
                         Buy Fest Pass
+                    </a>
+                {% endcomment %}
+
+                <p class="mb-4 text-emerald-700">You've not purchased your pass yet.</p>
+                    <a href="#" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
+                        Festpasses releasing from 27th November, 2024.
                     </a>
                 {% endif %}
                 </div>
