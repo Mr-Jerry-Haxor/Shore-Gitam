@@ -107,25 +107,25 @@
           <ul class="py-2" aria-labelledby="user-menu-button">
             <li>
               <a
-                href="{% url 'index' %}"
+                href="{% url 'home:dashboard' %}"
                 class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
                 >Home</a
               >
             </li>
             <li>
               <a
-                href="{% url 'passhome' %}"
+                href="{% url 'home:eticket' %}"
                 class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
                 >Fest Pass</a
               >
             <li>
-            <li>
+            <!-- <li>
               <a
                 href="{% url 'shoreidcard' %}"
                 class="block px-4 py-2 text-sm text-black-900 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-black-200 dark:hover:text-white"
                 >Shore IDcard</a
               >
-            <li>
+            <li> -->
             <li>
               <a
                 href="{% url 'ngusers:update_picture' %}"
