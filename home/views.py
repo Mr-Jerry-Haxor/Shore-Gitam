@@ -245,7 +245,7 @@ def festpass(request):
 
             """After saving the user data successfully, redirect to their respective payment portals"""
             if user.is_gitamite:
-                return redirect("https://gevents.gitam.edu/registration/MjkzMg")
+                return redirect(f"https://gevents.gitam.edu/registration/MjkzMg..?rid={user.registration_number}&type=student")
             elif not user.is_gitamite and sports_participation == 'no':
                 return HttpResponse("Non GITAM Student's festpass gevent page")
             elif not user.is_gitamite and sports_participation == 'yes':
@@ -274,10 +274,25 @@ def eticket(request):
 def dashboard(request):
     if request.user.is_authenticated:
         context = {}
+
+        fields_to_check = [
+            'event_manager', 'campus_head_hyd', 'campus_head_blr', 'coordinator', 
+            'president', 'vice_president', 'technology', 'events_cultural', 
+            'events_sports', 'legal', 'operations', 'marketing', 'sponsorship', 
+            'design', 'finance', 'media', 'security', 'hospitality', 'advisory', 
+            'hospitality_staff', 'events_cultural_staff', 'events_sports_staff', 
+            'security_staff', 'isLead'
+        ]
+
+        if request.user.is_superuser or any(getattr(request.user, field, False) for field in fields_to_check):
+            context['isCoreMember'] = True
+        else:
+            context['isCoreMember'] = False
+
         # if request.user.is_festpass_purchased and FestPass.objects.filter(email=request.user.email).exists():
         if request.user.is_festpass_purchased:
             context['festpass_validated'] = True
             return render(request, 'home/dashboard.html', context)
-        return render(request, 'home/dashboard.html')
+        return render(request, 'home/dashboard.html', context)
     
     return redirect('home:login')
