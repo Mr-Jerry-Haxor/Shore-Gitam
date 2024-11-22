@@ -162,6 +162,11 @@ def signup(request):
 @login_required(login_url="home:login")
 def festpass(request):
     if request.user.is_authenticated:
+        # redirecting non gitamite users to dashboard
+        if not request.user.is_gitamite:
+            return redirect("home:dashboard")
+        
+
         if request.user.is_festpass_purchased:
             return redirect('home:eticket')
         if request.GET:
@@ -240,7 +245,7 @@ def festpass(request):
 
             """After saving the user data successfully, redirect to their respective payment portals"""
             if user.is_gitamite:
-                return HttpResponse("GITAM Student's festpass gevent page")
+                return redirect("https://gevents.gitam.edu/registration/MjkzMg")
             elif not user.is_gitamite and sports_participation == 'no':
                 return HttpResponse("Non GITAM Student's festpass gevent page")
             elif not user.is_gitamite and sports_participation == 'yes':
