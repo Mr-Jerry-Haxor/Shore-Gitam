@@ -18,6 +18,7 @@ from django.http import HttpResponse
 from coreteam.models import CustomUser
 from payments.models import FestPass
 from production_admin.models import PassStatus
+from .models import *
 
 
 class EmailThread(threading.Thread):
@@ -70,6 +71,36 @@ def send_festpass_email(user_email):
     msg.send()
 
 
+def send_payment_failed_email(user_email):
+    user = CustomUser.objects.get(email=user_email)
+
+    subject = "Payment Failed! Payment for SHORe'25 festpass failed"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("home/payment_issue.html").render({
+        "user": user,
+        "payment": FestPass.objects.filter(email=user_email).order_by('-updated_date').first()
+    })
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
+    msg.content_subtype = "html"
+    msg.send()
+
+
+def send_payment_pending_email(user_email):
+    user = CustomUser.objects.get(email=user_email)
+
+    subject = "Payment Pending! Payment for SHORe'25 festpass is pending"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("home/payment_pending.html").render({
+        "user": user,
+        "payment": FestPass.objects.filter(email=user_email).order_by('-updated_date').first()
+    })
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
+    msg.content_subtype = "html"
+    msg.send()
+
+
 def send_email_async(user_email, send_mail_function):
     """
     Function to send an email asynchronously using a thread.
@@ -91,6 +122,24 @@ def is_transaction_success(user_email):
     if FestPass.objects.filter(email=user_email).exists():
         user_transaction = FestPass.objects.filter(email=user_email).order_by('-updated_date').first()
         if user_transaction.transaction_status == 'Y':
+            return True
+        
+    return False
+
+
+def is_transaction_failed(user_email):
+    if FestPass.objects.filter(email=user_email).exists():
+        user_transaction = FestPass.objects.filter(email=user_email).order_by('-updated_date').first()
+        if user_transaction.transaction_status == 'N':
+            return True
+        
+    return False
+
+
+def is_transaction_pending(user_email):
+    if FestPass.objects.filter(email=user_email).exists():
+        user_transaction = FestPass.objects.filter(email=user_email).order_by('-updated_date').first()
+        if user_transaction.transaction_status == 'P':
             return True
         
     return False
@@ -252,7 +301,10 @@ def festpass(request):
             return redirect("home:dashboard")
         
         """Checking for prebooking"""
-        prebooking = PassStatus.objects.get(id=1).pre_booking
+        try:
+            prebooking = PassStatus.objects.get(id=1).pre_booking
+        except:
+            prebooking = PassStatus.objects.get(id=2).pre_booking
         context['prebooking'] = prebooking
 
         if prebooking and request.user.prebooking:
@@ -399,7 +451,10 @@ def dashboard(request):
         context = {}
 
         """Checking for prebooking"""
-        prebooking = PassStatus.objects.get(id=1).pre_booking
+        try:
+            prebooking = PassStatus.objects.get(id=1).pre_booking
+        except:
+            prebooking = PassStatus.objects.get(id=2).pre_booking
         context['prebooking'] = prebooking
 
         # check if hashpass is created and not request.user.is_festpass_purchased is false and transaction is success in payments table
@@ -410,7 +465,46 @@ def dashboard(request):
             user.save()
             # send festpass email
             send_email_async(request.user.email, send_festpass_email)
+        elif is_transaction_failed(request.user.email):
+            transactions = FestPass.objects.filter(email=request.user.email)
+            context['transactions'] = transactions
+            payment = FestPass.objects.filter(email=request.user.email).order_by('-updated_date').first()
+            payment_issue = PaymentIssueEmail.objects.filter(user=request.user, payment=payment)
 
+            if not payment_issue.exists():
+                send_email_async(request.user.email, send_payment_failed_email)
+                PaymentIssueEmail.objects.create(
+                    user = request.user,
+                    payment=payment,
+                    status = payment.transaction_status
+                ).save()
+            elif payment.transaction_status != payment_issue[0].status:
+                send_email_async(request.user.email, send_payment_failed_email)
+                obj = payment_issue[0]
+                obj.status = payment.transaction_status
+                obj.save()
+
+            return render(request, 'home/dashboard.html', context)
+        elif is_transaction_pending(request.user.email):
+            transactions = FestPass.objects.filter(email=request.user.email)
+            context['transactions'] = transactions
+            payment = FestPass.objects.filter(email=request.user.email).order_by('-updated_date').first()
+            payment_issue = PaymentIssueEmail.objects.filter(user=request.user, payment=payment)
+
+            if not payment_issue.exists():
+                send_email_async(request.user.email, send_payment_pending_email)
+                PaymentIssueEmail.objects.create(
+                    user = request.user,
+                    payment=payment,
+                    status = payment.transaction_status
+                ).save()
+            elif payment.transaction_status != payment_issue[0].status:
+                send_email_async(request.user.email, send_payment_pending_email)
+                obj = payment_issue[0]
+                obj.status = payment.transaction_status
+                obj.save()
+
+            return render(request, 'home/dashboard.html', context)
 
         fields_to_check = [
             'event_manager', 'campus_head_hyd', 'campus_head_blr', 'coordinator', 

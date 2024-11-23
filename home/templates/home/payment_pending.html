@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Shore Fest '25 Payment Pending</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #333333; background-color: #f4f4f4;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <tr>
+            <td style="padding: 40px;">
+                <!-- Header -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 30px;">
+                    <tr>
+                        <td align="center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shore25[1]%20(1)-mR9BQnBuKpbqvA26grBiasn20QOXWz.png" alt="Shore Fest '25 Logo" width="120" height="120" style="margin-bottom: 20px;" />
+                            <h1 style="color: #f6ad55; font-size: 28px; margin: 0 0 10px 0;">Payment Pending</h1>
+                            <p style="color: #666666; font-size: 18px; margin: 0;">Your payment for Shore Fest '25 is currently being processed.</p>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Transaction Details -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #fffaf0; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                    <tr>
+                        <td>
+                            <h2 style="color: #ed8936; font-size: 22px; margin: 0 0 15px 0;">Transaction Details</h2>
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td style="padding: 8px 0; color: #666666;">Transaction ID:</td>
+                                    <td style="padding: 8px 0; color: #333333; font-weight: bold;">{{ payment.txn_id }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 0; color: #666666;">Bankref Number:</td>
+                                    <td style="padding: 8px 0; color: #333333;">{{ payment.bankref_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 0; color: #666666;">Amount:</td>
+                                    <td style="padding: 8px 0; color: #333333;">{{ payment.amount }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 0; color: #666666;">Pass Type:</td>
+                                    <td style="padding: 8px 0; color: #333333;">{% if user.is_gitamite %}GITAM Student {% else %}Non-GITAM Student {% endif %}Pass</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 0; color: #666666;">Status:</td>
+                                    <td style="padding: 8px 0; color: #ed8936; font-weight: bold;">Pending</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- What This Means -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 30px;">
+                    <tr>
+                        <td>
+                            <h2 style="color: #333333; font-size: 22px; margin: 0 0 15px 0;">What This Means</h2>
+                            <ul style="color: #666666; padding-left: 20px; margin: 0;">
+                                <li style="font-weight: bold; color: red; margin-bottom: 10px;">Please do not pay again, refund will not be processed.</li>
+                                <li style="margin-bottom: 10px;">Your payment is currently being processed by our payment provider.</li>
+                                <li style="margin-bottom: 10px;">This process typically takes 1-2 business days to complete.</li>
+                                <li style="margin-bottom: 10px;">You will receive a confirmation email once the payment has been successfully processed.</li>
+                                <li style="margin-bottom: 10px;">If there are any issues, we will contact you promptly.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Additional Information -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-top: 1px solid #eeeeee; padding-top: 20px; margin-bottom: 30px;">
+                    <tr>
+                        <td>
+                            <h2 style="color: #333333; font-size: 22px; margin: 0 0 15px 0;">Important Information</h2>
+                            <ul style="color: #666666; padding-left: 20px; margin: 0;">
+                                <li style="margin-bottom: 10px;">Your Shore Fest '25 pass is temporarily reserved pending payment completion.</li>
+                                <li style="margin-bottom: 10px;">If the payment is not completed within 48 hours, your reservation may be released.</li>
+                                <li style="margin-bottom: 10px;">Please do not pay again, refund will not be processed!</li>
+                                <li style="margin-bottom: 10px;">If you have any questions or concerns, please don't hesitate to contact our support team.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Footer -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td align="center" style="color: #666666; font-size: 14px;">
+                            <p style="margin: 0 0 10px 0;">If you have any questions, please contact our support team:</p>
+                            <p style="font-weight: bold; margin: 0 0 10px 0;">shore_tech@gitam.in</p>
+                            <p style="margin: 0;">We look forward to seeing you at Shore Fest '25!</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+

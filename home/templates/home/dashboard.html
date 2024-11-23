@@ -47,7 +47,7 @@
         </div>
         <div class="mb-8 text-center">
             <h1 class="text-4xl font-bold text-white mb-2">Welcome back, {{ request.user.first_name|capfirst }}!</h1>
-            <p class="text-lg text-white">Your Shore Fest '25 adventure awaits.</p>
+            <p class="text-lg text-white">Your SHORe Fest '25 adventure awaits.</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -63,26 +63,43 @@
                 </div>
                 <div class="p-6 text-center">
                 {% if request.user.is_festpass_purchased and festpass_validated %}
-                    <p class="mb-4 text-emerald-700">You're all set for Shore Fest 25! Access your e-ticket for quick entry.</p>
+                    <p class="mb-4 text-emerald-700">You're all set for SHORe Fest 25! Access your e-ticket for quick entry.</p>
                     <a href="{% url 'home:eticket' %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8.414l-2-2V6a2 2 0 00-2-2H4zm2 3a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
                         </svg>
                         View E-Ticket
                     </a>
+                    
                 {% else %}
-
-                {% comment %}
-                <p class="mb-4 text-emerald-700">You've not purchased your pass yet.</p>
-                    <a href="{% url 'home:festpass' %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
-                        Buy Fest Pass
-                    </a>
-                {% endcomment %}
-
-                <p class="mb-4 text-emerald-700">You've not purchased your pass yet.</p>
-                    <a href="#" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
-                        Festpasses releasing from 26th November, 2024.
-                    </a>
+                    <p class="mb-4 text-emerald-700">You've not purchased your pass yet.</p>
+                        <a href="{% url 'home:festpass' %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
+                            {% if prebooking %}Pre-book{% else %}Buy{% endif %} Fest Pass
+                        </a>
+                        <!-- Transaction Table -->
+                    {% if transactions %}
+                        <div class="mt-6">
+                        <h3 class="text-lg font-semibold text-emerald-700">Transaction History</h3>
+                        <table class="min-w-full bg-white border border-emerald-100 mt-4">
+                            <thead>
+                                <tr>
+                                    <th class="border border-emerald-200 px-4 py-2">Transaction ID</th>
+                                    <th class="border border-emerald-200 px-4 py-2">Date</th>
+                                    <th class="border border-emerald-200 px-4 py-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions %}
+                                <tr>
+                                    <td class="border border-emerald-200 px-4 py-2">{{ transaction.txn_id }}</td>
+                                    <td class="border border-emerald-200 px-4 py-2">{{ transaction.posted_date }}</td>
+                                    <td class="border border-emerald-200 px-4 py-2">{{ transaction.transaction_status }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
                 {% endif %}
                 </div>
             </div>
@@ -373,6 +390,35 @@
         // Update countdown immediately and then every second
         updateCountdown();
         setInterval(updateCountdown, 1000);
+    </script>
+
+    <!-- Add this script just before the closing </body> tag -->
+    <script>
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('uploadModal').classList.add('hidden'); // Hide modal
+        });
+
+        document.getElementById('submitPicture').addEventListener('click', function() {
+            const fileInput = document.getElementById('profilePicture');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const fileSize = file.size / 1024 / 1024; // Convert to MB
+                const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+
+                if (fileSize > 2) {
+                    alert('File size must be less than 2MB.');
+                } else if (!validTypes.includes(file.type)) {
+                    alert('Invalid file type. Please upload a PNG, JPG, or JPEG image.');
+                } else {
+                    // Proceed with the upload (you may need to implement the upload logic)
+                    alert('Picture uploaded successfully!'); // Placeholder for actual upload logic
+                    document.getElementById('uploadModal').classList.add('hidden'); // Hide modal
+                }
+            } else {
+                alert('Please select a file to upload.');
+            }
+        });
     </script>
 </body>
 </html>
