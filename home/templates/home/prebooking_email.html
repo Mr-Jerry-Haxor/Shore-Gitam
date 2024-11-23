@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Booking Success - Shore Fest '25</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        .logo {
+            display: block;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #15803d;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .confirmation-box {
+            background-color: #ecfdf5;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .confirmation-box h2 {
+            color: #15803d;
+            margin-bottom: 15px;
+        }
+        .confirmation-box ul {
+            list-style-type: none;
+        }
+        .confirmation-box li {
+            margin-bottom: 10px;
+        }
+        .next-steps {
+            text-align: center;
+        }
+        .next-steps h3 {
+            margin-bottom: 15px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #15803d;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #166534;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .logo {
+                width: 150px;
+                height: 150px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            p, .confirmation-box li {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <img class="logo" src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shore25%5B1%5D%20(1)-Gvft4jYmjtGSwd75uyYAueQ180UzdC.png" alt="Shore Fest '25 Logo">
+            <h1>Pre-Booking Successful!</h1>
+            <p>Thank you for pre-registering for Shore Fest '25. We're excited to have you join us for this amazing event!</p>
+            <div class="confirmation-box">
+                <h2>Confirmation Details</h2>
+                <ul>
+                    <li><strong>Name:</strong>{{ name }}</li>
+                    <li><strong>Registration Number:</strong>{{ reg_num }}</li>
+                    <li><strong>Event:</strong> Shore Fest '25</li>
+                    <li><strong>Date:</strong> January 3-5, 2025</li>
+                    <li><strong>Location:</strong>GITAM University, Visakhapatnam</li>
+                    <li><strong>Ticket Type:</strong> Pre-Registration</li>
+                </ul>
+            </div>
+            <div class="next-steps">
+                <h3>Next Steps</h3>
+                <p>We'll send you an email with further details and instructions for completing your registration when ticket sales open.</p>
+                <!-- <a href="/" class="button">Return to Homepage</a> -->
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Shore Fest '25. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

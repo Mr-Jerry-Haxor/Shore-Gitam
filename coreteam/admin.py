@@ -63,6 +63,7 @@ class CustomUserAdmin(UserAdmin):
         "campus",
         "is_festpass_purchased",
         "is_gitamite",
+        "prebooking",
     )
     list_filter = (
         "event_manager",
@@ -91,14 +92,7 @@ class CustomUserAdmin(UserAdmin):
         "isLead",
         "is_festpass_purchased",
         "is_gitamite",
-        "passhash",
-        "gender",
-        "college",
-        "year_of_study",
-        "course",
-        "branch",
-        "registration_number",
-        "campus",
+        "prebooking",
     )
     fieldsets = (
         (None, {"fields": ("username", "password")}),
@@ -122,6 +116,7 @@ class CustomUserAdmin(UserAdmin):
                     "is_festpass_purchased",
                     "is_gitamite",
                     "passhash",
+                    "prebooking",
                 )
             }
         ),

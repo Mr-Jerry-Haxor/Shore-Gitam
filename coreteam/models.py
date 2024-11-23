@@ -49,6 +49,7 @@ class CustomUser(AbstractUser):
     isLead = models.BooleanField(default=False)
     # Add other role fields as needed
 
+    prebooking = models.BooleanField(default=False)
     is_festpass_purchased = models.BooleanField(default=False)
     is_gitamite = models.BooleanField(default=True)
     accomdation = models.BooleanField(default=False)

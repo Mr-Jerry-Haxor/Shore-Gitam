@@ -10,4 +10,5 @@ urlpatterns = [
     path("shore25/festpass/", views.festpass, name='festpass'),
     path("eticket/", views.eticket, name='eticket'),
     path("dashboard/", views.dashboard, name='dashboard'),
+    path("prebook/", views.prebooking, name="prebooking"),
 ]

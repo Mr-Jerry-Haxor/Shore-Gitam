@@ -1,4 +1,7 @@
 import hashlib
+import threading
+import requests
+import json
 import random
 from datetime import datetime
 
@@ -7,10 +10,90 @@ from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse
 
 from coreteam.models import CustomUser
 from payments.models import FestPass
+from production_admin.models import PassStatus
+
+
+class EmailThread(threading.Thread):
+    """
+    Custom thread class for sending emails.
+    Takes a different email sending function as argument.
+    """
+    def __init__(self, user_email, send_mail_function):
+        threading.Thread.__init__(self)
+        self.user_email = user_email
+        self.send_mail_function = send_mail_function
+
+    def run(self):
+        """
+        This method is called when the thread starts.
+        """
+        try:
+            self.send_mail_function(self.user_email)
+        except Exception as e:
+            print(f"Failed to send email to {self.user_email}: {e}")
+
+
+def send_prebooking_email(user_email):
+    user = CustomUser.objects.get(email=user_email)
+
+    subject = "Success! Pre-Booking Confirmed for SHORe'25"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("home/prebooking_email.html").render({
+        "name": user.first_name,
+        "email": user.email,
+        "reg_num": user.registration_number
+    })
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
+    msg.content_subtype = "html"
+    msg.send()
+
+
+def send_festpass_email(user_email):
+    user = CustomUser.objects.get(email=user_email)
+
+    subject = "Success! Festpass Confirmed for SHORe'25"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("home/festpass_email.html").render({
+        "user": user
+    })
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
+    msg.content_subtype = "html"
+    msg.send()
+
+
+def send_email_async(user_email, send_mail_function):
+    """
+    Function to send an email asynchronously using a thread.
+    Accepts a send mail function as argument.
+    """
+    email_thread = EmailThread(user_email, send_mail_function)
+
+    # Start the thread
+    email_thread.start()
+
+    # Wait for the thread to complete
+    email_thread.join()
+
+    # Clean up (optional; threads clean themselves up upon completion)
+    del email_thread  # Explicitly remove reference
+
+
+def is_transaction_success(user_email):
+    if FestPass.objects.filter(email=user_email).exists():
+        user_transaction = FestPass.objects.filter(email=user_email).order_by('-updated_date').first()
+        if user_transaction.transaction_status == 'Y':
+            return True
+        
+    return False
 
 
 def generate_md5(user_string):
@@ -162,18 +245,48 @@ def signup(request):
 @login_required(login_url="home:login")
 def festpass(request):
     if request.user.is_authenticated:
+        context = {}
+
         # redirecting non gitamite users to dashboard
         if not request.user.is_gitamite:
             return redirect("home:dashboard")
         
+        """Checking for prebooking"""
+        prebooking = PassStatus.objects.get(id=1).pre_booking
+        context['prebooking'] = prebooking
+
+        if prebooking and request.user.prebooking:
+            return redirect('home:prebooking')
 
         if request.user.is_festpass_purchased:
             return redirect('home:eticket')
+
         if request.GET:
             if request.user.is_festpass_purchased:
                 return redirect('home:eticket')        
             else:
-                return render(request, 'home/festpass.html')
+                data = {
+                    "email": str(request.user.email)
+                }
+
+                try:
+                    response = requests.post(
+                        "https://gevents.gitam.edu/registration/data/checkmail",
+                        data=data,
+                    )
+
+                    if response.status_code == 200:
+                        student_data = json.loads(response.text)
+                        context['student_data'] = student_data
+                        if student_data["status"] == "success":
+                            return render(request, 'home/festpass.html', context)
+                        else:
+                            return render(request, 'home/festpass.html', context)
+                    else:
+                        return render(request, 'home/festpass.html', context)
+                except:
+                    return render(request, 'home/festpass.html', context)
+
         elif request.POST:
             user = CustomUser.objects.get(email=request.user.email)
 
@@ -243,6 +356,16 @@ def festpass(request):
             user.passhash = hash_md5
             user.save()
 
+            """Check if prebooking is enabled, and if yes then jus mark prebooking as true and redirect to prebooking success page"""
+            if prebooking:
+                user.prebooking = True
+                user.save()
+
+                # send prebooking email
+                send_email_async(request.user.email, send_prebooking_email)
+
+                return redirect("home:prebooking")
+
             """After saving the user data successfully, redirect to their respective payment portals"""
             if user.is_gitamite:
                 return redirect(f"https://gevents.gitam.edu/registration/MjkzMg..?rid={user.registration_number}&type=student")
@@ -251,7 +374,7 @@ def festpass(request):
             elif not user.is_gitamite and sports_participation == 'yes':
                 return HttpResponse("Non GITAM Student's festpass + sports gevent page")
 
-        return render(request, 'home/festpass.html')
+        return render(request, 'home/festpass.html', context)
     return redirect('home:login')
 
 
@@ -275,6 +398,20 @@ def dashboard(request):
     if request.user.is_authenticated:
         context = {}
 
+        """Checking for prebooking"""
+        prebooking = PassStatus.objects.get(id=1).pre_booking
+        context['prebooking'] = prebooking
+
+        # check if hashpass is created and not request.user.is_festpass_purchased is false and transaction is success in payments table
+        if request.user.passhash and not request.user.is_festpass_purchased and is_transaction_success(request.user.email):
+            # make is_festpass_purchased to True
+            user = CustomUser.objects.get(email=request.user.email)
+            user.is_festpass_purchased = True
+            user.save()
+            # send festpass email
+            send_email_async(request.user.email, send_festpass_email)
+
+
         fields_to_check = [
             'event_manager', 'campus_head_hyd', 'campus_head_blr', 'coordinator', 
             'president', 'vice_president', 'technology', 'events_cultural', 
@@ -289,10 +426,22 @@ def dashboard(request):
         else:
             context['isCoreMember'] = False
 
-        # if request.user.is_festpass_purchased and FestPass.objects.filter(email=request.user.email).exists():
-        if request.user.is_festpass_purchased:
+        if request.user.is_festpass_purchased and is_transaction_success(request.user.email):
+        # if request.user.is_festpass_purchased:
             context['festpass_validated'] = True
             return render(request, 'home/dashboard.html', context)
         return render(request, 'home/dashboard.html', context)
+    
+    return redirect('home:login')
+
+
+@login_required(login_url="home:login")
+def prebooking(request):
+    if request.user.is_authenticated:
+        if request.user.prebooking:
+            return render(request, "home/prebooking_success.html")
+        else:
+            messages.error(request, "Please fill in your details")
+            return redirect("home:festpass")
     
     return redirect('home:login')
