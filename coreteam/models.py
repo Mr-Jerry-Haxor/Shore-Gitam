@@ -51,7 +51,7 @@ class CustomUser(AbstractUser):
 
     is_festpass_purchased = models.BooleanField(default=False)
     is_gitamite = models.BooleanField(default=True)
-    # accomdation = models.BooleanField(default=False)
+    accomdation = models.BooleanField(default=False)
     sports = models.BooleanField(default=False)
 
     username = models.CharField(max_length=255, blank=True, null=True)
