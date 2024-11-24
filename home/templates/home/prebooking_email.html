@@ -22,6 +22,10 @@
             flex-direction: column;
             min-height: 100vh;
             padding: 20px;
+            background-image: url("https://shore.gitam.edu/static/img/bg_a4.png");
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(10px); /* Apply blur effect */
         }
         .container {
             max-width: 800px;
@@ -119,17 +123,17 @@
 <body>
     <div class="container">
         <div class="content">
-            <img class="logo" src="{% static 'img/shore25logo.png' %}" alt="Shore Fest '25 Logo">
+            <img class="logo" src="https://shore.gitam.edu/static/img/shore25logo.png" alt="Shore Fest '25 Logo">
             <h1>Pre-Booking Successful!</h1>
             <p>Thank you for pre-registering for Shore Fest '25. We're excited to have you join us for this amazing event!</p>
             <div class="confirmation-box">
                 <h2>Confirmation Details</h2>
                 <ul>
-                    <li><strong>Name:</strong>{{ name }}</li>
-                    <li><strong>Registration Number:</strong>{{ reg_num }}</li>
+                    <li><strong>Name:</strong> {{ name }}</li>
+                    <li><strong>Registration Number:</strong> {{ reg_num }}</li>
                     <li><strong>Event:</strong> Shore Fest '25</li>
                     <li><strong>Date:</strong> January 3-5, 2025</li>
-                    <li><strong>Location:</strong>GITAM University, Visakhapatnam</li>
+                    <li><strong>Location:</strong> GITAM University, Visakhapatnam</li>
                     <li><strong>Ticket Type:</strong> Pre-Registration</li>
                 </ul>
             </div>
@@ -145,4 +149,3 @@
     </footer>
 </body>
 </html>
-
