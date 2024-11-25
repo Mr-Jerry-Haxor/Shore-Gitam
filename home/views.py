@@ -120,29 +120,36 @@ def send_email_async(user_email, send_mail_function):
 
 def is_transaction_success(user_email):
     if FestPass.objects.filter(email=user_email).exists():
-        user_transaction = FestPass.objects.filter(email=user_email).order_by('-updated_date').first()
-        if user_transaction.transaction_status == 'Y':
+        user_transactions = FestPass.objects.filter(email=user_email)
+        y_count = user_transactions.filter(transaction_status="Y").count()
+        if y_count > 0:
             return True
+        else:
+            return False
         
-    return False
 
 
 def is_transaction_failed(user_email):
     if FestPass.objects.filter(email=user_email).exists():
-        user_transaction = FestPass.objects.filter(email=user_email).order_by('-updated_date').first()
-        if user_transaction.transaction_status == 'N':
+        user_transactions = FestPass.objects.filter(email=user_email)
+        y_count = user_transactions.filter(transaction_status="Y").count()
+        if y_count == 0:
             return True
-        
-    return False
+        else:
+            return False
+
 
 
 def is_transaction_pending(user_email):
     if FestPass.objects.filter(email=user_email).exists():
-        user_transaction = FestPass.objects.filter(email=user_email).order_by('-updated_date').first()
-        if user_transaction.transaction_status == 'P':
+        user_transactions = FestPass.objects.filter(email=user_email)
+        y_count = user_transactions.filter(transaction_status="Y").count()
+        p_count = user_transactions.filter(transaction_status="P").count()
+        if y_count == 0 and p_count > 0:
             return True
-        
-    return False
+        else:
+            return False
+
 
 
 def generate_md5(user_string):
@@ -439,8 +446,18 @@ def eticket(request):
         if request.user.is_festpass_purchased:
             return render(request, 'home/eticket.html')
         else:
-            messages.error(request, 'Please purchase the festpass to get your eticket.')
-            return redirect('home:dashboard')
+            if FestPass.objects.filter(email=request.user.email).exists():
+                user_transactions = FestPass.objects.filter(email=request.user.email)
+                y_count = user_transactions.filter(transaction_status="Y").count()
+                if y_count > 0:
+                    user = CustomUser.objects.get(email=request.user.email)
+                    user.is_festpass_purchased = True
+                    user.save()
+                    send_email_async(request.user.email, send_festpass_email)
+                    return render(request, 'home/eticket.html')
+            else:
+                messages.error(request, 'Please purchase the festpass to get your eticket.')
+                return redirect('home:dashboard')
 
     return redirect('home:login')
 
@@ -468,41 +485,45 @@ def dashboard(request):
         elif is_transaction_failed(request.user.email):
             transactions = FestPass.objects.filter(email=request.user.email)
             context['transactions'] = transactions
-            payment = FestPass.objects.filter(email=request.user.email).order_by('-updated_date').first()
-            payment_issue = PaymentIssueEmail.objects.filter(user=request.user, payment=payment)
+            
+            # payment = FestPass.objects.filter(email=request.user.email).order_by('-updated_date').first()
+            # payment_issue = PaymentIssueEmail.objects.filter(user=request.user, payment=payment)
 
-            if not payment_issue.exists():
-                send_email_async(request.user.email, send_payment_failed_email)
-                PaymentIssueEmail.objects.create(
-                    user = request.user,
-                    payment=payment,
-                    status = payment.transaction_status
-                ).save()
-            elif payment.transaction_status != payment_issue[0].status:
-                send_email_async(request.user.email, send_payment_failed_email)
-                obj = payment_issue[0]
-                obj.status = payment.transaction_status
-                obj.save()
+            # if not payment_issue.exists():
+            #     send_email_async(request.user.email, send_payment_failed_email)
+            #     PaymentIssueEmail.objects.create(
+            #         user = request.user,
+            #         payment=payment,
+            #         status = payment.transaction_status
+            #     ).save()
+            # elif payment.transaction_status != payment_issue[0].status:
+            #     send_email_async(request.user.email, send_payment_failed_email)
+            #     obj = payment_issue[0]
+            #     obj.status = payment.transaction_status
+            #     obj.save()
 
             return render(request, 'home/dashboard.html', context)
+        
         elif is_transaction_pending(request.user.email):
             transactions = FestPass.objects.filter(email=request.user.email)
             context['transactions'] = transactions
-            payment = FestPass.objects.filter(email=request.user.email).order_by('-updated_date').first()
-            payment_issue = PaymentIssueEmail.objects.filter(user=request.user, payment=payment)
+            
+            
+            # payment = FestPass.objects.filter(email=request.user.email).order_by('-updated_date').first()
+            # payment_issue = PaymentIssueEmail.objects.filter(user=request.user, payment=payment)
 
-            if not payment_issue.exists():
-                send_email_async(request.user.email, send_payment_pending_email)
-                PaymentIssueEmail.objects.create(
-                    user = request.user,
-                    payment=payment,
-                    status = payment.transaction_status
-                ).save()
-            elif payment.transaction_status != payment_issue[0].status:
-                send_email_async(request.user.email, send_payment_pending_email)
-                obj = payment_issue[0]
-                obj.status = payment.transaction_status
-                obj.save()
+            # if not payment_issue.exists():
+            #     send_email_async(request.user.email, send_payment_pending_email)
+            #     PaymentIssueEmail.objects.create(
+            #         user = request.user,
+            #         payment=payment,
+            #         status = payment.transaction_status
+            #     ).save()
+            # elif payment.transaction_status != payment_issue[0].status:
+            #     send_email_async(request.user.email, send_payment_pending_email)
+            #     obj = payment_issue[0]
+            #     obj.status = payment.transaction_status
+            #     obj.save()
 
             return render(request, 'home/dashboard.html', context)
 
