@@ -14,7 +14,7 @@ from django.conf import settings
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse
-
+from django.db.models import Count
 from coreteam.models import CustomUser
 from payments.models import FestPass
 from production_admin.models import PassStatus
@@ -498,7 +498,8 @@ def dashboard(request):
             send_email_async(request.user.email, send_festpass_email)
             context['festpass_validated'] = True
         elif is_transaction_failed(request.user.email):
-            transactions = FestPass.objects.filter(email=request.user.email)
+            transactions = FestPass.objects.filter(email=request.user.email).values('txn_id').annotate(count=Count('txn_id'))
+            # transactions = FestPass.objects.filter(email=request.user.email)
             context['transactions'] = transactions
             
         
