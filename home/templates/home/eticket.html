@@ -8,10 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
     <div class="max-w-md w-full">
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden relative">
+        <div id="eticket" class="bg-white rounded-3xl shadow-2xl overflow-hidden relative">
             <!-- Background -->
             <div class="absolute inset-0 z-0">
                 <div class="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-800"></div>
@@ -124,8 +126,6 @@
                             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.user.passhash }}" alt="QR Code" class="w-32 h-32">
                         </div>
                     </div>
-
-                  
                 </div>
 
                 <!-- Disclaimer -->
@@ -139,9 +139,36 @@
         </div>
 
         <!-- Download Button -->
-        <button class="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
+        <button id="downloadBtn" class="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
             Download E-Ticket
         </button>
     </div>
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function () {
+            html2canvas(document.getElementById('eticket')).then(function (canvas) {
+                var imgData = canvas.toDataURL('image/png');
+                var pdf = new jsPDF('p', 'mm', 'a4');
+                var imgWidth = 210;
+                var pageHeight = 295;
+                var imgHeight = canvas.height * imgWidth / canvas.width;
+                var heightLeft = imgHeight;
+
+                var position = 0;
+
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                pdf.save('ShoreFest25_ETicket.pdf');
+            });
+        });
+    </script>
 </body>
 </html>
