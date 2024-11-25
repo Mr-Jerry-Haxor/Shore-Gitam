@@ -8,12 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
     <div class="max-w-md w-full">
-        <div id="eticket" class="bg-white rounded-3xl shadow-2xl overflow-hidden relative">
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden relative">
             <!-- Background -->
             <div class="absolute inset-0 z-0">
                 <div class="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-800"></div>
@@ -126,6 +124,15 @@
                             <img id="qrCode" src="https://quickchart.io/qr?text={{ request.user.passhash }}&ecLevel=H&size=200&format=png" alt="QR Code" class="w-32 h-32">
                         </div>
                     </div>
+
+                    <!-- Alternate API for QR Code -->
+
+                    <!-- <div class="flex justify-center relative z-10">
+                        <div class="p-4 bg-emerald-100 rounded-xl">
+                            <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.user.passhash }}" alt="QR Code" class="w-32 h-32">
+                        </div>
+                    </div> -->
+
                 </div>
 
                 <!-- Disclaimer -->
@@ -139,46 +146,9 @@
         </div>
 
         <!-- Download Button -->
-        <button id="downloadBtn" class="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
+        <button onclick="window.print()"  class="w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
             Download E-Ticket
         </button>
     </div>
-
-    <script>
-        document.getElementById('downloadBtn').addEventListener('click', function () {
-            const qrCode = document.getElementById('qrCode');
-            if (qrCode.complete) {
-                generatePDF();
-            } else {
-                qrCode.onload = generatePDF;
-            }
-        });
-
-        function generatePDF() {
-            const eticket = document.getElementById('eticket');
-            html2canvas(eticket).then(function (canvas) {
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const imgWidth = 210;
-                const pageHeight = 295;
-                const imgHeight = canvas.height * imgWidth / canvas.width;
-                let heightLeft = imgHeight;
-
-                let position = 0;
-
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                    heightLeft -= pageHeight;
-                }
-
-                pdf.save('{{ request.user.first_name }}_ShoreFest25_ETicket.pdf');
-            });
-        }
-    </script>
 </body>
 </html>
