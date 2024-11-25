@@ -486,6 +486,7 @@ def dashboard(request):
         except:
             prebooking = PassStatus.objects.get(id=2).pre_booking
         context['prebooking'] = prebooking
+         
 
         # check if hashpass is created and not request.user.is_festpass_purchased is false and transaction is success in payments table
         if request.user.passhash and not request.user.is_festpass_purchased and is_transaction_success(request.user.email):
@@ -495,50 +496,16 @@ def dashboard(request):
             user.save()
             # send festpass email
             send_email_async(request.user.email, send_festpass_email)
+            context['festpass_validated'] = True
         elif is_transaction_failed(request.user.email):
             transactions = FestPass.objects.filter(email=request.user.email)
             context['transactions'] = transactions
             
-            # payment = FestPass.objects.filter(email=request.user.email).order_by('-updated_date').first()
-            # payment_issue = PaymentIssueEmail.objects.filter(user=request.user, payment=payment)
-
-            # if not payment_issue.exists():
-            #     send_email_async(request.user.email, send_payment_failed_email)
-            #     PaymentIssueEmail.objects.create(
-            #         user = request.user,
-            #         payment=payment,
-            #         status = payment.transaction_status
-            #     ).save()
-            # elif payment.transaction_status != payment_issue[0].status:
-            #     send_email_async(request.user.email, send_payment_failed_email)
-            #     obj = payment_issue[0]
-            #     obj.status = payment.transaction_status
-            #     obj.save()
-
-            # return render(request, 'home/dashboard.html', context)
         
         elif is_transaction_pending(request.user.email):
             transactions = FestPass.objects.filter(email=request.user.email)
             context['transactions'] = transactions
             
-            
-            # payment = FestPass.objects.filter(email=request.user.email).order_by('-updated_date').first()
-            # payment_issue = PaymentIssueEmail.objects.filter(user=request.user, payment=payment)
-
-            # if not payment_issue.exists():
-            #     send_email_async(request.user.email, send_payment_pending_email)
-            #     PaymentIssueEmail.objects.create(
-            #         user = request.user,
-            #         payment=payment,
-            #         status = payment.transaction_status
-            #     ).save()
-            # elif payment.transaction_status != payment_issue[0].status:
-            #     send_email_async(request.user.email, send_payment_pending_email)
-            #     obj = payment_issue[0]
-            #     obj.status = payment.transaction_status
-            #     obj.save()
-
-            # return render(request, 'home/dashboard.html', context)
 
         fields_to_check = [
             'event_manager', 'campus_head_hyd', 'campus_head_blr', 'coordinator', 
@@ -556,7 +523,7 @@ def dashboard(request):
 
         if request.user.is_festpass_purchased and is_transaction_success(request.user.email):
             context['festpass_validated'] = True
-            # return render(request, 'home/dashboard.html', context)
+            
         return render(request, 'home/dashboard.html', context)
     
     else:
