@@ -11,8 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-    <div id="eticket" class="max-w-md w-full">
+<body id="eticket" class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div  class="max-w-md w-full">
         <div  class="bg-white rounded-3xl shadow-2xl overflow-hidden relative">
             <!-- Background -->
             <div class="absolute inset-0 z-0">
@@ -122,9 +122,13 @@
 
                     <!-- QR Code -->
                     <div class="flex justify-center relative z-10">
-                        <div class="p-4 bg-emerald-100 rounded-xl">
+                        <!-- <div class="p-4 bg-emerald-100 rounded-xl">
                             <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.user.passhash }}" alt="QR Code" class="w-32 h-32">
+                        </div> -->
+                        <div class="p-4 bg-emerald-100 rounded-xl">
+                            <img id="qrCode" src="https://quickchart.io/qr?text={{ request.user.passhash }}" alt="QR Code" class="w-32 h-32">
                         </div>
+                        
                     </div>
                 </div>
 
