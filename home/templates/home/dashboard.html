@@ -62,7 +62,7 @@
                     </h2>
                 </div>
                 <div class="p-6 text-center">
-                {% if request.user.is_festpass_purchased and festpass_validated %}
+                {% if festpass_validated %}
                     <p class="mb-4 text-emerald-700">You're all set for SHORe Fest 25! Access your e-ticket for quick entry.</p>
                     <a href="{% url 'home:eticket' %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
