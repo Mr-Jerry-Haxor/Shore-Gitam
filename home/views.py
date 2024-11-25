@@ -502,7 +502,7 @@ def dashboard(request):
             #     obj.status = payment.transaction_status
             #     obj.save()
 
-            return render(request, 'home/dashboard.html', context)
+            # return render(request, 'home/dashboard.html', context)
         
         elif is_transaction_pending(request.user.email):
             transactions = FestPass.objects.filter(email=request.user.email)
@@ -525,7 +525,7 @@ def dashboard(request):
             #     obj.status = payment.transaction_status
             #     obj.save()
 
-            return render(request, 'home/dashboard.html', context)
+            # return render(request, 'home/dashboard.html', context)
 
         fields_to_check = [
             'event_manager', 'campus_head_hyd', 'campus_head_blr', 'coordinator', 
@@ -542,12 +542,12 @@ def dashboard(request):
             context['isCoreMember'] = False
 
         if request.user.is_festpass_purchased and is_transaction_success(request.user.email):
-        # if request.user.is_festpass_purchased:
             context['festpass_validated'] = True
-            return render(request, 'home/dashboard.html', context)
+            # return render(request, 'home/dashboard.html', context)
         return render(request, 'home/dashboard.html', context)
     
-    return redirect('home:login')
+    else:
+        return redirect('home:login')
 
 
 @login_required(login_url="home:login")
