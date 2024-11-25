@@ -123,7 +123,7 @@
                     <!-- QR Code -->
                     <div class="flex justify-center relative z-10">
                         <div class="p-4 bg-emerald-100 rounded-xl">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.user.passhash }}" alt="QR Code" class="w-32 h-32">
+                            <img id="qrCode" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ request.user.passhash }}" alt="QR Code" class="w-32 h-32">
                         </div>
                     </div>
                 </div>
@@ -145,30 +145,32 @@
     </div>
 
     <script>
-        document.getElementById('downloadBtn').addEventListener('click', function () {
-            html2canvas(document.getElementById('eticket')).then(function (canvas) {
-                var imgData = canvas.toDataURL('image/png');
-                var pdf = new jsPDF('p', 'mm', 'a4');
-                var imgWidth = 210;
-                var pageHeight = 295;
-                var imgHeight = canvas.height * imgWidth / canvas.width;
-                var heightLeft = imgHeight;
+        document.getElementById('qrCode').onload = function () {
+            document.getElementById('downloadBtn').addEventListener('click', function () {
+                html2canvas(document.getElementById('eticket')).then(function (canvas) {
+                    var imgData = canvas.toDataURL('image/png');
+                    var pdf = new jsPDF('p', 'mm', 'a4');
+                    var imgWidth = 210;
+                    var pageHeight = 295;
+                    var imgHeight = canvas.height * imgWidth / canvas.width;
+                    var heightLeft = imgHeight;
 
-                var position = 0;
+                    var position = 0;
 
-                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-
-                while (heightLeft >= 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addPage();
                     pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
                     heightLeft -= pageHeight;
-                }
 
-                pdf.save('ShoreFest25_ETicket.pdf');
+                    while (heightLeft >= 0) {
+                        position = heightLeft - imgHeight;
+                        pdf.addPage();
+                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                        heightLeft -= pageHeight;
+                    }
+
+                    pdf.save('{{ request.user.first_name }}_ShoreFest25_ETicket.pdf');
+                });
             });
-        });
+        };
     </script>
 </body>
 </html>
