@@ -126,6 +126,8 @@ def is_transaction_success(user_email):
             return True
         else:
             return False
+    else:
+        return False
         
 
 
@@ -137,6 +139,8 @@ def is_transaction_failed(user_email):
             return True
         else:
             return False
+    else:
+        return False
 
 
 
@@ -149,6 +153,8 @@ def is_transaction_pending(user_email):
             return True
         else:
             return False
+    else:
+        return False
 
 
 
@@ -353,6 +359,15 @@ def festpass(request):
                     return render(request, 'home/festpass.html', context)
 
         elif request.POST:
+            """Check whether user has accepted all terms and conditions or not"""
+            if (
+                "terms1" not in request.POST or
+                "terms2" not in request.POST or
+                "terms3" not in request.POST
+            ):
+                messages.error(request, "Please accept all the terms and conditions to purchase festpass")
+                return redirect("home:festpass")
+
             user = CustomUser.objects.get(email=request.user.email)
 
             reg_num = request.POST.get('registrationNumber')
