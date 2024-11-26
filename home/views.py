@@ -563,7 +563,7 @@ def dashboard(request):
         if request.user.is_festpass_purchased and is_transaction_success(request.user.email):
             context['festpass_validated'] = True
             
-        total_tickets_sold = FestPass.objects.filter(transaction_status="Y").values('email').annotate(count=Count('email')).order_by('-count')
+        total_tickets_sold = FestPass.objects.filter(transaction_status="Y") #.values('email').annotate(count=Count('email')).order_by('-count')
         context['total_tickets_sold'] = total_tickets_sold
             
         return render(request, 'home/dashboard.html', context)
