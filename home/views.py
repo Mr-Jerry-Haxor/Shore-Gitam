@@ -204,6 +204,7 @@ def logout_user(request):
 
 def signup(request):
     # removing signup temporarily, need to enable once festpasses for non gitam students are enabled
+    messages.info(request, "Please use Sign in with Google")
     return redirect("home:login")
 
     if request.user.is_authenticated:
