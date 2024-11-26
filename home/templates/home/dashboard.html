@@ -192,12 +192,14 @@
                         <div class="h-32 w-32 rounded-full border-4 border-emerald-200 overflow-hidden">
                             <img src="{{ request.user.profile_picture.url }}" alt="Profile Picture" class="w-full h-full object-cover">
                         </div>
+                        {% comment %}
                         <button class="mt-2 text-emerald-700 border border-emerald-600 hover:bg-emerald-50 transition-colors px-3 py-1 rounded-md text-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
                             </svg>
                             Change Picture
                         </button>
+                        {% endcomment %}
                         {% else %}
                         <div class="h-32 w-32 rounded-full bg-emerald-100 flex items-center justify-center text-4xl text-emerald-700 border-4 border-emerald-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
