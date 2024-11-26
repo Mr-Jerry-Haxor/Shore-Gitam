@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'timeline',
     "production_admin",
     "home",
+    "grievance",
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,275 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Fest '25 Grievance Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        shore: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const searchInput = document.querySelector('input[placeholder="Search grievances..."]');
+        const typeFilter = document.querySelector('select:nth-child(1)');
+        const statusFilter = document.querySelector('select:nth-child(2)');
+        const tableRows = document.querySelectorAll("tbody tr");
+        const rowsPerPageSelect = document.querySelector("#rows-per-page");
+        const paginationContainer = document.querySelector(".relative.z-0");
+
+        let currentPage = 1;
+        let rowsPerPage = parseInt(rowsPerPageSelect.value);
+
+        function filterAndPaginate() {
+            const searchText = searchInput.value.toLowerCase();
+            const selectedType = typeFilter.value;
+            const selectedStatus = statusFilter.value;
+
+            const filteredRows = Array.from(tableRows).filter((row) => {
+                const title = row.children[0].textContent.toLowerCase();
+                const type = row.children[1].textContent.toLowerCase();
+                const status = row.children[2].textContent.toLowerCase();
+                const upi = row.children[3].textContent.toLowerCase();
+                const submitted = row.children[4].textContent.toLowerCase();
+
+                const matchesSearch =
+                    title.includes(searchText) ||
+                    type.includes(searchText) ||
+                    status.includes(searchText) ||
+                    upi.includes(searchText) ||
+                    submitted.includes(searchText);
+
+                const matchesType = !selectedType || type.includes(selectedType);
+                const matchesStatus = !selectedStatus || status.includes(selectedStatus);
+
+                return matchesSearch && matchesType && matchesStatus;
+            });
+
+            renderTable(filteredRows);
+        }
+
+        function renderTable(filteredRows) {
+            const totalRows = filteredRows.length;
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            tableRows.forEach((row) => (row.style.display = "none"));
+            filteredRows.slice(start, end).forEach((row) => (row.style.display = ""));
+
+            updatePaginationControls(totalPages);
+        }
+
+        function updatePaginationControls(totalPages) {
+            paginationContainer.innerHTML = "";
+
+            const prevButton = document.createElement("a");
+            prevButton.href = "#";
+            prevButton.className =
+                "relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50";
+            prevButton.innerHTML = `<span class="sr-only">Previous</span><i class="fas fa-chevron-left"></i>`;
+            prevButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    filterAndPaginate();
+                }
+            });
+            paginationContainer.appendChild(prevButton);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement("a");
+                pageButton.href = "#";
+                pageButton.className =
+                    `relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                        i === currentPage
+                            ? "z-10 bg-shore-50 border-shore-500 text-shore-600"
+                            : "bg-white text-gray-500 hover:bg-gray-50"
+                    }`;
+                pageButton.textContent = i;
+                pageButton.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    currentPage = i;
+                    filterAndPaginate();
+                });
+                paginationContainer.appendChild(pageButton);
+            }
+
+            const nextButton = document.createElement("a");
+            nextButton.href = "#";
+            nextButton.className =
+                "relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50";
+            nextButton.innerHTML = `<span class="sr-only">Next</span><i class="fas fa-chevron-right"></i>`;
+            nextButton.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    filterAndPaginate();
+                }
+            });
+            paginationContainer.appendChild(nextButton);
+        }
+
+        rowsPerPageSelect.addEventListener("change", () => {
+            rowsPerPage = parseInt(rowsPerPageSelect.value);
+            currentPage = 1;
+            filterAndPaginate();
+        });
+
+        searchInput.addEventListener("input", filterAndPaginate);
+        typeFilter.addEventListener("change", filterAndPaginate);
+        statusFilter.addEventListener("change", filterAndPaginate);
+
+        filterAndPaginate();
+    });
+</script>
+
+</head>
+<body class="bg-gray-50">
+    {% include 'messages.html' %}
+    <div class="min-h-screen flex flex-col">
+        {% include 'grievance/navbar.html' %}
+
+        <main class="flex-grow">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-8 flex flex-col sm:flex-row justify-between items-center">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4 sm:mb-0">Grievance Dashboard</h2>
+                    <div class="flex space-x-4">
+                    {% if not request.user.grievance_staff %}
+                        <a href="{% url 'grievance:raise_ticket' %}" class="bg-shore-600 text-white hover:bg-shore-700 px-4 py-2 rounded-md text-sm font-medium flex items-center">
+                            <i class="fas fa-plus mr-2"></i>
+                            Create Ticket
+                        </a>
+                    {% endif %}
+                    </div>
+                </div>
+
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-grow">
+                                <div class="relative">
+                                    <input type="text" placeholder="Search grievances..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-shore-500 focus:border-transparent">
+                                    <i class="fas fa-search text-gray-400 absolute left-3 top-3"></i>
+                                </div>
+                            </div>
+                            <div class="flex space-x-4">
+                                <select class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-shore-500 focus:border-transparent">
+                                    <option value="">All Types</option>
+                                    {% for type in types %}
+                                    <option value="{{ type.0 }}">{{ type.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                                <select class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-shore-500 focus:border-transparent">
+                                    <option value="">All Status</option>
+                                    {% for st in status %}
+                                    <option value="{{ st.0 }}">{{ st.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">E-Mail</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UPI Reference</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Raised On</th>
+                                    {% if request.user.grievance_staff %}
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for ticket in tickets %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.title }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.type }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">{{ ticket.status }}</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.user.email }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.utr }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.submitted_at }}</td>
+                                    {% if request.user.grievance_staff %}
+                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                        <a href="{% url 'grievance:update_ticket' ticket.ticket_hash %}" class="text-shore-600 hover:text-shore-900 mr-2">
+                                            Update
+                                        </a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1 flex justify-between sm:hidden">
+                                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    Previous
+                                </a>
+                                <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    Next
+                                </a>
+                            </div>
+                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                <div class="flex justify-between items-center mb-4">
+                                    <label>
+                                        Show
+                                        <select id="rows-per-page" class="border border-gray-300 rounded-md px-2 py-1 focus:ring-2 focus:ring-shore-500 focus:border-transparent">
+                                            <option value="5">5</option>
+                                            <option value="10" selected>10</option>
+                                            <option value="20">20</option>
+                                            <option value="40">40</option>
+                                        </select>
+                                        entries per page
+                                    </label>
+                                    <div id="pagination-controls" class="flex"></div>
+                                </div>
+                                
+                                <div>
+                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination"></nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-white">
+            <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                <p class="text-center text-sm text-gray-500">&copy; 2024 Shore Fest. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

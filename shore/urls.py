@@ -37,6 +37,7 @@ urlpatterns = [
     path('timeline/' , include('timeline.urls')),
     path("productionadmin/" , include("production_admin.urls")),
     path("", include("home.urls")),
+    path("grievance/", include("grievance.urls")),
 ]
 
 

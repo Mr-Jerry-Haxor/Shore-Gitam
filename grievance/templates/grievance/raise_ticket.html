@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Fest '25 Ticket Issue Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const attachmentInput = document.getElementById('attachment');
+
+            form.addEventListener('submit', function(event) {
+                const file = attachmentInput.files[0];
+                const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+                const maxSize = 2 * 1024 * 1024; // 2MB
+
+                if (file) {
+                    if (!validTypes.includes(file.type)) {
+                        alert('Invalid file type. Please upload a JPG, PNG, JPEG, or PDF file.');
+                        event.preventDefault();
+                    } else if (file.size > maxSize) {
+                        alert('File size exceeds 2MB. Please upload a smaller file.');
+                        event.preventDefault();
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+<body class="bg-emerald-50">
+    {% include 'messages.html' %}
+    {% include 'grievance/navbar.html' %}
+    <div class="min-h-screen w-full py-12 px-4 bg-cover bg-center bg-no-repeat bg-fixed"
+        style="background-image: url({% static 'img/bg_shore_blur.png' %})">
+        <div class="w-full max-w-2xl mx-auto backdrop-blur-md bg-white/90 shadow-xl border-t-4 border-emerald-500 rounded-lg overflow-hidden">
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-500 text-white p-6">
+                <h1 class="text-3xl font-bold text-center flex items-center justify-center"> 
+                    Shore'25 Ticket Issue Form
+                </h1>
+            </div>
+            <div class="p-6">
+                {% if request.user.grievance_staff %}
+                    <form class="space-y-6" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="space-y-4">
+                            <div class="grid gap-2">
+                                <label for="issue-type" class="text-lg font-semibold text-emerald-700">Type of Payment Issue</label>
+                                <select id="issue-type" name="issue-type" required
+                                        class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300" readonly>
+                                    <option value="{{ ticket.type }}" selected>{{ ticket.get_type_display }}</option>
+                                </select>
+                            </div>
+                            <div class="grid gap-2">
+                                <label for="title" class="text-lg font-semibold text-emerald-700">Title</label>
+                                <input type="text" id="title" name="title" value="{{ ticket.title }}" required readonly
+                                       class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300">
+                            </div>
+                            <div class="grid gap-2">
+                                <label for="description" class="text-lg font-semibold text-emerald-700">Description of Issue</label>
+                                <textarea id="description" name="description" rows="4" required readonly
+                                          class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300">{{ ticket.description }}</textarea>
+                            </div>
+                            <div class="grid gap-2">
+                                <label for="upi-reference" class="text-lg font-semibold text-emerald-700">UPI Reference Number/ UTR Number</label>
+                                <input type="text" id="upi-reference" name="upi-reference" value="{{ ticket.utr }}" required readonly
+                                       class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-lg font-semibold text-emerald-700">Example Payment Screenshots</label>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-full h-50 border-2 border-emerald-300 rounded-lg overflow-hidden">
+                                            <img src="{% static 'img/paytm.jpeg' %}" alt="Paytm Example Screenshot" class="w-full h-full object-cover">
+                                        </div>
+                                        <span class="mt-2 text-sm text-emerald-600">Paytm</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-full h-50 border-2 border-emerald-300 rounded-lg overflow-hidden">
+                                            <img src="{% static 'img/gpay.jpeg' %}" alt="Google Pay Example Screenshot" class="w-full h-full object-cover">
+                                        </div>
+                                        <span class="mt-2 text-sm text-emerald-600">Google Pay</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-full h-50 border-2 border-emerald-300 rounded-lg overflow-hidden">
+                                            <img src="{% static 'img/phonepe.jpeg' %}" alt="PhonePe Example Screenshot" class="w-full h-full object-cover">
+                                        </div>
+                                        <span class="mt-2 text-sm text-emerald-600">PhonePe</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid gap-2">
+                                <label for="attachment" class="text-lg font-semibold text-emerald-700">User Uploaded Attachment</label>
+                                <!-- <input type="file" id="attachment" name="attachment" accept=".pdf,.jpg,.jpeg,.png"
+                                       class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                                > -->
+                                <a class="text-blue-500 underline" href="{{ ticket.attached_documents.url }}">Uploaded URL</a>
+                            </div>
+                            
+                            <div class="grid gap-2">
+                                <label for="status" class="text-lg font-semibold text-emerald-700">Status</label>
+                                <select id="status" name="status" required
+                                        class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300">
+                                    <option value="{{ ticket.status }}" selected>{{ ticket.get_status_display }} (Current Status)</option>
+                                    {% for st in status %}
+                                    <option value="{{ st.0 }}">{{ st.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="grid gap-2">
+                                <label for="remarks" class="text-lg font-semibold text-emerald-700">Remarks</label>
+                                <textarea id="remarks" name="remarks" rows="3" placeholder="Add any additional remarks or notes"
+                                          class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300">{{ ticket.remark }}</textarea>
+                            </div>
+
+                            <button type="submit"
+                                    class="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-700 hover:to-teal-600 text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+                                Submit Ticket Issue
+                            </button>
+                        </div>
+                    </form>
+                {% else %}
+                    <form class="space-y-6" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="space-y-4">
+                            <div class="grid gap-2">
+                                <label for="issue-type" class="text-lg font-semibold text-emerald-700">Type of Payment Issue</label>
+                                <select id="issue-type" name="issue-type" required
+                                        class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300">
+                                    {% for issue in issue_types %}
+                                        <option value="{{ issue.0 }}" selected>{{ issue.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="grid gap-2">
+                                <label for="title" class="text-lg font-semibold text-emerald-700">Title</label>
+                                <input type="text" id="title" name="title" placeholder="Enter your issue Title" required
+                                       class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300">
+                            </div>
+                            <div class="grid gap-2">
+                                <label for="description" class="text-lg font-semibold text-emerald-700">Description of Issue</label>
+                                <textarea id="description" name="description" rows="4" placeholder="Please provide a detailed description of your ticket issue" required
+                                          class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300"></textarea>
+                            </div>
+                            <div class="grid gap-2">
+                                <label for="upi-reference" class="text-lg font-semibold text-emerald-700">UPI Reference Number/ UTR Number</label>
+                                <input type="text" id="upi-reference" name="upi-reference" placeholder="Enter your UPI reference number" required
+                                       class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-lg font-semibold text-emerald-700">Example Payment Screenshots</label>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-full h-50 border-2 border-emerald-300 rounded-lg overflow-hidden">
+                                            <img src="{% static 'img/paytm.jpeg' %}" alt="Paytm Example Screenshot" class="w-full h-full object-cover">
+                                        </div>
+                                        <span class="mt-2 text-sm text-emerald-600">Paytm</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-full h-50 border-2 border-emerald-300 rounded-lg overflow-hidden">
+                                            <img src="{% static 'img/gpay.jpeg' %}" alt="Google Pay Example Screenshot" class="w-full h-full object-cover">
+                                        </div>
+                                        <span class="mt-2 text-sm text-emerald-600">Google Pay</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-full h-50 border-2 border-emerald-300 rounded-lg overflow-hidden">
+                                            <img src="{% static 'img/phonepe.jpeg' %}" alt="PhonePe Example Screenshot" class="w-full h-full object-cover">
+                                        </div>
+                                        <span class="mt-2 text-sm text-emerald-600">PhonePe</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid gap-2">
+                                <label for="attachment" class="text-lg font-semibold text-emerald-700">Attachment (required for verification)</label>
+                                <input type="file" id="attachment" name="attachment" accept=".pdf,.jpg,.jpeg,.png"
+                                       class="w-full px-3 py-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                                       required
+                                >
+                                <p class="text-sm text-emerald-600 mt-1">Accepted file types: PDF, JPG, JPEG, PNG (Max size: 2MB)</p>
+                            </div>
+                            
+                            <button type="submit"
+                                    class="w-full bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-700 hover:to-teal-600 text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105">
+                                Submit Ticket Issue
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

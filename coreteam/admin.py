@@ -66,6 +66,7 @@ class CustomUserAdmin(UserAdmin):
         "prebooking",
         "accomdation",
         "sports",
+        "grievance_staff",
     )
     list_filter = (
         "event_manager",
@@ -97,6 +98,7 @@ class CustomUserAdmin(UserAdmin):
         "prebooking",
         "accomdation",
         "sports",
+        "grievance_staff",
     )
     fieldsets = (
         (None, {"fields": ("username", "password")}),
@@ -157,6 +159,7 @@ class CustomUserAdmin(UserAdmin):
                     "events_sports_staff",
                     "security_staff",
                     "isLead",
+                    "grievance_staff",
                     "groups",
                     "user_permissions",
                 )

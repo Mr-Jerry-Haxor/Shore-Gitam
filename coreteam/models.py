@@ -47,6 +47,7 @@ class CustomUser(AbstractUser):
     events_sports_staff = models.BooleanField(default=False)
     security_staff = models.BooleanField(default=False)
     isLead = models.BooleanField(default=False)
+    grievance_staff = models.BooleanField(default=False)
     # Add other role fields as needed
 
     prebooking = models.BooleanField(default=False)
@@ -217,7 +218,7 @@ def upload_file_to(instance, filename):
     ext = filename.split(".")[-1]
     new_filename = f"{instance.name}.{ext}"
 
-    domain_folder = f"guidelines/"
+    domain_folder = f"media/cloud"
     return os.path.join(domain_folder, new_filename)
 
 

@@ -4,10 +4,10 @@ import requests
 import json
 import random
 from datetime import datetime
+import os
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -383,6 +383,15 @@ def festpass(request):
                 campus = request.POST.get('campus')
             course = request.POST.get('course')
             profile_picture = request.FILES.get('profilePic')
+
+            # Validate the file extension
+            if profile_picture:
+                valid_extensions = ['.jpg', '.jpeg', '.png']
+                extension = os.path.splitext(profile_picture.name)[1].lower()
+                if extension not in valid_extensions:
+                    messages.error(request, "Invalid file type. Only JPG, JPEG, and PNG files are allowed.")
+                    return redirect('home:festpass')
+
             sports_participation = request.POST.get('participatingInSports')
             accomdation = request.POST.get('needAccommodation')
 
