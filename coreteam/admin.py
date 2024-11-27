@@ -99,6 +99,7 @@ class CustomUserAdmin(UserAdmin):
         "accomdation",
         "sports",
         "grievance_staff",
+        "gender",
     )
     fieldsets = (
         (None, {"fields": ("username", "password")}),
