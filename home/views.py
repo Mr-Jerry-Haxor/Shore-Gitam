@@ -564,7 +564,13 @@ def dashboard(request):
             context['festpass_validated'] = True
             
         total_tickets_sold = FestPass.objects.filter(transaction_status="Y").count() #.values('email').annotate(count=Count('email')).order_by('-count')
-        context['total_tickets_sold'] = total_tickets_sold
+
+        total_unique_tickets = FestPass.objects.filter(
+            txn_id__isnull = False,
+            transaction_status = "Y"
+        ).values("txn_id").distinct().count()
+
+        context['total_tickets_sold'] = total_unique_tickets
             
         return render(request, 'home/dashboard.html', context)
     
