@@ -1,9 +1,7 @@
 import hashlib
 from django.db import models
 
-event_choices = (
-    ("culturals", "culturals"),
-)
+event_choices = (("culturals", "culturals"),)
 
 campus_choices = (
     ("gitam_vzg", "GITAM Visakhapatnam"),
@@ -11,9 +9,11 @@ campus_choices = (
     ("gitam_blr", "GITAM Bangalore"),
 )
 
+
 def generate_md5(user_string):
     hashed_string = hashlib.md5(user_string.encode("UTF-8"))
     return hashed_string.hexdigest()
+
 
 class Event(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -60,9 +60,7 @@ class Participant(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     email = models.EmailField(null=False, blank=False)
     phone_number = models.CharField(max_length=10, null=False, blank=False)
-    registration_number = models.CharField(
-        max_length=100, null=True, blank=True
-    )
+    registration_number = models.CharField(max_length=100, null=True, blank=True)
     campus = models.CharField(
         max_length=100, null=False, blank=False, choices=campus_choices
     )
