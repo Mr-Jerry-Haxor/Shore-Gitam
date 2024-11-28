@@ -44,6 +44,16 @@
                 Core Team
             </a>
             {% endif %}
+            {% if request.user.grievance_staff %}
+            <a href="{% url 'grievance:dashboard' %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-4 py-2 rounded-md ml-2">
+                Grievance Dashboard
+            </a>
+            {% endif %}
+            {% if request.user.grievance_staff or request.user.is_superuser %}
+            <a href="https://shore.gitam.edu/shoreadmin" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-4 py-2 rounded-md ml-2">
+                Django Admin
+            </a>
+            {% endif %}
         </div>
         <div class="mb-8 text-center">
             <h1 class="text-4xl font-bold text-white mb-2">Welcome back, {{ request.user.first_name|capfirst }}!</h1>
