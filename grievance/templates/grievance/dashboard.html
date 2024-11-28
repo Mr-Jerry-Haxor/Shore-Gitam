@@ -154,6 +154,35 @@
 
         <main class="flex-grow">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <!-- Mini Dashboard Section -->
+                {% if request.user.grievance_staff %}
+                <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+                    <h3 class="text-lg font-bold mb-4">Ticket Summary</h3>
+                    <div class="flex flex-wrap justify-between gap-4">
+                        <div class="flex items-center justify-center bg-shore-100 p-4 rounded-md flex-1">
+                            <h4 class="font-semibold">Total Tickets</h4>
+                            <p class="text-2xl ml-2">{{ total_tickets }}</p>
+                        </div>
+                        <div class="flex items-center justify-center bg-yellow-100 p-4 rounded-md flex-1">
+                            <h4 class="font-semibold">Open Tickets</h4>
+                            <p class="text-2xl ml-2">{{ submitted_tickets }}</p>
+                        </div>
+                        <div class="flex items-center justify-center bg-green-100 p-4 rounded-md flex-1">
+                            <h4 class="font-semibold">Resolved Tickets</h4>
+                            <p class="text-2xl ml-2">{{ resolved_tickets }}</p>
+                        </div>
+                        <div class="flex items-center justify-center bg-red-100 p-4 rounded-md flex-1">
+                            <h4 class="font-semibold">Rejected Tickets</h4>
+                            <p class="text-2xl ml-2">{{ rejected_tickets }}</p>
+                        </div>
+                        <div class="flex items-center justify-center bg-blue-100 p-4 rounded-md flex-1">
+                            <h4 class="font-semibold">Under Review</h4>
+                            <p class="text-2xl ml-2">{{ under_review_tickets }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <!-- End of Mini Dashboard Section -->
                 <div class="mb-8 flex flex-col sm:flex-row justify-between items-center">
                     <h2 class="text-3xl font-bold text-gray-900 mb-4 sm:mb-0">Grievance Dashboard</h2>
                     <div class="flex space-x-4">

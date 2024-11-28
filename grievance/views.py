@@ -100,6 +100,13 @@ def dashboard(request):
         context['types'] = issue_types
         context['status'] = issue_status
 
+        context['total_tickets'] = Ticket.objects.all().count()
+        context['submitted_tickets'] = Ticket.objects.filter(status='submitted').count()
+        context['resolved_tickets'] = Ticket.objects.filter(status='resolved').count()
+        context['rejected_tickets'] = Ticket.objects.filter(status='rejected').count()
+        context['under_review_tickets'] = Ticket.objects.filter(status='under_review').count()
+
+
         if request.user.grievance_staff:
             tickets = Ticket.objects.all().order_by('-submitted_at')
         else:
@@ -174,9 +181,13 @@ def update_ticket(request, ticket_hash):
             if "status" in request.POST:
                 if request.POST['status'] != ticket.status:
                     flag = True
+                    
                     ticket.status = request.POST["status"]
                     ticket.save()
 
+                    messages.success(request, f"Updated {ticket.user.email}'s status to {ticket.status}")
+
+                    """
                     if ticket.status == 'resolved':
                         flag = False
                         # modify transaction to Y
@@ -230,12 +241,15 @@ def update_ticket(request, ticket_hash):
                             messages.info(request, f"Updated {ticket.user.email}'s status to {ticket.status} and modified transaction status to 'N' in payments table.")
 
                             send_email_async(ticket.user.email, send_ticket_rejected)
-            
+                    """
+
             if "remarks" in request.POST:
                 if request.POST["remarks"] != ticket.remark:
                     flag = True
+
                     ticket.remark = request.POST["remarks"]
                     ticket.save()
+                    
                     messages.success(request, f"Added remark {ticket.remark}")
 
             if flag:
