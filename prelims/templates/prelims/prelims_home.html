@@ -1,0 +1,189 @@
+{% load static %}
+{% load filter_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore'25 - Prelims</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'shore-green': '#10B981',
+                        'shore-dark': '#064E3B',
+                        'shore-light': '#ECFDF5',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .marble-bg {
+            background-image: url('{% static "img/bg1.png" %}');
+            background-size: cover;
+            background-position: center;
+        }
+        .card-hover {
+            transition: all 0.3s ease-in-out;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .button-hover {
+            transition: all 0.3s ease;
+        }
+        .button-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    {% include 'prelims/navbar.html' %}
+    {% include 'messages.html' %}
+    <header class="marble-bg relative overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="container mx-auto px-4 py-16 relative z-10">
+            <img src="{% static 'img/shore25logo.png' %}"
+                 alt="Shore'25 Logo" 
+                 class="w-40 h-40 mx-auto mb-8 float-animation">
+            <h1 class="text-5xl md:text-6xl font-bold text-white text-center mb-6 shadow-text float-animation">SHORe'25 Prelims</h1>
+            <p class="text-xl text-white text-center max-w-3xl mx-auto mb-12 shadow-text">
+                Embark on a journey of artistic expression and competition. Join us in celebrating talent across music, dance, art, and drama.
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#events" class="button-hover bg-white text-shore-dark px-8 py-3 rounded-full font-semibold text-lg inline-block shadow-lg hover:shadow-xl transition-shadow duration-300">Explore Events</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-16">
+        <section id="events" class="mb-20">
+            <h2 class="text-4xl font-bold text-shore-dark text-center mb-12">Cultural Events</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {% for event in events %}
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg fade-in">
+                    <img src="{{ event.event_image.url }}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-shore-dark mb-4">{{ event.name }}</h3>
+                        <p class="text-gray-600 mb-6">
+                            {{ event.description }}
+                        </p>
+                        <p class="text-gray-600 mb-6">
+                            <span class="font-bold">Venue:</span> {{ event.venue }}
+                        </p>
+                        <div class="flex space-x-4">
+                            {% if event.guidelines_url %}
+                            <a href="{{ event.guidelines_url }}" class="button-hover flex-1 bg-shore-dark text-white text-center py-2 rounded-lg font-semibold">Guidelines</a>
+                            {% endif %}
+                            <a href="{% url 'prelims:register' event.name %}" class="button-hover flex-1 bg-shore-green text-white text-center py-2 rounded-lg font-semibold">Register</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- <section id="register" class="mb-20">
+            <div class="bg-shore-light rounded-3xl p-8 md:p-12 text-center">
+                <h2 class="text-4xl font-bold text-shore-dark mb-6">Ready to Showcase Your Talent?</h2>
+                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Don't miss this opportunity to be part of Shore'25. Register now and take the first step towards an unforgettable experience!
+                </p>
+                <a href="/register" class="button-hover inline-block bg-shore-green text-white px-10 py-4 rounded-full font-semibold text-lg">Start Your Registration</a>
+            </div>
+        </section> -->
+
+        <!-- <section id="timeline" class="mb-20">
+            <h2 class="text-4xl font-bold text-shore-dark text-center mb-12">Event Timeline</h2>
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-shore-green"></div>
+                <div class="space-y-12">
+                    <div class="relative fade-in">
+                        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-4 w-8 h-8 rounded-full bg-shore-green border-4 border-white"></div>
+                        <div class="ml-8 bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold text-shore-dark mb-2">Registration Opens</h3>
+                            <p class="text-gray-600">January 15, 2025</p>
+                        </div>
+                    </div>
+                    <div class="relative fade-in">
+                        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-4 w-8 h-8 rounded-full bg-shore-green border-4 border-white"></div>
+                        <div class="mr-8 ml-auto bg-white p-6 rounded-lg shadow-md text-right">
+                            <h3 class="text-xl font-bold text-shore-dark mb-2">Prelims Begin</h3>
+                            <p class="text-gray-600">February 1, 2025</p>
+                        </div>
+                    </div>
+                    <div class="relative fade-in">
+                        <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-4 w-8 h-8 rounded-full bg-shore-green border-4 border-white"></div>
+                        <div class="ml-8 bg-white p-6 rounded-lg shadow-md">
+                            <h3 class="text-xl font-bold text-shore-dark mb-2">Final Event</h3>
+                            <p class="text-gray-600">March 15, 2025</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+    </main>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fade-in animation for elements
+        function fadeInElements() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element) => {
+                const rect = element.getBoundingClientRect();
+                const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+                if (rect.top <= viewHeight * 0.75) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', fadeInElements);
+        window.addEventListener('load', fadeInElements);
+
+        // Button click effect
+        const buttons = document.querySelectorAll('.button-hover');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
+

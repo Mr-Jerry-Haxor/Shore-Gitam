@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File - Shore'25</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'shore-green': '#10B981',
+                        'shore-dark': '#064E3B',
+                        'shore-light': '#ECFDF5',
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center">
+    
+    {% include 'messages.html' %}
+    <div class="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
+        <h1 class="text-3xl font-bold text-shore-dark mb-6">Upload Your File</h1>
+        <form id="uploadForm" class="space-y-6" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label for="file" class="block text-sm font-medium text-gray-700 mb-1">File Upload</label>
+                <div id="dropZone" class="w-full h-32 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center cursor-pointer hover:border-shore-green transition duration-150 ease-in-out">
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600">Drag and drop your file here or</p>
+                        <button type="button" id="browseButton" class="mt-2 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-shore-green hover:bg-shore-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-shore-green transition duration-150 ease-in-out">
+                            Browse Files
+                        </button>
+                    </div>
+                </div>
+                <input type="file" id="file" name="file" class="hidden" required>
+                <p id="fileInfo" class="mt-2 text-sm text-gray-500"></p>
+            </div>
+            <div id="progressContainer" class="hidden">
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div id="progressBar" class="bg-shore-green h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                <p id="progressText" class="text-sm text-gray-600 mt-2"></p>
+            </div>
+            <button type="submit" 
+                    class="w-full bg-shore-green hover:bg-shore-dark text-white font-semibold py-2 px-4 rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-shore-green">
+                Upload File
+            </button>
+        </form>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('file');
+        const browseButton = document.getElementById('browseButton');
+        const fileInfo = document.getElementById('fileInfo');
+        const uploadForm = document.getElementById('uploadForm');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+
+        // Trigger file input when browse button is clicked
+        browseButton.addEventListener('click', () => fileInput.click());
+
+        // Handle file selection
+        fileInput.addEventListener('change', handleFileSelect);
+
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+
+        // Highlight drop zone when file is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        // Handle dropped files
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        // Handle form submission
+        uploadForm.addEventListener('submit', handleSubmit);
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight() {
+            dropZone.classList.add('border-shore-green');
+        }
+
+        function unhighlight() {
+            dropZone.classList.remove('border-shore-green');
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+            handleFileSelect();
+        }
+
+        function handleFileSelect() {
+            const file = fileInput.files[0];
+            if (file) {
+                fileInfo.textContent = `File selected: ${file.name}`;
+                fileInfo.classList.remove('text-red-500');
+                fileInfo.classList.add('text-green-500');
+            } else {
+                fileInfo.textContent = 'No file selected.';
+                fileInfo.classList.remove('text-green-500');
+                fileInfo.classList.add('text-red-500');
+            }
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(uploadForm);
+            
+            // Simulate file upload with progress
+            let progress = 0;
+            progressContainer.classList.remove('hidden');
+            
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `Uploading... ${progress}%`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    progressText.textContent = 'Upload complete!';
+                    setTimeout(() => {
+                        uploadForm.submit();
+                    }, 1000);
+                }
+            }, 500);
+        }
+    </script>
+</body>
+</html>
+

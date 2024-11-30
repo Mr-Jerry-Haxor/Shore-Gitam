@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Confirmed - Shore Fest '25 Prelims</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #f3f4f6;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6;">
+        <tr>
+            <td align="center" style="padding: 20px;">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <!-- Header -->
+                    <tr>
+                        <td style="background-color: #ECFDF5; padding: 30px 20px; text-align: center;">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shore25%5B1%5D%20(1)-1UQhGl8fLQJgIk8KQjnNUsXECjIN4o.png" 
+                                 alt="Shore Fest '25 Logo" 
+                                 style="width: 120px; margin-bottom: 20px;">
+                            <h1 style="color: #064E3B; margin: 0; font-size: 28px;">Registration Confirmed!</h1>
+                            <p style="color: #047857; margin: 10px 0 0 0;">Welcome to Shore Fest '25 Prelims</p>
+                        </td>
+                    </tr>
+
+                    <!-- Main Content -->
+                    <tr>
+                        <td style="padding: 30px 40px;">
+                            <p style="margin-bottom: 20px;">Dear Captain, {{ captain.name }},</p>
+                            <p style="margin-bottom: 25px;">Congratulations! Your team has been successfully registered for Shore'25 Prelims. We're excited to have you participate in this celebration of talent and creativity.</p>
+
+                            <!-- Registration Details -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #ECFDF5; border-radius: 8px; margin-bottom: 30px;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <h2 style="color: #064E3B; margin: 0 0 15px 0; font-size: 20px;">Registration Details</h2>
+                                        <table width="100%" cellpadding="8" cellspacing="0">
+                                            <tr>
+                                                <td width="150" style="color: #047857; font-weight: bold;">Registration ID:</td>
+                                                <td>{{ captain.registration_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #047857; font-weight: bold;">Team Name:</td>
+                                                <td>{{ team.visible_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #047857; font-weight: bold;">Event:</td>
+                                                <td>{{ team.event.name }}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Team Members -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 30px;">
+                                <tr>
+                                    <td>
+                                        <h2 style="color: #064E3B; margin: 0 0 15px 0; font-size: 20px;">Team Members</h2>
+                                        <table width="100%" cellpadding="8" cellspacing="0" style="border: 1px solid #D1FAE5; border-radius: 8px;">
+                                            <tr style="background-color: #ECFDF5;">
+                                                <th style="text-align: left; color: #047857;">Name</th>
+                                                <th style="text-align: left; color: #047857;">Reg. Number</th>
+                                                <th style="text-align: left; color: #047857;">Contact Number</th>
+                                            </tr>
+                                            {% for participant in team.participants.all %}
+                                            <tr>
+                                                <td>{{ participant.name }}</td>
+                                                <td>{{ participant.registration_number }}</td>
+                                                <td>{{ participant.phone_number }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 30px;">
+                                <tr>
+                                    <td>
+                                        <h2 style="color: #064E3B; margin: 0 0 15px 0; font-size: 20px;">Next Steps</h2>
+                                        <ol style="color: #374151; margin: 0; padding-left: 20px;">
+                                            <li style="margin-bottom: 10px;">Log in to your <a href="#" style="color: #10B981; text-decoration: none;">Shore Fest Dashboard</a> using your registration ID</li>
+                                            <li style="margin-bottom: 10px;">Complete your team profile and upload required documents</li>
+                                            <li style="margin-bottom: 10px;">Submit your technical requirements and performance details</li>
+                                            <li style="margin-bottom: 10px;">Review the <a href="#" style="color: #10B981; text-decoration: none;">performance guidelines</a></li>
+                                        </ol>
+                                    </td>
+                                </tr>
+                            </table> -->
+
+                            <!-- Contact Information -->
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #F9FAFB; border-radius: 8px; margin-bottom: 30px;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <h2 style="color: #064E3B; margin: 0 0 15px 0; font-size: 20px;">Need Help?</h2>
+                                        <p style="margin: 0 0 10px 0;">For any queries, please contact:</p>
+                                        <p style="margin: 0;">
+                                            Email: <a href="mailto:shore_tech@gitam.in" style="color: #10B981; text-decoration: none;">shore_tech@gitam.in</a>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="margin: 0 0 20px 0;">We look forward to your participation in Shore Fest '25!</p>
+                            <p style="margin: 0;">Best regards,<br>The Shore Fest '25 Team</p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #064E3B; color: #ffffff; padding: 30px 40px; text-align: center;">
+                            <img src="https://shore.gitam.edu/static/img/shore25logo.png" 
+                                 alt="Shore Fest '25 Logo" 
+                                 style="width: 80px; margin-bottom: 20px; filter: invert(1);">
+                            <p style="margin: 0 0 10px 0;">&copy; 2025 Shore Fest. All rights reserved.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+

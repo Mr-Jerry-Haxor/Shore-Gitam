@@ -18,6 +18,9 @@
                             700: '#047857',
                             800: '#065f46',
                         },
+                        'shore-green': '#10B981',
+                      'shore-dark': '#064E3B',
+                      'shore-light': '#ECFDF5',
                     },
                 },
             },
@@ -31,10 +34,113 @@
     </style>
 </head>
 <body class="min-h-screen bg-[url('{% static 'img/bg_shore_blur.png' %}')] bg-cover bg-center bg-fixed">
+    <nav class="bg-shore-dark backdrop-blur-md w-full z-20 left-0 border-b border-gray-700 z-40">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+          <!-- Logo -->
+          <a href="#" class="flex items-center space-x-2">
+            <img src="{% static 'img/shore25logo.png' %}" alt="SHORE Fest Logo" class="h-10 w-10 rounded-full">
+            <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">SHORe 2025</span>
+          </a>
+      
+          <button
+            data-collapse-toggle="navbar-sticky"
+            type="button"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            aria-controls="navbar-sticky"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+      
+          <!-- Navigation Links -->
+          <div
+            class="hidden w-full md:flex md:items-center md:justify-between md:w-auto"
+            id="navbar-sticky"
+          >
+            <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium bg-emerald-800/90 rounded-lg md:flex-row md:space-x-6 md:mt-0 md:bg-transparent">
+              <li>
+                <a
+                  href="{% url 'home:homepage' %}"
+                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
+                >Home</a>
+              </li>
+              
+              <li>
+                {% if isCoreMember %}
+                <a
+                  href="{% url 'corehome' %}"
+                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
+                >Core Team</a>
+                {% endif %}
+              </li>
+              
+              <li>
+                <a
+                  href="{% url 'prelims:home' %}"
+                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
+                >Prelims</a>
+              </li>
+              
+              <li>
+                {% if request.user.grievance_staff %}
+                <a
+                  href="{% url 'grievance:dashboard' %}"
+                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
+                >Grievence Portal</a>
+                {% endif %}
+              </li>
+              
+              
+              <li>
+                {% if request.user.grievance_staff or request.user.is_superuser %}
+                <a
+                  href="https://shore.gitam.edu/shoreadmin"
+                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
+                >Django Admin</a>
+                {% endif %}
+              </li>
+              
+              <li class="mt-2 md:mt-0">
+                {% if not request.user.is_authenticated %}
+                <a
+                  href="{% url 'home:login' %}"
+                  class="block bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full text-center transition-colors duration-300"
+                >
+                  Login
+                </a>
+                {% else %}
+                <a
+                  href="{% url 'home:logout' %}"
+                  class="block bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full text-center transition-colors duration-300"
+                >
+                  Logout
+                </a>
+                {% endif %}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     {% include 'messages.html' %}
     <!-- Main Content Area -->
     <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <!-- Add Logout Button -->
+        {% comment %}
         <div class="text-right mb-4">
             <a href="{% url 'home:logout' %}" class="inline-block bg-red-600 hover:bg-red-700 text-white transition-colors px-4 py-2 rounded-md">
                 Logout
@@ -55,6 +161,7 @@
             </a>
             {% endif %}
         </div>
+        {% endcomment %}
         <div class="mb-8 text-center">
             <h1 class="text-4xl font-bold text-white mb-2">Welcome back, {{ request.user.first_name|capfirst }}!</h1>
             <p class="text-lg text-white">Your SHORe Fest '25 adventure awaits.</p>

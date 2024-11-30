@@ -1,0 +1,232 @@
+{% load static %}
+{% load filter_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore'25 - Prelims Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'shore-green': '#10B981',
+                        'shore-dark': '#064E3B',
+                        'shore-light': '#ECFDF5',
+                        'shore-border': '#D1FAE5',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2 {
+            color: #064E3B; /* shore-dark */
+        }
+        .table-header {
+            background-color: #D1FAE5; /* shore-border */
+        }
+        .table-row:hover {
+            background-color: #ECFDF5; /* shore-light */
+        }
+        .uploadAudio {
+            transition: background-color 0.3s;
+        }
+        .uploadAudio:hover {
+            background-color: #10B981; /* shore-green */
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans">
+   <!--  <nav class="bg-shore-dark text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl">Shore Fest '25</span>
+                </div>
+                <div>
+                    <span class="text-shore-light">Welcome, Captain!</span>
+                </div>
+            </div>
+        </div>
+    </nav> -->
+    {% include 'prelims/navbar.html' %}
+    {% include 'messages.html' %}
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <h1 class="text-3xl font-bold text-gray-900 mb-6">Prelims Dashboard</h1>
+            
+            <!-- Team Details Section -->
+            <section class="mb-12">
+                {% for team in teams %}
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">{{ team.event.name|capfirst }} Team Details</h2>
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="table-header">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone Number</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registration Number</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="teamTable">
+                            {% for participant in team.participants.all %}
+                            <tr class="table-row">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ participant.name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ participant.email }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ participant.phone_number }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ participant.registration_number }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+            </section>
+
+            <!-- Registered Events Section -->
+            <section class="mb-12">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Registered Events</h2>
+                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Venue</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Guidelines</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="eventsList">
+                            {% for team in teams %}
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ team.event.name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ team.event.date }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                        {{ team.event.time }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ team.event.venue }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {% if team.event.guidelines_url %}
+                                    <a href="{{ team.event.guidelines_url }}" target="_blank">View Guidelines</a>
+                                    {% else %}
+                                    No File Attached
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    {% if not team.reference_attatchment %}
+                                        <a href="{% url 'prelims:upload_file' team.team_hash %}" class="uploadAudio text-shore-green hover:text-shore-dark">Upload File</a>
+                                    {% else %}
+                                        <a href="{{ team.reference_attatchment.url }}" target="_blank">View Attached File</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('uploadModal');
+        const closeModal = document.getElementById('closeModal');
+        const uploadButtons = document.querySelectorAll('.uploadAudio');
+        const uploadForm = document.getElementById('uploadForm');
+        const audioFileInput = document.getElementById('audioFile');
+        const uploadButton = document.getElementById('uploadButton');
+
+        uploadButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            uploadForm.reset();
+        });
+
+        // Prevent modal from closing when clicking inside
+        modal.querySelector('.sm\\:max-w-lg').addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+            uploadForm.reset();
+        });
+
+        // File upload functionality
+        uploadButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const file = audioFileInput.files[0];
+            if (file) {
+                // Simulating file upload (replace with actual upload logic)
+                console.log(`Uploading audio file: "${file.name}"`);
+                alert(`Audio file "${file.name}" uploaded successfully!`);
+                modal.classList.add('hidden');
+                uploadForm.reset();
+            } else {
+                alert('Please select an audio file to upload.');
+            }
+        });
+
+        // Drag and drop functionality
+        const dropZone = document.querySelector('label[for="audioFile"]').parentElement;
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            dropZone.classList.add('border-shore-green', 'border-2');
+        }
+
+        function unhighlight(e) {
+            dropZone.classList.remove('border-shore-green', 'border-2');
+        }
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            audioFileInput.files = files;
+        }
+    </script>
+</body>
+</html>
+
