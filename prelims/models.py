@@ -82,7 +82,7 @@ class Team(models.Model):
 class Participant(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     email = models.EmailField(null=False, blank=False)
-    phone_number = models.IntegerField()
+    phone_number = models.CharField(max_length=10)
     registration_number = models.CharField(max_length=100, null=True, blank=True)
     campus = models.CharField(
         max_length=100, null=False, blank=False, choices=campus_choices
