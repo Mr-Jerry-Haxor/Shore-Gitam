@@ -25,7 +25,7 @@ if DEVELOPMENT:
         }
     }
 else:
-    DEBUG = True
+    DEBUG = False
     ALLOWED_HOSTS = ['shore.gitam.edu', '127.0.0.1']
     DATABASES = {
         'default': {
