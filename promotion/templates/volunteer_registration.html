@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHORE'25 Volunteer Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 py-12 px-4" style="background-image: url('{% static 'img/bg_shore_blur_2.png' %}'); background-size: cover;">
+    {% include 'messages.html' %}
+    <div class="max-w-4xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-12 animate-fadeInUp">
+            <img src="{% static 'img/shore25logo.png' %}" alt="SHORE'25 Logo" class="mx-auto mb-4 w-32 h-auto">
+            <h1 class="text-5xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-white mb-4">
+                Join SHORE'25 Team
+            </h1>
+        </div>
+
+        <!-- Form Section -->
+        <h2 class="text-3xl font-bold text-center text-white mb-6 animate-fadeInUp">Volunteer Registration</h2>
+        <form method="post" enctype="multipart/form-data" id="volunteerForm" class="space-y-8 bg-white rounded-2xl shadow-lg p-8 border border-emerald-100 animate-fadeInUp transition-transform transform hover:scale-105">
+            {% csrf_token %}
+            <!-- Personal Details -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" id="name" name="name" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="email" id="email" name="email" value="{{ request.user.email }}" readonly required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="regNo" class="block text-sm font-medium text-gray-700">Registration Number</label>
+                    <input type="text" id="regNo" name="regNo" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                </div>
+                <div class="space-y-2">
+                    <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input type="number" id="phone_number" name="phone_number" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="year_of_study" class="block text-sm font-medium text-gray-700">Year of Study</label>
+                    <select id="year_of_study" name="year_of_study" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                        <option value="" disabled selected>Select option</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                        <option value="5">5th Year</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label for="branch" class="block text-sm font-medium text-gray-700">Branch</label>
+                    <input type="text" id="branch" name="branch" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                </div>
+                <div class="space-y-2">
+                    <label for="course" class="block text-sm font-medium text-gray-700">Course</label>
+                    <input type="text" id="course" name="course" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                </div>
+                <div class="space-y-2">
+                    <label for="hosteler" class="block text-sm font-medium text-gray-700">Are you Hosteler?</label>
+                    <select id="hosteler" name="hosteler" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                        <option value="">Select option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label for="prev" class="block text-sm font-medium text-gray-700"></label>Do you have previous experience in volunteering?</label>
+                    <select id="prev" name="prev" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                        <option value="">Select option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label for="tShirtSize" class="block text-sm font-medium text-gray-700">T-Shirt Size</label>
+                    <select id="tShirtSize" name="tShirtSize" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                        <option value="">Select size</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Gender</label>
+                    <select id="gender" name="gender" required
+                        class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md">
+                        <option value="" disabled selected>Select your gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Why Join Section -->
+            <div class="space-y-2">
+                <label for="whyJoin" class="block text-sm font-medium text-gray-700">Why do you want to join SHORE'25 Team?</label>
+                <textarea id="whyJoin" name="whyJoin" required rows="4"
+                    class="w-full px-4 py-3 border border-emerald-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition duration-200 ease-in-out hover:shadow-md"></textarea>
+            </div>
+            <!-- Photo Upload Section -->
+            <div class="flex flex-col items-center space-y-4">
+                <label class="block text-sm font-medium text-gray-700">Upload Your Photo</label>
+                <div class="relative group">
+                    <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-emerald-200 group-hover:border-emerald-400 transition-colors">
+                        <div id="photoPreview" class="w-full h-full bg-emerald-50 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <input type="file" id="photo" name="photo" accept="image/*" required class="hidden">
+                    <button type="button" id="uploadButton"
+                        class="absolute bottom-0 right-0 rounded-full w-10 h-10 p-0 bg-white border border-emerald-200 hover:border-emerald-400 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-sm text-gray-500">Please upload a clear, front-facing photo (JPG, JPEG, PNG, max size: 2MB)</p>
+            </div>
+            <!-- Terms and Conditions -->
+            <div class="space-y-4">
+                <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-100">
+                    <h3 class="font-semibold text-emerald-800 mb-4">Terms and Conditions</h3>
+                    <div class="text-sm text-emerald-700 space-y-2 h-32 overflow-y-auto">
+                        <p>By joining SHORE'25 as a volunteer, you agree to:</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Maintain professional conduct throughout the event</li>
+                            <li>Follow the guidelines and instructions provided by team leaders</li>
+                            <li>Commit to your assigned responsibilities and schedules</li>
+                            <li>Represent SHORE'25 with enthusiasm and dedication</li>
+                            <li>Maintain confidentiality regarding sensitive information</li>
+                        </ul>
+                    </div>
+                </div>
+                <label class="flex items-start space-x-3 cursor-pointer group">
+                    <input type="checkbox" name="acceptTerms" required
+                        class="mt-1 text-emerald-500 border-emerald-300 rounded focus:ring-emerald-500">
+                    <span class="text-sm text-gray-600 group-hover:text-gray-800">
+                        I agree to the terms and conditions of volunteering for SHORE'25
+                    </span>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-center">
+                <button type="submit"
+                    class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                    Submit Application
+                </button>
+            </div>
+        </form>
+
+        <!-- Footer -->
+        <div class="text-center mt-8 text-gray-500 text-sm animate-fadeInUp">
+            <p class="text-white">For any queries, please contact the SHORE'25 team</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('volunteerForm');
+            const photoInput = document.getElementById('photo');
+            const photoPreview = document.getElementById('photoPreview');
+            const uploadButton = document.getElementById('uploadButton');
+
+            // Handle photo upload and preview
+            uploadButton.addEventListener('click', () => photoInput.click());
+
+            photoInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    // Validate file type and size
+                    const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                    const maxSize = 2 * 1024 * 1024; // 2MB
+
+                    if (!validTypes.includes(file.type)) {
+                        alert('Please upload an image file (JPG, JPEG, PNG).');
+                        this.value = ''; // Clear the input
+                        return;
+                    }
+
+                    if (file.size > maxSize) {
+                        alert('File size must be less than 2MB.');
+                        this.value = ''; // Clear the input
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        photoPreview.innerHTML = `<img src="${e.target.result}" alt="Preview" class="w-full h-full object-cover">`;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Handle form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Create FormData object
+                const formData = new FormData(form);
+                
+                // Log form data (replace with your actual submission logic)
+                console.log('Form submitted!');
+                for (let [key, value] of formData.entries()) {
+                    console.log(`${key}: ${value}`);
+                }
+
+                // Add your form submission logic here
+                // alert('Application submitted successfully!');
+                form.submit();
+
+                form.reset();
+                photoPreview.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-emerald-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

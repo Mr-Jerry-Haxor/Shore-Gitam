@@ -8,6 +8,7 @@ import re
 from django.contrib.auth.decorators import login_required
 from events.models import College , Event , Hackathon
 from hospitality.models import HospitalityUser
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 @require_http_methods(["GET", "POST"])
 def bgmi_player(request):
@@ -49,32 +50,45 @@ def bgmi_player(request):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def volunteer_registration(request):
-    # if True:
-    #     return render(request,'bgmiclose.html',{"titletext":"Volunteer Registration Closed"})
     if request.method == 'POST':
+        print(f'\n{request.POST}\n')
         try:
             name = request.POST.get('name') 
             email = request.POST.get('email')
             phone_number = request.POST.get('phone_number')
-            regno = request.POST.get('regno')
+            regno = request.POST.get('regNo')
             gender = request.POST.get('gender')
-            year_of_study = request.POST.get('yearofstudy')
+            year_of_study = request.POST.get('year_of_study')
             branch = request.POST.get('branch')
-            institute = request.POST.get('institute')
-            department = request.POST.get('Department') 
-            campus = request.POST.get('campus')  
-            is_hosteler = request.POST.get('hosteler')
-            previous_experience = request.POST.get('previousexp')
-            availability = request.POST.get('availability')
-            domain_of_interest = request.POST.get('domain')
-            tshirt_size = request.POST.get('tshirt')
-            why_you_interested = request.POST.get('why_you_interested') 
-            profile_pic = request.FILES.get('file_input') 
-            
+            course = request.POST.get('course')
+            is_hosteler = request.POST.get('hosteler') == "yes"
+            previous_experience = request.POST.get('prev')
+            tshirt_size = request.POST.get('tShirtSize')
+            why_you_interested = request.POST.get('whyJoin')
+            profile_pic = request.FILES.get('photo')
+
+            if email != request.user.email:
+                messages.error(request, "You can only register using your email.")
+                return redirect('volunteer')
+
+            # Validate email domain
             if not re.match(r'.+@(?:gitam\.edu|gitam\.in)$', email):
                 messages.error(request, "Invalid email domain. Please use a Gitam email.")
                 return redirect('volunteer')
-            
+
+            # Validate image file type and size
+            if isinstance(profile_pic, InMemoryUploadedFile):
+                valid_types = ['image/jpeg', 'image/jpg', 'image/png']
+                max_size = 2 * 1024 * 1024  # 2MB
+
+                if profile_pic.size > max_size:
+                    messages.error(request, "File size must be less than 2MB.")
+                    return redirect('volunteer')
+
+                if profile_pic.content_type not in valid_types:
+                    messages.error(request, "Please upload an image file (JPG, JPEG, PNG).")
+                    return redirect('volunteer')
+
             # Save data to the Volunteer model
             volunteer = Volunteer(
                 name=name,
@@ -84,26 +98,26 @@ def volunteer_registration(request):
                 gender=gender,
                 year_of_study=year_of_study,
                 branch=branch,
-                institute=institute,
-                department=department,
-                Campus=campus,
+                course=course,
                 ishosteler=is_hosteler,
                 previous_experience=previous_experience,
-                availability=availability,
                 why_you_interested=why_you_interested,
                 tshirt_size=tshirt_size,
-                domain_of_interest=domain_of_interest,
                 profile_pic=profile_pic
             )
             volunteer.save()  # Save the data to the database
-            messages.success(request, "Registration successful")
-            return redirect('volunteer')
+            messages.success(request, "Successfully completed volunteer registration.")
+            return render(request, "volunteer_success.html")
         except IntegrityError as e:
-            # Catch the specific IntegrityError for unique constraint failure
+            print(e)
             messages.error(request, "Email already exists. Please use a different email")
-            return render(request, 'voulnteerreg.html')
+            return redirect('volunteer')
+        except Exception as e:
+            print(e)
+            messages.error(request, e)
+            return redirect('volunteer')
     else:
-        return render(request, 'voulnteerreg.html')
+        return render(request, 'volunteer_registration.html')
 
 
 def noc(request):

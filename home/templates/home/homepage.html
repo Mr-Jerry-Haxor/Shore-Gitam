@@ -76,9 +76,10 @@
             <!-- Logo -->
             <a href="#" class="flex items-center space-x-2">
                 <img src="{% static 'img/shore25logo.png' %}" alt="SHORE Fest Logo" class="h-10 w-10 rounded-full">
-                <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">SHORe Fest 2025</span>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">SHORe 2025</span>
             </a>
 
+            <!-- Hamburger Menu -->
             <button data-collapse-toggle="navbar-sticky" type="button"
                 class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 aria-controls="navbar-sticky" aria-expanded="false">
@@ -92,8 +93,7 @@
 
             <!-- Navigation Links -->
             <div class="hidden w-full md:flex md:items-center md:justify-between md:w-auto" id="navbar-sticky">
-                <ul
-                    class="flex flex-col p-4 md:p-0 mt-4 font-medium bg-emerald-800/90 rounded-lg md:flex-row md:space-x-6 md:mt-0 md:bg-transparent">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium bg-emerald-800/90 rounded-lg md:flex-row md:space-x-6 md:mt-0 md:bg-transparent">
                     <li>
                         <a href="#home"
                             class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">Home</a>
@@ -107,22 +107,26 @@
                             class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">About</a>
                     </li>
                     <li>
-                        <a href="{% url 'prelims:home' %}"
-                            class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">Prelims</a>
-                    </li>
-                    <!-- <li>
-                <a
-                  href="#schedule"
-                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
-                >Schedule</a>
-              </li> -->
-                    <li>
                         <a href="#register"
                             class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">Register</a>
                     </li>
                     <li>
                         <a href="#faq"
                             class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">FAQ</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'prelims:home' %}"
+                            class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                            Prelims
+                            <span class="inline-block bg-emerald-500 text-white text-xs font-semibold rounded-full px-2 py-1 ml-2 transform scale-105 hover:scale-110 transition-transform duration-300 shadow-lg align-middle">New</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'prelims:home' %}"
+                            class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                            Register as volunteer
+                            <span class="inline-block bg-emerald-500 text-white text-xs font-semibold rounded-full px-2 py-1 ml-2 transform scale-105 hover:scale-110 transition-transform duration-300 shadow-lg align-middle">New</span>
+                        </a>
                     </li>
                     <li class="mt-2 md:mt-0">
                         <a href="{% url 'home:festpass' %}"
