@@ -101,7 +101,7 @@ def view_team(request, team_hash):
         return redirect("culturals_home")
 
 
-@login_required(login_url="home:login")
+@login_required(login_url="/auth/login/google-oauth2/")
 def register(request, event_name):
     context = {}
     context["campus_choices"] = campus_choices
