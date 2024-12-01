@@ -63,7 +63,7 @@ class Team(models.Model):
     captain_email = models.EmailField(null=False, blank=False)
     registered_at = models.DateTimeField(auto_now=True)
     reference_attatchment = models.FileField(
-        upload_to=prelims_files_upload_to, null=True, blank=True
+        upload_to=prelims_files_upload_to
     )
     teammates = models.TextField(null=False, blank=True, max_length=5000)
 
