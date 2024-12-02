@@ -204,8 +204,8 @@ def logout_user(request):
 
 def signup(request):
     # removing signup temporarily, need to enable once festpasses for non gitam students are enabled
-    messages.info(request, "Please use Sign in with Google")
-    return redirect("home:login")
+    # messages.info(request, "Please use Sign in with Google")
+    # return redirect("home:login")
 
     if request.user.is_authenticated:
         return redirect('home:dashboard')
@@ -517,9 +517,10 @@ def dashboard(request):
         """Checking for prebooking"""
         try:
             prebooking = PassStatus.objects.get(id=1).pre_booking
-        except:
-            prebooking = PassStatus.objects.get(id=2).pre_booking
-        context['prebooking'] = prebooking
+        except Exception as e:
+            # prebooking = PassStatus.objects.get(id=2).pre_booking
+            print(e)
+        context['prebooking'] = False
          
 
         # check if hashpass is created and not request.user.is_festpass_purchased is false and transaction is success in payments table
