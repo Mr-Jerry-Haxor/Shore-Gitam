@@ -13,5 +13,5 @@ urlpatterns = [
     path("prebook/", views.prebooking, name="prebooking"),
     path("update-name/", views.update_name, name="update-name"),
 
-    path("send-student-emails/", views.send_student_emails),
+    # path("send-student-emails/", views.send_student_emails),
 ]
