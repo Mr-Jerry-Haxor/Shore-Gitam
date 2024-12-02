@@ -20,6 +20,25 @@
         }
     </style>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (navigator.userAgent.includes("Instagram")) {
+                const openInBrowserLink = document.createElement('a');
+                openInBrowserLink.href = location.href;
+                openInBrowserLink.target = '_blank';
+                openInBrowserLink.download = '';
+                openInBrowserLink.textContent = 'Open in browser';
+                openInBrowserLink.style.display = 'block';
+                openInBrowserLink.style.margin = '20px';
+                openInBrowserLink.style.padding = '10px';
+                openInBrowserLink.style.backgroundColor = '#4CAF50';
+                openInBrowserLink.style.color = 'white';
+                openInBrowserLink.style.textAlign = 'center';
+                openInBrowserLink.style.borderRadius = '5px';
+                openInBrowserLink.style.textDecoration = 'none';
+        
+                document.body.appendChild(openInBrowserLink);
+            }
+        });
         tailwind.config = {
             theme: {
                 extend: {
