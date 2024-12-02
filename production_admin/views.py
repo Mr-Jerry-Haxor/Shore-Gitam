@@ -10,15 +10,36 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.management import call_command
 from io import StringIO
 from django.core.management.base import CommandError
+from coreteam.models import CustomUser
 
 from dotenv import load_dotenv
 load_dotenv()
+
+import random
+
+def get_random_number():
+    random_num = random.randint(1, 99999)
+    return random_num
+
 
 def index(request):
     if request.user.is_superuser:
         return render(request, "production_admin/index.html")
     else:
         return redirect("corehome")
+    
+
+def change_username(request):
+    if request.user.is_superuser:
+        users = CustomUser.objects.all()
+        for user in users:
+            num = get_random_number()
+            user.username = f"{user.email}__{num}"
+            user.save()
+        
+        return HttpResponse("Completed!!")
+    else:
+        return HttpResponse("Unauthorized!!")
 
 
 def pull_and_restart(request):

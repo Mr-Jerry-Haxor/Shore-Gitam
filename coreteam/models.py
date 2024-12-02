@@ -74,13 +74,23 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = [username, phone_number, age, gender, college, year_of_study, course, branch]
 
     def save(self, *args, **kwargs):
+        # Generate username if not provided
+        if self.username:
+            import random
+            random_number = random.randint(1, 99999)  # Generate a random number
+            self.username = f"{self.email}_{random_number}"
+            
+        if not self.username:
+            import random
+            random_number = random.randint(1, 99999)  # Generate a random number
+            self.username = f"{self.email}_{random_number}"  # Set username to email_randomnumber
+        
         # Delete old profile picture if updating with a new one
         if self.pk:
             old_user = CustomUser.objects.filter(pk=self.pk).first()
             if old_user and old_user.profile_picture != self.profile_picture:
                 if old_user.profile_picture and os.path.isfile(old_user.profile_picture.path):
                     os.remove(old_user.profile_picture.path)
-        
         
         super().save(*args, **kwargs)
     
