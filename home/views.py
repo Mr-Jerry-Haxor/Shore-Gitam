@@ -6,6 +6,8 @@ import random
 from datetime import datetime
 import os
 
+
+from concurrent.futures import ThreadPoolExecutor
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -39,6 +41,20 @@ class EmailThread(threading.Thread):
             self.send_mail_function(self.user_email)
         except Exception as e:
             print(f"Failed to send email to {self.user_email}: {e}")
+
+
+def send_email_async(user_email, send_mail_function):
+    """
+    Function to send an email asynchronously using a thread.
+    Accepts a send mail function as argument.
+    """
+    email_thread = EmailThread(user_email, send_mail_function)
+
+    # Start the thread
+    email_thread.start()
+
+    # Clean up (optional; threads clean themselves up upon completion)
+    return email_thread
 
 
 def send_prebooking_email(user_email):
@@ -99,23 +115,6 @@ def send_payment_pending_email(user_email):
     msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
     msg.content_subtype = "html"
     msg.send()
-
-
-def send_email_async(user_email, send_mail_function):
-    """
-    Function to send an email asynchronously using a thread.
-    Accepts a send mail function as argument.
-    """
-    email_thread = EmailThread(user_email, send_mail_function)
-
-    # Start the thread
-    email_thread.start()
-
-    # Wait for the thread to complete
-    email_thread.join()
-
-    # Clean up (optional; threads clean themselves up upon completion)
-    del email_thread  # Explicitly remove reference
 
 
 def is_transaction_success(user_email):
@@ -604,12 +603,14 @@ def send_name_email(emails):
 @login_required(login_url="home:login")
 def send_student_emails(request):
     if request.user.is_authenticated and request.user.is_superuser:
-        users = CustomUser.objects.filter(name__isnull=True)
+        users = CustomUser.objects.filter(name__isnull=True, is_festpass_purchased=True)
         emails = [user.email for user in users]
 
-        send_email_async(send_name_email, emails)
+        with ThreadPoolExecutor(max_workers=50) as executor:
+            for email in emails:
+                executor.submit(send_email_async, email, send_name_email)
 
-        return HttpResponse("Sent emails")
+        return HttpResponse("Sent emails in the background")
     
     return redirect("home:dashboard")
 
