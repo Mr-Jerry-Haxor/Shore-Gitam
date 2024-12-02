@@ -318,11 +318,7 @@ def festpass(request):
             return redirect("home:dashboard")
         
         """Checking for prebooking"""
-        try:
-            prebooking = PassStatus.objects.get(id=1).pre_booking
-        except:
-            prebooking = PassStatus.objects.get(id=2).pre_booking
-        context['prebooking'] = prebooking
+        context['prebooking'] = False
 
         if prebooking and request.user.prebooking:
             return redirect('home:prebooking')
@@ -374,6 +370,7 @@ def festpass(request):
 
             user = CustomUser.objects.get(email=request.user.email)
 
+            name = request.POST.get('visible_name')
             reg_num = request.POST.get('registrationNumber')
             phone_number = request.POST.get('phone')
             branch = request.POST.get('branch')
@@ -405,6 +402,7 @@ def festpass(request):
                 messages.error(request, "All fields are required.")
                 return redirect('home:festpass')  # Redirect back to the festpass page
             
+            user.name = name
             user.registration_number = reg_num
             user.phone_number = phone_number
             user.branch = branch
@@ -589,3 +587,47 @@ def prebooking(request):
             return redirect("home:festpass")
     
     return redirect('home:login')
+
+
+def send_name_email(emails):
+    subject = "Important! Please update your name!"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("home/update_name_email.html").render({
+        "update_name_url": ""
+    })
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, emails)
+    msg.content_subtype = "html"
+    msg.send()
+
+
+@login_required(login_url="home:login")
+def send_student_emails(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        users = CustomUser.objects.filter(name__isnull=True)
+        emails = [user.email for user in users]
+
+        send_email_async(send_name_email, emails)
+
+        return HttpResponse("Sent emails")
+    
+    return redirect("home:dashboard")
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
+def update_name(request):
+    if request.user.is_authenticated:
+        user_obj = CustomUser.objects.get(email=request.user.email)
+        if user_obj.name:
+            messages.info(request, "Name already exists, no need to update your name.")
+            return redirect("home:dashboard")
+        if request.POST:
+            name = request.POST.get('name')
+            user_obj.name = name
+            user_obj.save()
+
+            messages.success(request, "Successfully updated your name")
+            return redirect("home:dashboard")
+        return render(request, "home/update_name.html")
+    else:
+        return redirect("home:login")

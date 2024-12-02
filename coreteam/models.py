@@ -56,6 +56,9 @@ class CustomUser(AbstractUser):
     accomdation = models.BooleanField(default=False)
     sports = models.BooleanField(default=False)
 
+    # added name
+    name = models.CharField(max_length=255, blank=True, null=True)
+
     username = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(unique=True)
     phone_number = models.CharField( max_length=20,null=True, blank=True)

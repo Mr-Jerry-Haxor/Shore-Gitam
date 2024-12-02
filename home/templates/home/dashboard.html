@@ -164,7 +164,11 @@
         </div>
         {% endcomment %}
         <div class="mb-8 text-center">
-            <h1 class="text-4xl font-bold text-white mb-2">Welcome back, {{ request.user.first_name|capfirst }}!</h1>
+            {% if request.user.name %}
+            <h1 class="text-4xl font-bold text-white mb-2">Welcome, {{ request.user.name|capfirst }}!</h1>
+            {% else %}
+            <h1 class="text-4xl font-bold text-white mb-2">Welcome, {{ request.user.first_name|capfirst }}!</h1>
+            {% endif %}
             <p class="text-lg text-white">Your SHORe Fest '25 adventure awaits.</p>
         </div>
 
@@ -380,6 +384,13 @@
                         {% endif %}
                     </div>
                     <div class="md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {% if request.user.name %}
+                        <div class="bg-emerald-50 p-3 rounded-md">
+                            <p class="text-sm font-medium text-emerald-700">Visible Name</p>
+                            <p class="text-emerald-800">{{ request.user.name }}</p>
+                        </div>
+                        {% endif %}
+
                         {% if request.user.first_name %}
                         <div class="bg-emerald-50 p-3 rounded-md">
                             <p class="text-sm font-medium text-emerald-700">First Name</p>

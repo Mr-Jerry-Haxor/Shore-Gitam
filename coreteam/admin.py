@@ -26,6 +26,7 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "first_name",
         "last_name",
+        "name",
         "registration_number",
         "profile_picture",
         "passhash",
@@ -110,6 +111,7 @@ class CustomUserAdmin(UserAdmin):
                     "first_name", 
                     "last_name", 
                     "email",
+                    "name",
                     "registration_number",
                     "profile_picture",
                     "phone_number",
@@ -176,6 +178,7 @@ class CustomUserAdmin(UserAdmin):
                 "fields": (
                     "username",
                     "email",
+                    "name",
                     "password1",
                     "password2",
                     "profile_picture",

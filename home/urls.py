@@ -11,4 +11,7 @@ urlpatterns = [
     path("eticket/", views.eticket, name='eticket'),
     path("dashboard/", views.dashboard, name='dashboard'),
     path("prebook/", views.prebooking, name="prebooking"),
+    path("update-name/", views.update_name, name="update-name"),
+
+    path("send-student-emails/", views.send_student_emails),
 ]

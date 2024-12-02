@@ -80,6 +80,12 @@
                     {% csrf_token %}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
+                            <label for="visible_name" class="block text-sm font-semibold text-gray-700">Name</label>
+                            <input type="text" id="visible_name" name="visible_name" required
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
+                                   placeholder="Name as per ID card">
+                        </div>
+                        <!-- <div class="space-y-2">
                             <label for="firstName" class="block text-sm font-semibold text-gray-700">First Name</label>
                             <input type="text" id="firstName" name="firstName" required
                                    value="{{ request.user.first_name|default:'' }}" 
@@ -94,7 +100,7 @@
                                    {% if request.user.last_name %} readonly {% endif %}
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
                                    placeholder="Doe">
-                        </div>
+                        </div> -->
                         <div class="space-y-2">
                             <label for="email" class="block text-sm font-semibold text-gray-700">Email Address</label>
                             <input type="email" id="email" name="email" required
