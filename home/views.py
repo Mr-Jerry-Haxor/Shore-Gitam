@@ -588,14 +588,14 @@ def prebooking(request):
     return redirect('home:login')
 
 
-def send_name_email(emails):
-    subject = "Important! Please update your name!"
+def send_name_email(email):
+    subject = "Shore'25 || Important! Please update your name!"
     from_email = settings.EMAIL_HOST_USER
     html_content = get_template("home/update_name_email.html").render({
-        "update_name_url": ""
+        "update_name_url": "https://shore.gitam.edu/update-name/"
     })
 
-    msg = EmailMultiAlternatives(subject, html_content, from_email, emails)
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [email])
     msg.content_subtype = "html"
     msg.send()
 

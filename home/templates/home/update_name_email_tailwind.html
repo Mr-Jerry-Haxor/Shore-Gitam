@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Fest '25 - Update Your Name</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="max-w-2xl mx-auto p-8">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="bg-[#2a9d8f] p-4">
+                <img src="https://shore.gitam.edu/static/img/shore25logo.png" alt="Shore Fest '25 Logo" class="w-24 h-24 mx-auto mb-4">
+                <h1 class="text-3xl font-bold text-white text-center">Shore Fest '25</h1>
+            </div>
+            <div class="p-6 relative">
+                <!-- Mascot positioned on the right -->
+                <img src="https://shore.gitam.edu/static/img/mascot.png" 
+                     alt="Shore Fest Mascot" 
+                     class="absolute right-0 top-0 w-32 h-auto -mt-8 mr-4 lg:w-40 hidden sm:block"
+                     style="transform: scaleX(-1);">
+                
+                <div class="pr-28 sm:pr-40">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Important: Update Your Name</h2>
+                    <p class="text-gray-600 mb-4">Dear Fest Attendee,</p>
+                    <p class="text-gray-600 mb-4">We hope you're excited about Shore Fest '25! We need your attention on an important matter regarding your festival pass.</p>
+                    <p class="text-gray-600 mb-4"><strong>It is mandatory to update your name to exactly match the name on your ID card.</strong> This will be verified during entry, and any discrepancies may result in your festpass being rejected.</p>
+                </div>
+
+                <p class="text-gray-600 mb-4">Please click the button below to update your name:</p>
+                <a href="{{ update_name_url }}" class="block w-full bg-[#2a9d8f] hover:bg-[#238477] text-white font-bold py-2 px-4 rounded text-center transition duration-300 ease-in-out mb-4">Update My Name</a>
+                <p class="text-gray-600 mb-4">If the button doesn't work, copy and paste this link into your browser:</p>
+                <p class="text-[#2a9d8f] break-all mb-4">{{ update_name_url }}</p>
+                
+                <div class="border-t border-gray-200 pt-4 mt-4">
+                    <p class="text-gray-600 mb-2"><strong>Remember:</strong></p>
+                    <ul class="list-disc list-inside text-gray-600 mb-4">
+                        <li>Your name must match your ID card exactly</li>
+                        <li>This includes spelling, middle names, and any suffixes</li>
+                        <li>Failure to comply may result in entry denial</li>
+                    </ul>
+                </div>
+                
+                <p class="text-gray-600 mb-4">Thank you for your cooperation. We can't wait to see you at Shore Fest '25!</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
