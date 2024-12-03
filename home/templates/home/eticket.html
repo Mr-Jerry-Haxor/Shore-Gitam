@@ -57,7 +57,11 @@
                             <img src="{{ request.user.profile_picture.url }}" alt="Profile Picture" class="w-full h-full object-cover rounded-full">
                         </div>
                         <div>
+                            {% if request.user.name %}
                             <h2 class="font-bold text-xl text-emerald-700">{{ request.user.name|capfirst }}</h2>
+                            {% elif request.user.first_name %}
+                            <h2 class="font-bold text-xl text-emerald-700">{{ request.user.first_name|capfirst }}</h2>
+                            {% endif %}
                             <p class="text-emerald-600">{% if request.user.is_gitamite %} GITAM Student {% else %}Non-GITAM Student{% endif %}</p>
                         </div>
                     </div>
