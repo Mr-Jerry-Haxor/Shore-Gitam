@@ -66,6 +66,8 @@ def send_festpasspurchase_emails(request):
         prebooked_users = CustomUser.objects.filter(is_festpass_purchased=False, prebooking=True)
         emails = [user.email for user in prebooked_users]
 
+        return HttpResponse(emails)
+
         with ThreadPoolExecutor(max_workers=50) as executor:
             for email in emails:
                 executor.submit(send_email_async, email, send_email_prebooking)
