@@ -317,10 +317,11 @@ def festpass(request):
             return redirect("home:dashboard")
         
         """Checking for prebooking"""
-        context['prebooking'] = False
+        # prebooking = False
+        # context['prebooking'] = prebooking
 
-        if prebooking and request.user.prebooking:
-            return redirect('home:prebooking')
+        # if prebooking and request.user.prebooking:
+        #     return redirect('home:prebooking')
 
         if request.user.is_festpass_purchased:
             return redirect('home:eticket')
@@ -447,14 +448,14 @@ def festpass(request):
             user.save()
 
             """Check if prebooking is enabled, and if yes then jus mark prebooking as true and redirect to prebooking success page"""
-            if prebooking:
-                user.prebooking = True
-                user.save()
+            # if prebooking:
+            #     user.prebooking = True
+            #     user.save()
 
-                # send prebooking email
-                send_email_async(request.user.email, send_prebooking_email)
+            #     # send prebooking email
+            #     send_email_async(request.user.email, send_prebooking_email)
 
-                return redirect("home:prebooking")
+            #     return redirect("home:prebooking")
 
             """After saving the user data successfully, redirect to their respective payment portals"""
             if user.is_gitamite:
@@ -512,14 +513,9 @@ def dashboard(request):
         context = {}
 
         """Checking for prebooking"""
-        try:
-            prebooking = PassStatus.objects.get(id=1).pre_booking
-        except Exception as e:
-            # prebooking = PassStatus.objects.get(id=2).pre_booking
-            print(e)
-        context['prebooking'] = False
+        # prebooking = False
+        # context['prebooking'] = prebooking
          
-
         # check if hashpass is created and not request.user.is_festpass_purchased is false and transaction is success in payments table
         if request.user.passhash and not request.user.is_festpass_purchased and is_transaction_success(request.user.email):
             # make is_festpass_purchased to True
@@ -561,8 +557,6 @@ def dashboard(request):
         if request.user.is_festpass_purchased and is_transaction_success(request.user.email):
             context['festpass_validated'] = True
             
-        total_tickets_sold = FestPass.objects.filter(transaction_status="Y").count() #.values('email').annotate(count=Count('email')).order_by('-count')
-
         total_unique_tickets = FestPass.objects.filter(
             txn_id__isnull = False,
             transaction_status = "Y"
@@ -578,6 +572,7 @@ def dashboard(request):
 
 @login_required(login_url="home:login")
 def prebooking(request):
+    return redirect("home:festpass")
     if request.user.is_authenticated:
         if request.user.prebooking:
             return render(request, "home/prebooking_success.html")
