@@ -9,5 +9,5 @@ urlpatterns = [
     path('run-command/', views.run_command, name='run_command'),
     # path("change-usernames/", views.change_username, name="change_username"),
     # path("send_festpasspurchase_emails/", views.send_festpasspurchase_emails, name="send_festpasspurchase_emails"),
-    path("remove_prebooking/", views.remove_prebooking, name="remove_prebooking"),
+    # path("remove_prebooking/", views.remove_prebooking, name="remove_prebooking"),
 ]
