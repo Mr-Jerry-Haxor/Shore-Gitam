@@ -82,6 +82,7 @@
                         <div class="space-y-2">
                             <label for="visible_name" class="block text-sm font-semibold text-gray-700">Name</label>
                             <input type="text" id="visible_name" name="visible_name" required
+                                   value="{{ request.user.name|default:'' }}"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200"
                                    placeholder="Name as per ID card">
                         </div>
