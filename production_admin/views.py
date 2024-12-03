@@ -13,6 +13,7 @@ from django.core.management.base import CommandError
 from coreteam.models import CustomUser
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
+from concurrent.futures import ThreadPoolExecutor
 
 from home.views import send_email_async
 
@@ -63,10 +64,25 @@ def send_festpasspurchase_emails(request):
     """Send emails to prebooked students for purchasing the festpass"""
     if request.user.is_authenticated and request.user.is_superuser:
         prebooked_users = CustomUser.objects.filter(is_festpass_purchased=False, prebooking=True)
-        for user in prebooked_users:
-            send_email_async(user.email, send_email_prebooking)
+        emails = [user.email for user in prebooked_users]
+
+        with ThreadPoolExecutor(max_workers=50) as executor:
+            for email in emails:
+                executor.submit(send_email_async, email, send_email_prebooking)
         
         return HttpResponse("Sent emails in background")
+    else:
+        return redirect("home:dashboard")
+
+
+def remove_prebooking(request):
+    if request.user.is_authenticated and request.user.is_superuser:
+        prebooked_users = CustomUser.objects.filter(is_festpass_purchased=False, prebooking=True)
+        for user in prebooked_users:
+            user.prebooking = False
+            user.save()
+        
+        return HttpResponse("Completed")
     else:
         return redirect("home:dashboard")
 
