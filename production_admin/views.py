@@ -11,6 +11,10 @@ from django.core.management import call_command
 from io import StringIO
 from django.core.management.base import CommandError
 from coreteam.models import CustomUser
+from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
+
+from home.views import send_email_async
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -41,6 +45,30 @@ def change_username(request):
     else:
         return HttpResponse("Unauthorized!!")
 
+
+def send_email_prebooking(email):
+    user = CustomUser.objects.get(email=email)
+    subject = "Shore'25 || Purchase your pass for SHORe'25"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("home/festpass_purchase_email.html").render({
+        "name": user.first_name.title(),
+    })
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [email])
+    msg.content_subtype = "html"
+    msg.send()
+
+
+def send_festpasspurchase_emails(request):
+    """Send emails to prebooked students for purchasing the festpass"""
+    if request.user.is_authenticated and request.user.is_superuser:
+        prebooked_users = CustomUser.objects.filter(is_festpass_purchased=False, prebooking=True)
+        for user in prebooked_users:
+            send_email_async(user.email, send_email_prebooking)
+        
+        return HttpResponse("Sent emails in background")
+    else:
+        return redirect("home:dashboard")
 
 def pull_and_restart(request):
     if request.user.is_superuser:

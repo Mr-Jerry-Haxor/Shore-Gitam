@@ -429,13 +429,13 @@ def festpass(request):
 
 
             """Check whether any of the important field is empty (first_name, last_name, email, registration_number, phone_number, college, branch, course, year_of_study, campus(for is_gitamite=True))"""
-            important_fields = [user.first_name, user.last_name, user.email, user.registration_number, 
+            important_fields = [user.name, user.first_name, user.last_name, user.email, user.registration_number, 
                                 user.phone_number, user.branch, user.course, 
                                 user.year_of_study, user.campus if user.is_gitamite else 'non gitamite']
             
             for field in important_fields:
                 if field is None or field == '':
-                    messages.error(request, f'{field} is empty.')
+                    messages.error(request, "Please enter all the fields")
 
                     return redirect('home:festpass')
 
