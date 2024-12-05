@@ -105,11 +105,11 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (
-            "Personal Info", 
+            "Personal Info",
             {
                 "fields": (
-                    "first_name", 
-                    "last_name", 
+                    "first_name",
+                    "last_name",
                     "email",
                     "name",
                     "registration_number",
@@ -118,7 +118,7 @@ class CustomUserAdmin(UserAdmin):
                     "age",
                     "gender",
                     "college",
-                    "year_of_study", 
+                    "year_of_study",
                     "course",
                     "branch",
                     "campus",
@@ -129,7 +129,7 @@ class CustomUserAdmin(UserAdmin):
                     "accomdation",
                     "sports",
                 )
-            }
+            },
         ),
         (
             "Permissions",
@@ -233,26 +233,26 @@ from .models import Task
 
 class TaskAdmin(ImportExportModelAdmin):
     list_display = (
-        "task_title", 
+        "task_title",
         "domain",
-        "assigned_to", 
+        "assigned_to",
         "assigned_by",
-        "status", 
+        "status",
         "priority",
         "due_date",
         "coordinator",
         "submitted_by",
     )
     list_filter = (
-        "status", 
+        "status",
         "priority",
-        "due_date", 
+        "due_date",
         "domain",
         "coordinator",
     )
     search_fields = (
-        "task_title", 
-        "assigned_to", 
+        "task_title",
+        "assigned_to",
         "assigned_by",
         "description",
         "submitted_by",

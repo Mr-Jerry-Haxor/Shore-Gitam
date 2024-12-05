@@ -14,7 +14,7 @@ from security.models import security_staff
 def get_domain_leads_emails(domain):
     try:
         domain_lead = DomainLead.objects.get(domain=domain)
-        return [email.strip() for email in domain_lead.leads.split(',')]
+        return [email.strip() for email in domain_lead.leads.split(",")]
     except DomainLead.DoesNotExist:
         return []
 
@@ -161,8 +161,7 @@ role_domains = {
         "alltasks",
         "president",
         "vice_president",
-        "event_manager"
-        "campus_head_hyd",
+        "event_manager" "campus_head_hyd",
         "campus_head_blr",
         "technology",
         "events_cultural",
@@ -283,7 +282,7 @@ def coretasks(request, domain_name):
 
     # Define user permissions based on their role attributes
     user_permissions = {
-        "event_manager":  getattr(request.user, "event_manager", False),
+        "event_manager": getattr(request.user, "event_manager", False),
         "campus_head_hyd": getattr(request.user, "campus_head_hyd", False),
         "campus_head_blr": getattr(request.user, "campus_head_blr", False),
         "coordinator": getattr(request.user, "coordinator", False),
@@ -459,7 +458,13 @@ def sendmail_submission(taskid):
 
     # Add domain leads and event managers to email list
     domain_leads_emails = get_domain_leads_emails(domain)
-    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails) | set(event_manager_emails)
+    emails_list = (
+        set(president_emails)
+        | set(vicepresident_emails)
+        | set(domain_emails)
+        | set(domain_leads_emails)
+        | set(event_manager_emails)
+    )
 
     if coordinator:
         coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(
@@ -552,7 +557,13 @@ def sendmail_create(taskid):
 
     # Add domain leads and event managers to email list
     domain_leads_emails = get_domain_leads_emails(domain)
-    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails) | set(event_manager_emails)
+    emails_list = (
+        set(president_emails)
+        | set(vicepresident_emails)
+        | set(domain_emails)
+        | set(domain_leads_emails)
+        | set(event_manager_emails)
+    )
 
     if coordinator:
         coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(
@@ -773,7 +784,13 @@ def sendmail_edit(taskid):
 
     # Add domain leads and event managers to email list
     domain_leads_emails = get_domain_leads_emails(domain)
-    emails_list = set(president_emails) | set(vicepresident_emails) | set(domain_emails) | set(domain_leads_emails) | set(event_manager_emails)
+    emails_list = (
+        set(president_emails)
+        | set(vicepresident_emails)
+        | set(domain_emails)
+        | set(domain_leads_emails)
+        | set(event_manager_emails)
+    )
 
     if coordinator:
         coordinator_emails = CustomUser.objects.filter(coordinator=True).values_list(

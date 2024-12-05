@@ -7,8 +7,10 @@ from .models import ParticipantApplication, Domain
 
 def team(request):
     context = {}
-    context['domains'] = Domain.objects.all().order_by('order')
-    all_applications = ParticipantApplication.objects.select_related('domain').order_by('domain__order')
+    context["domains"] = Domain.objects.all().order_by("order")
+    all_applications = ParticipantApplication.objects.select_related("domain").order_by(
+        "domain__order"
+    )
 
     applications_by_domain = {}
     for application in all_applications:
@@ -23,14 +25,24 @@ def team(request):
 
         applications_by_domain[domain_name][position].append(application)
 
-    order = ['Head', 'Co-head', 'Lead', 'Co-lead', 'Member']
+    order = ["Head", "Co-head", "Lead", "Co-lead", "Member"]
 
     for key in applications_by_domain:
-        sorted_dict = {k: applications_by_domain[key][k] for k in order if k in applications_by_domain[key]}
-        sorted_dict.update({k: applications_by_domain[key][k] for k in applications_by_domain[key] if k not in order})
+        sorted_dict = {
+            k: applications_by_domain[key][k]
+            for k in order
+            if k in applications_by_domain[key]
+        }
+        sorted_dict.update(
+            {
+                k: applications_by_domain[key][k]
+                for k in applications_by_domain[key]
+                if k not in order
+            }
+        )
         applications_by_domain[key] = sorted_dict
 
-    context['applications_by_domain'] = applications_by_domain
+    context["applications_by_domain"] = applications_by_domain
 
     return render(request, "teams/team.html", context)
 
@@ -39,7 +51,16 @@ def team(request):
 def apply(request):
     context = {}
     email = request.user.email
-    context['positions'] = ['President', 'Vice-President', 'Event Manager' ,'Head', 'Co-head', 'Lead', 'Co-lead', 'Member']
+    context["positions"] = [
+        "President",
+        "Vice-President",
+        "Event Manager",
+        "Head",
+        "Co-head",
+        "Lead",
+        "Co-lead",
+        "Member",
+    ]
 
     if not ParticipantApplication.objects.filter(email=email).exists():
         context["email"] = email
@@ -67,8 +88,8 @@ def apply(request):
 
             application.save()
             messages.success(
-                request,
-                "Application submitted successfully. Verification is pending.")
+                request, "Application submitted successfully. Verification is pending."
+            )
             return redirect("teams:view_application")
     else:
         messages.info(request, "You have already submitted an application.")
@@ -81,7 +102,16 @@ def apply(request):
 def view_application(request):
     context = {}
     context["domains"] = Domain.objects.all()
-    context['positions'] = ['President', 'Vice-President', 'Event Manager', 'Head', 'Co-head', 'Lead', 'Co-lead', 'Member']
+    context["positions"] = [
+        "President",
+        "Vice-President",
+        "Event Manager",
+        "Head",
+        "Co-head",
+        "Lead",
+        "Co-lead",
+        "Member",
+    ]
     email = request.user.email
     try:
         application = ParticipantApplication.objects.get(email=email)
@@ -120,17 +150,17 @@ def verify_application(request):
 
         for domain in all_domains:
             accepted_emails = domain.head_email.split(",")
-            accepted_emails = [ email.strip() for email in accepted_emails ]
-            
+            accepted_emails = [email.strip() for email in accepted_emails]
+
             if email in accepted_emails:
                 matched_domains.append(domain)
 
         if not matched_domains:
             raise Domain.DoesNotExist
 
-        applications = ParticipantApplication.objects.filter(domain__in=matched_domains).order_by(
-            "verified", "name"
-        )
+        applications = ParticipantApplication.objects.filter(
+            domain__in=matched_domains
+        ).order_by("verified", "name")
 
         context["applications"] = applications
     except Domain.DoesNotExist:

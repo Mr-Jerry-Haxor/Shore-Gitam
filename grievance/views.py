@@ -20,19 +20,22 @@ Change status of a ticket
 Add comment for a ticket
 """
 
+
 def status_remarks_updated(user_email):
     user = CustomUser.objects.get(email=user_email)
     ticket = Ticket.objects.get(user=user)
 
     subject = "Shore'25 - Update on raised ticket"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("grievance/update_email.html").render({
-        "name": ticket.user.first_name,
-        "title": ticket.title,
-        "description": ticket.description,
-        "status": ticket.status,
-        "remarks": ticket.remark
-    })
+    html_content = get_template("grievance/update_email.html").render(
+        {
+            "name": ticket.user.first_name,
+            "title": ticket.title,
+            "description": ticket.description,
+            "status": ticket.status,
+            "remarks": ticket.remark,
+        }
+    )
 
     msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
     msg.content_subtype = "html"
@@ -45,12 +48,14 @@ def send_ticket_created_email(user_email):
 
     subject = "Shore'25 - Successfully Raised Ticket"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("grievance/submitted_email.html").render({
-        "name": ticket.user.first_name,
-        "title": ticket.title,
-        "description": ticket.description,
-        "date": ticket.submitted_at,
-    })
+    html_content = get_template("grievance/submitted_email.html").render(
+        {
+            "name": ticket.user.first_name,
+            "title": ticket.title,
+            "description": ticket.description,
+            "date": ticket.submitted_at,
+        }
+    )
 
     msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
     msg.content_subtype = "html"
@@ -63,12 +68,14 @@ def send_ticket_rejected(user_email):
 
     subject = "Shore'25 - Your ticket has been rejected"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("grievance/rejected_email.html").render({
-        "name": ticket.user.first_name,
-        "title": ticket.title,
-        "description": ticket.description,
-        "remarks": ticket.remark,
-    })
+    html_content = get_template("grievance/rejected_email.html").render(
+        {
+            "name": ticket.user.first_name,
+            "title": ticket.title,
+            "description": ticket.description,
+            "remarks": ticket.remark,
+        }
+    )
 
     msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
     msg.content_subtype = "html"
@@ -81,12 +88,14 @@ def send_ticket_resolved(user_email):
 
     subject = "Shore'25 - Your ticket has been resolved"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("grievance/resolved_email.html").render({
-        "name": ticket.user.first_name,
-        "title": ticket.title,
-        "description": ticket.description,
-        "remarks": ticket.remark,
-    })
+    html_content = get_template("grievance/resolved_email.html").render(
+        {
+            "name": ticket.user.first_name,
+            "title": ticket.title,
+            "description": ticket.description,
+            "remarks": ticket.remark,
+        }
+    )
 
     msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
     msg.content_subtype = "html"
@@ -97,25 +106,26 @@ def dashboard(request):
     if request.user.is_authenticated:
         context = {}
 
-        context['types'] = issue_types
-        context['status'] = issue_status
+        context["types"] = issue_types
+        context["status"] = issue_status
 
-        context['total_tickets'] = Ticket.objects.all().count()
-        context['submitted_tickets'] = Ticket.objects.filter(status='submitted').count()
-        context['resolved_tickets'] = Ticket.objects.filter(status='resolved').count()
-        context['rejected_tickets'] = Ticket.objects.filter(status='rejected').count()
-        context['under_review_tickets'] = Ticket.objects.filter(status='under_review').count()
-
+        context["total_tickets"] = Ticket.objects.all().count()
+        context["submitted_tickets"] = Ticket.objects.filter(status="submitted").count()
+        context["resolved_tickets"] = Ticket.objects.filter(status="resolved").count()
+        context["rejected_tickets"] = Ticket.objects.filter(status="rejected").count()
+        context["under_review_tickets"] = Ticket.objects.filter(
+            status="under_review"
+        ).count()
 
         if request.user.grievance_staff:
-            tickets = Ticket.objects.all().order_by('-submitted_at')
+            tickets = Ticket.objects.all().order_by("-submitted_at")
         else:
             tickets = Ticket.objects.filter(user=request.user)
-        
-        context['tickets'] = tickets
+
+        context["tickets"] = tickets
 
         return render(request, "grievance/dashboard.html", context)
-    
+
     return redirect("home:login")
 
 
@@ -125,38 +135,41 @@ def raise_ticket(request):
             return redirect("grievance:dashboard")
 
         context = {}
-        context['issue_types'] = issue_types
+        context["issue_types"] = issue_types
 
         if request.POST:
-            type = request.POST.get('issue-type')
-            title = request.POST.get('title')
-            description = request.POST.get('description')
-            utr = request.POST.get('upi-reference')
-            file = request.FILES.get('attachment')
+            type = request.POST.get("issue-type")
+            title = request.POST.get("title")
+            description = request.POST.get("description")
+            utr = request.POST.get("upi-reference")
+            file = request.FILES.get("attachment")
 
             if file:
-                valid_extensions = ['png', 'jpg', 'jpeg', 'pdf']
+                valid_extensions = ["png", "jpg", "jpeg", "pdf"]
                 max_size = 2 * 1024 * 1024  # 2 MB
 
                 if file.size > max_size:
-                    messages.error(request, 'File size should not exceed 2MB.')
+                    messages.error(request, "File size should not exceed 2MB.")
                     return render(request, "grievance/raise_ticket.html", context)
 
-                if not file.name.split('.')[-1].lower() in valid_extensions:
-                    messages.error(request, 'File type is not supported. Only png, jpg, jpeg, and pdf are allowed.')
+                if not file.name.split(".")[-1].lower() in valid_extensions:
+                    messages.error(
+                        request,
+                        "File type is not supported. Only png, jpg, jpeg, and pdf are allowed.",
+                    )
                     return render(request, "grievance/raise_ticket.html", context)
 
             ticket = Ticket.objects.create(
-                user = request.user,
-                title = title,
-                description = description,
-                type = type,
-                utr = utr,
-                attached_documents = file,
+                user=request.user,
+                title=title,
+                description=description,
+                type=type,
+                utr=utr,
+                attached_documents=file,
             )
             ticket.save()
-            
-            messages.success(request, 'Ticket raised successfully')
+
+            messages.success(request, "Ticket raised successfully")
 
             # send email to user
             send_email_async(request.user.email, send_ticket_created_email)
@@ -164,7 +177,7 @@ def raise_ticket(request):
             return redirect("grievance:dashboard")
 
         return render(request, "grievance/raise_ticket.html", context)
-    
+
     return redirect("home:login")
 
 
@@ -174,18 +187,21 @@ def update_ticket(request, ticket_hash):
 
         flag = False
         ticket = get_object_or_404(Ticket, ticket_hash=ticket_hash)
-        context['ticket'] = ticket
-        context['status'] = issue_status
+        context["ticket"] = ticket
+        context["status"] = issue_status
 
         if request.POST:
             if "status" in request.POST:
-                if request.POST['status'] != ticket.status:
+                if request.POST["status"] != ticket.status:
                     flag = True
-                    
+
                     ticket.status = request.POST["status"]
                     ticket.save()
 
-                    messages.success(request, f"Updated {ticket.user.email}'s status to {ticket.status}")
+                    messages.success(
+                        request,
+                        f"Updated {ticket.user.email}'s status to {ticket.status}",
+                    )
 
                     """
                     if ticket.status == 'resolved':
@@ -249,7 +265,7 @@ def update_ticket(request, ticket_hash):
 
                     ticket.remark = request.POST["remarks"]
                     ticket.save()
-                    
+
                     messages.success(request, f"Added remark {ticket.remark}")
 
             if flag:
@@ -257,7 +273,7 @@ def update_ticket(request, ticket_hash):
                 send_email_async(ticket.user.email, status_remarks_updated)
 
             return redirect("grievance:dashboard")
-        
+
         return render(request, "grievance/raise_ticket.html", context)
-    
+
     return redirect("home:login")

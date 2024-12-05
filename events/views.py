@@ -9,10 +9,19 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.conf import settings
-from .models import College, Event, Team, Participants, Hackathon, HackathonTeam, HackathonParticipants
+from .models import (
+    College,
+    Event,
+    Team,
+    Participants,
+    Hackathon,
+    HackathonTeam,
+    HackathonParticipants,
+)
 from payments.models import nongitamite
 
 from ngusers.models import AllowedParticipants
+
 
 def send_pass_mail(team_id, event_id):
     team = Team.objects.get(team_id=team_id)
@@ -20,16 +29,24 @@ def send_pass_mail(team_id, event_id):
 
     # get all the participants of the team
     participants = Participants.objects.filter(team=team)
-    participant_emails = [ participant.email for participant in participants ]
-    
-    subject, from_email= f"SHORE'24 GITAM,Thank you for Registering", settings.EMAIL_HOST_USER
-    html_content1 = get_template('registered_mail.html').render({
-        "event": event, "team": team, "teammates": participants,
-        "status_link":  f'https://shore.gitam.edu/registrations/success/{team.team_hash}'
-    })
+    participant_emails = [participant.email for participant in participants]
+
+    subject, from_email = (
+        f"SHORE'24 GITAM,Thank you for Registering",
+        settings.EMAIL_HOST_USER,
+    )
+    html_content1 = get_template("registered_mail.html").render(
+        {
+            "event": event,
+            "team": team,
+            "teammates": participants,
+            "status_link": f"https://shore.gitam.edu/registrations/success/{team.team_hash}",
+        }
+    )
     msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
     msg.content_subtype = "html"
-    msg.send() 
+    msg.send()
+
 
 def send_pass_mail_hackathon(team_id, event_id):
     team = HackathonTeam.objects.get(team_id=team_id)
@@ -37,16 +54,23 @@ def send_pass_mail_hackathon(team_id, event_id):
 
     # get all the participants of the team
     participants = HackathonParticipants.objects.filter(team=team)
-    participant_emails = [ participant.email for participant in participants ]
-    
-    subject, from_email= f"SHORE'24 GITAM,Thank you for Registering", settings.EMAIL_HOST_USER
-    html_content1 = get_template('registered_mail.html').render({
-        "event": event, "team": team, "teammates": participants,
-        "status_link":  f'https://shore.gitam.edu/registrations/hackathon/success/{team.team_hash}'
-    })
+    participant_emails = [participant.email for participant in participants]
+
+    subject, from_email = (
+        f"SHORE'24 GITAM,Thank you for Registering",
+        settings.EMAIL_HOST_USER,
+    )
+    html_content1 = get_template("registered_mail.html").render(
+        {
+            "event": event,
+            "team": team,
+            "teammates": participants,
+            "status_link": f"https://shore.gitam.edu/registrations/hackathon/success/{team.team_hash}",
+        }
+    )
     msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
     msg.content_subtype = "html"
-    msg.send() 
+    msg.send()
 
 
 def send_pass_mail_updated(team_id, event_id):
@@ -55,17 +79,24 @@ def send_pass_mail_updated(team_id, event_id):
 
     # get all the participants of the team
     participants = Participants.objects.filter(team=team)
-    participant_emails = [ participant.email for participant in participants ]
-    
-    subject, from_email= f"SHORE'24 GITAM, Team {team.visible_name}'s status updated to {team.status}", settings.EMAIL_HOST_USER
-    html_content1 = get_template('registered_mail.html').render({
-        "event": event, "team": team, "teammates": participants,
-        "status_link":  f'https://shore.gitam.edu/registrations/success/{team.team_hash}',
-        "status_text" : f"Your Team status is updated to {team.status}",
-    })
+    participant_emails = [participant.email for participant in participants]
+
+    subject, from_email = (
+        f"SHORE'24 GITAM, Team {team.visible_name}'s status updated to {team.status}",
+        settings.EMAIL_HOST_USER,
+    )
+    html_content1 = get_template("registered_mail.html").render(
+        {
+            "event": event,
+            "team": team,
+            "teammates": participants,
+            "status_link": f"https://shore.gitam.edu/registrations/success/{team.team_hash}",
+            "status_text": f"Your Team status is updated to {team.status}",
+        }
+    )
     msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
     msg.content_subtype = "html"
-    msg.send() 
+    msg.send()
 
 
 def event_home(request):
@@ -75,7 +106,9 @@ def event_home(request):
 
 def sports_home(request):
     if True:
-        return render(request, "regclose.html" , {"titletext" : "Sports Registrations are closed"})
+        return render(
+            request, "regclose.html", {"titletext": "Sports Registrations are closed"}
+        )
     context = {}
     events = Event.objects.filter(event_type="sports")
     context["events"] = events
@@ -113,9 +146,15 @@ def selectCollege(request, sport_name):
 
     return render(request, "selectCollege.html", context)
 
+
 @login_required(login_url="/auth/login/google-oauth2/")
 def addCollege(request):
-    if request.user.events_cultural or request.user.events_cultural_staff or request.user.events_sports or request.user.events_sports_staff:
+    if (
+        request.user.events_cultural
+        or request.user.events_cultural_staff
+        or request.user.events_sports
+        or request.user.events_sports_staff
+    ):
         context = {}
         if request.POST:
             name = request.POST.get("college_name")
@@ -143,6 +182,7 @@ def addCollege(request):
     else:
         messages.error(request, "You are not authorized to access this page.")
         return render(request, "index")
+
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def addEvent(request):
@@ -200,6 +240,7 @@ def addEvent(request):
         return redirect("index")
     return render(request, "addEvent.html", context)
 
+
 def register(request, sport_name):
     context = {}
     passkey_status = request.session.get("passkey_valid")
@@ -213,8 +254,13 @@ def register(request, sport_name):
     sport = Event.objects.get(name=sport_name)
     allowed_team_count = sport.no_of_teams
 
-    if (Team.objects.filter(college=college, sport=sport).count() >= sport.max_univeristy_teams):
-        messages.error(request, f"Max registrations for {sport.name} from {college.name} received")
+    if (
+        Team.objects.filter(college=college, sport=sport).count()
+        >= sport.max_univeristy_teams
+    ):
+        messages.error(
+            request, f"Max registrations for {sport.name} from {college.name} received"
+        )
         return redirect("events:eventshome")
 
     context["team_size"] = range(2, sport.min_team_size + 1)
@@ -239,12 +285,14 @@ def register(request, sport_name):
                     college=college,
                     sport=sport,
                     isWaiting=True if teams_count > allowed_team_count else False,
-                    endorsment_file=endorsementFile
+                    endorsment_file=endorsementFile,
                 )
                 team.save()
-                
+
             except IntegrityError:
-                messages.error(request, f"Team with name {visible_team_name} already exists.")
+                messages.error(
+                    request, f"Team with name {visible_team_name} already exists."
+                )
                 return render(request, "register_new.html", context)
 
             captain_name = request.POST.get("name_1")
@@ -253,16 +301,16 @@ def register(request, sport_name):
             captain_accomdation = request.POST.get("accomdation_1")
 
             # if event type is cultural, then a participant is atmost allowed to participate in only 2 culturals
-            if sport.event_type == 'cultural':
+            if sport.event_type == "cultural":
                 if Participants.objects.filter(email=captain_email).count() == 2:
-                    messages.error(request, f"A participant is allowed to participant atmost in only two culturals. {captain_name} already registered for 2 cultural events.")
+                    messages.error(
+                        request,
+                        f"A participant is allowed to participant atmost in only two culturals. {captain_name} already registered for 2 cultural events.",
+                    )
                     return redirect("events:eventshome")
 
             # phone number length should be 10 and should be digits
-            if (
-                len(captain_phone_number) != 10
-                or not captain_phone_number.isdigit()
-            ):
+            if len(captain_phone_number) != 10 or not captain_phone_number.isdigit():
                 messages.error(
                     request,
                     f"Invalid phone number {captain_phone_number}.",
@@ -299,7 +347,9 @@ def register(request, sport_name):
                     member1.name = captain_name
                     member1.mobile = captain_phone_number
                     member1.college = college.name
-                    member1.accommodation =True if captain_accomdation == "yes" else False
+                    member1.accommodation = (
+                        True if captain_accomdation == "yes" else False
+                    )
                     member1.event_name = sport.name
                     member1.event_type = sport.event_type
                     member1.save()
@@ -330,9 +380,12 @@ def register(request, sport_name):
                 phone_number = request.POST.get(f"phone_{i}")
                 accomdation = request.POST.get(f"accomdation_{i}")
 
-                if sport.event_type == 'cultural':
+                if sport.event_type == "cultural":
                     if Participants.objects.filter(email=email).count() == 2:
-                        messages.error(request, f"A participant is allowed to participant atmost in only two culturals. {name} already registered for 2 cultural events.")
+                        messages.error(
+                            request,
+                            f"A participant is allowed to participant atmost in only two culturals. {name} already registered for 2 cultural events.",
+                        )
                         return redirect("events:eventshome")
 
                 # phone number length should be 10 and should be digits
@@ -371,7 +424,9 @@ def register(request, sport_name):
                         member1.name = name
                         member1.mobile = phone_number
                         member1.college = college.name
-                        member1.accommodation =True if accomdation == "yes" else False,
+                        member1.accommodation = (
+                            True if accomdation == "yes" else False,
+                        )
                         member1.event_name = sport.name
                         member1.event_type = sport.event_type
                         member1.save()
@@ -474,7 +529,12 @@ def registered_culturals(request, sport_name):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def view_team(request, team_hash):
-    if request.user.events_cultural or request.user.events_cultural_staff or request.user.events_sports or request.user.events_sports_staff:
+    if (
+        request.user.events_cultural
+        or request.user.events_cultural_staff
+        or request.user.events_sports
+        or request.user.events_sports_staff
+    ):
         context = {}
         team = Team.objects.get(team_hash=team_hash)
         participants = Participants.objects.filter(team=team)
@@ -488,16 +548,19 @@ def view_team(request, team_hash):
                 for participant in participants:
                     participantemail = participant.email
                     if not participantemail.endswith("@gitam.in"):
-                        if not AllowedParticipants.objects.filter(email=participantemail).exists():
+                        if not AllowedParticipants.objects.filter(
+                            email=participantemail
+                        ).exists():
                             AllowedParticipants.objects.create(email=participantemail)
             else:
                 for participant in participants:
                     participantemail = participant.email
-                    if AllowedParticipants.objects.filter(email=participantemail).exists():
+                    if AllowedParticipants.objects.filter(
+                        email=participantemail
+                    ).exists():
                         p = AllowedParticipants.objects.get(email=participantemail)
                         p.delete()
-                    
-                    
+
             team.status = new_status
             team.save()
             messages.success(
@@ -514,7 +577,9 @@ def view_team(request, team_hash):
             if team.sport.event_type == "sports":
                 return redirect("events:registered_sports", sport_name=team.sport.name)
             else:
-                return redirect("events:registered_culturals", sport_name=team.sport.name)
+                return redirect(
+                    "events:registered_culturals", sport_name=team.sport.name
+                )
 
         return render(request, "view_team.html", context)
     else:
@@ -549,13 +614,20 @@ def events_admin_culturals(request):
         messages.error(request, "You are not authorized to access this page.")
         return redirect("events:eventshome")
 
+
 """ Hackathon Views """
+
+
 def hackathon_home(request):
     if True:
-        return render(request, "regclose.html" , {"titletext" : "Hackathon Registrations are closed"})
+        return render(
+            request,
+            "regclose.html",
+            {"titletext": "Hackathon Registrations are closed"},
+        )
     context = {}
     hackathons = Hackathon.objects.all()
-    
+
     context["isHackathon"] = True
     context["events"] = hackathons
     context["title"] = "Hackathons"
@@ -583,14 +655,12 @@ def select_hackathon_college(request, hackathon_name):
 
 
 def register_hackathon(request, hackathon_name):
-    context = {
-        "isHackathon": True
-    }
-    
+    context = {"isHackathon": True}
+
     college_name = request.session.get("college_name")
     college = College.objects.get(name=college_name)
     hackathon = Hackathon.objects.get(name=hackathon_name)
-    
+
     context["college"] = college
     context["sport"] = hackathon
     context["team_size"] = range(2, hackathon.min_team_size + 1)
@@ -608,30 +678,29 @@ def register_hackathon(request, hackathon_name):
                 visible_name=visible_team_name,
                 college=college,
                 hackathon=hackathon,
-                endorsment_file=endorsementFile
+                endorsment_file=endorsementFile,
             )
             team.save()
         except IntegrityError:
-            messages.error(request, f"Team with name {visible_team_name} already exists.")
+            messages.error(
+                request, f"Team with name {visible_team_name} already exists."
+            )
             return render(request, "hackathon/hackathon_register.html", context)
-        
+
         captain_name = request.POST.get("name_1")
         captain_email = request.POST.get("email_1")
         captain_phone_number = request.POST.get("phone_1")
         captain_accomdation = request.POST.get("accomdation_1")
 
         # phone number length should be 10 and should be digits
-        if (
-            len(captain_phone_number) != 10
-            or not captain_phone_number.isdigit()
-        ):
+        if len(captain_phone_number) != 10 or not captain_phone_number.isdigit():
             messages.error(
                 request,
                 f"Invalid phone number {captain_phone_number}.",
             )
             team.delete()
             return render(request, "hackathon/hackathon_register.html", context)
-        
+
         # validate email
         try:
             validate_email(captain_email)
@@ -642,7 +711,7 @@ def register_hackathon(request, hackathon_name):
             )
             team.delete()
             return render(request, "hackathon/hackathon_register.html", context)
-        
+
         try:
             captain = HackathonParticipants.objects.create(
                 name=captain_name,
@@ -671,8 +740,8 @@ def register_hackathon(request, hackathon_name):
                     mobile=captain_phone_number,
                     college=college.name,
                     accommodation=True if captain_accomdation == "yes" else False,
-                    event_name = hackathon.name,
-                    event_type = "Hackathon"
+                    event_name=hackathon.name,
+                    event_type="Hackathon",
                 )
                 member1.save()
         except IntegrityError:
@@ -682,7 +751,7 @@ def register_hackathon(request, hackathon_name):
             )
             team.delete()
             return render(request, "hackathon/hackathon_register.html", context)
-        
+
         for i in range(2, hackathon.max_team_size + 1):
             if f"name_{i}" not in request.POST:
                 break
@@ -727,7 +796,7 @@ def register_hackathon(request, hackathon_name):
                     member1.name = name
                     member1.mobile = phone_number
                     member1.college = college.name
-                    member1.accommodation =True if accomdation == "yes" else False,
+                    member1.accommodation = (True if accomdation == "yes" else False,)
                     member1.event_name = hackathon.name
                     member1.event_type = "Hackathon"
                     member1.save()
@@ -738,8 +807,8 @@ def register_hackathon(request, hackathon_name):
                         mobile=phone_number,
                         college=college.name,
                         accommodation=True if accomdation == "yes" else False,
-                        event_name = hackathon.name,
-                        event_type = "Hackathon",
+                        event_name=hackathon.name,
+                        event_type="Hackathon",
                     )
                     member1.save()
             except IntegrityError:
@@ -749,17 +818,17 @@ def register_hackathon(request, hackathon_name):
                 )
                 team.delete()
                 return render(request, "hackathon/hackathon_register.html", context)
-        
-        messages.success(
-            request, f"Team {team.visible_name} registered successfully."
-        )
+
+        messages.success(request, f"Team {team.visible_name} registered successfully.")
 
         # sending email
         try:
             send_pass_mail_hackathon(team_id=team.team_id, event_id=hackathon.event_id)
         except Exception as e:
             print(e)
-            messages.error(request, "Error sending email. Please contact the organizers.")
+            messages.error(
+                request, "Error sending email. Please contact the organizers."
+            )
             team.delete()
 
         # creating login accounts for all the participants
@@ -781,9 +850,10 @@ def hackathon_success(request, team_hash):
         player1.save()
 
     context["team"] = team
-    context["players"] =  HackathonParticipants.objects.filter(team=team)
+    context["players"] = HackathonParticipants.objects.filter(team=team)
 
     return render(request, "hackathon/hackathon_success.html", context)
+
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def registered_hackathon(request):
@@ -793,6 +863,7 @@ def registered_hackathon(request):
         context["teams"] = teams
 
         return render(request, "hackathon_registered.html", context)
+
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def hackathon_admin(request):
@@ -805,6 +876,7 @@ def hackathon_admin(request):
         messages.error(request, "You are not authorized to access this page.")
         return redirect("events:eventshome")
 
+
 def send_status_update_email(team_id, event_id):
     # function to send status update for hackathon
     team = HackathonTeam.objects.get(team_id=team_id)
@@ -812,16 +884,24 @@ def send_status_update_email(team_id, event_id):
 
     # get all the participants of the team
     participants = HackathonParticipants.objects.filter(team=team)
-    participant_emails = [ participant.email for participant in participants ]
+    participant_emails = [participant.email for participant in participants]
 
-    subject, from_email= f"SHORE'24 GITAM, Team {team.visible_name}'s status updated to {team.status}", settings.EMAIL_HOST_USER
-    html_content1 = get_template('registered_mail.html').render({
-        "event": event, "team": team, "teammates": participants,
-        "status_link":  f'https://shore.gitam.edu/registrations/hackathon/success/{team.team_hash}'
-    })
+    subject, from_email = (
+        f"SHORE'24 GITAM, Team {team.visible_name}'s status updated to {team.status}",
+        settings.EMAIL_HOST_USER,
+    )
+    html_content1 = get_template("registered_mail.html").render(
+        {
+            "event": event,
+            "team": team,
+            "teammates": participants,
+            "status_link": f"https://shore.gitam.edu/registrations/hackathon/success/{team.team_hash}",
+        }
+    )
     msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
     msg.content_subtype = "html"
     msg.send()
+
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def view_hackathon_team(request, team_hash):
@@ -842,33 +922,40 @@ def view_hackathon_team(request, team_hash):
                 for participant in participants:
                     participantemail = participant.email
                     if not participantemail.endswith("@gitam.in"):
-                        if not AllowedParticipants.objects.filter(email=participantemail).exists():
+                        if not AllowedParticipants.objects.filter(
+                            email=participantemail
+                        ).exists():
                             AllowedParticipants.objects.create(email=participantemail)
             else:
                 for participant in participants:
                     participantemail = participant.email
-                    if AllowedParticipants.objects.filter(email=participantemail).exists():
+                    if AllowedParticipants.objects.filter(
+                        email=participantemail
+                    ).exists():
                         p = AllowedParticipants.objects.get(email=participantemail)
                         p.delete()
 
             messages.success(
                 request, f"Team {team.visible_name} status changed to {new_status}."
             )
-            
+
             # sending emails to all the participants upon status change
             try:
-                email_thread = threading.Thread(target=send_status_update_email, args=(team.team_id, team.hackathon.event_id))
+                email_thread = threading.Thread(
+                    target=send_status_update_email,
+                    args=(team.team_id, team.hackathon.event_id),
+                )
                 email_thread.start()
                 messages.info(request, "Email sent to all the participants.")
             except Exception as e:
                 print(e)
                 messages.error(
                     request,
-                    f"Error sending email. Please send your concern to shore_tech@gitam.in")
+                    f"Error sending email. Please send your concern to shore_tech@gitam.in",
+                )
             return redirect("events:hackathon_admin")
 
         return render(request, "hackathon/hackathon_view_team.html", context)
     else:
         messages.error(request, "You are not authorized to access this page.")
         return redirect("events:eventshome")
-

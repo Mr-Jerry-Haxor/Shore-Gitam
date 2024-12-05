@@ -6,8 +6,8 @@ from urllib.parse import urlparse
 
 
 def upload_profile_pic(instance, filename):
-    current_datetime = timezone.now().strftime('%Y%m%d%H%M%S')
-    ext = filename.split('.')[-1]
+    current_datetime = timezone.now().strftime("%Y%m%d%H%M%S")
+    ext = filename.split(".")[-1]
     new_filename = f"{instance.name}__{current_datetime}.{ext}"
     domain_folder = f"Team/"
     return os.path.join(domain_folder, new_filename)
@@ -36,9 +36,15 @@ class ParticipantApplication(models.Model):
 
     name = models.CharField(max_length=100, null=False, blank=False)
     email = models.EmailField(null=False, blank=False, unique=True)
-    profile_pic = models.ImageField(upload_to=upload_profile_pic, null=False, blank=False)
-    domain = models.ForeignKey(Domain, on_delete=models.CASCADE, null=False, blank=False)
-    position = models.CharField(max_length=100, choices=position_choices, null=False, blank=False)
+    profile_pic = models.ImageField(
+        upload_to=upload_profile_pic, null=False, blank=False
+    )
+    domain = models.ForeignKey(
+        Domain, on_delete=models.CASCADE, null=False, blank=False
+    )
+    position = models.CharField(
+        max_length=100, choices=position_choices, null=False, blank=False
+    )
     designation = models.CharField(max_length=100, null=False, blank=False)
     instagram_url = models.URLField(null=True, blank=True)
     linkedin_url = models.URLField(null=True, blank=True)
@@ -52,7 +58,7 @@ class ParticipantApplication(models.Model):
             return
         try:
             result = urlparse(self.linkedin_url)
-            if result.scheme != 'https' and result.scheme != 'http':
+            if result.scheme != "https" and result.scheme != "http":
                 raise ValidationError(
                     'Invalid LinkedIn URL. Please provide a valid URL starting with "http" or "https"'
                 )
@@ -61,7 +67,7 @@ class ParticipantApplication(models.Model):
 
         try:
             result = urlparse(self.instagram_url)
-            if result.scheme != 'https' and result.scheme != 'http':
+            if result.scheme != "https" and result.scheme != "http":
                 raise ValidationError(
                     'Invalid Instagram URL. Please provide a valid URL starting with "http" or "https"'
                 )
@@ -69,8 +75,7 @@ class ParticipantApplication(models.Model):
             raise ValidationError("Invalid Instagram URL. ")
 
     def validate_email(self):
-        if not (self.email.endswith('@gitam.edu')
-                or self.email.endswith('@gitam.in')):
+        if not (self.email.endswith("@gitam.edu") or self.email.endswith("@gitam.in")):
             raise ValidationError("Please enter a vald Gitam email address.")
 
     def clean(self):

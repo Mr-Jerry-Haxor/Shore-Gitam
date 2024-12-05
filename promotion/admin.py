@@ -13,8 +13,8 @@ admin.site.register(Volunteer)
 #     search_fields = ('name', 'userid', 'email', 'regno', 'campus')
 #     list_filter = ('yearofstudy', 'campus')
 #     # Additional configuration as needed
-    
-    
+
+
 # from django.contrib import admin
 # from .models import Volunteer
 
@@ -25,4 +25,3 @@ admin.site.register(Volunteer)
 #     list_filter = ('Campus' , 'domain_of_interest' , 'ishosteler' , 'isvolunteer')
 
 #     # Add more configurations as per your requirement
-

@@ -9,17 +9,15 @@ import os
 from django.utils import timezone
 from datetime import datetime
 
-gender_choices = [
-    ('male', 'Male'),
-    ('female', 'Female'),
-    ('other', 'Other')
-]
+gender_choices = [("male", "Male"), ("female", "Female"), ("other", "Other")]
 
 
 def profile_pic_upload_to(instance, filename):
-    ext = filename.split('.')[-1]
+    ext = filename.split(".")[-1]
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    return f"profile_pics/{instance.first_name}__{instance.last_name}__{timestamp}.{ext}"
+    return (
+        f"profile_pics/{instance.first_name}__{instance.last_name}__{timestamp}.{ext}"
+    )
 
 
 class CustomUser(AbstractUser):
@@ -61,69 +59,96 @@ class CustomUser(AbstractUser):
 
     username = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(unique=True)
-    phone_number = models.CharField( max_length=20,null=True, blank=True)
+    phone_number = models.CharField(max_length=20, null=True, blank=True)
     registration_number = models.CharField(max_length=255, null=True, blank=True)
     age = models.IntegerField(null=True, blank=True)
-    gender = models.CharField(max_length=255, choices=gender_choices, blank=True, null=True)
-    college = models.CharField(max_length=255, null=True, blank=True, default='GITAM University')
+    gender = models.CharField(
+        max_length=255, choices=gender_choices, blank=True, null=True
+    )
+    college = models.CharField(
+        max_length=255, null=True, blank=True, default="GITAM University"
+    )
     year_of_study = models.CharField(max_length=255, null=True, blank=True)
     course = models.CharField(max_length=255, null=True, blank=True)
     branch = models.CharField(max_length=255, null=True, blank=True)
     campus = models.CharField(max_length=255, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to=profile_pic_upload_to, blank=True, null=True)
+    profile_picture = models.ImageField(
+        upload_to=profile_pic_upload_to, blank=True, null=True
+    )
     passhash = models.CharField(max_length=255, null=True, blank=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [username, phone_number, age, gender, college, year_of_study, course, branch]
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = [
+        username,
+        phone_number,
+        age,
+        gender,
+        college,
+        year_of_study,
+        course,
+        branch,
+    ]
 
     def save(self, *args, **kwargs):
         # Generate username if not provided
         if self.username:
             import random
+
             random_number = random.randint(1, 99999)  # Generate a random number
             self.username = f"{self.email}_{random_number}"
-            
+
         if not self.username:
             import random
+
             random_number = random.randint(1, 99999)  # Generate a random number
-            self.username = f"{self.email}_{random_number}"  # Set username to email_randomnumber
-        
+            self.username = (
+                f"{self.email}_{random_number}"  # Set username to email_randomnumber
+            )
+
         # Delete old profile picture if updating with a new one
         if self.pk:
             old_user = CustomUser.objects.filter(pk=self.pk).first()
             if old_user and old_user.profile_picture != self.profile_picture:
-                if old_user.profile_picture and os.path.isfile(old_user.profile_picture.path):
+                if old_user.profile_picture and os.path.isfile(
+                    old_user.profile_picture.path
+                ):
                     os.remove(old_user.profile_picture.path)
-        
+
         super().save(*args, **kwargs)
-    
+
     def clean(self):
         # Call the parent class's clean method
         super().clean()
-        
+
         # Existing profile picture validation
         if self.profile_picture:
             if self.profile_picture.size > 2 * 1024 * 1024:
                 raise ValidationError("The profile picture must be less than 2MB.")
-            
-            valid_extensions = ['png', 'jpg', 'jpeg']
-            ext = os.path.splitext(self.profile_picture.name)[-1].lower().strip('.')
+
+            valid_extensions = ["png", "jpg", "jpeg"]
+            ext = os.path.splitext(self.profile_picture.name)[-1].lower().strip(".")
             if ext not in valid_extensions:
-                raise ValidationError("Only PNG, JPG, and JPEG formats are allowed for the profile picture.")
-        
+                raise ValidationError(
+                    "Only PNG, JPG, and JPEG formats are allowed for the profile picture."
+                )
+
         # Phone number validation
         if self.phone_number:
             # Convert to string to check the length and starting digit
             phone_str = str(self.phone_number)
-            
+
             # Check if length is exactly 10 digits
             if len(phone_str) != 10:
-                raise ValidationError({'phone_number': 'Phone number must be exactly 10 digits'})
-            
+                raise ValidationError(
+                    {"phone_number": "Phone number must be exactly 10 digits"}
+                )
+
             # Check if starts with valid digits (6,7,8,9)
-            if not phone_str.startswith(('6', '7', '8', '9')):
-                raise ValidationError({'phone_number': 'Phone number must start with 6, 7, 8, or 9'})
-    
+            if not phone_str.startswith(("6", "7", "8", "9")):
+                raise ValidationError(
+                    {"phone_number": "Phone number must start with 6, 7, 8, or 9"}
+                )
+
     def __str__(self):
         return self.email
 

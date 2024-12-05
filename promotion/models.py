@@ -2,6 +2,7 @@ from django.utils import timezone
 import os
 from django.db import models
 
+
 class BGMIPlayer(models.Model):
     name = models.CharField(max_length=100)
     userid = models.CharField(max_length=100)
@@ -13,8 +14,8 @@ class BGMIPlayer(models.Model):
 
 
 def profilepic_upload_path(instance, filename):
-    current_datetime = timezone.now().strftime('%Y%m%d%H%M%S')
-    ext = filename.split('.')[-1]
+    current_datetime = timezone.now().strftime("%Y%m%d%H%M%S")
+    ext = filename.split(".")[-1]
     new_filename = f"{instance.name}__{instance.regno}__{current_datetime}.{ext}"
     domain_folder = f"volunteer/"
     return os.path.join(domain_folder, new_filename)
@@ -26,7 +27,7 @@ class Volunteer(models.Model):
     phone_number = models.CharField(max_length=15)
     regno = models.CharField(max_length=100)
     gender = models.CharField(max_length=100)
-    year_of_study =  models.CharField(max_length=100)
+    year_of_study = models.CharField(max_length=100)
     branch = models.CharField(max_length=100)
     course = models.CharField(max_length=100)
     ishosteler = models.BooleanField(default=False)
@@ -39,5 +40,3 @@ class Volunteer(models.Model):
 
     def __str__(self):
         return f"{self.name}"
-
-

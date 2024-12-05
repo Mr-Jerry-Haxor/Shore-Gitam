@@ -15,6 +15,7 @@ from .models import AllowedParticipants, ProfilePicUpdated
 import requests
 import json
 
+
 def send_otp_email(user_email, otp):
     participant = AllowedParticipants.objects.get(email=user_email)
 
@@ -66,14 +67,16 @@ def user_login(request):
 
 def verify_edu_email(email):
     data = {
-                'mail': email,
-            }
-    response = requests.post('https://gevents.gitam.edu/registration/data/checkmail', data=data)
+        "mail": email,
+    }
+    response = requests.post(
+        "https://gevents.gitam.edu/registration/data/checkmail", data=data
+    )
     if response.status_code == 200:
         studentdata = json.loads(response.text)
-        if studentdata['status'] == 'success':
+        if studentdata["status"] == "success":
             try:
-                if studentdata['data']['staff_email'] == email:
+                if studentdata["data"]["staff_email"] == email:
                     return True
                 else:
                     return False
@@ -100,13 +103,19 @@ def verify_email(request):
             if not AllowedParticipants.objects.filter(email=email).exists():
                 # check the email domain is @gitam.edu
                 if not email.endswith("@gitam.edu"):
-                    messages.error(request, "Only participants emails are allowed. If you have doubt,contact: Shore_tech@gitam.in")
+                    messages.error(
+                        request,
+                        "Only participants emails are allowed. If you have doubt,contact: Shore_tech@gitam.in",
+                    )
                     return redirect("ngusers:register")
                 else:
                     if verify_edu_email(email):
                         AllowedParticipants.objects.create(email=email)
                     else:
-                        messages.error(request, "Mailid was not valid. If you have doubt,contact: Shore_tech@gitam.in")
+                        messages.error(
+                            request,
+                            "Mailid was not valid. If you have doubt,contact: Shore_tech@gitam.in",
+                        )
                         return redirect("ngusers:register")
 
             participant = AllowedParticipants.objects.get(email=email)
@@ -114,12 +123,17 @@ def verify_email(request):
             otp = generate_otp()
 
             try:
-                email_thread = threading.Thread(target=send_otp_email, args=(email, otp))
+                email_thread = threading.Thread(
+                    target=send_otp_email, args=(email, otp)
+                )
                 email_thread.start()
                 messages.success(request, f"OTP sent to your email {email}")
             except Exception as e:
                 print(f"An error occurred: {e}")
-                messages.error(request, f"An error occurred while sending OTP. Please send your concern to shore_tech@gitam.in.")
+                messages.error(
+                    request,
+                    f"An error occurred while sending OTP. Please send your concern to shore_tech@gitam.in.",
+                )
 
             context["otp_sent"] = True
             context["email"] = email
@@ -178,7 +192,6 @@ def set_password(request, email):
     return redirect("ngusers:register")
 
 
-
 @login_required(login_url="/auth/login/google-oauth2/")
 def update_picture(request):
     if not request.user.is_authenticated:
@@ -190,12 +203,12 @@ def update_picture(request):
     if ProfilePicUpdated.objects.filter(email=email, updated=True).exists():
         messages.info(
             request,
-            "Profile picture already updated, can only update it once. Contact shore_tech@gitam.in for any queries"
+            "Profile picture already updated, can only update it once. Contact shore_tech@gitam.in for any queries",
         )
         return redirect("passhome")
     if Student.objects.filter(email=email).exists():
         student = Student.objects.get(email=email)
-        context['student'] = student
+        context["student"] = student
 
         if request.method == "POST":
             if student.profile_picture:

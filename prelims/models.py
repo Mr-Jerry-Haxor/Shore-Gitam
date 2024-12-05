@@ -62,10 +62,9 @@ class Team(models.Model):
     team_hash = models.CharField(max_length=100, unique=True, null=True, blank=True)
     captain_email = models.EmailField(null=False, blank=False)
     registered_at = models.DateTimeField(auto_now=True)
-    reference_attatchment = models.FileField(
-        upload_to=prelims_files_upload_to
-    )
+    reference_attatchment = models.FileField(upload_to=prelims_files_upload_to)
     teammates = models.TextField(null=False, blank=True, max_length=5000)
+    campus = models.CharField(max_length=255, null=True, blank=True)
 
     # many to many relationship between teams and participants
     participants = models.ManyToManyField("Participant", related_name="teams")
@@ -74,6 +73,8 @@ class Team(models.Model):
         return self.visible_name
 
     def save(self, *args, **kwargs):
+        if not self.campus:
+            self.campus = Participant.objects.get(email=self.captain_email).campus
         if not self.pk:
             self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
         super().save(*args, **kwargs)

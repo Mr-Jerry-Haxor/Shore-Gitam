@@ -308,19 +308,19 @@ def upload_file(request, team_hash):
             if team.captain_email == request.user.email:
                 if request.POST:
                     file = request.FILES.get("file")
-                    
+
                     # Check if the uploaded file size is less than 10 MB
                     if file.size > 10 * 1024 * 1024:  # 10 MB
                         messages.error(request, "File size must be less than 10 MB")
                         return redirect("prelims:dashboard")
-                    
+
                     team.reference_attatchment = file
                     team.save()
 
                     messages.success(request, "File uploaded successfully")
                     return redirect("prelims:dashboard")
                 else:
-                    return render(request, "prelims/upload_files.html")            
+                    return render(request, "prelims/upload_files.html")
             else:
                 messages.error(request, "Only captain can upload the file")
                 return redirect("prelims:dashboard")

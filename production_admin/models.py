@@ -7,4 +7,3 @@ class PassStatus(models.Model):
 
     def __str__(self) -> str:
         return f"Pre Booking: {self.pre_booking}"
-
