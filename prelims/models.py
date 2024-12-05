@@ -73,8 +73,6 @@ class Team(models.Model):
         return self.visible_name
 
     def save(self, *args, **kwargs):
-        if not self.campus:
-            self.campus = Participant.objects.get(email=self.captain_email).campus
         if not self.pk:
             self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
         super().save(*args, **kwargs)

@@ -153,6 +153,7 @@ def register(request, event_name):
                     event=event,
                     visible_name=visible_team_name,
                     captain_email=captain_email,
+                    campus=captain_campus
                 )
                 team.save()
 
