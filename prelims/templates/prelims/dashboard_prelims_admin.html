@@ -115,12 +115,29 @@
             <div class="bg-white rounded-lg shadow-lg w-1/2">
                 <div class="p-6">
                     <h2 class="text-xl font-bold mb-4">Team Details</h2>
-                    <p class="text-gray-600">Team Name: {{ team.visible_name }}</p>
-                    <ul>
-                        {% for participant in team.participants.all %}
-                        <li>{{ participant.name }} - {{ participant.phone_number }} - {{ participant.registration_number }}</li>
-                        {% endfor %}
-                    </ul>
+                    <p class="text-gray-600 m-4">Team Name: {{ team.visible_name }}</p>
+                    <div class="overflow-hidden shadow rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registration Number</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone Number</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Campus</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for participant in team.participants.all %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ participant.name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ participant.registration_number }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ participant.phone_number }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ participant.campus }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <div class="px-6 py-4 bg-gray-100 text-right">
                     <button onclick="closeModal_{{ team.team_hash }}()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">

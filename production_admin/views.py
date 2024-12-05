@@ -86,6 +86,7 @@ def remove_prebooking(request):
     else:
         return redirect("home:dashboard")
 
+
 def pull_and_restart(request):
     if request.user.is_superuser:
         # Check if we're in development mode
