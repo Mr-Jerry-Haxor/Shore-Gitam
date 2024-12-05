@@ -206,6 +206,7 @@ def register(request, event_name):
                             if not (
                                 email.endswith("@gitam.in")
                                 or email.endswith("@gitam.edu")
+                                or email.endswith("@student.gitam.edu")
                             ):
                                 raise ValidationError("Invalid Email Domain")
                         except ValidationError:
