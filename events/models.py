@@ -11,7 +11,10 @@ status_choices = (
     ("eligible_for_payment", "Eligible for payment"),
 )
 
-event_choices = (("sports", "sports"), ("cultural", "cultural"))
+event_choices = (
+    ("sports", "sports"), 
+    ("cultural", "cultural")
+)
 
 
 def generate_md5(user_string):

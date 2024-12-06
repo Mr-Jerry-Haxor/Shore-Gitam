@@ -201,19 +201,19 @@ def register(request, event_name):
                                 request, "prelims/prelims_registration.html", context
                             )
 
-                        try:
-                            validate_email(email)
-                            if not (
-                                email.endswith("@gitam.in")
-                                or email.endswith("@gitam.edu")
-                                or email.endswith("@student.gitam.edu")
-                            ):
-                                raise ValidationError("Invalid Email Domain")
-                        except ValidationError:
-                            messages.error(request, "Invalid email")
-                            return render(
-                                request, "prelims/prelims_registration.html", context
-                            )
+                        # try:
+                        #     validate_email(email)
+                        #     if not (
+                        #         email.endswith("@gitam.in")
+                        #         or email.endswith("@gitam.edu")
+                        #         or email.endswith("@student.gitam.edu")
+                        #     ):
+                        #         raise ValidationError("Invalid Email Domain")
+                        # except ValidationError:
+                        #     messages.error(request, "Invalid email")
+                        #     return render(
+                        #         request, "prelims/prelims_registration.html", context
+                        #     )
 
                         if len(phone) != 10 or not phone.isdigit():
                             messages.error(request, "Invalid Phone Number")
