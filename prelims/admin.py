@@ -11,7 +11,9 @@ class EventAdmin(ImportExportModelAdmin):
 @admin.register(Team)
 class TeamAdmin(ImportExportModelAdmin):
     list_display = ("visible_name", "event", "captain_email", "registered_at")
-
+    search_fields = ("visible_name", "captain_email", "event__name")
+    list_filter = ("event", "registered_at")
+    ordering = ("-registered_at",)
 
 @admin.register(Participant)
 class ParticipantAdmin(ImportExportModelAdmin):
@@ -26,3 +28,6 @@ class ParticipantAdmin(ImportExportModelAdmin):
         "isCaptain",
         "registered_at",
     )
+    search_fields = ("name", "email", "registration_number", "event__name", "team__visible_name")
+    list_filter = ("event", "campus", "isCaptain", "registered_at")
+    ordering = ("-registered_at",)
