@@ -109,9 +109,9 @@ def register(request, event_name):
 
     event = Event.objects.get(name=event_name)
 
-    # if Participant.objects.filter(email=email, event=event).exists():
-    #     messages.error(request, f"You have already registered for {event.name}")
-    #     return redirect("prelims:home")
+    if Participant.objects.filter(email=email, event=event).exists():
+        messages.error(request, f"You have already registered for {event.name}")
+        return redirect("prelims:home")
 
     context["event"] = event
 
