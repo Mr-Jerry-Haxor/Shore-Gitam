@@ -343,10 +343,10 @@ def festpass(request):
         context = {}
 
         # redirecting non gitamite users to dashboard
-        """
+       
         if not request.user.is_gitamite:
             return redirect("home:dashboard")
-        """
+       
             
         """Checking for prebooking"""
         # prebooking = False
