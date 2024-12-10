@@ -220,7 +220,7 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
     search_fields = ("username", "email", "college", "course", "branch")
-    ordering = ("username",)
+    ordering = ("-date_joined", "username",)
 
 
 admin.site.register(CustomUser, CustomUserAdmin)

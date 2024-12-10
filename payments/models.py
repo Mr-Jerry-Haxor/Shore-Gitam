@@ -44,7 +44,6 @@ class Registrations(models.Model):
     posted_date = models.DateTimeField(blank=True, null=True)
     updated_date = models.DateTimeField(blank=True, null=True)
 
-
 class Accomdation(models.Model):
     """Model for accomdation"""
 
@@ -65,9 +64,6 @@ class Accomdation(models.Model):
     bankref_number = models.CharField(max_length=300, blank=True, null=True)
     posted_date = models.DateTimeField(blank=True, null=True)
     updated_date = models.DateTimeField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Competition(models.Model):
@@ -90,9 +86,6 @@ class Competition(models.Model):
     bankref_number = models.CharField(max_length=300, blank=True, null=True)
     posted_date = models.DateTimeField(blank=True, null=True)
     updated_date = models.DateTimeField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
     
 
 class nongitamite(models.Model):
