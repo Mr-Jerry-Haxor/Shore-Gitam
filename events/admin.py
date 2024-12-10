@@ -24,9 +24,18 @@ class EventAdmin(ImportExportModelAdmin):
     list_display = (
         "event_id",
         "name",
+        "description",
         "event_type",
+        "guidelines_url",
+        "image",
+        "event_time",
+        "event_start_date",
+        "event_end_date",
+        "created_at",
         "no_of_teams",
         "max_univeristy_teams",
+        "min_team_size",
+        "max_team_size",
     )
 
 

@@ -100,20 +100,16 @@ def send_pass_mail_updated(team_id, event_id):
 
 
 def event_home(request):
-    # messages.success(request,"Welcome to Shore24 ,GITAM's Biggest Fest Ever")
-    return render(request, "event_home.html")
+    return render(request, "events/homepage.html")
 
 
 def sports_home(request):
-    if True:
-        return render(
-            request, "regclose.html", {"titletext": "Sports Registrations are closed"}
-        )
     context = {}
     events = Event.objects.filter(event_type="sports")
     context["events"] = events
     context["title"] = "Sports"
-    return render(request, "eventspage.html", context)
+
+    return render(request, "events/events.html", context)
 
 
 def culturals_home(request):
@@ -122,7 +118,7 @@ def culturals_home(request):
     context["events"] = events
     context["title"] = "Culturals"
 
-    return render(request, "eventspage.html", context)
+    return render(request, "events/events.html", context)
 
 
 def selectCollege(request, sport_name):
@@ -132,8 +128,8 @@ def selectCollege(request, sport_name):
     context["sport_name"] = sport_name
 
     if request.method == "POST":
-        college_id = request.POST.get("college")
-        passkey = request.POST.get("passkey")
+        college_id = request.POST.get("college_name")
+        passkey = request.POST.get("passKey")
 
         college = College.objects.get(college_id=college_id)
         if college.passkey == passkey:
@@ -142,9 +138,9 @@ def selectCollege(request, sport_name):
             return redirect("events:register", sport_name=sport_name)
         else:
             messages.error(request, "Invalid passkey.")
-            return render(request, "selectCollege.html", context)
+            return render(request, "events/select_college.html", context)
 
-    return render(request, "selectCollege.html", context)
+    return render(request, "events/select_college.html", context)
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
@@ -154,6 +150,7 @@ def addCollege(request):
         or request.user.events_cultural_staff
         or request.user.events_sports
         or request.user.events_sports_staff
+        or request.user.is_superuser
     ):
         context = {}
         if request.POST:
@@ -187,7 +184,7 @@ def addCollege(request):
 @login_required(login_url="/auth/login/google-oauth2/")
 def addEvent(request):
     context = {}
-    if request.user.events_sports or request.user.events_cultural:
+    if request.user.events_sports or request.user.events_cultural or request.user.is_superuser:
         if request.POST:
             name = request.POST.get("sport_name")
             event_type = request.POST.get("event_type")
@@ -264,7 +261,7 @@ def register(request, sport_name):
         return redirect("events:eventshome")
 
     context["team_size"] = range(2, sport.min_team_size + 1)
-    context["sport"] = sport
+    context["event"] = sport
     context["college"] = college
 
     if request.POST:
@@ -293,7 +290,7 @@ def register(request, sport_name):
                 messages.error(
                     request, f"Team with name {visible_team_name} already exists."
                 )
-                return render(request, "register_new.html", context)
+                return render(request, "events/registration.html", context)
 
             captain_name = request.POST.get("name_1")
             captain_email = request.POST.get("email_1")
@@ -316,7 +313,7 @@ def register(request, sport_name):
                     f"Invalid phone number {captain_phone_number}.",
                 )
                 team.delete()
-                return render(request, "register_new.html", context)
+                return render(request, "events/registration.html", context)
 
             # validate email
             try:
@@ -327,7 +324,7 @@ def register(request, sport_name):
                     f"Invalid email {captain_email}.",
                 )
                 team.delete()
-                return render(request, "register_new.html", context)
+                return render(request, "events/registration.html", context)
 
             try:
                 captain = Participants.objects.create(
@@ -370,7 +367,7 @@ def register(request, sport_name):
                     f"Participant with {captain_email} or {captain_phone_number} already registered.",
                 )
                 team.delete()
-                return render(request, "register_new.html", context)
+                return render(request, "events/registration.html", context)
 
             for i in range(2, sport.max_team_size + 1):
                 if f"name_{i}" not in request.POST:
@@ -395,7 +392,7 @@ def register(request, sport_name):
                         f"Invalid phone number {phone_number}.",
                     )
                     team.delete()
-                    return render(request, "register_new.html", context)
+                    return render(request, "events/registration.html", context)
 
                 # validate email
                 try:
@@ -406,7 +403,7 @@ def register(request, sport_name):
                         f"Invalid email {email}.",
                     )
                     team.delete()
-                    return render(request, "register_new.html", context)
+                    return render(request, "events/registration.html", context)
 
                 try:
                     player = Participants.objects.create(
@@ -447,7 +444,7 @@ def register(request, sport_name):
                         f"Participant with {email} or {phone_number} already registered.",
                     )
                     team.delete()
-                    return render(request, "register_new.html", context)
+                    return render(request, "events/registration.html", context)
 
             messages.success(
                 request, f"Team {team.visible_name} registered successfully."
@@ -467,8 +464,8 @@ def register(request, sport_name):
                 request,
                 f"Limit reached for {college.name} for {sport.name}.",
             )
-            return render(request, "register_new.html", context)
-    return render(request, "register_new.html", context)
+            return render(request, "events/registration.html", context)
+    return render(request, "events/registration.html", context)
 
 
 def success(request, team_hash):
@@ -476,6 +473,8 @@ def success(request, team_hash):
     context = {}
     team = Team.objects.get(team_hash=team_hash)
     players = Participants.objects.filter(team=team)
+    context['player_count'] = players.count
+    context['player'] = Participants.objects.get(email=request.user.email)
 
     for player in players:
         player_obj = nongitamite.objects.get(email=player.email)
@@ -494,12 +493,12 @@ def success(request, team_hash):
         player.nocFile = noc_file
         player.save()
 
-    return render(request, "success.html", context)
+    return render(request, "events/dashboard.html", context)
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def registered_sports(request, sport_name):
-    if request.user.events_sports or request.user.events_sports_staff:
+    if request.user.events_sports or request.user.events_sports_staff or request.user.is_superuser:
         context = {}
         sport = Event.objects.get(name=sport_name)
         teams = Team.objects.filter(sport=sport).all
@@ -514,7 +513,7 @@ def registered_sports(request, sport_name):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def registered_culturals(request, sport_name):
-    if request.user.events_cultural or request.user.events_cultural_staff:
+    if request.user.events_cultural or request.user.events_cultural_staff or request.user.is_superuser:
         context = {}
         sport = Event.objects.get(name=sport_name)
         teams = Team.objects.filter(sport=sport).all
@@ -534,6 +533,7 @@ def view_team(request, team_hash):
         or request.user.events_cultural_staff
         or request.user.events_sports
         or request.user.events_sports_staff
+        or request.user.is_superuser
     ):
         context = {}
         team = Team.objects.get(team_hash=team_hash)
@@ -603,7 +603,7 @@ def events_admin_sports(request):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def events_admin_culturals(request):
-    if request.user.events_cultural or request.user.events_cultural_staff:
+    if request.user.events_cultural or request.user.events_cultural_staff or request.user.is_superuser:
         context = {}
         sports = Event.objects.filter(event_type="cultural").all()
 
@@ -619,12 +619,6 @@ def events_admin_culturals(request):
 
 
 def hackathon_home(request):
-    if True:
-        return render(
-            request,
-            "regclose.html",
-            {"titletext": "Hackathon Registrations are closed"},
-        )
     context = {}
     hackathons = Hackathon.objects.all()
 
@@ -632,7 +626,7 @@ def hackathon_home(request):
     context["events"] = hackathons
     context["title"] = "Hackathons"
 
-    return render(request, "eventspage.html", context)
+    return render(request, "events/events.html", context)
 
 
 def select_hackathon_college(request, hackathon_name):
@@ -857,7 +851,7 @@ def hackathon_success(request, team_hash):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def registered_hackathon(request):
-    if request.user.events_cultural or request.user.events_cultural_staff:
+    if request.user.events_cultural or request.user.events_cultural_staff or request.user.is_superuser:
         context = {}
         teams = HackathonTeam.objects.all
         context["teams"] = teams
@@ -867,7 +861,7 @@ def registered_hackathon(request):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def hackathon_admin(request):
-    if request.user.events_cultural or request.user.events_cultural_staff:
+    if request.user.events_cultural or request.user.events_cultural_staff or request.user.is_superuser:
         context = {}
         teams = HackathonTeam.objects.all()
         context["teams"] = teams
@@ -905,7 +899,7 @@ def send_status_update_email(team_id, event_id):
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def view_hackathon_team(request, team_hash):
-    if request.user.events_cultural or request.user.events_cultural_staff:
+    if request.user.events_cultural or request.user.events_cultural_staff or request.user.is_superuser:
         context = {}
         team = HackathonTeam.objects.get(team_hash=team_hash)
         participants = HackathonParticipants.objects.filter(team=team)

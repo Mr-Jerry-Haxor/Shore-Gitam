@@ -171,18 +171,40 @@
                                      class="preview-image rounded-lg border border-gray-300" style="max-width: 150px; max-height: 150px;">
                             </div>
                         </div>
+                        <div class="space-y-2 col-span-full">
+                          <label for="aadhar_card" class="block text-sm font-semibold text-gray-700">Aadhar Card</label>
+                          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                              <div class="flex">
+                                  <div class="flex-shrink-0">
+                                      <!-- Warning icon -->
+                                      <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                      </svg>
+                                  </div>
+                                  <div class="ml-3">
+                                      <p class="text-sm text-yellow-700 mt-1">
+                                          Maximum size: 1MB. Incorrect Aadhar Cards will result in pass cancellation without refund.
+                                      </p>
+                                  </div>
+                              </div>
+                          </div>
+                          <input type="file" id="aadhar_card" name="aadhar_card" accept=".png, .jpg, .jpeg, .pdf" required
+                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200">
+                                 <span id="error-message" class="text-red-500 text-sm"></span>
+
+                      </div>
                     </div>
                     <div class="flex items-center">
-                        <input id="terms" name="terms" type="checkbox" required
+                        <input id="terms" name="terms1" type="checkbox" required
                                class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
-                        <label for="terms" class="ml-2 block text-sm text-gray-700">
-                            I agree to the <a href="#" class="text-green-600 hover:text-green-500">Terms and Conditions</a>
+                        <label for="terms1" class="ml-2 block text-sm text-gray-700">
+                            I agree to the <a href="https://shore.gitam.edu/media/guidelines/Shore25_Terms_and_Conditions.pdf" class="text-green-600 hover:text-green-500">Terms and Conditions</a>
                         </label>
                     </div>
                     <div class="flex items-center">
-                      <input id="terms" name="terms" type="checkbox" required
+                      <input id="terms" name="terms2" type="checkbox" required
                              class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
-                      <label for="terms" class="ml-2 block text-sm text-gray-700">
+                      <label for="terms2" class="ml-2 block text-sm text-gray-700">
                         I confirm that I am not a student of GITAM and agree to register under the category of 'Non-GITAM Student.'
                       </label>
                   </div>
@@ -361,6 +383,31 @@
             };
             reader.readAsDataURL(file);
         }
+        document.getElementById('aadhar_card').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        const errorMessageElement = document.getElementById('error-message');
+        
+        // Reset error message
+        errorMessageElement.textContent = '';
+
+        if (file) {
+            // Validate file type
+            const validFileTypes = ['application/pdf', 'image/png', 'image/jpeg'];
+            if (!validFileTypes.includes(file.type)) {
+                errorMessageElement.textContent = 'Invalid file type. Please upload a .pdf, .png, .jpg, or .jpeg file.';
+                event.target.value = ''; // Reset input
+                return;
+            }
+
+            // Validate file size (1MB = 1024 * 1024 bytes)
+            const maxSizeInBytes = 1 * 1024 * 1024;
+            if (file.size > maxSizeInBytes) {
+                errorMessageElement.textContent = 'File size exceeds 1MB. Please upload a smaller file.';
+                event.target.value = ''; // Reset input
+                return;
+            }
+        }
+    });
     </script>
     <style>
         .animate-fade-in {

@@ -17,6 +17,7 @@ from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse
 from django.db.models import Count, Max
+
 from coreteam.models import CustomUser
 from payments.models import FestPass
 from production_admin.models import PassStatus
@@ -208,13 +209,12 @@ def logout_user(request):
 
 
 def signup(request):
-    # removing signup temporarily, need to enable once festpasses for non gitam students are enabled
-    messages.info(request, "Please use Sign in with Google")
-    return redirect("home:login")
-
     if request.user.is_authenticated:
         return redirect("home:dashboard")
     if request.POST:
+        if ('terms1' not in request.POST or 'terms2' not in request.POST):
+            messages.error(request, "Please check checkbox of both the terms and conditions.")
+            return redirect("home:signup")
         # email, phone number, first name, last name, age, gender, college, year of study, course, branch, password
         email = request.POST.get("email")
         phone_number = request.POST.get("phone")
@@ -309,7 +309,9 @@ def signup(request):
         # Create a new user
         username = f"{first_name}__{last_name}__{registration_number}__{email}"
         profile_picture = request.FILES.get("profilePic")
+        aadhar_card = request.FILES.get("aadhar_card")
         user = CustomUser.objects.create_user(
+            name = f"{first_name} {last_name}",
             username=username,
             email=email,
             phone_number=phone_number,
@@ -324,6 +326,7 @@ def signup(request):
             branch=branch,
             password=password,
             profile_picture=profile_picture,
+            aadhar_card=aadhar_card,
             is_gitamite=False,
         )
         user.save()
@@ -340,9 +343,11 @@ def festpass(request):
         context = {}
 
         # redirecting non gitamite users to dashboard
+        """
         if not request.user.is_gitamite:
             return redirect("home:dashboard")
-
+        """
+            
         """Checking for prebooking"""
         # prebooking = False
         # context['prebooking'] = prebooking
@@ -420,8 +425,8 @@ def festpass(request):
                     )
                     return redirect("home:festpass")
 
-            sports_participation = request.POST.get("participatingInSports")
-            accomdation = request.POST.get("needAccommodation")
+            # sports_participation = request.POST.get("participatingInSports")
+            # accomdation = request.POST.get("needAccommodation")
 
             # validate phone number, it should be 10 digits and should start with 6, 7, 8 or 9
             if len(phone_number) != 10 or phone_number[0] not in ["6", "7", "8", "9"]:
@@ -442,8 +447,8 @@ def festpass(request):
             if "campus" in request.POST:
                 user.campus = campus
             user.course = course
-            user.sports = sports_participation == "yes"
-            user.accomdation = accomdation == "yes"
+            # user.sports = sports_participation == "yes"
+            # user.accomdation = accomdation == "yes"
 
             # Save user data first
             user.save()
@@ -506,10 +511,8 @@ def festpass(request):
                 return redirect(
                     f"https://gevents.gitam.edu/registration/MjkzMg..?rid={user.registration_number}&type=student"
                 )
-            elif not user.is_gitamite and sports_participation == "no":
-                return HttpResponse("Non GITAM Student's festpass gevent page")
-            elif not user.is_gitamite and sports_participation == "yes":
-                return HttpResponse("Non GITAM Student's festpass + sports gevent page")
+            elif not user.is_gitamite:
+                return redirect(f"https://gevents.gitam.edu/registration/MzA5OQ..")
 
         return render(request, "home/festpass.html", context)
     return redirect("home:login")

@@ -1,0 +1,108 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Fest '25 - Select College</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen w-full bg-white flex items-center justify-center p-4 relative overflow-hidden">
+    {% include 'messages.html' %}
+    <div 
+        class="absolute inset-0 bg-[url('{% static 'img/bg1.png'  %}')] 
+        bg-cover bg-center opacity-50 blur-sm"
+    ></div>
+
+    <div class="relative z-10 w-full max-w-lg sm:max-w-md">
+
+
+        <div class="bg-white/90 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-xl">
+            <div class="flex justify-center mb-6 sm:mb-8">
+                <img 
+                    src="https://shore.gitam.edu/static/img/shore25logo.png"
+                    alt="Shore Fest '25"
+                    class="w-16 h-16 sm:w-16 sm:h-16"
+                >
+            </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6 text-center">Select College</h1>
+
+            <div class="mb-6 sm:mb-8">
+                <label for="college" class="block text-sm font-medium text-gray-700 mb-2">
+                    College
+                </label>
+                <div class="relative">
+                    <select
+                        required
+                        name="college_name" 
+                        id="college_name"
+                        onchange="togglePassKeyField()"
+                        class="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 appearance-none hover:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                    >
+                        <option value="" selected disabled>Select your college</option>
+                        {% for college in colleges %}
+                            <option value="{{ college.college_id }}">{{ college.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div id="passKeyField" class="mb-6 sm:mb-8 hidden">
+                <label for="passKey" class="block text-sm font-medium text-gray-700 mb-2">
+                    Passkey
+                </label>
+                <input
+                    type="password"
+                    id="passKey"
+                    name="passKey"
+                    class="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 hover:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
+                    placeholder="Enter your college passkey"
+                    required
+                >
+            </div>
+
+            <button id="nextButton" class="w-full bg-emerald-600 text-white rounded-lg px-4 py-3 font-medium hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                Next
+            </button>
+
+        </form>
+
+            <div class="mt-6 sm:mt-8 space-y-2 text-sm text-gray-600">
+                <p class="font-medium">Note:</p>
+                <p>If your college/university is not listed above, kindly reach out to us.</p>
+                <p>Contact:</p>
+                <p class="font-medium">unifest_cc@gitam.in</p>
+                <p class="font-medium">shore_tech@gitam.in</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassKeyField() {
+            const college = document.getElementById('college_name');
+            const passKeyField = document.getElementById('passKeyField');
+
+            if (college.value) {
+                passKeyField.classList.remove('hidden');
+            } else {
+                passKeyField.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

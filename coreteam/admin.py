@@ -29,6 +29,7 @@ class CustomUserAdmin(UserAdmin):
         "name",
         "registration_number",
         "profile_picture",
+        "aadhar_card",
         "passhash",
         "event_manager",
         "campus_head_hyd",
@@ -66,7 +67,6 @@ class CustomUserAdmin(UserAdmin):
         "is_gitamite",
         "prebooking",
         "accomdation",
-        "sports",
         "grievance_staff",
     )
     list_filter = (
@@ -98,7 +98,6 @@ class CustomUserAdmin(UserAdmin):
         "is_gitamite",
         "prebooking",
         "accomdation",
-        "sports",
         "grievance_staff",
         "gender",
     )
@@ -114,6 +113,7 @@ class CustomUserAdmin(UserAdmin):
                     "name",
                     "registration_number",
                     "profile_picture",
+                    "aadhar_card",
                     "phone_number",
                     "age",
                     "gender",
@@ -127,7 +127,6 @@ class CustomUserAdmin(UserAdmin):
                     "passhash",
                     "prebooking",
                     "accomdation",
-                    "sports",
                 )
             },
         ),
@@ -182,6 +181,7 @@ class CustomUserAdmin(UserAdmin):
                     "password1",
                     "password2",
                     "profile_picture",
+                    "aadhar_card",
                     "phone_number",
                     "age",
                     "gender",

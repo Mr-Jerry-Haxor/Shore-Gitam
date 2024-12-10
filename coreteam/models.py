@@ -20,6 +20,14 @@ def profile_pic_upload_to(instance, filename):
     )
 
 
+def aadhar_card_upload_to(instance, filename):
+    ext = filename.split(".")[-1]
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    return (
+        f"aadhar_cards/{instance.first_name}__{instance.last_name}__{timestamp}.{ext}"
+    )
+
+
 class CustomUser(AbstractUser):
     event_manager = models.BooleanField(default=False)
     campus_head_hyd = models.BooleanField(default=False)
@@ -52,7 +60,6 @@ class CustomUser(AbstractUser):
     is_festpass_purchased = models.BooleanField(default=False)
     is_gitamite = models.BooleanField(default=True)
     accomdation = models.BooleanField(default=False)
-    sports = models.BooleanField(default=False)
 
     # added name
     name = models.CharField(max_length=255, blank=True, null=True)
@@ -74,6 +81,9 @@ class CustomUser(AbstractUser):
     campus = models.CharField(max_length=255, null=True, blank=True)
     profile_picture = models.ImageField(
         upload_to=profile_pic_upload_to, blank=True, null=True
+    )
+    aadhar_card = models.ImageField(
+        upload_to=aadhar_card_upload_to, blank=True, null=True
     )
     passhash = models.CharField(max_length=255, null=True, blank=True)
 

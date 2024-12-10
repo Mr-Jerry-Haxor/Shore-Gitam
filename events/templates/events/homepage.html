@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Fest '25 - Event Categories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            950: '#042f2e',
+                        }
+                    },
+                    animation: {
+                        'scroll': 'scroll 20s linear infinite',
+                    },
+                    keyframes: {
+                        scroll: {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative text-white">
+    <div class="fixed inset-0 bg-[url('{% static 'img/bg1.png'  %}')] bg-cover bg-center"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-emerald-950/30 to-emerald-950/80"></div>
+    <div class="relative container mx-auto px-4 py-12 sm:py-16 md:py-24 lg:py-24">
+        <!-- Existing content starts here -->
+        <div class="text-center mb-12 sm:mb-16 md:mb-20 lg:mb-24">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-200">
+                Event Categories
+            </h1>
+            <p class="text-xl sm:text-2xl md:text-3xl text-white/90 max-w-3xl mx-auto font-light">
+                Explore the diverse range of events at Shore Fest '25
+            </p>
+        </div>
+
+        <div class="grid gap-6 sm:gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+            <!-- Culturals Category -->
+            <div class="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-emerald-950/30 backdrop-blur-sm h-[450px] sm:h-[500px] border border-white/10">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202024-11-18%20111037-enuJ8oKqu7a1HuRGWlJ5wi0W49UbIm.png" alt="Culturals" class="h-full w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300">
+                <div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-emerald-950/95 via-emerald-950/70 to-transparent">
+                    <h2 class="mb-3 text-2xl sm:text-3xl font-bold transition-all group-hover:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-600">
+                        Culturals
+                    </h2>
+                    <p class="mb-4 text-sm sm:text-base text-white/90 transition-all opacity-90 group-hover:opacity-100 line-clamp-3">
+                        Immerse yourself in a celebration of cultures from around the nation. Join us to witness the fusion of creativity and tradition that promises to leave you spellbound.
+                    </p>
+                    <div class="flex flex-wrap gap-3 mt-auto">
+                        <a href="{% url 'events:culturals_home' %}" class="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-emerald-400 to-teal-600 rounded hover:brightness-110 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                            Compete
+                        </a>
+                        <!-- <a href="#" class="px-4 py-2 text-sm text-white bg-white/10 hover:bg-white/20 border border-white/10 rounded transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                            Guidelines
+                        </a> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sports Category -->
+            <div class="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-emerald-950/30 backdrop-blur-sm h-[450px] sm:h-[500px] border border-white/10">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202024-11-18%20111037-enuJ8oKqu7a1HuRGWlJ5wi0W49UbIm.png" alt="Sports" class="h-full w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300">
+                <div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-emerald-950/95 via-emerald-950/70 to-transparent">
+                    <h2 class="mb-3 text-2xl sm:text-3xl font-bold transition-all group-hover:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-emerald-600">
+                        Sports
+                    </h2>
+                    <p class="mb-4 text-sm sm:text-base text-white/90 transition-all opacity-90 group-hover:opacity-100 line-clamp-3">
+                        Experience the thrill of competition across various sporting events. From cricket to athletics, showcase your skills and compete with the best talents.
+                    </p>
+                    <div class="flex flex-wrap gap-3 mt-auto">
+                        <a href="{% url 'events:sports_home' %}" class="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-teal-400 to-emerald-600 rounded hover:brightness-110 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                            Compete
+                        </a>
+                        <!-- <a href="#" class="px-4 py-2 text-sm text-white bg-white/10 hover:bg-white/20 border border-white/10 rounded transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                            Guidelines
+                        </a> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Category -->
+            <div class="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-emerald-950/30 backdrop-blur-sm h-[450px] sm:h-[500px] border border-white/10">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202024-11-18%20111037-enuJ8oKqu7a1HuRGWlJ5wi0W49UbIm.png" alt="Technical" class="h-full w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300">
+                <div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-emerald-950/95 via-emerald-950/70 to-transparent">
+                    <h2 class="mb-3 text-2xl sm:text-3xl font-bold transition-all group-hover:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-green-600">
+                        Technical
+                    </h2>
+                    <p class="mb-4 text-sm sm:text-base text-white/90 transition-all opacity-90 group-hover:opacity-100 line-clamp-3">
+                        Dive into the world of innovation and technology. Participate in hackathons, coding competitions, and technical workshops to showcase your expertise.
+                    </p>
+                    <div class="flex flex-wrap gap-3 mt-auto">
+                        <a href="{% url 'events:hackathon_home' %}" class="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-green-600 rounded hover:brightness-110 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                            Compete
+                        </a>
+                        <!-- <a href="#" class="px-4 py-2 text-sm text-white bg-white/10 hover:bg-white/20 border border-white/10 rounded transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+                            Guidelines
+                        </a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
