@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from .models import FestPass, Registrations
+from .models import FestPass, Registrations, nongitamite
 
 
 @admin.register(FestPass)
@@ -51,3 +51,5 @@ class RegistrationsAdmin(ImportExportModelAdmin):
         "order_id",
     ]
     date_hierarchy = "posted_date"
+
+admin.site.register(nongitamite)

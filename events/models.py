@@ -160,7 +160,6 @@ class Participants(models.Model):
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
     shoreid = models.CharField(max_length=100, null=True, blank=True)
     nocFile = models.FileField(upload_to=noc_file_upload_path, null=True, blank=True)
-    
 
     def __str__(self):
         return self.name

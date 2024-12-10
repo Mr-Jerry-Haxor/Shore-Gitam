@@ -93,3 +93,37 @@ class Competition(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class nongitamite(models.Model):
+    """Model for Non-GITAM festpass"""
+
+    name = models.CharField(max_length=300, blank=True, null=True)
+    mobile = models.CharField(max_length=300, blank=True, null=True)
+    email = models.CharField(max_length=300, blank=True, null=True)
+    gender = models.CharField(max_length=300, blank=True, null=True)
+    college = models.CharField(max_length=300, blank=True, null=True)
+    college_roll_number = models.CharField(max_length=300, blank=True, null=True)
+    branch = models.CharField(max_length=300, blank=True, null=True)
+    year_of_study = models.CharField(max_length=300, blank=True, null=True)
+    address = models.CharField(max_length=300, blank=True, null=True)
+    event_type = models.CharField(max_length=300, blank=True, null=True)
+    event_name = models.CharField(max_length=300, blank=True, null=True)
+    accommodation = models.BooleanField(default=False)
+    payment = models.CharField(max_length=300, blank=True, null=True)
+    paid = models.BooleanField(default=False)
+    shoreid = models.CharField(max_length=200, unique=True, editable=False)
+    campus = models.CharField(max_length=200, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  # If the object is being created (not updated)
+            last_id = nongitamite.objects.order_by("-id").first()
+            if last_id:
+                last_shore_id = int(last_id.shoreid[6:-3])  # Extracting numeric part
+                new_shore_id = last_shore_id + 1
+            else:
+                new_shore_id = 1
+
+            self.shoreid = f"shore{new_shore_id:05d}024"
+
+        super().save(*args, **kwargs)
