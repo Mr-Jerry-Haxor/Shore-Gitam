@@ -139,35 +139,13 @@ def is_transaction_success(user_email):
             user_transactions = Registrations.objects.filter(email=user_email)
         else:
             return False
-        
+
     y_count = user_transactions.filter(transaction_status="Y").count()
     if y_count > 0:
         return True
     else:
         return False
-    
-    """ 
-    if user.is_gitamite:
-        if FestPass.objects.filter(email=user_email).exists():
-            user_transactions = FestPass.objects.filter(email=user_email)
-            y_count = user_transactions.filter(transaction_status="Y").count()
-            if y_count > 0:
-                return True
-            else:
-                return False
-        else:
-            return False
-    else:
-        if Registrations.objects.filter(email=user_email).exists():
-            user_transactions = Registrations.objects.filter(email=user_email)
-            y_count = user_transactions.filter(transaction_status="Y").count()
-            if y_count > 0:
-                return True
-            else:
-                return False
-        else:
-            return False
-    """
+
 
 def is_transaction_failed(user_email):
     user = get_object_or_404(CustomUser, email=user_email)
@@ -181,7 +159,7 @@ def is_transaction_failed(user_email):
             user_transactions = Registrations.objects.filter(email=user_email)
         else:
             return False
-    
+
     y_count = user_transactions.filter(transaction_status="Y").count()
     if y_count == 0:
         return True
@@ -250,8 +228,10 @@ def signup(request):
     if request.user.is_authenticated:
         return redirect("home:dashboard")
     if request.POST:
-        if ('terms1' not in request.POST or 'terms2' not in request.POST):
-            messages.error(request, "Please check checkbox of both the terms and conditions.")
+        if "terms1" not in request.POST or "terms2" not in request.POST:
+            messages.error(
+                request, "Please check checkbox of both the terms and conditions."
+            )
             return redirect("home:signup")
         # email, phone number, first name, last name, age, gender, college, year of study, course, branch, password
         email = request.POST.get("email")
@@ -348,8 +328,37 @@ def signup(request):
         username = f"{first_name}__{last_name}__{registration_number}__{email}"
         profile_picture = request.FILES.get("profilePic")
         aadhar_card = request.FILES.get("aadhar_card")
+
+        # Validate profile picture
+        if profile_picture:
+            valid_extensions = [".jpg", ".jpeg", ".png"]
+            extension = os.path.splitext(profile_picture.name)[1].lower()
+            if extension not in valid_extensions:
+                messages.error(
+                    request,
+                    "Invalid profile picture format. Only JPG, JPEG, and PNG files are allowed.",
+                )
+                return redirect("home:signup")
+            if profile_picture.size > 2 * 1024 * 1024:  # 2MB
+                messages.error(request, "Profile picture size should not exceed 2MB.")
+                return redirect("home:signup")
+
+        # Validate aadhar card
+        if aadhar_card:
+            valid_extensions = [".jpg", ".jpeg", ".png", ".pdf"]
+            extension = os.path.splitext(aadhar_card.name)[1].lower()
+            if extension not in valid_extensions:
+                messages.error(
+                    request,
+                    "Invalid Aadhar card format. Only JPG, JPEG, PNG, and PDF files are allowed.",
+                )
+                return redirect("home:signup")
+            if aadhar_card.size > 1 * 1024 * 1024:  # 1MB
+                messages.error(request, "Aadhar card size should not exceed 1MB.")
+                return redirect("home:signup")
+
         user = CustomUser.objects.create_user(
-            name = f"{first_name} {last_name}",
+            name=f"{first_name} {last_name}",
             username=username,
             email=email,
             phone_number=phone_number,
@@ -368,9 +377,11 @@ def signup(request):
             is_gitamite=False,
         )
         user.save()
-        
+
         # Set the backend for the user
-        user.backend = 'django.contrib.auth.backends.ModelBackend'  # Set the appropriate backend
+        user.backend = (
+            "django.contrib.auth.backends.ModelBackend"  # Set the appropriate backend
+        )
         login(request, user)
         messages.success(request, "User registered successfully")
 
@@ -442,6 +453,11 @@ def festpass(request):
                 campus = request.POST.get("campus")
             course = request.POST.get("course")
             profile_picture = request.FILES.get("profilePic")
+
+            # check whether user has uploaded aadhar card or not
+            if not request.user.aadhar_card:
+                messages.error(request, "You've not uploaded aadhar card, please send an email to shore_tech@gitam.in to solve your issue.")
+                return redirect("home:dashboard")
 
             # Validate the file extension
             if profile_picture:
@@ -546,7 +562,9 @@ def eticket(request):
         if request.user.is_festpass_purchased:
             if request.user.is_gitamite:
                 if FestPass.objects.filter(email=request.user.email).exists():
-                    user_transactions = FestPass.objects.filter(email=request.user.email)
+                    user_transactions = FestPass.objects.filter(
+                        email=request.user.email
+                    )
                     y_count = user_transactions.filter(transaction_status="Y").count()
                     if y_count == 0:
                         user = CustomUser.objects.get(email=request.user.email)
@@ -564,7 +582,9 @@ def eticket(request):
                     return redirect("home:dashboard")
             else:
                 if Registrations.objects.filter(email=request.user.email).exists():
-                    user_transactions = Registrations.objects.filter(email=request.user.email)
+                    user_transactions = Registrations.objects.filter(
+                        email=request.user.email
+                    )
                     y_count = user_transactions.filter(transaction_status="Y").count()
                     if y_count == 0:
                         user = CustomUser.objects.get(email=request.user.email)
@@ -584,7 +604,9 @@ def eticket(request):
         else:
             if request.user.is_gitamite:
                 if FestPass.objects.filter(email=request.user.email).exists():
-                    user_transactions = FestPass.objects.filter(email=request.user.email)
+                    user_transactions = FestPass.objects.filter(
+                        email=request.user.email
+                    )
                     y_count = user_transactions.filter(transaction_status="Y").count()
                     if y_count > 0:
                         user = CustomUser.objects.get(email=request.user.email)
@@ -599,13 +621,16 @@ def eticket(request):
                     return redirect("home:dashboard")
             else:
                 if Registrations.objects.filter(email=request.user.email).exists():
-                    user_transactions = Registrations.objects.filter(email=request.user.email)
+                    user_transactions = Registrations.objects.filter(
+                        email=request.user.email
+                    )
                     y_count = user_transactions.filter(transaction_status="Y").count()
                     if y_count > 0:
                         user = CustomUser.objects.get(email=request.user.email)
                         user.is_festpass_purchased = True
                         user.save()
                         send_email_async(request.user.email, send_festpass_email)
+                        messages.success(request, "Sent festpass to registered email, check your inbox and spam folder.")
                         return render(request, "home/eticket.html")
                 else:
                     messages.error(
@@ -658,7 +683,7 @@ def dashboard(request):
                     )
                 )
                 # transactions = FestPass.objects.filter(email=request.user.email)
-                context["transactions"] = transactions 
+                context["transactions"] = transactions
 
         elif is_transaction_pending(request.user.email):
             if request.user.is_gitamite:
@@ -667,7 +692,6 @@ def dashboard(request):
             else:
                 transactions = Registrations.objects.filter(email=request.user.email)
                 context["transactions"] = transactions
-            
 
         fields_to_check = [
             "event_manager",

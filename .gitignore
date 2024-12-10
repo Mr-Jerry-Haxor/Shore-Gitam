@@ -175,3 +175,5 @@ shore_venv/
 
 # ignoring staticfiles
 staticfiles/
+
+competition/
