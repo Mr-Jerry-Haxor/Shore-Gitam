@@ -455,7 +455,7 @@ def festpass(request):
             profile_picture = request.FILES.get("profilePic")
 
             # check whether user has uploaded aadhar card or not
-            if not request.user.aadhar_card:
+            if not request.user.is_gitamite and not request.user.aadhar_card:
                 messages.error(request, "You've not uploaded aadhar card, please send an email to shore_tech@gitam.in to solve your issue.")
                 return redirect("home:dashboard")
 
