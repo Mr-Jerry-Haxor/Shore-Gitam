@@ -240,6 +240,7 @@ def addEvent(request):
 
 def register(request, sport_name):
     context = {}
+    context["college_name"] = request.session["college_name"]
     passkey_status = request.session.get("passkey_valid")
     if not passkey_status:
         messages.error(request, "Invalid passkey.")
@@ -474,7 +475,7 @@ def success(request, team_hash):
     team = Team.objects.get(team_hash=team_hash)
     players = Participants.objects.filter(team=team)
     context['player_count'] = players.count
-    context['player'] = Participants.objects.get(email=request.user.email)
+    # context['player'] = Participants.objects.get(email=request.user.email)
 
     for player in players:
         player_obj = nongitamite.objects.get(email=player.email)

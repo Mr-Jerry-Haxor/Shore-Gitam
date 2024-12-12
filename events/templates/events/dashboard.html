@@ -82,7 +82,7 @@
                             {% if team.status == "eligible_for_payment" %}
                             Eligible for payment
                             {% else %}
-                            {{ team.status }}
+                            {{ team.status|capfirst }}
                             {% endif %}
                         </dd>
                     </div>
@@ -175,7 +175,7 @@
             <!-- Quick Actions -->
             <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <!-- Upload Documents -->
-                <div class="bg-white overflow-hidden shadow rounded-lg">
+                <!-- <div class="bg-white overflow-hidden shadow rounded-lg">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                     <div class="px-4 py-5 sm:p-6">
@@ -219,7 +219,7 @@
                         {% endif %}
                     </div>
                     </form>
-                </div>
+                </div> -->
 
                 <!-- Payment Details -->
                 <div class="bg-white overflow-hidden shadow rounded-lg">
@@ -237,11 +237,16 @@
                             </div>
                             <div class="mt-1 flex justify-between text-sm">
                                 <span class="font-medium text-gray-500">Status</span>
-                                <span class="font-semibold text-yellow-600">Pending</span>
+                                <span class="font-semibold text-yellow-600">{{ team.status|capfirst }}</span>
                             </div>
                         </div>
                     </div>
                     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                        {% if not request.user.is_authenticated %}
+                        <a href="{% url 'home:login' %}" type="button" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Login to pay
+                        </a>
+                        {% endif %}
                         {% if team.status == "eligible_for_payment" %}
                         <button type="button" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Pay Now

@@ -49,11 +49,16 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
                             <label for="team_name" class="block text-sm font-medium text-gray-700 mb-1">College Name</label>
-                            <input type="text" id="college_name" name="college_name" placeholder="Enter College Name" required class="w-full px-4 py-2 bg-white border-2 border-shore-border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-shore-green focus:border-transparent transition duration-150 ease-in-out">
+                            <input type="text" id="college_name" name="college_name" placeholder="Enter College Name" value="{{ college_name }}" required readonly class="w-full px-4 py-2 bg-white border-2 border-shore-border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-shore-green focus:border-transparent transition duration-150 ease-in-out">
                         </div>
                         <div>
                             <label for="eventType" class="block text-sm font-medium text-gray-700 mb-1">Event</label>
-                            <select id="eventType" name="eventType" required class="w-full px-4 py-2 bg-white border-2 border-shore-border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-shore-green focus:border-transparent transition duration-150 ease-in-out">
+                            <select 
+                                id="eventType" 
+                                name="eventType"  
+                                class="w-full px-4 py-2 bg-white border-2 border-shore-border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-shore-green focus:border-transparent transition duration-150 ease-in-out"
+                                required
+                            >
                                 <option value="{{ event.name }}" selected>{{ event.name }}</option>
                             </select>
                         </div>
@@ -127,34 +132,6 @@
                         <label for="memberPhone${count}" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                         <input type="tel" id="memberPhone${count}" name="phone_${count}" placeholder="Enter phone number" required class="w-full px-4 py-2 bg-white border-2 border-shore-border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-shore-green focus:border-transparent transition duration-150 ease-in-out">
                     </div>
-                    <div>
-                        <label for="memberregnum${count}" class="block text-sm font-medium text-gray-700 mb-1">Aadhar Number</label>
-                        <input type="text" id="memberregnum${count}" name="regnum_${count}" placeholder="Enter Aadhar number" required class="w-full px-4 py-2 bg-white border-2 border-shore-border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-shore-green focus:border-transparent transition duration-150 ease-in-out">
-                    </div>
-                    <div class="relative group">
-                        <label for="memberAadharPhoto${count}" class="block text-sm font-medium text-gray-700 mb-1">
-                            Upload Aadhaar Photo
-                        </label>
-                        <div class="w-full px-4 py-2 bg-white border-2 border-shore-border rounded-lg shadow-sm flex items-center justify-between focus-within:ring-2 focus-within:ring-shore-green focus-within:border-transparent transition duration-150 ease-in-out">
-                            <span id="fileNameDisplay${count}" class="text-gray-500 truncate">No file selected</span>
-                            <button 
-                                type="button" 
-                                class="px-4 py-1 text-white bg-shore-green rounded-lg hover:bg-shore-green-dark focus:outline-none focus:ring-2 focus:ring-shore-green transition duration-150 ease-in-out"
-                                onclick="document.getElementById('memberAadharPhoto${count}').click()"
-                            >
-                                Browse
-                            </button>
-                            <input 
-                                type="file" 
-                                id="memberAadharPhoto${count}" 
-                                name="aadhar_photo_${count}" 
-                                accept="image/*" 
-                                required 
-                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                onchange="updateFileName(${count})"
-                            >
-                        </div>
-                    </div>
                 </div>
             `;
             return memberDiv;
@@ -210,7 +187,7 @@
         }
 
         function updateFileName(count) {
-        const input = document.getElementById(`memberAadharPhoto${count}`);
+        // const input = document.getElementById(`memberAadharPhoto${count}`);
         const display = document.getElementById(`fileNameDisplay${count}`);
         display.textContent = input.files.length > 0 ? input.files[0].name : 'No file selected';
     }
