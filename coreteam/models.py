@@ -1,12 +1,10 @@
+import os
 from django.contrib.auth import get_user_model
 from django.db import models
-
-# Create your models here.
-# models.py (inside your custom user app)
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
-import os
 from django.utils import timezone
+
 from datetime import datetime
 
 gender_choices = [("male", "Male"), ("female", "Female"), ("other", "Other")]

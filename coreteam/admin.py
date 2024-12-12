@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Permission
+from import_export.admin import ImportExportModelAdmin
 from .models import CustomUser, DomainLead
 
 
@@ -20,7 +21,7 @@ class DomainLeadAdmin(admin.ModelAdmin):
 admin.site.register(DomainLead, DomainLeadAdmin)
 
 
-class CustomUserAdmin(UserAdmin):
+class CustomUserAdmin(ImportExportModelAdmin):
     list_display = (
         "username",
         "email",
@@ -220,7 +221,7 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
     search_fields = ("username", "email", "college", "course", "branch")
-    ordering = ("username",)
+    ordering = ("-date_joined", "username",)
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
