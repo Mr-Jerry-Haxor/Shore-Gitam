@@ -658,7 +658,7 @@ def eticket(request):
     return redirect("home:login")
 
 
-@login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="home:login")
 def dashboard(request):
     if request.user.is_authenticated:
         context = {}
