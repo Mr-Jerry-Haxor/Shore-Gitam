@@ -40,9 +40,13 @@
     </style>
 </head>
 <body class="min-h-screen relative text-white">
+    {% include 'messages.html' %}
     <div class="fixed inset-0 bg-[url('{% static 'img/bg1.png'  %}')] bg-cover bg-center"></div>
-    <div class="absolute inset-0 bg-gradient-to-b from-emerald-950/30 to-emerald-950/80"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-emerald-950/30 to-emerald-950/80">
+        {% include 'events/navbar.html' %}
+    </div>
     <div class="relative container mx-auto px-4 py-12 sm:py-16 md:py-24 lg:py-24">
+
         <!-- Existing content starts here -->
         <div class="text-center mb-12 sm:mb-16 md:mb-20 lg:mb-24">
             <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-200">

@@ -19,7 +19,6 @@ from .models import (
     HackathonParticipants,
 )
 from payments.models import nongitamite
-
 from ngusers.models import AllowedParticipants
 
 
@@ -238,13 +237,16 @@ def addEvent(request):
     return render(request, "addEvent.html", context)
 
 
+@login_required(login_url="home:login")
 def register(request, sport_name):
     context = {}
     context["college_name"] = request.session["college_name"]
     passkey_status = request.session.get("passkey_valid")
+
     if not passkey_status:
         messages.error(request, "Invalid passkey.")
         return redirect("events:selectCollege", sport_name=sport_name)
+    
     college_name = request.session.get("college_name")
     if college_name == "Other":
         context["passkey_not_required"] = True
@@ -263,6 +265,7 @@ def register(request, sport_name):
 
     context["team_size"] = range(2, sport.min_team_size + 1)
     context["event"] = sport
+    context["sport"] = sport
     context["college"] = college
 
     if request.POST:
@@ -291,7 +294,8 @@ def register(request, sport_name):
                 messages.error(
                     request, f"Team with name {visible_team_name} already exists."
                 )
-                return render(request, "events/registration.html", context)
+                # return render(request, "events/registration.html", context)
+                return render(request, "register_new.html", context)
 
             captain_name = request.POST.get("name_1")
             captain_email = request.POST.get("email_1")
@@ -314,7 +318,8 @@ def register(request, sport_name):
                     f"Invalid phone number {captain_phone_number}.",
                 )
                 team.delete()
-                return render(request, "events/registration.html", context)
+                # return render(request, "events/registration.html", context)
+                return render(request, "register_new.html", context)
 
             # validate email
             try:
@@ -325,9 +330,15 @@ def register(request, sport_name):
                     f"Invalid email {captain_email}.",
                 )
                 team.delete()
-                return render(request, "events/registration.html", context)
+                # return render(request, "events/registration.html", context)
+                return render(request, "register_new.html", context)
 
             try:
+                if Participants.objects.filter(email=captain_email).exists():
+                    messages.error(request, f"Participant with email {captain_email} already registered.")
+                    team.delete()
+                    return redirect("events:eventshome")
+
                 captain = Participants.objects.create(
                     name=captain_name,
                     email=captain_email,
@@ -339,36 +350,14 @@ def register(request, sport_name):
                     isCaptain=True,
                 )
                 captain.save()
-                # check if the captain mail is in nongitamite table , if yes update rest details and if not insert details
-                if nongitamite.objects.filter(email=captain_email).exists():
-                    member1 = nongitamite.objects.get(email=captain_email)
-                    member1.name = captain_name
-                    member1.mobile = captain_phone_number
-                    member1.college = college.name
-                    member1.accommodation = (
-                        True if captain_accomdation == "yes" else False
-                    )
-                    member1.event_name = sport.name
-                    member1.event_type = sport.event_type
-                    member1.save()
-                else:
-                    member1 = nongitamite.objects.create(
-                        name=captain_name,
-                        email=captain_email,
-                        mobile=captain_phone_number,
-                        college=college.name,
-                        accommodation=True if captain_accomdation == "yes" else False,
-                        event_name=sport.name,
-                        event_type=sport.event_type,
-                    )
-                    member1.save()
             except IntegrityError:
                 messages.error(
                     request,
                     f"Participant with {captain_email} or {captain_phone_number} already registered.",
                 )
                 team.delete()
-                return render(request, "events/registration.html", context)
+                # return render(request, "events/registration.html", context)
+                return render(request, "register_new.html", context)
 
             for i in range(2, sport.max_team_size + 1):
                 if f"name_{i}" not in request.POST:
@@ -393,7 +382,8 @@ def register(request, sport_name):
                         f"Invalid phone number {phone_number}.",
                     )
                     team.delete()
-                    return render(request, "events/registration.html", context)
+                    # return render(request, "events/registration.html", context)
+                    return render(request, "register_new.html", context)
 
                 # validate email
                 try:
@@ -404,9 +394,15 @@ def register(request, sport_name):
                         f"Invalid email {email}.",
                     )
                     team.delete()
-                    return render(request, "events/registration.html", context)
+                    # return render(request, "events/registration.html", context)
+                    return render(request, "register_new.html", context)
 
                 try:
+                    if Participants.objects.filter(email=email).exists():
+                        messages.error(request, f"Participant with email {email} already registered.")
+                        team.delete()
+                        return redirect("events:eventshome")
+
                     player = Participants.objects.create(
                         name=name,
                         email=email,
@@ -417,35 +413,14 @@ def register(request, sport_name):
                         team=team,
                     )
                     player.save()
-                    if nongitamite.objects.filter(email=email).exists():
-                        member1 = nongitamite.objects.get(email=email)
-                        member1.name = name
-                        member1.mobile = phone_number
-                        member1.college = college.name
-                        member1.accommodation = (
-                            True if accomdation == "yes" else False,
-                        )
-                        member1.event_name = sport.name
-                        member1.event_type = sport.event_type
-                        member1.save()
-                    else:
-                        member1 = nongitamite.objects.create(
-                            name=name,
-                            email=email,
-                            mobile=phone_number,
-                            college=college.name,
-                            accommodation=True if accomdation == "yes" else False,
-                            event_name=sport.name,
-                            event_type=sport.event_type,
-                        )
-                        member1.save()
                 except IntegrityError:
                     messages.error(
                         request,
                         f"Participant with {email} or {phone_number} already registered.",
                     )
                     team.delete()
-                    return render(request, "events/registration.html", context)
+                    # return render(request, "events/registration.html", context)
+                    return render(request, "register_new.html", context)
 
             messages.success(
                 request, f"Team {team.visible_name} registered successfully."
@@ -465,8 +440,10 @@ def register(request, sport_name):
                 request,
                 f"Limit reached for {college.name} for {sport.name}.",
             )
-            return render(request, "events/registration.html", context)
-    return render(request, "events/registration.html", context)
+            # return render(request, "events/registration.html", context)
+            return render(request, "register_new.html", context)
+    # return render(request, "events/registration.html", context)
+    return render(request, "register_new.html", context)
 
 
 def success(request, team_hash):
@@ -478,9 +455,7 @@ def success(request, team_hash):
     # context['player'] = Participants.objects.get(email=request.user.email)
 
     for player in players:
-        player_obj = nongitamite.objects.get(email=player.email)
         player1 = Participants.objects.get(email=player.email)
-        player1.shoreid = player_obj.shoreid
         player1.save()
 
     context["team"] = team

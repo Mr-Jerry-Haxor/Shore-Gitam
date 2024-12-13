@@ -100,6 +100,7 @@ class Event(models.Model):
     event_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(max_length=300, null=True, blank=True)
+    ticket_price = models.IntegerField()
     event_type = models.CharField(max_length=100, null=False, blank=False, choices=event_choices)
     guidelines_url = models.URLField(max_length=1000, null=True, blank=True)
     image = models.ImageField(upload_to=event_file_upload_path, null=True, blank=True)

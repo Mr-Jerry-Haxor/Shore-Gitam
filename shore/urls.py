@@ -18,6 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.shortcuts import render
+
+def opening_soon(request):
+    return render(request, "prelims/opening_soon.html")
 
 urlpatterns = [
     path("shoreadmin/", admin.site.urls, name="django_admin"),
@@ -29,7 +33,8 @@ urlpatterns = [
     path("hospitality/", include("hospitality.urls")),
     path("prelims/", include("prelims.urls")),
     path("preshore/", include("promotion.urls")),
-    path("registrations/", include("events.urls")),
+    # path("registrations/", include("events.urls")),
+    path("registrations/", opening_soon),
     # path('festpass/' , include('festpass.urls')),
     path("sports/", include("sports.urls")),
     path("users/", include("ngusers.urls")),
@@ -39,7 +44,7 @@ urlpatterns = [
     path("productionadmin/", include("production_admin.urls")),
     path("", include("home.urls")),
     path("grievance/", include("grievance.urls")),
-    # path("competition", include("competition.urls")),
+    # path("competitions/", include("competition.urls")),
 ]
 
 
