@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     "production_admin",
     "home",
     "grievance",
-    "competition",
 ]
 
 MIDDLEWARE = [

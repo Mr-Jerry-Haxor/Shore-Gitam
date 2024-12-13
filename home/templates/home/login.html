@@ -100,16 +100,23 @@
                             Sign In
                         </button>
                     </form>
+                    <p class="mt-6 text-center text-sm text-black">
+                        Don't have an account?
+                        <a href="{% url 'home:signup' %}" class="font-medium text-black hover:text-green-200 underline">
+                            Sign up for SHORE Fest
+                        </a>
+                    </p>
                 </div>
+                
             </div>
         </div>
 
-        <p class="mt-6 text-center text-sm text-white">
+<!--         <p class="mt-6 text-center text-sm text-white">
             Don't have an account?
             <a href="{% url 'home:signup' %}" class="font-medium text-white hover:text-green-200 underline">
                 Sign up for SHORE Fest
             </a>
-        </p>
+        </p> -->
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
