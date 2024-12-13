@@ -189,9 +189,11 @@
                         <h3 class="text-4xl sm:text-5xl font-bold text-emerald-700 mb-2">
                             {{ total_tickets_sold }}
                         </h3>
-                        <p class="text-lg text-emerald-600 font-medium">
+                        <div class="text-lg text-emerald-600 font-medium">
+                            {{ gitamite_tickets_sold }}[G] + {{ nongitamite_tickets_sold }}[NG]
+                            <br>
                             Total Tickets Sold for SHORe Fest '25
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -606,5 +608,8 @@
             }
         });
     </script>
+    <footer class="bg-shore-dark text-white text-center py-4 mt-6">
+        <p>&copy; 2025 SHORe Fest. All rights reserved.</p>
+    </footer>
 </body>
 </html>
