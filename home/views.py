@@ -764,6 +764,8 @@ def dashboard(request):
         )
 
         context["total_tickets_sold"] = total_unique_tickets + total_unique_ng_tickets
+        context["gitamite_tickets_sold"] = total_unique_tickets
+        context["nongitamite_tickets_sold"] = total_unique_ng_tickets
 
         return render(request, "home/dashboard.html", context)
 
