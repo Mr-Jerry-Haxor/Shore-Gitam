@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore Fest '25 - Coming Soon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div 
+        class="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-teal-900"
+        style="background-image: url('{% static 'img/bg_shore_blur.png' %}'); background-size: cover; background-position: center;"
+    >
+        <!-- Overlay -->
+        <div 
+            class="absolute inset-0"
+            style="background-image: url('{% static 'img/bg_shore_overlay.png' %}'); background-size: cover; background-position: center; opacity: 0.7;"
+        ></div>
+
+        <!-- Content -->
+        <div class="relative z-10 container mx-auto px-4 py-16 flex flex-col items-center text-center">
+            <!-- Main Logo -->
+            <div class="w-full max-w-[300px] md:max-w-[400px] mb-8 animate-float">
+                <img
+                    src="{% static 'img/shore25logo.png' %}"
+                    alt="Shore Fest '25 Logo"
+                    class="w-full h-auto"
+                />
+            </div>
+
+            <!-- Text Content -->
+            <div class="space-y-6 max-w-2xl mx-auto">
+                <h1 class="text-4xl md:text-6xl font-bold text-white tracking-tight">
+                    Prelims registrations Closed
+                </h1>
+                <p class="text-xl md:text-2xl text-white/90">
+                    Get ready for the ultimate shore experience in 2025
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

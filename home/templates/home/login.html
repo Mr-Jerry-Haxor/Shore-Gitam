@@ -62,12 +62,17 @@
                         <div class="w-full border-t border-gray-300"></div>
                     </div>
                     <div class="relative flex justify-center text-sm">
-                        <span class="px-2 bg-white text-gray-500">Or</span>
+                        <span class="px-2 bg-white text-gray-500">and</span>
                     </div>
                 </div>
 
                 <div class="space-y-4">
                     <h2 class="text-lg font-semibold text-center text-gray-700">Non-GITAM Students</h2>
+                    <p class="mt-6 text-center text-md text-black">
+                        Buy Pass by signing up for SHORE Fest<br>
+                        <a href="{% url 'home:signup' %}" class="font-medium text-black hover:text-green-900 underline">
+                            Sign up for SHORE Fest
+                        </a>
                     {% include 'messages.html' %}
 
                     <form class="space-y-4" method="post">
@@ -100,16 +105,17 @@
                             Sign In
                         </button>
                     </form>
-                    <p class="mt-6 text-center text-sm text-black">
-                        Don't have an account?
-                        <a href="{% url 'home:signup' %}" class="font-medium text-black hover:text-green-200 underline">
-                            Sign up for SHORE Fest
-                        </a>
-                    </p>
+                    
                 </div>
                 
             </div>
         </div>
+        <p class="mt-6 text-center text-sm text-black">
+            Don't have an account?
+            <a href="{% url 'home:signup' %}" class="font-medium text-black hover:text-green-200 underline">
+                Sign up for SHORE Fest
+            </a>
+        </p>
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
