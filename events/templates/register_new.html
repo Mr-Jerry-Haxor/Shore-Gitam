@@ -16,8 +16,10 @@ Register
 
     .form-title {
         font-size: 20px;
+
         font-weight: 700;
-        color: rgb(0, 0, 0);
+        color: #064e3b;
+        margin-top: 1rem;
         margin-bottom: 1rem;
 
     }
@@ -34,100 +36,156 @@ Register
         /* Firefox */
     }
 </style>
+<script>
+    tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'shore-green': '#10B981',
+                        'shore-dark': '#064E3B',
+                        'shore-light': '#ECFDF5',
+                        'shore-border': '#D1FAE5',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+</script>
 {% endblock %} 
 
 {% block body %}
 {% include 'events/navbar.html' %}
 {% include 'messages.html' %}
-<div class="h-screen flex items-center justify-center">
+<div class="h-screen flex items-center justify-center bg-gradient-to-br from-shore-light to-white min-h-screen py-12 px-4 sm:px-6 lg:px-8 font-sans">
     <div style="height: 40rem"
         class="overflow-y-scroll container mx-auto max-w-2xl p-6 border border-gray-200 rounded-lg shadow-lg">
-        <h1 class="text-center title font-bold mb-5">
-            Registration for {{ sport.name }}
+        
+        <h1 class="text-center text-5xl font-extrabold text-shore-dark mb-8 relative p-6">
+            <span class="absolute inset-0 bg-shore-light opacity-60 rounded-lg"></span>
+            <span class="relative z-10 text-shore-dark">Registration for</span> 
+            <span class="relative z-10 text-shore-green">{{ sport.name }}</span>
         </h1>
+        
+        
+        
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="grid gap-6 mb-6 md:grid-cols-2">
-                <div>
-                    <label for="teamname" class="block mb-2 text-sm font-medium text-gray-900 ">Team
-                        Name</label>
-                    <input type="text" name="team_name" id="teamname"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                        placeholder="Enter team name" required />
+                <div class="space-y-2">
+                    <label for="teamname" class="block text-sm font-medium text-shore-dark">
+                        Team Name
+                    </label>
+                    <input
+                        type="text"
+                        name="team_name"
+                        id="teamname"
+                        class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out"
+                        placeholder="Enter team name"
+                        required
+                    />
                 </div>
-                <div>
-                    <label for="college" class="block mb-2 text-sm font-medium text-gray-900">
+                
+                <div class="space-y-2">
+                    <label for="college" class="block text-sm font-medium text-shore-dark">
                         College</label>
                     <input id="college" type="text" id="college" name="college"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out"
                         disabled value="{{ college.name }}">
                 </div>
             </div>
             <!-- Player 1 -->
-            <h1 class="form-title">Participant 1 ({% if sport.event_type == 'sports' %}Captain{% else %}Lead{% endif %})</h1>
-            <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <h1 class="form-title text-xl font-extrabold text-shore-dark mb-8">
+                Participant 1 ({% if sport.event_type == 'sports' %}Captain{% else %}Lead{% endif %})
+            </h1>
+            <div class="grid gap-6 mb-8 md:grid-cols-2">
                 <div>
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
-                    <input type="text" id="name" name="name_1"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="Enter name" required />
+                    <label for="name" class="block text-sm font-medium text-shore-dark mb-2">Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name_1"
+                        class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out"
+                        placeholder="Enter name"
+                        required
+                    />
                 </div>
                 <div>
-                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">
-                        Contact Number</label>
-                    <input type="number" id="phone" name="phone_1"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="Enter phone number" required />
+                    <label for="phone" class="block text-sm font-medium text-shore-dark mb-2">Contact Number</label>
+                    <input
+                        type="number"
+                        id="phone"
+                        name="phone_1"
+                        class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out"
+                        placeholder="Enter phone number"
+                        required
+                    />
                 </div>
             </div>
-            <div class="mb-6">
+            <div class="mb-8">
                 <div>
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email ID</label>
-                    <input type="email" id="email" name="email_1"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="Enter email" required />
+                    <label for="email" class="block text-sm font-medium text-shore-dark mb-2">Email ID</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email_1"
+                        class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out"
+                        placeholder="Enter email"
+                        required
+                    />
                 </div>
             </div>
-            <h3 id="player1_accomdation" class="mb-4 font-semibold text-gray-900">Do you need accomodattion?</h3>
-            <div class="grid gap-6 mb-6 md:grid-cols-2">
-                <label for="bordered-radio-1" class="flex items-center ps-4 border border-gray-200 rounded cursor-pointer">
-                    <input id="bordered-radio-1" type="radio" value="yes" name="accomodation_1" required
-                    class="bordered-radio-1"   
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                    <span class="w-full py-4 ms-2 text-sm font-medium text-gray-900">Yes</span>
+            <h3 id="player1_accomdation" class="text-xl font-semibold text-shore-dark mb-6">Do you need accommodation?</h3>
+            <div class="grid gap-6 md:grid-cols-2">
+                <label for="bordered-radio-1" class="flex items-center px-6 py-4 border border-gray-300 rounded-lg cursor-pointer">
+                    <input
+                        id="bordered-radio-1"
+                        type="radio"
+                        value="yes"
+                        name="accomodation_1"
+                        class="w-5 h-5 text-shore-green bg-white border-gray-300 focus:ring-shore-green transition-all duration-300"
+                        required
+                    />
+                    <span class="ml-3 text-sm font-medium text-shore-dark">Yes</span>
                 </label>
+                <label for="bordered-radio-no-1" class="flex items-center px-6 py-4 border border-gray-300 rounded-lg cursor-pointer">
+                    <input
+                        id="bordered-radio-no-1"
+                        type="radio"
+                        value="no"
+                        name="accomodation_1"
+                        class="w-5 h-5 text-shore-green bg-white border-gray-300 focus:ring-shore-green transition-all duration-300"
+                        required
+                    />
+                    <span class="ml-3 text-sm font-medium text-shore-dark">No</span>
+                </label>
+            </div>
             
-                <label for="bordered-radio-no-1" class="flex items-center ps-4 border border-gray-200 rounded cursor-pointer">
-                    <input id="bordered-radio-no-1" type="radio" value="no" name="accomodation_1" required
-                        class="bordered-radio-2"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                    <span class="w-full py-4 ms-2 text-sm font-medium text-gray-900">No</span>
-                </label>
-            </div>
             
             <!-- Other players -->
             {% for i in team_size %}
             <h1 class="form-title">Participant {{ i }}</h1>
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
+                    <label for="name" class="block text-sm font-medium text-shore-dark mb-2 ">Name</label>
                     <input type="text" id="name" name="name_{{ i }}"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out"
                         placeholder="Enter name" required />
                 </div>
                 <div>
-                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">Contact
+                    <label for="phone" class="block text-sm font-medium text-shore-dark mb-2 ">Contact
                         Number</label>
                     <input type="number" id="phone" name="phone_{{ i }}"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out"
                         placeholder="Enter phone number" required />
                 </div>
             </div>
             <div class="mb-6">
                 <div>
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email ID</label>
+                    <label for="email" class="block text-sm font-medium text-shore-dark mb-2 ">Email ID</label>
                     <input type="email" id="email" name="email_{{ i }}"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out"
                         placeholder="Enter email" required />
                 </div>
             </div>
@@ -152,25 +210,20 @@ Register
 
             <div id="additionalPlayers"></div>
             <button type="button" onclick="addPlayer()"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                Add Participant
+            class="mt-6 inline-flex items-center px-6 py-3 border-2 border-shore-green rounded-lg shadow-sm text-lg font-medium text-shore-green bg-white hover:bg-shore-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-shore-green transition duration-300 ease-in-out transform hover:-translate-y-1">
+                <svg class="w-6 h-6 mr-2 -ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Add Team Member
             </button>
-            <div class="py-3">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="endorsment_file">Upload Endorsment
-                file<a href="https://shore.gitam.edu/home/ubuntuserver/Shore24/media/guidelines/endorsement_form.pdf">(sample endorsment file,click to download)</a></label>
-            <input
-                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                id="endorsment_file" name="endorsment_file" type="file" required>
-            </div>
             <br>
-              <div class="max-w-xl mx-auto">
+              <div class="max-w-xl mx-auto py-3">
                 <button class="bg-white p-6 rounded-md shadow-md mb-4" data-modal-target="default-modal" data-modal-toggle="default-modal" type="button">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center" >
-                            <input id="link-checkbox-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="link-checkbox-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-left">
-                                <a data-modal-target="default-modal" data-modal-toggle="default-modal">   I, hereby acknowledge and agree all the transport and accommodation guidelines <span class="text-white ">............................................................................................</span></a>
+                            <input id="link-checkbox-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                            <label for="link-checkbox-1" class="ms-2 text-sm font-medium text-gray-900 text-left">
+                                <a data-modal-target="default-modal" data-modal-toggle="default-modal">   I, hereby acknowledge and agree all the transport and accommodation guidelines </a>
                             </label>
                         </div>
                         <div class="checkbox-indicator"></div>
@@ -180,12 +233,12 @@ Register
 
               <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div class="relative p-4 w-full max-w-2xl max-h-full">
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    <div class="relative bg-white rounded-lg shadow">
+                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                            <h3 class="text-xl font-semibold text-gray-900">
                                 Accommodation Guidelines:
                             </h3>
-                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="default-modal">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                 </svg>
@@ -195,52 +248,52 @@ Register
                         
                         <div class="p-4 md:p-5 space-y-4 ">
                             <ul class="list-disc">
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">All participants are advised to check in on 2nd February and checkout on 5th February. Any change in dates should be intimated to the Hospitality team prior through the campus coordinators.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">All participants must present their University ID along with a photocopy of a valid government ID (preferably Aadhaar).</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Rooms will not be allowed to lock in hostels. No locks are provided for cupboards in rooms; therefore, residents are expected to secure their valuables appropriately.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Participants are strongly advised to utilize lockable bags or containers for the safety of their personal belongings.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Participants can enter the campus after 9 PM only if they are arriving for the first time during the fest.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Participants are strictly prohibited from venturing outside the campus boundaries after the specified timings:
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">All participants are advised to check in on 2nd February and checkout on 5th February. Any change in dates should be intimated to the Hospitality team prior through the campus coordinators.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">All participants must present their University ID along with a photocopy of a valid government ID (preferably Aadhaar).</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Rooms will not be allowed to lock in hostels. No locks are provided for cupboards in rooms; therefore, residents are expected to secure their valuables appropriately.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Participants are strongly advised to utilize lockable bags or containers for the safety of their personal belongings.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Participants can enter the campus after 9 PM only if they are arriving for the first time during the fest.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Participants are strictly prohibited from venturing outside the campus boundaries after the specified timings:
                                     <ul class="list-disc">
                                         <li>Campus timings: 9 PM</li>
                                         <li>Hostel timings: 10 PM</li>
                                     </ul>
                                 </li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Any damage inflicted upon hostel property will incur charges that will be attributed to the individual or group responsible.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Upon check-in, students are required to occupy the rooms that have been specifically allotted to them. Room changes are not permissible without obtaining explicit permission from authorities concerned.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Contact the following numbers in case of emergency: Amith Raj (Accommodation & Registration lead) - 9866498772</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Arrival Location: Participants are advised to enter through the West (back) gate.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Attendees arriving before the scheduled event days will incur charges for each additional day. The additional charges per day are as follows: Rs. 300 per day (Food & Accommodation)</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Any damage inflicted upon hostel property will incur charges that will be attributed to the individual or group responsible.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Upon check-in, students are required to occupy the rooms that have been specifically allotted to them. Room changes are not permissible without obtaining explicit permission from authorities concerned.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Contact the following numbers in case of emergency: Amith Raj (Accommodation & Registration lead) - 9866498772</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Arrival Location: Participants are advised to enter through the West (back) gate.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Attendees arriving before the scheduled event days will incur charges for each additional day. The additional charges per day are as follows: Rs. 300 per day (Food & Accommodation)</li>
                             </ul>
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white p-4 md:p-5 border-b rounded-t">
+                            <h3 class="text-xl font-semibold text-gray-900 p-4 md:p-5 border-b rounded-t">
                                 Transport Guidelines:
                             </h3>
                             <ul class="list-disc">
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Travelers are advised to stay vigilant, prioritize safety, and follow COVID-19 measures.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Participants are strictly advised to proceed directly to the campus without making any detours.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Upon reaching the campus, participants are to promptly notify the SHORE Committee’s Hospitality team, ensuring seamless check-in and check-out.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Contact the following numbers in case of emergency: Contact : Mahitha ( Transportations Lead) - 85010 20304</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Travelers are advised to stay vigilant, prioritize safety, and follow COVID-19 measures.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Participants are strictly advised to proceed directly to the campus without making any detours.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Upon reaching the campus, participants are to promptly notify the SHORE Committee’s Hospitality team, ensuring seamless check-in and check-out.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Contact the following numbers in case of emergency: Contact : Mahitha ( Transportations Lead) - 85010 20304</li>
                             </ul>
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white p-4 md:p-5 border-b rounded-t">
+                            <h3 class="text-xl font-semibold text-gray-900 p-4 md:p-5 border-b rounded-t">
                                 Food Guidelines:
                             </h3>
                             <ul class="list-disc">
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Meal timings will be specified on the SHORE website and will be available via QR code generation.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Admittance into the mess post meal timings is strictly prohibited.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">All participants are requested to cooperate with the hospitality team during the QR scanning at the mess entrance.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">It is imperative to refrain from sharing QR code credentials, as each QR code is valid for a single individual only.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Participants should exclusively utilize their own credentials for QR code generation.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">All participants are expected to exhibit respect towards the staff, organizing committee and ensure hygiene.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">For any discrepancies or concerns related to the QR code, participants should promptly contact the designated help desks.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Water dispensers will be accessible at event venues; participants are urged to conserve water and avoid wastage.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Those with a 600/- pass won't be provided with food and accommodation in the hostel.</li>
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400">Those with a 1500/- pass will be provided with food coupons and accommodation in the hostel.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Meal timings will be specified on the SHORE website and will be available via QR code generation.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Admittance into the mess post meal timings is strictly prohibited.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">All participants are requested to cooperate with the hospitality team during the QR scanning at the mess entrance.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">It is imperative to refrain from sharing QR code credentials, as each QR code is valid for a single individual only.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Participants should exclusively utilize their own credentials for QR code generation.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">All participants are expected to exhibit respect towards the staff, organizing committee and ensure hygiene.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">For any discrepancies or concerns related to the QR code, participants should promptly contact the designated help desks.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Water dispensers will be accessible at event venues; participants are urged to conserve water and avoid wastage.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Those with a 600/- pass won't be provided with food and accommodation in the hostel.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">Those with a 1500/- pass will be provided with food coupons and accommodation in the hostel.</li>
                             </ul>
                         </div>
                         
                         
-                        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                            <button id="acceptButton" data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
+                        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+                            <button id="acceptButton" data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">I accept</button>
                         </div>
                     </div>
                 </div>
@@ -249,8 +302,8 @@ Register
                 <div class="bg-white p-6 rounded-md shadow-md mb-4">
                   <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                      <input id="link-checkbox-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" d>
-                      <label for="link-checkbox-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <input id="link-checkbox-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" d>
+                      <label for="link-checkbox-2" class="ms-2 text-sm font-medium text-gray-900">
                         I, hereby acknowledge and agree that I am attending Shore Fest'24 at GITAM (Deemed to be University), Visakhapatnam, from 2nd February 2024 to 4th February 2024. I understand and expressly acknowledge that GITAM University, its representatives, or organizers of Shore Fest'24 are not responsible for any untoward incident, injury, loss, or damage that may occur to me during my time on the premises or while participating in the event.
                     </label>
                     </div>
@@ -261,8 +314,8 @@ Register
                 <div class="bg-white p-6 rounded-md shadow-md mb-4">
                   <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                      <input id="link-checkbox-3" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                      <label for="link-checkbox-3" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                      <input id="link-checkbox-3" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                      <label for="link-checkbox-3" class="ms-2 text-sm font-medium text-gray-900">
                         I agree that I am responsible for my own safety, well-being, and belongings during the event, and I will take necessary precautions to ensure my personal safety and security. In the circumstance of my act in violation of rules and regulations and and any damage or injury caused to me due to my violation, I release GITAM University, its officers, employees, and event organizers from any liability, claims, or demands for personal injury, loss, or damage to personal property that may arise during my attendance at Shore Fest'24. By attending Shore Fest'24 at GITAM University, I hereby acknowledge that I have read and understood and agreed to the regulations and agree voluntarily to the terms and conditions set by GITAM(Deemed to be University) and by Shore Fest24 committee.
                     </label>
                     </div>
@@ -270,10 +323,15 @@ Register
                   </div>
                 </div>
               
-                <div class="text-center" id="submit-button" style="display: none;">
+                <!-- <div class="text-center" id="submit-button" style="display: none;">
                   <button type="submit" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     Register
                   </button>
+                </div> -->
+                <div class="flex justify-end" id="submit-button" style="display: none;">
+                    <button type="submit" class="px-8 py-4 bg-shore-green text-white rounded-lg text-lg font-semibold hover:bg-shore-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-shore-green transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl">
+                        Submit Registration
+                    </button>
                 </div>
               </div>
             </form>
@@ -318,16 +376,16 @@ Register
             nameDiv.classList.add("grid", "gap-6", "mb-6", "md:grid-cols-2");
             nameDiv.innerHTML = `
             <div>
-                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">
+                <label for="name" class="block text-sm font-medium text-shore-dark mb-2 ">
                     Name
                 </label>
-                <input name="name_${participantCount}" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter name" required />
+                <input name="name_${participantCount}" type="text" id="name" class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out" placeholder="Enter name" required />
             </div>
             <div>
-                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 ">
+                <label for="phone" class="block text-sm font-medium text-shore-dark mb-2 ">
                     Contact Number
                 </label>
-                <input type="number" name="phone_${participantCount}" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter phone number" required />
+                <input type="number" name="phone_${participantCount}" id="phone" class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out" placeholder="Enter phone number" required />
             </div>
         `;
 
@@ -336,29 +394,39 @@ Register
             contactDiv.innerHTML = `
             <div>
                     <label for="email"
-                        class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
+                        class="block text-sm font-medium text-shore-dark mb-2 ">Email</label>
                     <input type="email" id="email" name="email_${participantCount}"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        class="bg-white border border-gray-300 text-shore-dark text-sm rounded-lg focus:ring-2 focus:ring-shore-green focus:border-shore-green block w-full p-4 transition-all ease-in-out"
                         placeholder="Enter email" required />
                 </div>
         `;
             const accomDiv = document.createElement("div");
             accomDiv.classList.add("mb-6");
             accomDiv.innerHTML = `
-            <h3 id="player1_accomdation" class="mb-4 font-semibold text-gray-900">Do you need accomodation?</h3>
-            <div class="grid gap-6 mb-6 md:grid-cols-2">
-                <label for="bordered-radio-${participantCount}" class="flex items-center ps-4 border border-gray-200 rounded cursor-pointer">
-                    <input id="bordered-radio-${participantCount}" type="radio" value="yes" name="accomodation_${participantCount}" required
-                        class="bordered-radio-1"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                    <span class="w-full py-4 ms-2 text-sm font-medium text-gray-900">Yes</span>
-                </label>
             
-                <label for="bordered-radio-no-${participantCount}" class="flex items-center ps-4 border border-gray-200 rounded cursor-pointer">
-                    <input id="bordered-radio-no-${participantCount}" type="radio" value="no" name="accomodation_${participantCount}" required
-                        class="bordered-radio-2"
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                    <span class="w-full py-4 ms-2 text-sm font-medium text-gray-900">No</span>
+            <h3 id="player1_accomdation" class="text-xl font-semibold text-shore-dark mb-6">Do you need accommodation?</h3>
+            <div class="grid gap-6 md:grid-cols-2">
+                <label for="bordered-radio-${participantCount}" class="flex items-center px-6 py-4 border border-gray-300 rounded-lg cursor-pointer">
+                    <input
+                        id="bordered-radio-${participantCount}"
+                        type="radio"
+                        value="yes"
+                        name="accomodation_${participantCount}"
+                        class="w-5 h-5 text-shore-green bg-white border-gray-300 focus:ring-shore-green transition-all duration-300"
+                        required
+                    />
+                    <span class="ml-3 text-sm font-medium text-shore-dark">Yes</span>
+                </label>
+                <label for="bordered-radio-no-${participantCount}" class="flex items-center px-6 py-4 border border-gray-300 rounded-lg cursor-pointer">
+                    <input
+                        id="bordered-radio-no-${participantCount}"
+                        type="radio"
+                        value="no"
+                        name="accomodation_${participantCount}"
+                        class="w-5 h-5 text-shore-green bg-white border-gray-300 focus:ring-shore-green transition-all duration-300"
+                        required
+                    />
+                    <span class="ml-3 text-sm font-medium text-shore-dark">No</span>
                 </label>
             </div>
         `;
@@ -376,7 +444,6 @@ Register
                 "focus:ring-4",
                 "focus:outline-none",
                 "focus:ring-red-300",
-                "dark:focus:ring-red-800",
                 "font-medium",
                 "rounded-lg",
                 "text-sm",
