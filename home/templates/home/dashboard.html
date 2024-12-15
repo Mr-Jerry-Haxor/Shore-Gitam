@@ -90,12 +90,14 @@
                 {% endif %}
               </li>
               
+              {% comment %}
               <li>
                 <a
                   href="{% url 'prelims:home' %}"
                   class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
                 >Prelims</a>
               </li>
+              {% endcomment %}
               
               <li>
                 {% if request.user.grievance_staff %}
