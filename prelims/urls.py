@@ -3,8 +3,12 @@ from . import views
 
 app_name = "prelims"
 urlpatterns = [
-    path("", views.culturals_home, name="home"),
-    path("register/<str:event_name>/", views.register, name="register"),
+    path("", views.prelims_closed, name="prelims_closed"),
+
+    path("home/", views.culturals_home, name="home"),
+    path("register/<str:event_name>/", views.prelims_closed, name="register"),
+    # path("register/<str:event_name>/", views.register, name="register"),
+    
     # path(
     #     "registered_events/", views.registered_events, name="prelims_registered_events"
     # ),

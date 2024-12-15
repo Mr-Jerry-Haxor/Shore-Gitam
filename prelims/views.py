@@ -15,6 +15,8 @@ from django.db.models import Count
 from .models import Event, Team, Participant, campus_choices
 from home.views import send_email_async
 
+def prelims_closed(request):
+    return render(request, "prelims/prelims_closed.html")
 
 def send_success_email(email):
     team = Team.objects.get(captain_email=email)

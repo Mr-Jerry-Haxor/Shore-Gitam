@@ -23,6 +23,8 @@ from django.shortcuts import render
 def opening_soon(request):
     return render(request, "prelims/opening_soon.html")
 
+
+
 urlpatterns = [
     path("shoreadmin/", admin.site.urls, name="django_admin"),
     # path('logout/', auth_views.LogoutView.as_view(),name='logout'),
