@@ -302,9 +302,14 @@ def register(request, sport_name):
             captain_phone_number = request.POST.get("phone_1")
             captain_accomdation = request.POST.get("accomdation_1")
 
+            if captain_email != request.user.email:
+                messages.error(request, "Only captain can register the team.")
+                team.delete()
+                return redirect("events:eventshome")
+
             # if event type is cultural, then a participant is atmost allowed to participate in only 2 culturals
             if sport.event_type == "cultural":
-                if Participants.objects.filter(email=captain_email).count() == 2:
+                if Participants.objects.filter(email=captain_email).count() == 1:
                     messages.error(
                         request,
                         f"A participant is allowed to participant atmost in only two culturals. {captain_name} already registered for 2 cultural events.",
@@ -368,7 +373,7 @@ def register(request, sport_name):
                 accomdation = request.POST.get(f"accomdation_{i}")
 
                 if sport.event_type == "cultural":
-                    if Participants.objects.filter(email=email).count() == 2:
+                    if Participants.objects.filter(email=email).count() == 1:
                         messages.error(
                             request,
                             f"A participant is allowed to participant atmost in only two culturals. {name} already registered for 2 cultural events.",
@@ -446,11 +451,19 @@ def register(request, sport_name):
     return render(request, "register_new.html", context)
 
 
+@login_required(login_url="home:login")
 def success(request, team_hash):
     # complete success page, add team hash to view their team status, add functionality to send emails on successful registration.
     context = {}
     team = Team.objects.get(team_hash=team_hash)
+    captain_player = Participants.objects.get(email=request.user.email)
     players = Participants.objects.filter(team=team)
+
+    if captain_player.isCaptain:
+        context["is_captain"] = True
+    else:
+        context["is_captain"] = False
+
     context['player_count'] = players.count
     # context['player'] = Participants.objects.get(email=request.user.email)
 
@@ -462,12 +475,18 @@ def success(request, team_hash):
     context["players"] = Participants.objects.filter(team=team)
 
     if request.method == "POST":
-        noc_file = request.FILES.get("noc_file")
-        player_email = request.POST.get("player_email")
+        noc_file = request.FILES.get("nocfile")
+        player_email = request.user.email
 
-        player = Participants.objects.get(email=player_email)
-        player.nocFile = noc_file
-        player.save()
+        team.noc_file = noc_file
+        team.save()
+
+        messages.success(request, "Uploaded NOC successfully")
+        return redirect("events:success", team_hash=team.team_hash)
+
+        # player = Participants.objects.get(email=player_email)
+        # player.nocFile = noc_file
+        # player.save()
 
     return render(request, "events/dashboard.html", context)
 

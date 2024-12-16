@@ -132,6 +132,9 @@ class Team(models.Model):
     endorsment_file = models.FileField(
         upload_to=file_upload_path, null=True, blank=True
     )
+    noc_file = models.FileField(
+        upload_to=file_upload_path, null=True, blank=True
+    )
     status = models.CharField(choices=status_choices, default="pending", max_length=50)
 
     def __str__(self):
