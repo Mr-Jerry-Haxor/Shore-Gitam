@@ -80,12 +80,21 @@
                                 </svg>
                             </a>
                             {% endif %}
+                            {% if isHackathon %}
+                            <a href="{% url 'events:hackathon_selectCollege' event.name %}" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-emerald-500/50 flex items-center justify-center">
+                                Register
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                            {% else %}
                             <a href="{% url 'events:selectCollege' event.name %}" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-all duration-300 group-hover:shadow-lg group-hover:shadow-emerald-500/50 flex items-center justify-center">
                                 Register
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>  

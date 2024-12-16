@@ -264,7 +264,6 @@ def register(request, sport_name):
 
     if request.POST:
         visible_team_name = request.POST.get("team_name")
-        endorsementFile = request.FILES.get("endorsment_file")
 
         team_name = college.abbreviation + "_" + sport.name
         teams_count = Team.objects.all().count()
@@ -280,7 +279,6 @@ def register(request, sport_name):
                     college=college,
                     sport=sport,
                     isWaiting=True if teams_count > allowed_team_count else False,
-                    endorsment_file=endorsementFile,
                 )
                 team.save()
 
@@ -459,28 +457,17 @@ def success(request, team_hash):
         context["is_captain"] = False
 
     context['player_count'] = players.count
-    # context['player'] = Participants.objects.get(email=request.user.email)
-
-    for player in players:
-        player1 = Participants.objects.get(email=player.email)
-        player1.save()
-
     context["team"] = team
-    context["players"] = Participants.objects.filter(team=team)
+    context["players"] = players
 
     if request.method == "POST":
         noc_file = request.FILES.get("nocfile")
-        player_email = request.user.email
 
         team.noc_file = noc_file
         team.save()
 
         messages.success(request, "Uploaded NOC successfully")
         return redirect("events:success", team_hash=team.team_hash)
-
-        # player = Participants.objects.get(email=player_email)
-        # player.nocFile = noc_file
-        # player.save()
 
     return render(request, "events/dashboard.html", context)
 
@@ -637,6 +624,7 @@ def select_hackathon_college(request, hackathon_name):
     return render(request, "hackathon/hackathon_selectCollege.html", context)
 
 
+@login_required(login_url="home:login")
 def register_hackathon(request, hackathon_name):
     context = {"isHackathon": True}
 
@@ -650,7 +638,6 @@ def register_hackathon(request, hackathon_name):
 
     if request.POST:
         visible_team_name = request.POST.get("team_name")
-        endorsementFile = request.FILES.get("endorsment_file")
 
         team_name = college.abbreviation + "_" + hackathon.name
         teams_count = HackathonTeam.objects.all().count()
@@ -661,7 +648,6 @@ def register_hackathon(request, hackathon_name):
                 visible_name=visible_team_name,
                 college=college,
                 hackathon=hackathon,
-                endorsment_file=endorsementFile,
             )
             team.save()
         except IntegrityError:
@@ -674,6 +660,11 @@ def register_hackathon(request, hackathon_name):
         captain_email = request.POST.get("email_1")
         captain_phone_number = request.POST.get("phone_1")
         captain_accomdation = request.POST.get("accomdation_1")
+
+        if captain_email != request.user.email:
+            messages.error(request, "Only team captain/lead can register the team.")
+            team.delete()
+            return redirect("events:hackathon_home")
 
         # phone number length should be 10 and should be digits
         if len(captain_phone_number) != 10 or not captain_phone_number.isdigit():
@@ -707,26 +698,6 @@ def register_hackathon(request, hackathon_name):
                 isCaptain=True,
             )
             captain.save()
-            if nongitamite.objects.filter(email=captain_email).exists():
-                member1 = nongitamite.objects.get(email=captain_email)
-                member1.name = captain_name
-                member1.mobile = captain_phone_number
-                member1.college = college.name
-                member1.accommodation = True if captain_accomdation == "yes" else False
-                member1.event_name = hackathon.name
-                member1.event_type = "Hackathon"
-                member1.save()
-            else:
-                member1 = nongitamite.objects.create(
-                    name=captain_name,
-                    email=captain_email,
-                    mobile=captain_phone_number,
-                    college=college.name,
-                    accommodation=True if captain_accomdation == "yes" else False,
-                    event_name=hackathon.name,
-                    event_type="Hackathon",
-                )
-                member1.save()
         except IntegrityError:
             messages.error(
                 request,
@@ -774,26 +745,6 @@ def register_hackathon(request, hackathon_name):
                     team=team,
                 )
                 player.save()
-                if nongitamite.objects.filter(email=email).exists():
-                    member1 = nongitamite.objects.get(email=email)
-                    member1.name = name
-                    member1.mobile = phone_number
-                    member1.college = college.name
-                    member1.accommodation = (True if accomdation == "yes" else False,)
-                    member1.event_name = hackathon.name
-                    member1.event_type = "Hackathon"
-                    member1.save()
-                else:
-                    member1 = nongitamite.objects.create(
-                        name=name,
-                        email=email,
-                        mobile=phone_number,
-                        college=college.name,
-                        accommodation=True if accomdation == "yes" else False,
-                        event_name=hackathon.name,
-                        event_type="Hackathon",
-                    )
-                    member1.save()
             except IntegrityError:
                 messages.error(
                     request,
@@ -812,7 +763,7 @@ def register_hackathon(request, hackathon_name):
             messages.error(
                 request, "Error sending email. Please contact the organizers."
             )
-            team.delete()
+            # team.delete()
 
         # creating login accounts for all the participants
 
@@ -821,19 +772,31 @@ def register_hackathon(request, hackathon_name):
     return render(request, "hackathon/hackathon_register.html", context)
 
 
+@login_required(login_url="home:login")
 def hackathon_success(request, team_hash):
     context = {}
+    context['isHackathon'] = True
     team = HackathonTeam.objects.get(team_hash=team_hash)
+    captain_player = HackathonParticipants.objects.get(email=request.user.email)
     players = HackathonParticipants.objects.filter(team=team)
 
-    for player in players:
-        player_obj = nongitamite.objects.get(email=player.email)
-        player1 = HackathonParticipants.objects.get(email=player.email)
-        player1.shoreid = player_obj.shoreid
-        player1.save()
+    if captain_player.isCaptain:
+        context["is_captain"] = True
+    else:
+        context["is_captain"] = False
 
+    context['player_count'] = players.count
     context["team"] = team
-    context["players"] = HackathonParticipants.objects.filter(team=team)
+    context["players"] = players
+    
+    if request.method == "POST":
+        noc_file = request.FILES.get("nocfile")
+
+        team.noc_file = noc_file
+        team.save()
+
+        messages.success(request, "Uploaded NOC successfully")
+        return redirect("events:hackathon_success", team_hash=team.team_hash)
 
     return render(request, "hackathon/hackathon_success.html", context)
 

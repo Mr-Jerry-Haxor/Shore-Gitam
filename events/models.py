@@ -180,17 +180,21 @@ class Participants(models.Model):
 class Hackathon(models.Model):
     event_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
-    subtitle = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    event_type = models.CharField(
-        max_length=100, null=False, blank=False, choices=hackathon_choices
-    )
+    ticket_price = models.IntegerField()
+    event_type = models.CharField(max_length=100, null=False, blank=False, choices=hackathon_choices)
+    guidelines_url = models.URLField(max_length=1000, null=True, blank=True)
     image = models.ImageField(upload_to=event_file_upload_path, null=True, blank=True)
+    event_venue = models.CharField(max_length=255, default="ABCD")
+    event_time = models.TimeField(null=True, blank=True)
+    event_start_date = models.DateField(null=True, blank=True)
+    event_end_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    no_of_teams = models.IntegerField(null=False, blank=False)
+    max_univeristy_teams = models.IntegerField(null=False, blank=False)
     min_team_size = models.IntegerField(null=False, blank=False)
     max_team_size = models.IntegerField(null=False, blank=False)
-    guidelines = models.TextField(null=True, blank=True)
-    requirements = models.TextField(null=True, blank=True)
-    judiciary = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -210,6 +214,9 @@ class HackathonTeam(models.Model):
     registered_at = models.DateTimeField(default=timezone.now)
     team_hash = models.CharField(max_length=100, null=True, blank=True)
     endorsment_file = models.FileField(
+        upload_to=file_upload_path_hackthon, null=True, blank=True
+    )
+    noc_file = models.FileField(
         upload_to=file_upload_path_hackthon, null=True, blank=True
     )
     status = models.CharField(choices=status_choices, default="pending", max_length=50)
