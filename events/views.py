@@ -462,6 +462,10 @@ def success(request, team_hash):
     context["players"] = Participants.objects.filter(team=team)
 
     if request.method == "POST":
+
+        print(request.POST)
+        print(request.FILES)
+
         noc_file = request.FILES.get("noc_file")
         player_email = request.POST.get("player_email")
 
