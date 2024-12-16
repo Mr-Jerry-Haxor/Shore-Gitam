@@ -31,15 +31,13 @@ def send_pass_mail(team_id, event_id):
     participant_emails = [participant.email for participant in participants]
 
     subject, from_email = (
-        f"SHORE'24 GITAM,Thank you for Registering",
+        f"SHORe'25,Thank you for Registering for {event.name}",
         settings.EMAIL_HOST_USER,
     )
     html_content1 = get_template("registered_mail.html").render(
         {
             "event": event,
-            "team": team,
-            "teammates": participants,
-            "status_link": f"https://shore.gitam.edu/registrations/success/{team.team_hash}",
+            "view_team_details_url": f"https://shore.gitam.edu/registrations/success/{team.team_hash}",
         }
     )
     msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
@@ -56,15 +54,13 @@ def send_pass_mail_hackathon(team_id, event_id):
     participant_emails = [participant.email for participant in participants]
 
     subject, from_email = (
-        f"SHORE'24 GITAM,Thank you for Registering",
+        f"SHORe'25,Thank you for Registering for {event.name}",
         settings.EMAIL_HOST_USER,
     )
     html_content1 = get_template("registered_mail.html").render(
         {
             "event": event,
-            "team": team,
-            "teammates": participants,
-            "status_link": f"https://shore.gitam.edu/registrations/hackathon/success/{team.team_hash}",
+            "view_team_details_url": f"https://shore.gitam.edu/registrations/hackathon/success/{team.team_hash}",
         }
     )
     msg = EmailMultiAlternatives(subject, html_content1, from_email, participant_emails)
@@ -81,15 +77,13 @@ def send_pass_mail_updated(team_id, event_id):
     participant_emails = [participant.email for participant in participants]
 
     subject, from_email = (
-        f"SHORE'24 GITAM, Team {team.visible_name}'s status updated to {team.status}",
+        f"SHORe'25, Team {team.visible_name}'s status updated to {team.status}",
         settings.EMAIL_HOST_USER,
     )
     html_content1 = get_template("registered_mail.html").render(
         {
             "event": event,
-            "team": team,
-            "teammates": participants,
-            "status_link": f"https://shore.gitam.edu/registrations/success/{team.team_hash}",
+            "view_team_details_url": f"https://shore.gitam.edu/registrations/success/{team.team_hash}",
             "status_text": f"Your Team status is updated to {team.status}",
         }
     )
