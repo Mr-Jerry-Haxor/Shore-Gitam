@@ -280,7 +280,7 @@ def signup(request):
             return redirect("home:signup")
 
         # validate age, it should be a number and should be greater than 18
-        if not age.isdigit() or int(age) < 18:
+        if not age.isdigit() or int(age) < 16:
             messages.error(request, "Invalid age")
             return redirect("home:signup")
 
