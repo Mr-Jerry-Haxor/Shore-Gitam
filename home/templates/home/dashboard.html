@@ -174,7 +174,7 @@
             <p class="text-lg text-white">Your SHORe Fest '25 adventure awaits.</p>
         </div>
 
-        {% if request.user.president or request.user.vice_president or request.user.coordinator or request.user.technology or request.user.is_superuser %}
+        {% if request.user.president or request.user.coordinator or request.user.technology or request.user.is_superuser %}
         <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-emerald-100 mb-6">
             <div class="bg-emerald-700 text-white p-4">
                 <h2 class="text-xl sm:text-2xl flex items-center justify-center sm:justify-start">
