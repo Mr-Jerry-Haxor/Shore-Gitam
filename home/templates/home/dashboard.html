@@ -158,7 +158,7 @@
                 Grievance Dashboard
             </a>
             {% endif %}
-            {% if request.user.grievance_staff or request.user.is_superuser %}
+            {% if request.user.grievance_staff or request.user.is_superuser or request.user.is_staff %}
             <a href="https://shore.gitam.edu/shoreadmin" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-4 py-2 rounded-md ml-2">
                 Django Admin
             </a>
