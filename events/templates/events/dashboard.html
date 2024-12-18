@@ -125,7 +125,26 @@
                 <div class="bg-white p-6 rounded-lg shadow overflow-hidden">
 
                     {% if team.noc_file %}
-                    <a href="{{ team.noc_file.url }}">View uploaded NOC</a>
+                    <!-- View Uploaded File -->
+                    <div class="mt-4 p-4 bg-indigo-50 rounded-lg border border-indigo-100 shadow-md">
+                        <div class="flex items-center">
+                            <svg class="h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L9 11.172l5.586-5.586a1 1 0 011.414 0L21 10.172V3a1 1 0 00-1-1H4a1 1 0 00-1 1v18a1 1 0 001 1h16a1 1 0 001-1v-7.586a1 1 0 00-.293-.707l-5-5a1 1 0 00-1.414 0z"/>
+                            </svg>
+                            <p class="ml-3 text-lg font-medium text-gray-900">Uploaded File</p>
+                        </div>
+                        <div class="mt-2">
+                            <a href="{{ team.noc_file.url }}" target="_blank"
+                                class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium text-sm transition">
+                                <svg class="h-5 w-5 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l-1.293 1.293a1 1 0 001.414 1.414L6 18m0 0h.01M4 16h16M16 10V4m0 6l6 6m-6-6l-6 6" />
+                                </svg>
+                                View File
+                            </a>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-700">You can upload a new file if needed.</p>
+                    </div>
+
                     {% else %}
                     <form id="file-upload-form" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
