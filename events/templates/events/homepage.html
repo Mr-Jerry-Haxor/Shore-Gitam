@@ -42,8 +42,10 @@
 <body class="min-h-screen relative text-white">
     <div class="fixed inset-0 bg-[url('{% static 'img/bg1.png'  %}')] bg-cover bg-center"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-emerald-950/30 to-emerald-950/80">
+        <div class="fixed top-0 left-0 right-0 z-50">
+            {% include 'events/navbar.html' %}
+        </div>
         {% include 'messages.html' %}
-        {% include 'events/navbar.html' %}
     </div>
     <div class="relative container mx-auto px-4 pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-12">
 
