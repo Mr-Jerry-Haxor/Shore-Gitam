@@ -42,24 +42,26 @@
 <body class="min-h-screen relative text-white">
     <div class="fixed inset-0 bg-[url('{% static 'img/bg1.png'  %}')] bg-cover bg-center"></div>
     <div class="absolute inset-0 bg-gradient-to-b from-emerald-950/30 to-emerald-950/80">
+        <div class="fixed top-0 left-0 right-0 z-50">
+            {% include 'events/navbar.html' %}
+        </div>
         {% include 'messages.html' %}
-        {% include 'events/navbar.html' %}
     </div>
-    <div class="relative container mx-auto px-4 py-12 sm:py-16 md:py-24 lg:py-24">
+    <div class="relative container mx-auto px-4 pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-12">
 
         <!-- Existing content starts here -->
-        <div class="text-center mb-12 sm:mb-16 md:mb-20 lg:mb-24">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-200">
+        <div class="text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-200">
                 Event Categories
             </h1>
-            <p class="text-xl sm:text-2xl md:text-3xl text-white/90 max-w-3xl mx-auto font-light">
+            <p class="text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto font-light">
                 Explore the diverse range of events at Shore Fest '25
             </p>
         </div>
 
-        <div class="grid gap-6 sm:gap-8 md:gap-10 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+        <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
             <!-- Culturals Category -->
-            <div class="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-emerald-950/30 backdrop-blur-sm h-[450px] sm:h-[500px] border border-white/10">
+            <div class="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-emerald-950/30 backdrop-blur-sm h-[400px] sm:h-[450px] border border-white/10">
                 <img src="{% static 'img/culturals.jpg' %}" alt="Culturals" class="h-full w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300">
                 <div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-emerald-950/95 via-emerald-950/70 to-transparent">
                     <h2 class="mb-3 text-2xl sm:text-3xl font-bold transition-all group-hover:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-600">
@@ -80,7 +82,7 @@
             </div>
 
             <!-- Sports Category -->
-            <div class="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-emerald-950/30 backdrop-blur-sm h-[450px] sm:h-[500px] border border-white/10">
+            <div class="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-emerald-950/30 backdrop-blur-sm h-[400px] sm:h-[450px] border border-white/10">
                 <img src="{% static 'img/sports.jpg' %}" alt="Sports" class="h-full w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300">
                 <div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-emerald-950/95 via-emerald-950/70 to-transparent">
                     <h2 class="mb-3 text-2xl sm:text-3xl font-bold transition-all group-hover:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-emerald-600">
@@ -101,7 +103,7 @@
             </div>
 
             <!-- Technical Category -->
-            <div class="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-emerald-950/30 backdrop-blur-sm h-[450px] sm:h-[500px] border border-white/10">
+            <div class="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-emerald-950/30 backdrop-blur-sm h-[400px] sm:h-[450px] border border-white/10">
                 <img src="{% static 'img/technicals.jpg' %}" alt="Technical" class="h-full w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300">
                 <div class="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-emerald-950/95 via-emerald-950/70 to-transparent">
                     <h2 class="mb-3 text-2xl sm:text-3xl font-bold transition-all group-hover:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-green-600">
