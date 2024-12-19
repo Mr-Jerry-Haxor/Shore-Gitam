@@ -246,7 +246,7 @@ Register
                         
                         <div class="p-4 md:p-5 space-y-4 ">
                             <ul class="list-disc">
-                                <li class="text-sm md:text-base leading-relaxed text-gray-500">All participants are advised to check in on 2nd February and checkout on 5th February. Any change in dates should be intimated to the Hospitality team prior through the campus coordinators.</li>
+                                <li class="text-sm md:text-base leading-relaxed text-gray-500">All participants are advised to check in on 2nd January and checkout on 5th January. Any change in dates should be intimated to the Hospitality team prior through the campus coordinators.</li>
                                 <li class="text-sm md:text-base leading-relaxed text-gray-500">All participants must present their University ID along with a photocopy of a valid government ID (preferably Aadhaar).</li>
                                 <li class="text-sm md:text-base leading-relaxed text-gray-500">Rooms will not be allowed to lock in hostels. No locks are provided for cupboards in rooms; therefore, residents are expected to secure their valuables appropriately.</li>
                                 <li class="text-sm md:text-base leading-relaxed text-gray-500">Participants are strongly advised to utilize lockable bags or containers for the safety of their personal belongings.</li>
@@ -291,7 +291,18 @@ Register
                     </div>
                 </div>
             </div>
-  
+            <div class="bg-white p-6 rounded-md shadow-md mb-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <input id="link-checkbox-4" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500" d>
+                    <label for="link-checkbox-4" class="ms-2 text-sm font-medium text-gray-900">
+                        I agree that  registrations are first-come, first-served, confirmed only with payment, non-refundable, and unpaid registrations are not accepted.
+                    </label>
+                  </div>
+                  <div class="checkbox-indicator"></div>    
+                </div>
+              </div>
+
                 <div class="bg-white p-6 rounded-md shadow-md mb-4">
                   <div class="flex items-center justify-between">
                     <div class="flex items-center">
@@ -335,10 +346,11 @@ Register
                 var checkbox1 = document.getElementById('link-checkbox-1');
                 var checkbox2 = document.getElementById('link-checkbox-2');
                 var checkbox3 = document.getElementById('link-checkbox-3');
+                var checkbox4 = document.getElementById('link-checkbox-4');
                 var submitButton = document.getElementById('submit-button');
             
                 function updateSubmitButton() {
-                  if (checkbox1.checked && checkbox2.checked && checkbox3.checked) {
+                  if (checkbox1.checked && checkbox2.checked && checkbox3.checked && checkbox4.checked) {
                     submitButton.style.display = 'block';
                   } else {
                     submitButton.style.display = 'none';
@@ -348,6 +360,7 @@ Register
                 checkbox1.addEventListener('change', updateSubmitButton);
                 checkbox2.addEventListener('change', updateSubmitButton);
                 checkbox3.addEventListener('change', updateSubmitButton);
+                checkbox4.addEventListener('change', updateSubmitButton);
               });
               
             let minParticipants = {{ sport.min_team_size }};
