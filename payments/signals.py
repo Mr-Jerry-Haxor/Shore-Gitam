@@ -12,14 +12,14 @@ def after_save_trigger(sender, instance, created, **kwargs):
             send_email_async(instance.email, send_festpass_email)
         elif instance.transaction_status == "N":
             # send email mentioning failed pass purchase
-            send_payment_failed_email(instance.email, send_festpass_email)
+            send_email_async(instance.email, send_payment_failed_email)
     else:
         if instance.transaction_status == "Y":
             # send email mentioning successful pass purchase
             send_email_async(instance.email, send_festpass_email)
         elif instance.transaction_status == "N":
             # send email mentioning failed pass purchase
-            send_payment_failed_email(instance.email, send_festpass_email)
+            send_email_async(instance.email, send_payment_failed_email)
 
 
 @receiver(post_save, sender=Registrations)
