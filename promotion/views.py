@@ -79,7 +79,7 @@ def volunteer_registration(request):
                 return redirect("volunteer")
 
             # Validate email domain
-            if not re.match(r".+@(?:gitam\.edu|gitam\.in)$", email):
+            if not re.match(r".+@(?:gitam\.edu|gitam\.in|student\.gitam\.edu)$", email):
                 messages.error(
                     request, "Invalid email domain. Please use a Gitam email."
                 )
