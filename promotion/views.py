@@ -154,5 +154,6 @@ def send_volunteer_emails(request):
         return HttpResponse("Done, sent emails!!")
     return redirect("home:homepage")
 
+
 def noc(request):
     return redirect("hospitality:hospitalitynoc")
