@@ -37,6 +37,7 @@ class EventAdmin(ImportExportModelAdmin):
         "min_team_size",
         "max_team_size",
     )
+    list_filter = ('event_type', 'event_start_date', 'event_end_date')
 
 
 @admin.register(Team)
@@ -52,6 +53,7 @@ class TeamAdmin(ImportExportModelAdmin):
         "registered_at",
         "status",
     )
+    list_filter = ('sport', 'isPaid', 'isWaiting', 'status')
 
 
 @admin.register(Participants)
@@ -70,11 +72,13 @@ class ParticipantsAdmin(ImportExportModelAdmin):
         "isGitamite",
         "shoreid",
     )
+    list_filter = ('sport', 'isPaid', 'isCaptain', 'isGitamite', 'accomdation')
 
 
 class HackathonAdmin(ImportExportModelAdmin):
     list_display = ["name", "event_type", "min_team_size", "max_team_size"]
     search_fields = ["name", "event_type"]
+    list_filter = ('event_type',)
 
 
 class HackathonTeamAdmin(ImportExportModelAdmin):
@@ -88,6 +92,7 @@ class HackathonTeamAdmin(ImportExportModelAdmin):
         "registered_at",
     ]
     search_fields = ["team_name", "visible_name", "college__name", "hackathon__name"]
+    list_filter = ('hackathon', 'isPaid', 'isQualified')
 
 
 class HackathonParticipantsAdmin(ImportExportModelAdmin):
@@ -112,6 +117,7 @@ class HackathonParticipantsAdmin(ImportExportModelAdmin):
         "hackathon__name",
         "team__team_name",
     ]
+    list_filter = ('hackathon', 'isPaid', 'isCaptain', 'isGitamite', 'accomdation')
 
 
 admin.site.register(Hackathon, HackathonAdmin)

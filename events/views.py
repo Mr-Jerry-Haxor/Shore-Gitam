@@ -600,7 +600,7 @@ def hackathon_home(request):
 
     context["isHackathon"] = True
     context["events"] = hackathons
-    context["title"] = "Hackathons"
+    context["title"] = "Technical"
 
     return render(request, "events/events.html", context)
 
