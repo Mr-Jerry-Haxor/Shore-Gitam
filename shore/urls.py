@@ -46,6 +46,7 @@ urlpatterns = [
     path("productionadmin/", include("production_admin.urls")),
     path("", include("home.urls")),
     path("grievance/", include("grievance.urls")),
+    path("forgot_password/", include("forgot_password.urls")),
     # path("competitions/", include("competition.urls")),
 ]
 

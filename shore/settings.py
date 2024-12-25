@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "production_admin",
     "home",
     "grievance",
+    "forgot_password",
 ]
 
 MIDDLEWARE = [
