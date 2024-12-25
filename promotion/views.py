@@ -29,6 +29,18 @@ def send_success_volunteer_registration(user_email):
     msg.send()
 
 
+def volunteer_accepted_email(user_email):
+    user = Volunteer.objects.get(email=user_email)
+
+    subject = "Shore'25 || Volunteer request accepted"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("volunteer_accept_email.html").render({"user": user})
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
+    msg.content_subtype = "html"
+    msg.send()
+
+
 @require_http_methods(["GET", "POST"])
 def bgmi_player(request):
     if True:
@@ -153,6 +165,34 @@ def send_volunteer_emails(request):
             send_email_async(volunteer.email, send_success_volunteer_registration)
         return HttpResponse("Done, sent emails!!")
     return redirect("home:homepage")
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
+def volunteer_dashboard(request):
+    if request.user.president or request.user.hospitality_staff or request.user.is_superuser:
+        context = {}
+        context["volunteers"] = Volunteer.objects.all().order_by('-created_at')
+        context["total_volunteers"] = Volunteer.objects.all().count()
+        context["approved_volunteers"] = Volunteer.objects.filter(isvolunteer=True).count()
+        context["remaining_volunteers"] = Volunteer.objects.filter(isvolunteer=False).count()
+        return render(request, "volunteer_dashboard.html", context)
+    else:
+        return redirect("home:homepage")
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
+def volunteer_accept(request, email):
+    if request.user.president or request.user.hospitality_staff or request.user.is_superuser:
+        volunteer = Volunteer.objects.get(email=email)
+        volunteer.isvolunteer = True
+        volunteer.save()
+
+        send_email_async(email, volunteer_accepted_email)
+
+        messages.success(request, f"Accepted {email}")
+        return redirect("volunteer_dashboard")
+    else:
+        return redirect("home:homepage")
 
 
 def noc(request):

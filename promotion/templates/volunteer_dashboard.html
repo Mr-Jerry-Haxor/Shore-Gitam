@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHORE'25 Volunteer Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen p-6">
+        <!-- Header -->
+        {% include 'messages.html' %}
+        <header class="max-w-7xl mx-auto">
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                SHORE'25 Volunteer Dashboard
+            </h1>
+            <p class="text-gray-600 mt-2">Manage volunteer applications and track status</p>
+        </header>
+        
+
+        <!-- Stats Section -->
+        <div class="max-w-7xl mx-auto mt-8">
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                <!-- Total Volunteers -->
+                <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-emerald-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Applied for Volunteering</p>
+                            <p class="text-2xl font-semibold text-gray-900">{{ total_volunteers }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Approved -->
+                <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Approved</p>
+                            <p class="text-2xl font-semibold text-gray-900">{{ approved_volunteers }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending -->
+                <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-yellow-100">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-500">Pending</p>
+                            <p class="text-2xl font-semibold text-gray-900">{{ remaining_volunteers }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Volunteer List -->
+        <div class="max-w-7xl mx-auto mt-8">
+            <div class="bg-white shadow-sm rounded-lg">
+                <!-- Table Header -->
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-semibold text-gray-800">Volunteer Applications</h2>
+                        <div class="flex space-x-3">
+                            <input type="text" placeholder="Search volunteers..." 
+                                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                            <button id="exportBtn" class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600">
+                                Export List
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Prev. Exp</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Why Intrested</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Row 1 -->
+                             {% for volunteer in volunteers %}
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <img class="h-10 w-10 rounded-full cursor-pointer volunteer-photo" src="{{ volunteer.profile_pic.url }}">
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">{{ volunteer.name }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ volunteer.email }}</div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ volunteer.previous_experience }}</div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ volunteer.why_you_interested }}</div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                        {% if volunteer.isvolunteer %}
+                                            Accepted
+                                        {% else %}
+                                            Pending
+                                        {% endif %}
+                                    </div>
+                                </td>
+
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    {% if not volunteer.isvolunteer %}
+                                    <a href="{% url 'volunteer_accept' volunteer.email %}" class="text-emerald-600 hover:text-emerald-900 mr-3">Accept</a>
+                                    {% endif %}
+                                    {% comment %}
+                                    <a href="{% url 'volunteer_reject' volunteer.email %}" class="text-red-600 hover:text-red-900">Reject</a>
+                                    {% endcomment %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="px-6 py-4 border-t border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50">Previous</button>
+                            <button class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div id="photoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white p-4 rounded-lg max-w-2xl max-h-2xl">
+            <img id="enlargedPhoto" src="" alt="Enlarged volunteer photo" class="max-w-full max-h-full">
+            <button id="closeModal" class="mt-4 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600">Close</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Photo enlargement functionality
+            const photoModal = document.getElementById('photoModal');
+            const enlargedPhoto = document.getElementById('enlargedPhoto');
+            const closeModal = document.getElementById('closeModal');
+            const volunteerPhotos = document.querySelectorAll('.volunteer-photo');
+
+            volunteerPhotos.forEach(photo => {
+                photo.addEventListener('click', function() {
+                    enlargedPhoto.src = this.src;
+                    photoModal.classList.remove('hidden');
+                    photoModal.classList.add('flex');
+                });
+            });
+
+            closeModal.addEventListener('click', function() {
+                photoModal.classList.add('hidden');
+                photoModal.classList.remove('flex');
+            });
+
+            photoModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    photoModal.classList.add('hidden');
+                    photoModal.classList.remove('flex');
+                }
+            });
+
+            // Export functionality
+            const exportBtn = document.getElementById('exportBtn');
+            exportBtn.addEventListener('click', function() {
+                // Get table data
+                const table = document.querySelector('table');
+                const rows = Array.from(table.querySelectorAll('tr'));
+                
+                // Convert table data to CSV
+                const csvContent = rows.map(row => {
+                    const cells = Array.from(row.querySelectorAll('th, td'));
+                    return cells.map(cell => cell.innerText).join(',');
+                }).join('\n');
+
+                // Create a Blob with the CSV content
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                
+                // Create a download link and trigger the download
+                const link = document.createElement('a');
+                if (link.download !== undefined) {
+                    const url = URL.createObjectURL(blob);
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', 'volunteer_list.csv');
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
