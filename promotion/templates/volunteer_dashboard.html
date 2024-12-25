@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHORE'25 Volunteer Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
     <div class="min-h-screen p-6">
@@ -73,11 +92,11 @@
             <div class="bg-white shadow-sm rounded-lg">
                 <!-- Table Header -->
                 <div class="px-6 py-4 border-b border-gray-200">
-                    <div class="flex items-center justify-between">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-y-0">
                         <h2 class="text-xl font-semibold text-gray-800">Volunteer Applications</h2>
-                        <div class="flex space-x-3">
-                            <input type="text" placeholder="Search volunteers..." 
-                                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
+                            <input type="text" id="searchInput" placeholder="Search volunteers..." 
+                                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 w-full sm:w-auto">
                             <button id="exportBtn" class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600">
                                 Export List
                             </button>
@@ -98,7 +117,7 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
+                        <tbody class="bg-white divide-y divide-gray-200" id="volunteerTableBody">
                             <!-- Row 1 -->
                              {% for volunteer in volunteers %}
                             <tr>
@@ -118,8 +137,12 @@
                                     <div class="text-sm text-gray-900">{{ volunteer.previous_experience }}</div>
                                 </td>
 
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ volunteer.why_you_interested }}</div>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">
+                                        <div class="max-h-20 max-w-[200px] overflow-y-auto hover:overflow-y-auto pr-2 custom-scrollbar">
+                                            {{ volunteer.why_you_interested }}
+                                        </div>
+                                    </div>
                                 </td>
 
                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -146,12 +169,26 @@
                     </table>
                 </div>
 
-                <!-- Pagination -->
+                <!-- Updated Pagination -->
                 <div class="px-6 py-4 border-t border-gray-200">
-                    <div class="flex items-center justify-between">
+                    <div class="flex flex-col sm:flex-row items-center justify-between space-y-3 sm:space-y-0">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-500">Show</span>
+                            <select id="entriesPerPage" class="border border-gray-300 rounded-md px-2 py-1">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                            </select>
+                            <span class="text-sm text-gray-500">entries</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span id="pageInfo" class="text-sm text-gray-500">Showing 1-10 of 100</span>
+                        </div>
                         <div class="flex space-x-2">
-                            <button class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50">Previous</button>
-                            <button class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50">Next</button>
+                            <button id="prevPage" class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50">Previous</button>
+                            <div id="pageNumbers" class="flex space-x-1"></div>
+                            <button id="nextPage" class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50">Next</button>
                         </div>
                     </div>
                 </div>
@@ -160,10 +197,22 @@
     </div>
 
     <!-- Photo Modal -->
-    <div id="photoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-        <div class="bg-white p-4 rounded-lg max-w-2xl max-h-2xl">
-            <img id="enlargedPhoto" src="" alt="Enlarged volunteer photo" class="max-w-full max-h-full">
-            <button id="closeModal" class="mt-4 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600">Close</button>
+    <div id="photoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg w-full max-w-lg mx-auto overflow-hidden">
+            <div class="relative">
+                <!-- Close button in top-right corner -->
+                <button id="closeModal" class="absolute top-2 right-2 z-10 p-2 rounded-full bg-gray-800 bg-opacity-50 text-white hover:bg-opacity-70">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                
+                <!-- Image container with aspect ratio -->
+                <div class="relative w-full" style="max-height: 80vh;">
+                    <img id="enlargedPhoto" src="" alt="Enlarged volunteer photo" 
+                        class="w-full h-auto object-contain">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -180,20 +229,121 @@
                     enlargedPhoto.src = this.src;
                     photoModal.classList.remove('hidden');
                     photoModal.classList.add('flex');
+                    // Prevent body scrolling when modal is open
+                    document.body.style.overflow = 'hidden';
                 });
             });
 
-            closeModal.addEventListener('click', function() {
+            function closePhotoModal() {
                 photoModal.classList.add('hidden');
                 photoModal.classList.remove('flex');
-            });
+                // Re-enable body scrolling
+                document.body.style.overflow = 'auto';
+            }
+
+            closeModal.addEventListener('click', closePhotoModal);
 
             photoModal.addEventListener('click', function(e) {
                 if (e.target === this) {
-                    photoModal.classList.add('hidden');
-                    photoModal.classList.remove('flex');
+                    closePhotoModal();
                 }
             });
+
+            // Add keyboard support for closing modal
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !photoModal.classList.contains('hidden')) {
+                    closePhotoModal();
+                }
+            });
+
+            // Pagination Variables
+            let currentPage = 1;
+            let entriesPerPage = 10;
+            const tableBody = document.getElementById('volunteerTableBody');
+            const rows = Array.from(tableBody.getElementsByTagName('tr'));
+            const totalRows = rows.length;
+
+            // Pagination Elements
+            const prevButton = document.getElementById('prevPage');
+            const nextButton = document.getElementById('nextPage');
+            const pageNumbers = document.getElementById('pageNumbers');
+            const entriesSelect = document.getElementById('entriesPerPage');
+            const pageInfo = document.getElementById('pageInfo');
+            const searchInput = document.getElementById('searchInput');
+
+            function updateTable() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filteredRows = rows.filter(row => {
+                    const text = row.textContent.toLowerCase();
+                    return text.includes(searchTerm);
+                });
+
+                const startIndex = (currentPage - 1) * entriesPerPage;
+                const endIndex = startIndex + entriesPerPage;
+
+                // Hide all rows
+                rows.forEach(row => row.style.display = 'none');
+
+                // Show filtered rows for current page
+                filteredRows.slice(startIndex, endIndex).forEach(row => row.style.display = '');
+
+                // Update page info
+                const totalFilteredRows = filteredRows.length;
+                const totalPages = Math.ceil(totalFilteredRows / entriesPerPage);
+                
+                // Update pagination buttons
+                prevButton.disabled = currentPage === 1;
+                nextButton.disabled = currentPage === totalPages;
+
+                // Update page info text
+                const start = Math.min(startIndex + 1, totalFilteredRows);
+                const end = Math.min(endIndex, totalFilteredRows);
+                pageInfo.textContent = `Showing ${start}-${end} of ${totalFilteredRows}`;
+
+                // Generate page numbers
+                pageNumbers.innerHTML = '';
+                for (let i = 1; i <= totalPages; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i;
+                    button.className = `px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50 
+                        ${currentPage === i ? 'bg-emerald-500 text-white' : ''}`;
+                    button.addEventListener('click', () => {
+                        currentPage = i;
+                        updateTable();
+                    });
+                    pageNumbers.appendChild(button);
+                }
+            }
+
+            // Event Listeners
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateTable();
+                }
+            });
+
+            nextButton.addEventListener('click', () => {
+                const totalPages = Math.ceil(rows.length / entriesPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateTable();
+                }
+            });
+
+            entriesSelect.addEventListener('change', (e) => {
+                entriesPerPage = parseInt(e.target.value);
+                currentPage = 1;
+                updateTable();
+            });
+
+            searchInput.addEventListener('input', () => {
+                currentPage = 1;
+                updateTable();
+            });
+
+            // Initial table update
+            updateTable();
 
             // Export functionality
             const exportBtn = document.getElementById('exportBtn');
