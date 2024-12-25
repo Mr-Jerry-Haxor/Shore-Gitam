@@ -55,7 +55,7 @@ def bgmi_player(request):
         return redirect("bgmireg")
 
 
-# @login_required(login_url="/auth/login/google-oauth2/")
+@login_required(login_url="/auth/login/google-oauth2/")
 def volunteer_registration(request):
     if request.method == "POST":
         print(f"\n{request.POST}\n")
