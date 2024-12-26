@@ -8,5 +8,5 @@ urlpatterns = [
     path("volunteer_dashboard", views.volunteer_dashboard, name="volunteer_dashboard"),
     path("volunteer_accept/<str:email>", views.volunteer_accept, name="volunteer_accept"),
     # path("volunteer_reject/<str:email>", views.volunteer_reject, name="volunteer_reject"),
-    path("send_promotion_email/", views.send_emails_to_unpurchased),
+    path("send_promotion_email/", views.send_emails_to_unpurchased, name="send_promotion_email"),
 ]
