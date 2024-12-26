@@ -25,6 +25,9 @@ if DEVELOPMENT:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = BASE_DIR / "emails"
 else:
     DEBUG = False
     ALLOWED_HOSTS = ["shore.gitam.edu", "127.0.0.1"]
@@ -41,6 +44,13 @@ else:
             "PORT": str(os.getenv("DB_PORT")),
         }
     }
+
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_HOST = "smtp.gmail.com"
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = str(os.getenv("MAILID"))
+    EMAIL_HOST_PASSWORD = str(os.getenv("MAILPASSWORD"))
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -184,11 +194,3 @@ LOGOUT_REDIRECT_URL = "home:homepage"
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = str(os.getenv("GOOGLE_KEY"))
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = str(os.getenv("GOOGLE_SECRET"))
-
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = str(os.getenv("MAILID"))
-EMAIL_HOST_PASSWORD = str(os.getenv("MAILPASSWORD"))
