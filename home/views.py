@@ -19,6 +19,7 @@ from django.db.models import Count, Max
 
 from coreteam.models import CustomUser
 from payments.models import FestPass, Registrations
+from events.models import Participants as EventParticipants, HackathonParticipants
 from .models import *
 
 
@@ -747,6 +748,13 @@ def dashboard(request):
         context["total_tickets_sold"] = total_unique_tickets + total_unique_ng_tickets
         context["gitamite_tickets_sold"] = total_unique_tickets
         context["nongitamite_tickets_sold"] = total_unique_ng_tickets
+
+        # Get registered events for the user
+        registered_events = EventParticipants.objects.filter(email=request.user.email)
+        registered_hackathons = HackathonParticipants.objects.filter(email=request.user.email)
+        
+        context['registered_events'] = registered_events
+        context['registered_hackathons'] = registered_hackathons
 
         return render(request, "home/dashboard.html", context)
 

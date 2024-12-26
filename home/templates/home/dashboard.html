@@ -332,6 +332,62 @@
             
         </div>
         
+        <div class="mt-6 bg-white shadow-lg rounded-lg overflow-hidden border border-emerald-100">
+            <div class="bg-emerald-700 text-white p-4">
+                <h2 class="text-2xl flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    Registered Events
+                </h2>
+                <p class="text-emerald-100 text-sm">View your event registrations</p>
+            </div>
+            <div class="p-6">
+                {% if registered_events or registered_hackathons %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {% for event in registered_events %}
+                        <div class="bg-emerald-50 p-4 rounded-lg flex justify-between items-center">
+                            <div>
+                                <h3 class="font-semibold text-emerald-700">{{ event.sport.name }}</h3>
+                                <p class="text-sm text-emerald-600">{{ event.sport.event_type|title }}</p>
+                            </div>
+                            <a href="{% url 'events:success' team_hash=event.team.team_hash %}" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                View
+                            </a>
+                        </div>
+                        {% endfor %}
+                        
+                        {% for hackathon in registered_hackathons %}
+                        <div class="bg-emerald-50 p-4 rounded-lg flex justify-between items-center">
+                            <div>
+                                <h3 class="font-semibold text-emerald-700">{{ hackathon.hackathon.name }}</h3>
+                                <p class="text-sm text-emerald-600">Hackathon</p>
+                            </div>
+                            <a href="{% url 'events:hackathon_success' team_hash=hackathon.team.team_hash %}" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                View
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-8">
+                        <p class="text-gray-600">You haven't registered for any events yet.</p>
+                        <a href="{% url 'events:eventspage' %}" class="inline-block mt-4 bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
+                            Browse Events
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
         <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-emerald-100 mt-6">
             <div class="bg-emerald-700 text-white p-4">
                 <h2 class="text-xl sm:text-2xl flex items-center justify-center sm:justify-start">
