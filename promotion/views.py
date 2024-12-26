@@ -18,14 +18,12 @@ from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse
 
 
-def send_promotion_email(user_email):
-    user = CustomUser.objects.get(email=user_email)
-
+def send_promotion_email(user_emails):
     subject = "Shore'25 || Purchase your Shore'25 fest pass"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("promotion_mail.html").render({"user": user})
+    html_content = get_template("promotion_mail.html")
 
-    msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
+    msg = EmailMultiAlternatives(subject, html_content, from_email, user_emails)
     msg.content_subtype = "html"
     msg.send()
 
@@ -216,8 +214,15 @@ def noc(request):
 def send_emails_to_unpurchased(request):
     if request.user.is_superuser:
         users = CustomUser.objects.filter(is_festpass_purchased=False)
-        for user in users:
-            send_email_async(user.email, send_promotion_email)
+        emails = [user.email for user in users]
 
-        return HttpResponse("<h1>Sent emails!!</h1>")
+        try:
+            send_email_async(emails, send_promotion_email)
+            
+            messages.success(request, "completed sending emails")
+        except Exception as e:
+            messages.error(request, e)
+            return redirect("home:dashboard")
+        
+        return render(request, "promo.html")
     return redirect("home:homepage")
