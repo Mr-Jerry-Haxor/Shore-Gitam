@@ -21,7 +21,6 @@ from .models import (
 from payments.models import nongitamite
 from ngusers.models import AllowedParticipants
 
-
 def send_pass_mail(team_id, event_id):
     team = Team.objects.get(team_id=team_id)
     event = Event.objects.get(event_id=event_id)
@@ -757,7 +756,11 @@ def register_hackathon(request, hackathon_name):
 
         # sending email
         try:
-            send_pass_mail_hackathon(team_id=team.team_id, event_id=hackathon.event_id)
+            email_thread = threading.Thread(
+                target=send_pass_mail_hackathon, args=(team.team_id, hackathon.event_id)
+            )
+            email_thread.start()
+
         except Exception as e:
             print(e)
             messages.error(
