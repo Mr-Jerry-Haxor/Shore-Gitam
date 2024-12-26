@@ -9,12 +9,25 @@ from django.contrib.auth.decorators import login_required
 from events.models import College, Event, Hackathon
 from hospitality.models import HospitalityUser
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from coreteam.models import CustomUser
 
 from home.views import send_email_async
 from django.conf import settings
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse
+
+
+def send_promotion_email(user_email):
+    user = CustomUser.objects.get(email=user_email)
+
+    subject = "Shore'25 || Purchase your Shore'25 fest pass"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("promotion_mail.html").render({"user": user})
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
+    msg.content_subtype = "html"
+    msg.send()
 
 
 def send_success_volunteer_registration(user_email):
@@ -197,3 +210,14 @@ def volunteer_accept(request, email):
 
 def noc(request):
     return redirect("hospitality:hospitalitynoc")
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
+def send_emails_to_unpurchased(request):
+    if request.user.is_superuser:
+        users = CustomUser.objects.filter(is_festpass_purchased=False)
+        for user in users:
+            send_email_async(user.email, send_promotion_email)
+
+        return HttpResponse("<h1>Sent emails!!</h1>")
+    return redirect("home:homepage")
