@@ -3,7 +3,12 @@ from coreteam.models import CustomUser
 
 class CustomPasswordResetForm(PasswordResetForm):
     def get_users(self, email):
-        active_users = CustomUser.objects.filter(email=email, is_active=True)
+        # Case-insensitive email matching
+        email_field_name = CustomUser.get_email_field_name()
+        active_users = CustomUser.objects.filter(
+            **{f'{email_field_name}__iexact': email},
+            is_active=True
+        )
         return (user for user in active_users if user.has_usable_password())
     
 
