@@ -26,16 +26,66 @@ from django.db import IntegrityError
 from django.contrib import messages
 
 
-@login_required(login_url="ngusers:login")
+# mess qr for coreteam, volunteer, participants
+# checkin and checkout for coreteam, volunteer, participants
+
+
+@login_required(login_url="home:login")
+def add_student(request):
+    if request.user.is_superuser or request.user.hospitality_staff or request.user.hospitality:
+        if request.POST:
+            print(request.POST)
+
+            email = request.POST.get("user_email")
+         
+            user_obj = CustomUser.objects.filter(email=email)
+
+            if user_obj.exists():
+                user = HospitalityUser.objects.create(
+                    name = user_obj[0].first_name,
+                    email = email,
+                    phone_number = user_obj[0].phone_number
+                )
+                user.save()
+                
+                if "only_food" in request.POST and "only_accomdation" in request.POST:
+                    print("both food and accom")
+                    user.isfoodonly = True
+                    user.is_accomdation_only = True
+                elif "only_food" in request.POST:
+                    print("only food")
+                    user.isfoodonly = True
+                elif "only_accomdation" in request.POST:
+                    print("only accom")
+                    user.is_accomdation_only = True
+
+                user.save()
+
+                messages.success(request, "Added successfully.")
+                return redirect("hospitality:add_student")
+            else:
+                messages.error(request, "User is not logged in, please ask them to login and then fill it here.")
+                return redirect("hospitality:add_student")
+
+        return render(request, "add_hosp_student.html")
+
+    return redirect("home:homepage")
+
+@login_required(login_url="home:login")
 def add_hospitality_user(request):
     if not (request.user.hospitality_staff or request.user.hospitality or request.user.is_superuser):
         return redirect("corehome")
     else:
         if request.POST:
             user_email = request.POST.get("user_email")
-            user = CustomUser.objects.create(email=user_email)
-            user.hospitality_staff = True
-            user.save()
+
+            if CustomUser.objects.filter(email=user_email).exists():
+                user = CustomUser.objects.get(email=user_email)
+                user.hospitality_staff = True
+                user.save()
+            else:
+                messages.error(request, "The user is not logged in.")
+                return redirect("hospitality:add_user")
             messages.success(request, "User added successfully")
         return render(request, "add_hospuser.html")
 
@@ -56,7 +106,7 @@ def send_otp_email(user_email, otp):
         print(f"An error occurred: {e}")
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="home:login")
 def home(request):
     context = {}
     email = request.user.email
@@ -86,13 +136,18 @@ def home(request):
     return render(request, "home.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="home:login")
 @email_check_required(model=HospitalityUser)
 def food(request):
     context = {}
     email = request.user.email
 
     user = HospitalityUser.objects.get(email=email)
+
+    if not user.isfoodonly:
+        messages.error(request, "Food is not availed for you, contact hospitality head Amith Raj (9866498772).")
+        return redirect("hospitality:home")
+
     context["user_details"] = user
     server_datetime = timezone.now()
     server_time = server_datetime.time()
@@ -141,7 +196,7 @@ def food(request):
         return render(request, "food.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="home:login")
 def scan(request):
     if not (request.user.hospitality_staff or request.user.hospitality):
         return redirect("corehome")
@@ -190,7 +245,7 @@ def scan(request):
         return render(request, "hospscan.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="home:login")
 def admin_history(request, date):
     if not (
         request.user.hospitality_staff
@@ -226,7 +281,7 @@ def admin_history(request, date):
         return render(request, "admin_history.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="home:login")
 @email_check_required(model=HospitalityUser)
 def user_history(request):
     context = {}
@@ -239,7 +294,7 @@ def user_history(request):
     return render(request, "history.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="home:login")
 def checkInOutHome(request):
     if not (
         request.user.hospitality_staff
@@ -408,7 +463,7 @@ def checkInOutHome(request):
         return render(request, "checkInOut.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="home:login")
 def checkInOutForm(request, email):
     if not (
         request.user.hospitality_staff
@@ -453,7 +508,7 @@ def checkInOutForm(request, email):
         return render(request, "checkInOutForm.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="home:login")
 def checkInOutHistory(request):
     if not (
         request.user.hospitality_staff
@@ -561,7 +616,7 @@ def noc_and_travel_tickets(request):
         return render(request, "noc_tickets_reg.html", context)
 
 
-@login_required(login_url="ngusers:login")
+@login_required(login_url="home:login")
 def scan1(request):
     if not (request.user.hospitality_staff or request.user.hospitality):
         return redirect("corehome")

@@ -9,4 +9,4 @@ def test(request):
 
 
 def index(request):
-    return redirect("homepage")
+    return redirect("home:homepage")

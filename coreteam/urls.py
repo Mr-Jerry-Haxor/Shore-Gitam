@@ -11,6 +11,8 @@ urlpatterns = [
     path(
         "remove_submission/<int:task_id>", remove_submission, name="remove_submission"
     ),
+
+    
     path("domain_heads/", give_access_to_domain_head, name="domain_heads"),
     path("add_domain_leads/", add_domain_leads, name="add_domain_leads"),
 ]

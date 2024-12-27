@@ -26,6 +26,7 @@ class HospitalityUser(models.Model):
     email = models.EmailField(max_length=255, null=False, unique=True)
     phone_number = models.CharField(max_length=255, null=False, unique=True)
     isfoodonly = models.BooleanField(default=False)
+    is_accomdation_only = models.BooleanField(default=False)
     meal_id = models.IntegerField(null=True, blank=True)
     qr_hash = models.CharField(max_length=255, null=True, blank=True)
     otp = models.IntegerField(null=True, blank=True)

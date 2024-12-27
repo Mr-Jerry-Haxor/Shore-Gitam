@@ -17,7 +17,7 @@ def security_home(request):
         return render(request, "securityhome.html", {"secstaff": staff})
     else:
         messages.error(request, "You are not authorized to access this page.")
-        return redirect("index")
+        return redirect("home:homepage")
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
@@ -60,7 +60,7 @@ def festpass_scan(request):
             return render(request, "securityscan.html")
     else:
         messages.error(request, "You are not authorized to access this page.")
-        return redirect("index")
+        return redirect("home:homepage")
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
@@ -103,7 +103,7 @@ def festpass_scan1(request):
             return render(request, "securityscan1.html")
     else:
         messages.error(request, "You are not authorized to access this page.")
-        return redirect("index")
+        return redirect("home:homepage")
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
@@ -158,7 +158,7 @@ def festpass_verify(request):
                 return redirect("festpass_scan")
     else:
         messages.error(request, "You are not authorized to access this page.")
-        return redirect("index")
+        return redirect("home:homepage")
 
 
 # main gate
@@ -205,7 +205,7 @@ def maingate_scan(request):
             return render(request, "securityscan.html")
     else:
         messages.error(request, "You are not authorized to access this page.")
-        return redirect("index")
+        return redirect("home:homepage")
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
@@ -248,7 +248,7 @@ def maingate_scan1(request):
             return render(request, "securityscan1.html")
     else:
         messages.error(request, "You are not authorized to access this page.")
-        return redirect("index")
+        return redirect("home:homepage")
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
@@ -305,7 +305,7 @@ def maingate_verify(request):
                 return redirect("maingate_scan")
     else:
         messages.error(request, "You are not authorized to access this page.")
-        return redirect("index")
+        return redirect("home:homepage")
 
 
 # Coke scan , scan 1 , verify
@@ -346,4 +346,4 @@ def coke_scan(request):
             return render(request, "cokescan.html", {"cokecount": cokecount})
     else:
         messages.error(request, "You are not authorized to access this page.")
-        return redirect("index")
+        return redirect("home:homepage")
