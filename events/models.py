@@ -134,8 +134,6 @@ class Team(models.Model):
     )
     noc_file = models.FileField(upload_to=file_upload_path, null=True, blank=True)
     status = models.CharField(choices=status_choices, default="pending", max_length=50)
-    participant_count = models.IntegerField(default=0)
-
     participants = models.ManyToManyField(
         "Participants", related_name="participant_teams"
     )
@@ -147,10 +145,6 @@ class Team(models.Model):
         if not self.pk:
             # generate team hash using visiblie_name and registered time
             self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
-        
-        # Update participant count if the team already exists
-        if self.pk:
-            self.participant_count = self.team_participants.count()
             
         super().save(*args, **kwargs)
 
