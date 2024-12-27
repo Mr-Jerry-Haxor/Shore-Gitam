@@ -22,10 +22,20 @@ from django.utils.html import strip_tags
 def send_promotion_email(user_emails):
     subject = "Shore'25 || Purchase your Shore'25 fest pass"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("promotion_mail.html")
-
-    msg = EmailMultiAlternatives(subject, html_content, from_email, user_emails)
-    msg.content_subtype = "html"
+    
+    # Get the HTML content from template
+    html_content = render_to_string("promotion_mail.html")
+    # Create plain text version
+    text_content = strip_tags(html_content)
+    
+    # Create the email message
+    msg = EmailMultiAlternatives(
+        subject,
+        text_content,
+        from_email,
+        bcc=user_emails  # Use BCC for bulk emails
+    )
+    msg.attach_alternative(html_content, "text/html")
     msg.send()
 
 
@@ -229,8 +239,27 @@ def send_emails_to_unpurchased(request):
     return redirect("home:homepage")
 
 
+@login_required(login_url="/auth/login/google-oauth2/")
+def send_bulk_promotion_emails(request):
+    if request.user.is_superuser:
+        try:
+            # Get all users
+            users = CustomUser.objects.all()
+            emails = [user.email for user in users]
+            
+            # Send emails in batches of 50 to avoid timeout
+            batch_size = 50
+            for i in range(0, len(emails), batch_size):
+                batch_emails = emails[i:i + batch_size]
+                send_email_async(batch_emails, send_promotion_email)
+            
+            messages.success(request, f"Successfully sent promotional emails to {len(emails)} users")
+            return render(request, "promo.html")
+            
+        except Exception as e:
+            messages.error(request, f"Error sending emails: {str(e)}")
+            return redirect("home:dashboard")
+            
+    return redirect("home:homepage")
 
-import xlwt
-from django.http import HttpResponse
-from events.models import Participants
 
