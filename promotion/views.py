@@ -14,8 +14,9 @@ from coreteam.models import CustomUser
 from home.views import send_email_async
 from django.conf import settings
 from django.template.loader import get_template
-from django.core.mail import EmailMultiAlternatives
-from django.http import HttpResponse
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 def send_promotion_email(user_emails):
@@ -226,3 +227,49 @@ def send_emails_to_unpurchased(request):
         
         return render(request, "promo.html")
     return redirect("home:homepage")
+
+
+
+import xlwt
+from django.http import HttpResponse
+from events.models import Participants
+
+
+def export_participants_to_excel(request):
+    # Create an HttpResponse object with the appropriate Excel header.
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="participants.xls"'
+
+    # Create a workbook and add a worksheet.
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Participants')
+
+    # Define the header row and styles.
+    header_style = xlwt.XFStyle()
+    header_font = xlwt.Font()
+    header_font.bold = True
+    header_style.font = header_font
+
+    # Define the column headers.
+    columns = ['Name', 'Email', 'Phone Number', 'College', 'Sport', 'Team', 'Captain']
+
+    # Write the headers to the sheet.
+    for col_num, column_title in enumerate(columns):
+        ws.write(0, col_num, column_title, header_style)
+
+    # Fetch all participants.
+    participants = Participants.objects.select_related('college', 'sport', 'team').all()
+
+    # Write participant data to rows.
+    for row_num, participant in enumerate(participants, start=1):
+        ws.write(row_num, 0, participant.name)
+        ws.write(row_num, 1, participant.email)
+        ws.write(row_num, 2, participant.phone_number)
+        ws.write(row_num, 3, participant.college.name)  # Assuming 'College' has a 'name' field.
+        ws.write(row_num, 4, participant.sport.name)    # Assuming 'Event' has a 'name' field.
+        ws.write(row_num, 5, participant.team.name)     # Assuming 'Team' has a 'name' field.
+        ws.write(row_num, 6, 'Yes' if participant.isCaptain else 'No')
+
+    # Save the workbook to the response.
+    wb.save(response)
+    return response

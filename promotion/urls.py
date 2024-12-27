@@ -9,4 +9,5 @@ urlpatterns = [
     path("volunteer_accept/<str:email>", views.volunteer_accept, name="volunteer_accept"),
     # path("volunteer_reject/<str:email>", views.volunteer_reject, name="volunteer_reject"),
     path("send_promotion_email/", views.send_emails_to_unpurchased, name="send_promotion_email"),
+    path("download_excel_participants/", views.export_participants_to_excel),
 ]
