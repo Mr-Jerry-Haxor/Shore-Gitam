@@ -74,7 +74,6 @@ class TeamResource(resources.ModelResource):
             "isWaiting",
             "registered_at",
             "status",
-            "participant_count",
         )
         export_order = fields
 
@@ -195,7 +194,6 @@ class TeamAdmin(ImportExportModelAdmin):
         "isWaiting",
         "registered_at",
         "status",
-        "participant_count",
     )
     list_filter = ("sport", "isPaid", "isWaiting", "status")
     search_fields = ["team_id", "team_name", "visible_name", "college__name", "sport__name"]
