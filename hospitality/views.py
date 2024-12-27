@@ -34,8 +34,6 @@ from django.contrib import messages
 def add_student(request):
     if request.user.hospitality_staff or request.user.is_superuser or request.user.hospitality:
         if request.POST:
-            print(request.POST)
-
             email = request.POST.get("user_email")
          
             user_obj = CustomUser.objects.filter(email=email)
@@ -50,17 +48,13 @@ def add_student(request):
                     email = email,
                     phone_number = user_obj[0].phone_number
                 )
-                user.save()
                 
                 if "only_food" in request.POST and "only_accomdation" in request.POST:
-                    print("both food and accom")
                     user.isfoodonly = True
                     user.is_accomdation_only = True
                 elif "only_food" in request.POST:
-                    print("only food")
                     user.isfoodonly = True
                 elif "only_accomdation" in request.POST:
-                    print("only accom")
                     user.is_accomdation_only = True
 
                 user.save()
