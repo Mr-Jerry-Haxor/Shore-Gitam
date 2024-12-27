@@ -1,4 +1,6 @@
 from django.contrib import admin
+from import_export import resources, fields
+from import_export.widgets import ForeignKeyWidget
 
 # Register your models here.
 from django.contrib import admin
@@ -56,8 +58,45 @@ class TeamAdmin(ImportExportModelAdmin):
     list_filter = ('sport', 'isPaid', 'isWaiting', 'status')
 
 
+class ParticipantsResource(resources.ModelResource):
+    college = fields.Field(
+        column_name='college',
+        attribute='college',
+        widget=ForeignKeyWidget(College, 'name')
+    )
+    sport = fields.Field(
+        column_name='sport',
+        attribute='sport',
+        widget=ForeignKeyWidget(Event, 'name')
+    )
+    team = fields.Field(
+        column_name='team',
+        attribute='team',
+        widget=ForeignKeyWidget(Team, 'team_name')
+    )
+
+    class Meta:
+        model = Participants
+        fields = (
+            'name',
+            'email',
+            'phone_number',
+            'participant_id',
+            'accomdation',
+            'college',
+            'sport',
+            'team',
+            'isCaptain',
+            'isPaid',
+            'isGitamite',
+            'shoreid',
+        )
+        export_order = fields
+
+
 @admin.register(Participants)
 class ParticipantsAdmin(ImportExportModelAdmin):
+    resource_class = ParticipantsResource
     list_display = (
         "participant_id",
         "name",
