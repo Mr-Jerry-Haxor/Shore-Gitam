@@ -32,7 +32,7 @@ from django.contrib import messages
 
 @login_required(login_url="home:login")
 def add_student(request):
-    if request.user.is_superuser or request.user.hospitality_staff or request.user.hospitality:
+    if request.user.hospitality_staff or request.user.is_superuser or request.user.hospitality:
         if request.POST:
             print(request.POST)
 
@@ -73,7 +73,7 @@ def add_student(request):
 
 @login_required(login_url="home:login")
 def add_hospitality_user(request):
-    if not (request.user.hospitality_staff or request.user.hospitality or request.user.is_superuser):
+    if not (request.user.hospitality_staff or request.user.is_superuser or request.user.hospitality or request.user.is_superuser):
         return redirect("corehome")
     else:
         if request.POST:
@@ -198,7 +198,7 @@ def food(request):
 
 @login_required(login_url="home:login")
 def scan(request):
-    if not (request.user.hospitality_staff or request.user.hospitality):
+    if not (request.user.hospitality_staff or request.user.is_superuser or request.user.hospitality):
         return redirect("corehome")
     else:
         context = {}
@@ -248,7 +248,7 @@ def scan(request):
 @login_required(login_url="home:login")
 def admin_history(request, date):
     if not (
-        request.user.hospitality_staff
+        request.user.hospitality_staff or request.user.is_superuser
         or request.user.hospitality
         or request.user.president
     ):
@@ -297,7 +297,7 @@ def user_history(request):
 @login_required(login_url="home:login")
 def checkInOutHome(request):
     if not (
-        request.user.hospitality_staff
+        request.user.hospitality_staff or request.user.is_superuser
         or request.user.hospitality
         or request.user.president
     ):
@@ -312,6 +312,10 @@ def checkInOutHome(request):
                 user = HospitalityUser.objects.filter(email=user_email)
                 if user.exists():
                     user = user[0]
+
+                    if not user.is_accomdation_only:
+                        messages.error(request, f"User {user_email} does not have accomdation.")
+
                     if user.isfoodonly and not user.is_accomdation_only:
                         messages.info(
                             request,
@@ -466,7 +470,7 @@ def checkInOutHome(request):
 @login_required(login_url="home:login")
 def checkInOutForm(request, email):
     if not (
-        request.user.hospitality_staff
+        request.user.hospitality_staff or request.user.is_superuser
         or request.user.hospitality
         or request.user.president
     ):
@@ -511,7 +515,7 @@ def checkInOutForm(request, email):
 @login_required(login_url="home:login")
 def checkInOutHistory(request):
     if not (
-        request.user.hospitality_staff
+        request.user.hospitality_staff or request.user.is_superuser
         or request.user.hospitality
         or request.user.president
     ):
@@ -618,7 +622,7 @@ def noc_and_travel_tickets(request):
 
 @login_required(login_url="home:login")
 def scan1(request):
-    if not (request.user.hospitality_staff or request.user.hospitality):
+    if not (request.user.hospitality_staff or request.user.is_superuser or request.user.hospitality):
         return redirect("corehome")
     else:
         context = {}
