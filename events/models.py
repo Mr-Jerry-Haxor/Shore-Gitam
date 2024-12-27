@@ -11,16 +11,12 @@ status_choices = (
     ("eligible_for_payment", "Eligible for payment"),
 )
 
-event_choices = (
-    ("sports", "sports"), 
-    ("cultural", "cultural")
-)
+event_choices = (("sports", "sports"), ("cultural", "cultural"))
 
 
 def generate_md5(user_string):
     hashed_string = hashlib.md5(user_string.encode("UTF-8"))
     return hashed_string.hexdigest()
-
 
 
 def event_file_upload_path(instance, filename):
@@ -101,7 +97,9 @@ class Event(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(max_length=300, null=True, blank=True)
     ticket_price = models.IntegerField()
-    event_type = models.CharField(max_length=100, null=False, blank=False, choices=event_choices)
+    event_type = models.CharField(
+        max_length=100, null=False, blank=False, choices=event_choices
+    )
     guidelines_url = models.URLField(max_length=1000, null=True, blank=True)
     image = models.ImageField(upload_to=event_file_upload_path, null=True, blank=True)
     event_venue = models.CharField(max_length=255, default="ABCD")
@@ -122,7 +120,9 @@ class Event(models.Model):
 class Team(models.Model):
     team_id = models.AutoField(primary_key=True)
     team_name = models.CharField(max_length=100, null=False, blank=False)
-    visible_name = models.CharField(max_length=100, unique=True, null=False, blank=False)
+    visible_name = models.CharField(
+        max_length=100, unique=True, null=False, blank=False
+    )
     college = models.ForeignKey(College, on_delete=models.CASCADE)
     sport = models.ForeignKey(Event, on_delete=models.CASCADE)
     isPaid = models.BooleanField(default=False)
@@ -132,10 +132,12 @@ class Team(models.Model):
     endorsment_file = models.FileField(
         upload_to=file_upload_path, null=True, blank=True
     )
-    noc_file = models.FileField(
-        upload_to=file_upload_path, null=True, blank=True
-    )
+    noc_file = models.FileField(upload_to=file_upload_path, null=True, blank=True)
     status = models.CharField(choices=status_choices, default="pending", max_length=50)
+
+    participants = models.ManyToManyField(
+        "Participants", related_name="participant_teams"
+    )
 
     def __str__(self):
         return self.visible_name
@@ -157,7 +159,9 @@ class Participants(models.Model):
     accomdation = models.BooleanField(default=False)
     college = models.ForeignKey(College, on_delete=models.CASCADE)
     sport = models.ForeignKey(Event, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    team = models.ForeignKey(
+        Team, on_delete=models.CASCADE, related_name="team_participants"
+    )
     isCaptain = models.BooleanField(default=False)
     isPaid = models.BooleanField(default=False)
     isGitamite = models.BooleanField(default=False)
@@ -182,7 +186,9 @@ class Hackathon(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(null=True, blank=True)
     ticket_price = models.IntegerField()
-    event_type = models.CharField(max_length=100, null=False, blank=False, choices=hackathon_choices)
+    event_type = models.CharField(
+        max_length=100, null=False, blank=False, choices=hackathon_choices
+    )
     guidelines_url = models.URLField(max_length=1000, null=True, blank=True)
     image = models.ImageField(upload_to=event_file_upload_path, null=True, blank=True)
     event_venue = models.CharField(max_length=255, default="ABCD")

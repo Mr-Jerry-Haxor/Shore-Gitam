@@ -20,12 +20,12 @@ class CollegeResource(resources.ModelResource):
     class Meta:
         model = College
         fields = (
-            'name',
-            'abbreviation',
-            'college_id',
-            'passkey',
-            'tosend',
-            'emails',
+            "name",
+            "abbreviation",
+            "college_id",
+            "passkey",
+            "tosend",
+            "emails",
         )
         export_order = fields
 
@@ -34,48 +34,46 @@ class EventResource(resources.ModelResource):
     class Meta:
         model = Event
         fields = (
-            'name',
-            'description',
-            'event_type',
-            'event_id',
-            'guidelines_url',
-            'image',
-            'event_time',
-            'event_start_date',
-            'event_end_date',
-            'created_at',
-            'no_of_teams',
-            'max_univeristy_teams',
-            'min_team_size',
-            'max_team_size',
+            "name",
+            "description",
+            "event_type",
+            "event_id",
+            "guidelines_url",
+            "image",
+            "event_time",
+            "event_start_date",
+            "event_end_date",
+            "created_at",
+            "no_of_teams",
+            "max_univeristy_teams",
+            "min_team_size",
+            "max_team_size",
         )
         export_order = fields
 
 
 class TeamResource(resources.ModelResource):
     college = fields.Field(
-        column_name='college',
-        attribute='college',
-        widget=ForeignKeyWidget(College, 'name')
+        column_name="college",
+        attribute="college",
+        widget=ForeignKeyWidget(College, "name"),
     )
     sport = fields.Field(
-        column_name='sport',
-        attribute='sport',
-        widget=ForeignKeyWidget(Event, 'name')
+        column_name="sport", attribute="sport", widget=ForeignKeyWidget(Event, "name")
     )
 
     class Meta:
         model = Team
         fields = (
-            'team_name',
-            'visible_name',
-            'college',
-            'sport',
-            'team_id',
-            'isPaid',
-            'isWaiting',
-            'registered_at',
-            'status',
+            "team_name",
+            "visible_name",
+            "college",
+            "sport",
+            "team_id",
+            "isPaid",
+            "isWaiting",
+            "registered_at",
+            "status",
         )
         export_order = fields
 
@@ -84,71 +82,71 @@ class HackathonResource(resources.ModelResource):
     class Meta:
         model = Hackathon
         fields = (
-            'name',
-            'event_type',
-            'min_team_size',
-            'max_team_size',
+            "name",
+            "event_type",
+            "min_team_size",
+            "max_team_size",
         )
         export_order = fields
 
 
 class HackathonTeamResource(resources.ModelResource):
     college = fields.Field(
-        column_name='college',
-        attribute='college',
-        widget=ForeignKeyWidget(College, 'name')
+        column_name="college",
+        attribute="college",
+        widget=ForeignKeyWidget(College, "name"),
     )
     hackathon = fields.Field(
-        column_name='hackathon',
-        attribute='hackathon',
-        widget=ForeignKeyWidget(Hackathon, 'name')
+        column_name="hackathon",
+        attribute="hackathon",
+        widget=ForeignKeyWidget(Hackathon, "name"),
     )
 
     class Meta:
         model = HackathonTeam
         fields = (
-            'team_name',
-            'visible_name',
-            'college',
-            'hackathon',
-            'isPaid',
-            'isQualified',
-            'registered_at',
+            "team_name",
+            "visible_name",
+            "college",
+            "hackathon",
+            "isPaid",
+            "isQualified",
+            "registered_at",
         )
         export_order = fields
 
 
 class HackathonParticipantsResource(resources.ModelResource):
     college = fields.Field(
-        column_name='college',
-        attribute='college',
-        widget=ForeignKeyWidget(College, 'name')
+        column_name="college",
+        attribute="college",
+        widget=ForeignKeyWidget(College, "name"),
     )
     hackathon = fields.Field(
-        column_name='hackathon',
-        attribute='hackathon',
-        widget=ForeignKeyWidget(Hackathon, 'name')
+        column_name="hackathon",
+        attribute="hackathon",
+        widget=ForeignKeyWidget(Hackathon, "name"),
     )
     team = fields.Field(
-        column_name='team',
-        attribute='team',
-        widget=ForeignKeyWidget(HackathonTeam, 'team_name')
+        column_name="team",
+        attribute="team",
+        widget=ForeignKeyWidget(HackathonTeam, "team_name"),
     )
 
     class Meta:
         model = HackathonParticipants
         fields = (
-            'name',
-            'email',
-            'phone_number',
-            'accomdation',
-            'college',
-            'hackathon',
-            'team',
-            'isCaptain',
-            'isPaid',
-            'isGitamite',
-            'shoreid',
+            "name",
+            "email",
+            "phone_number",
+            "accomdation",
+            "college",
+            "hackathon",
+            "team",
+            "isCaptain",
+            "isPaid",
+            "isGitamite",
+            "shoreid",
         )
         export_order = fields
 
@@ -178,7 +176,7 @@ class EventAdmin(ImportExportModelAdmin):
         "min_team_size",
         "max_team_size",
     )
-    list_filter = ('event_type', 'event_start_date', 'event_end_date')
+    list_filter = ("event_type", "event_start_date", "event_end_date")
 
 
 @admin.register(Team)
@@ -195,41 +193,37 @@ class TeamAdmin(ImportExportModelAdmin):
         "registered_at",
         "status",
     )
-    list_filter = ('sport', 'isPaid', 'isWaiting', 'status')
+    list_filter = ("sport", "isPaid", "isWaiting", "status")
 
 
 class ParticipantsResource(resources.ModelResource):
     college = fields.Field(
-        column_name='college',
-        attribute='college',
-        widget=ForeignKeyWidget(College, 'name')
+        column_name="college",
+        attribute="college",
+        widget=ForeignKeyWidget(College, "name"),
     )
     sport = fields.Field(
-        column_name='sport',
-        attribute='sport',
-        widget=ForeignKeyWidget(Event, 'name')
+        column_name="sport", attribute="sport", widget=ForeignKeyWidget(Event, "name")
     )
     team = fields.Field(
-        column_name='team',
-        attribute='team',
-        widget=ForeignKeyWidget(Team, 'team_name')
+        column_name="team", attribute="team", widget=ForeignKeyWidget(Team, "team_name")
     )
 
     class Meta:
         model = Participants
         fields = (
-            'name',
-            'email',
-            'phone_number',
-            'participant_id',
-            'accomdation',
-            'college',
-            'sport',
-            'team',
-            'isCaptain',
-            'isPaid',
-            'isGitamite',
-            'shoreid',
+            "name",
+            "email",
+            "phone_number",
+            "participant_id",
+            "accomdation",
+            "college",
+            "sport",
+            "team",
+            "isCaptain",
+            "isPaid",
+            "isGitamite",
+            "shoreid",
         )
         export_order = fields
 
@@ -251,14 +245,14 @@ class ParticipantsAdmin(ImportExportModelAdmin):
         "isGitamite",
         "shoreid",
     )
-    list_filter = ('sport', 'isPaid', 'isCaptain', 'isGitamite', 'accomdation')
+    list_filter = ("sport", "isPaid", "isCaptain", "isGitamite", "accomdation")
 
 
 class HackathonAdmin(ImportExportModelAdmin):
     resource_class = HackathonResource
     list_display = ["name", "event_type", "min_team_size", "max_team_size"]
     search_fields = ["name", "event_type"]
-    list_filter = ('event_type',)
+    list_filter = ("event_type",)
 
 
 class HackathonTeamAdmin(ImportExportModelAdmin):
@@ -273,7 +267,7 @@ class HackathonTeamAdmin(ImportExportModelAdmin):
         "registered_at",
     ]
     search_fields = ["team_name", "visible_name", "college__name", "hackathon__name"]
-    list_filter = ('hackathon', 'isPaid', 'isQualified')
+    list_filter = ("hackathon", "isPaid", "isQualified")
 
 
 class HackathonParticipantsAdmin(ImportExportModelAdmin):
@@ -299,7 +293,7 @@ class HackathonParticipantsAdmin(ImportExportModelAdmin):
         "hackathon__name",
         "team__team_name",
     ]
-    list_filter = ('hackathon', 'isPaid', 'isCaptain', 'isGitamite', 'accomdation')
+    list_filter = ("hackathon", "isPaid", "isCaptain", "isGitamite", "accomdation")
 
 
 admin.site.register(Hackathon, HackathonAdmin)
