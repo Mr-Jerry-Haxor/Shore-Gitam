@@ -307,6 +307,13 @@ def register(request, sport_name):
                     )
                     team.delete()
                     return redirect("events:eventshome")
+            elif sport.event_type == "sports":
+                    if Participants.objects.filter(email=email).count() == 1:
+                        messages.error(
+                            request,
+                            f"A participant is allowed to participant atmost in only 1 sport. {name} already registered for 1 sport.",
+                        )
+                        return redirect("events:eventshome")
 
             # phone number length should be 10 and should be digits
             if len(captain_phone_number) != 10 or not captain_phone_number.isdigit():
@@ -331,6 +338,7 @@ def register(request, sport_name):
                 return render(request, "register_new.html", context)
 
             try:
+                """
                 if Participants.objects.filter(email=captain_email).exists():
                     messages.error(
                         request,
@@ -338,7 +346,8 @@ def register(request, sport_name):
                     )
                     team.delete()
                     return redirect("events:eventshome")
-
+                """
+                
                 captain = Participants.objects.create(
                     name=captain_name,
                     email=captain_email,
@@ -372,6 +381,13 @@ def register(request, sport_name):
                         messages.error(
                             request,
                             f"A participant is allowed to participant atmost in only two culturals. {name} already registered for 2 cultural events.",
+                        )
+                        return redirect("events:eventshome")
+                elif sport.event_type == "sports":
+                    if Participants.objects.filter(email=email).count() == 1:
+                        messages.error(
+                            request,
+                            f"A participant is allowed to participant atmost in only 1 sport. {name} already registered for 1 sport.",
                         )
                         return redirect("events:eventshome")
 
