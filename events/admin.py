@@ -155,6 +155,7 @@ class HackathonParticipantsResource(resources.ModelResource):
 class CollegeAdmin(ImportExportModelAdmin):
     resource_class = CollegeResource
     list_display = ("college_id", "name", "abbreviation", "passkey", "tosend", "emails")
+    search_fields = ["name", "abbreviation", "college_id", "emails"]
 
 
 @admin.register(Event)
@@ -177,6 +178,7 @@ class EventAdmin(ImportExportModelAdmin):
         "max_team_size",
     )
     list_filter = ("event_type", "event_start_date", "event_end_date")
+    search_fields = ["name", "event_id", "description", "event_type"]
 
 
 @admin.register(Team)
@@ -194,6 +196,7 @@ class TeamAdmin(ImportExportModelAdmin):
         "status",
     )
     list_filter = ("sport", "isPaid", "isWaiting", "status")
+    search_fields = ["team_id", "team_name", "visible_name", "college__name", "sport__name"]
 
 
 class ParticipantsResource(resources.ModelResource):
@@ -246,6 +249,16 @@ class ParticipantsAdmin(ImportExportModelAdmin):
         "shoreid",
     )
     list_filter = ("sport", "isPaid", "isCaptain", "isGitamite", "accomdation")
+    search_fields = [
+        "participant_id",
+        "name", 
+        "email",
+        "phone_number",
+        "shoreid",
+        "college__name",
+        "sport__name",
+        "team__team_name"
+    ]
 
 
 class HackathonAdmin(ImportExportModelAdmin):
