@@ -312,7 +312,7 @@ def checkInOutHome(request):
                 user = HospitalityUser.objects.filter(email=user_email)
                 if user.exists():
                     user = user[0]
-                    if user.isfoodonly:
+                    if user.isfoodonly and not user.is_accomdation_only:
                         messages.info(
                             request,
                             f"User {user_email} is only provided with food, not accomdation.",
@@ -475,7 +475,7 @@ def checkInOutForm(request, email):
         context = {}
         user = HospitalityUser.objects.get(email=email)
 
-        if user.isfoodonly:
+        if user.isfoodonly and not user.is_accomdation_only:
             messages.info(
                 request, f"User {email} is only provided with food, not accomdation."
             )
