@@ -16,6 +16,8 @@ from .decorators import email_check_required
 from .models import HospitalityUser, Meal, MealHistory, ParticipantsNOC
 from .hash import generate_md5
 
+from coreteam.models import CustomUser
+
 from events.models import Participants, HackathonParticipants
 
 from django.contrib.auth.decorators import login_required
@@ -26,12 +28,12 @@ from django.contrib import messages
 
 @login_required(login_url="ngusers:login")
 def add_hospitality_user(request):
-    if not (request.user.hospitality_staff or request.user.hospitality):
+    if not (request.user.hospitality_staff or request.user.hospitality or request.user.is_superuser):
         return redirect("corehome")
     else:
         if request.POST:
             user_email = request.POST.get("user_email")
-            user = CustomUser.objects.create(username=user_email, email=user_email)
+            user = CustomUser.objects.create(email=user_email)
             user.hospitality_staff = True
             user.save()
             messages.success(request, "User added successfully")
