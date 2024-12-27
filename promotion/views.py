@@ -220,12 +220,10 @@ def send_emails_to_unpurchased(request):
         try:
             send_email_async(emails, send_promotion_email)
             
-            messages.success(request, "completed sending emails")
+            messages.success(request, f"completed sending emails, {len(emails)}")
         except Exception as e:
             messages.error(request, e)
             return redirect("home:dashboard")
         
         return render(request, "promo.html")
     return redirect("home:homepage")
-
-
