@@ -71,7 +71,7 @@
                     {% endif %}
                 </div>
                 <div class="hidden md:flex items-center space-x-4">
-                    <a href="#" class="px-4 py-2 text-shore-700 hover:text-shore-900 transition duration-300 hover:underline underline-offset-4">Log out</a>
+                    <a href="{% url 'home:logout' %}" class="px-4 py-2 text-shore-700 hover:text-shore-900 transition duration-300 hover:underline underline-offset-4">Log out</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button @click="isOpen = !isOpen" class="text-shore-600 hover:text-shore-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-shore-500 rounded-md">
