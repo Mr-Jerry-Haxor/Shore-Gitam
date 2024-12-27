@@ -90,14 +90,14 @@
                 {% endif %}
               </li>
               
-              {% comment %}
+              {% if ishospitality %}
               <li>
                 <a
-                  href="{% url 'prelims:home' %}"
+                  href="{% url 'hospitality:home' %}"
                   class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
-                >Prelims</a>
+                >Hospitality</a>
               </li>
-              {% endcomment %}
+              {% endif %}
               
               <li>
                 {% if request.user.grievance_staff %}
