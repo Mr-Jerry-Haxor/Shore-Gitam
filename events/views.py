@@ -300,11 +300,12 @@ def register(request, sport_name):
 
             # if event type is cultural, then a participant is atmost allowed to participate in only 2 culturals
             if sport.event_type == "cultural":
-                if Participants.objects.filter(email=captain_email).count() == 1:
+                if Participants.objects.filter(email=captain_email).count() == 2:
                     messages.error(
                         request,
                         f"A participant is allowed to participant atmost in only two culturals. {captain_name} already registered for 2 cultural events.",
                     )
+                    team.delete()
                     return redirect("events:eventshome")
 
             # phone number length should be 10 and should be digits
@@ -367,7 +368,7 @@ def register(request, sport_name):
                 accomdation = request.POST.get(f"accomdation_{i}")
 
                 if sport.event_type == "cultural":
-                    if Participants.objects.filter(email=email).count() == 1:
+                    if Participants.objects.filter(email=email).count() == 2:
                         messages.error(
                             request,
                             f"A participant is allowed to participant atmost in only two culturals. {name} already registered for 2 cultural events.",
