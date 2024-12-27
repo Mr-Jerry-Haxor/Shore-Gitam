@@ -347,7 +347,7 @@ def register(request, sport_name):
                     team.delete()
                     return redirect("events:eventshome")
                 """
-                
+
                 captain = Participants.objects.create(
                     name=captain_name,
                     email=captain_email,
@@ -470,7 +470,7 @@ def success(request, team_hash):
     # complete success page, add team hash to view their team status, add functionality to send emails on successful registration.
     context = {}
     team = Team.objects.get(team_hash=team_hash)
-    captain_player = Participants.objects.get(email=request.user.email)
+    captain_player = Participants.objects.get(email=request.user.email, team=team)
     players = Participants.objects.filter(team=team)
 
     if captain_player.isCaptain:
