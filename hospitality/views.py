@@ -41,6 +41,10 @@ def add_student(request):
             user_obj = CustomUser.objects.filter(email=email)
 
             if user_obj.exists():
+                if HospitalityUser.objects.filter(email=email).exists():
+                    messages.error(request, f"User with email {email} already added.")
+                    return redirect("hospitality:add_student")
+
                 user = HospitalityUser.objects.create(
                     name = user_obj[0].first_name,
                     email = email,
