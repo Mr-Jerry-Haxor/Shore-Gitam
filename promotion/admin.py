@@ -5,7 +5,7 @@ from .models import Volunteer
 @admin.register(Volunteer)
 class VolunteerAdmin(ImportExportModelAdmin):
     list_display = ['name', 'email',  'profile_pic', 'year_of_study', 'created_at', 'isvolunteer']
-    search_fields = ['name', 'email', 'institute', 'year_of_study', 'regno']
+    search_fields = ['name', 'email', 'year_of_study', 'regno']
     list_filter = ('ishosteler', 'isvolunteer')
     
     # Optional: Add ordering
