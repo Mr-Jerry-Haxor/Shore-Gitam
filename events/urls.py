@@ -3,6 +3,8 @@ from . import views
 
 app_name = "events"
 urlpatterns = [
+    path("add_team_size/", views.add_team_size),
+
     path("", views.event_home, name="eventshome"),  # URL Working, guidelines not added
     path("sports/", views.sports_home, name="sports_home"),  # URL Working
     path("culturals/", views.culturals_home, name="culturals_home"),  # URL Working

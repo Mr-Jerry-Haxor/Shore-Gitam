@@ -2,7 +2,8 @@ import threading
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.shortcuts import render, redirect
-from django.db import IntegrityError, transaction
+from django.db import IntegrityError
+from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -13,6 +14,14 @@ from .models import *
 from payments.models import nongitamite
 from ngusers.models import AllowedParticipants
 
+def add_team_size(request):
+    if request.user.is_superuser:
+        teams = Team.objects.all()
+        for team in teams:
+            team.team_size = team.team_participants.count()
+            team.save()
+
+        return HttpResponse("Added team size")
 
 def send_pass_mail(team_id, event_id):
     team = Team.objects.get(team_id=team_id)

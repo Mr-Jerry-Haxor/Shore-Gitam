@@ -74,6 +74,7 @@ class TeamResource(resources.ModelResource):
             "isWaiting",
             "registered_at",
             "status",
+            "team_size",
         )
         export_order = fields
 
@@ -194,8 +195,9 @@ class TeamAdmin(ImportExportModelAdmin):
         "isWaiting",
         "registered_at",
         "status",
+        "team_size",
     )
-    list_filter = ("sport", "isPaid", "isWaiting", "status")
+    list_filter = ("sport", "isPaid", "isWaiting", "status", "college", "team_size")
     search_fields = ["team_id", "team_name", "visible_name", "college__name", "sport__name"]
 
 
@@ -248,7 +250,7 @@ class ParticipantsAdmin(ImportExportModelAdmin):
         "isGitamite",
         "shoreid",
     )
-    list_filter = ("sport", "isPaid", "isCaptain", "isGitamite", "accomdation")
+    list_filter = ("sport", "isPaid", "isCaptain", "isGitamite", "accomdation", "college")
     search_fields = [
         "participant_id",
         "name", 
@@ -280,7 +282,7 @@ class HackathonTeamAdmin(ImportExportModelAdmin):
         "registered_at",
     ]
     search_fields = ["team_name", "visible_name", "college__name", "hackathon__name"]
-    list_filter = ("hackathon", "isPaid", "isQualified")
+    list_filter = ("hackathon", "isPaid", "isQualified", "college")
 
 
 class HackathonParticipantsAdmin(ImportExportModelAdmin):
@@ -306,7 +308,7 @@ class HackathonParticipantsAdmin(ImportExportModelAdmin):
         "hackathon__name",
         "team__team_name",
     ]
-    list_filter = ("hackathon", "isPaid", "isCaptain", "isGitamite", "accomdation")
+    list_filter = ("hackathon", "isPaid", "isCaptain", "isGitamite", "accomdation", "college")
 
 
 admin.site.register(Hackathon, HackathonAdmin)

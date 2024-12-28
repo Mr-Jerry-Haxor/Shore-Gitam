@@ -2,6 +2,8 @@ import hashlib
 import os
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 
 
 status_choices = (
@@ -135,6 +137,8 @@ class Team(models.Model):
     noc_file = models.FileField(upload_to=file_upload_path, null=True, blank=True)
     status = models.CharField(choices=status_choices, default="pending", max_length=50)
 
+    team_size = models.IntegerField(default=0)
+
     def __str__(self):
         return self.visible_name
 
@@ -142,6 +146,10 @@ class Team(models.Model):
         if not self.pk:
             # generate team hash using visiblie_name and registered time
             self.team_hash = generate_md5(self.visible_name + str(self.registered_at))
+        
+        # Update team_size if the team already exists
+        if self.pk:
+            self.team_size = self.team_participants.count()
             
         super().save(*args, **kwargs)
 
@@ -262,3 +270,11 @@ class HackathonParticipants(models.Model):
             self.isGitamite = False
 
         super().save(*args, **kwargs)
+
+
+@receiver([post_save, post_delete], sender=Participants)
+def update_team_size(sender, instance, **kwargs):
+    if instance.team:
+        team = instance.team
+        team.team_size = team.team_participants.count()
+        team.save()
