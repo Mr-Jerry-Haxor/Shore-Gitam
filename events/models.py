@@ -134,9 +134,6 @@ class Team(models.Model):
     )
     noc_file = models.FileField(upload_to=file_upload_path, null=True, blank=True)
     status = models.CharField(choices=status_choices, default="pending", max_length=50)
-    participants = models.ManyToManyField(
-        "Participants", related_name="participant_teams"
-    )
 
     def __str__(self):
         return self.visible_name
