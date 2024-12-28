@@ -308,7 +308,7 @@ def register(request, sport_name):
                     team.delete()
                     return redirect("events:eventshome")
             elif sport.event_type == "sports":
-                    if Participants.objects.filter(email=email).count() == 1:
+                    if Participants.objects.filter(email=captain_email).count() == 1:
                         messages.error(
                             request,
                             f"A participant is allowed to participant atmost in only 1 sport. {name} already registered for 1 sport.",
