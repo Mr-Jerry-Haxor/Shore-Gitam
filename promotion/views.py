@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from .models import BGMIPlayer, Volunteer
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
@@ -218,6 +218,8 @@ def send_emails_to_unpurchased(request):
         emails = [user.email for user in users]
 
         messages.info(request, len(emails))
+
+        return HttpResponse(len(emails))
 
         # try:
         #     send_email_async(emails, send_promotion_email)
