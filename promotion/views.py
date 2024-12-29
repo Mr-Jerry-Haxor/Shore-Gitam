@@ -215,9 +215,20 @@ def noc(request):
 def send_emails_to_unpurchased(request):
     if request.user.is_superuser:
         users = CustomUser.objects.filter(is_festpass_purchased=False)
-        emails = [user.email for user in users]
+        # emails = [user.email for user in users]
 
-        messages.info(request, len(emails))
+        count = 0
+        emails = []
+        for user in users:
+            emails.append(user.email)
+            count += 1
+
+            if count%10 == 0:
+                send_email_async(emails, send_promotion_email) 
+                emails = []
+                count = 0
+            
+        return HttpResponse("Completed sending emails")
 
         return HttpResponse(len(emails))
 
