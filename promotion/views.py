@@ -217,13 +217,15 @@ def send_emails_to_unpurchased(request):
         users = CustomUser.objects.filter(is_festpass_purchased=False)
         emails = [user.email for user in users]
 
-        try:
-            send_email_async(emails, send_promotion_email)
+        messages.info(request, len(emails))
+
+        # try:
+        #     send_email_async(emails, send_promotion_email)
             
-            messages.success(request, f"completed sending emails, {len(emails)}")
-        except Exception as e:
-            messages.error(request, e)
-            return redirect("home:dashboard")
+        #     messages.success(request, f"completed sending emails, {len(emails)}")
+        # except Exception as e:
+        #     messages.error(request, e)
+        #     return redirect("home:dashboard")
         
-        return render(request, "promo.html")
+        # return render(request, "promo.html")
     return redirect("home:homepage")
