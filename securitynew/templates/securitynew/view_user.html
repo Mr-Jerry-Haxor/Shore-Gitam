@@ -18,7 +18,7 @@
         <!-- <header class="flex justify-between items-center mb-12">
             <h1 class="text-4xl font-bold">User Details</h1>
         </header> -->
-
+        {% include 'messages.html' %}
         <!-- User Details Card -->
         <div class="bg-gray-800 rounded-xl shadow-lg p-6 mb-2">
             <div class="flex flex-col md:flex-row">
@@ -28,15 +28,15 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <p class="text-gray-400">Name</p>
-                            <p class="font-semibold">John Doe</p>
+                            <p class="font-semibold">{{ user.name }}</p>
                         </div>
                         <div>
-                            <p class="text-gray-400">ID</p>
-                            <p class="font-semibold">SH25-001</p>
+                            <p class="text-gray-400">Registration Number</p>
+                            <p class="font-semibold">{{ user.registration_number }}</p>
                         </div>
                         <div>
-                            <p class="text-gray-400">Access Level</p>
-                            <p class="font-semibold">VIP</p>
+                            <p class="text-gray-400">Student Type</p>
+                            <p class="font-semibold">{% if user.is_gitamite %}GITAM Student{% else %}Non-GITAM Student{% endif %}</p>
                         </div>
                     </div>
                 </div>
@@ -45,30 +45,18 @@
                     <h2 class="text-2xl font-semibold mb-4 text-green-400">Photos</h2>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <img src="WhatsApp Image 2024-12-30 at 12.06.45_6a30c6e6.jpg" alt="User Photo 1" class="w-48 h-48 rounded-lg object-cover cursor-pointer transition-transform transform hover:scale-105 z-50" onclick="openModal('WhatsApp Image 2024-12-30 at 12.06.45_6a30c6e6.jpg')">
+                            <img src="{{ user.profile_picture.url }}" alt="uploaded pic" class="w-48 h-48 rounded-lg object-cover cursor-pointer transition-transform transform hover:scale-105 z-50" onclick="openModal('{{ user.profile_picture.url }}')">
                         </div>
+                        {% if user.is_gitamite %}
                         <div>
-                            <img src="ridhima__ridhimamamgain__20241221205028.jpeg" alt="User Photo 2" class="w-48 h-48 rounded-lg object-cover cursor-pointer transition-transform transform hover:scale-105 z-50" onclick="openModal('ridhima__ridhimamamgain__20241221205028.jpeg')">
+                            <img src="https://doeresults.gitam.edu/photo/img.aspx?id={{ user.registration_number }}" alt="id card pic" class="w-48 h-48 rounded-lg object-cover cursor-pointer transition-transform transform hover:scale-105 z-50" onclick="openModal('https://doeresults.gitam.edu/photo/img.aspx?id={{ user.registration_number }}')">
                         </div>
-                    </div>
-                    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-75 overflow-y-auto h-screen w-full z-50">
-                        <div class="relative top-20 mx-auto p-5 w-full max-w-3xl shadow-2xl rounded-lg bg-white">
-                            <button onclick="closeModal()" class="absolute top-0 right-0 m-4 text-white bg-red-600 hover:bg-red-800 text-sm font-bold uppercase px-4 py-2 rounded-full transition duration-300">
-                                Close
-                            </button>
-                            <img id="modalImage" src="" alt="User Photo" class="w-full h-auto rounded-lg shadow-lg">
+                        {% else %}
+                        <div>
+                            <img src="{{ user.aadhar_card.url }}" alt="uploaded pic" class="w-48 h-48 rounded-lg object-cover cursor-pointer transition-transform transform hover:scale-105 z-50" onclick="openModal('{{ user.aadhar_card.url }}')">
                         </div>
+                        {% endif %}
                     </div>
-                    <script>
-                        function openModal(imageSrc) {
-                            document.getElementById('modalImage').src = imageSrc;
-                            document.getElementById('modal').classList.remove('hidden');
-                        }
-
-                        function closeModal() {
-                            document.getElementById('modal').classList.add('hidden');
-                        }
-                    </script>
                 </div>
             </div>
         </div>
@@ -76,18 +64,68 @@
         <!-- Additional Information -->
         <div class="bg-gray-800 rounded-xl shadow-lg p-6">
             <div class="flex flex-col mb-4">
-                <div id="entryStatus" class="text-lg text-center mb-2">Status: Awaiting entry...</div>
+                <div id="entryStatus" class="text-lg text-center mb-2">Status: {% if userin_obj.is_user_in %}IN{% else %}OUT{% endif %}</div>
+                {% if userin_obj.is_user_in %}
+                    <div class="text-lg text-center mb-2">Latest IN Time: {{ userin_obj.in_time|date:"h:i:s A" }}</div>
+                {% endif %}
                 <div class="flex justify-between items-center">
                     <div class="flex justify-center w-full">
-                        <button id="verifyButton" class="bg-gradient-to-r from-green-500 to-green-400 hover:opacity-90 text-white font-bold py-4 px-10 rounded-lg transition duration-300 ease-in-out text-xl shadow-lg transform hover:scale-105">
+                        <a href="{% url 'securitynew:accept_user' user.passhash %}" id="verifyButton" class="bg-gradient-to-r from-green-500 to-green-400 hover:opacity-90 text-white font-bold py-4 px-10 rounded-lg transition duration-300 ease-in-out text-xl shadow-lg transform hover:scale-105">
                             Verify
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal (updated styling) -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
+        <div class="relative max-w-4xl w-full bg-gray-900 rounded-lg">
+            <!-- Close button repositioned and restyled -->
+            <div class="flex justify-end p-4">
+                <button onclick="closeModal()" class="text-white bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition duration-300 flex items-center gap-2">
+                    <span class="hidden sm:inline">Close</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <!-- Image container with padding -->
+            <div class="p-4">
+                <img id="modalImage" src="" alt="User Photo" class="w-full h-auto rounded-lg shadow-lg max-h-[80vh] object-contain">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(imageSrc) {
+            const modal = document.getElementById('modal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageSrc;
+            modal.classList.remove('hidden');
+            
+            // Close modal when clicking outside the image
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Add keyboard support for closing
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
 

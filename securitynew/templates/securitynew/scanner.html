@@ -20,17 +20,12 @@
             <img src="/Shore25 green.png" alt="Shore 25 Logo" class="w-24 h-24 rounded-full bg-white p-2">
             <h1 class="text-4xl font-bold">QR Code Scanner</h1>
         </header>
-
+        {% include 'messages.html' %}
         <!-- Scanner Area -->
         <div class="bg-gray-800 rounded-xl shadow-lg p-6 mb-12">
             <div class="relative aspect-video mb-4">
                 <video id="video" class="w-full h-full object-cover rounded-lg"></video>
                 <div id="scanOverlay" class="absolute inset-0 border-2 border-green-400 opacity-0 transition-opacity duration-300"></div>
-            </div>
-            <div class="flex justify-center">
-                <button id="startButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
-                    Start Scanning
-                </button>
             </div>
         </div>
 
@@ -48,18 +43,22 @@
     </div>
     <script>
         const video = document.getElementById('video');
-        const startButton = document.getElementById('startButton');
         const result = document.getElementById('result');
         const resultText = document.getElementById('resultText');
         const scanOverlay = document.getElementById('scanOverlay');
 
-        startButton.onclick = () => {
+        // Start scanning automatically when the page loads
+        window.onload = () => {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
                 .then(function(stream) {
                     video.srcObject = stream;
-                    video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                    video.setAttribute("playsinline", true);
                     video.play();
                     requestAnimationFrame(tick);
+                })
+                .catch(function(error) {
+                    console.error("Error accessing camera:", error);
+                    // Optionally show an error message to the user
                 });
         };
 
@@ -82,6 +81,9 @@
                     setTimeout(() => {
                         scanOverlay.style.opacity = '0';
                     }, 500);
+                    
+                    document.getElementById('passhash').value = code.data;
+                    document.querySelector('form').submit();
                 } else {
                     result.classList.add('hidden');
                 }
