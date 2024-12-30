@@ -651,54 +651,53 @@ def dashboard(request):
         # check if they are registered for any event, if yes then check for their payment
         # event models -> Participants, HackathonParticipants
         if EventParticipants.objects.filter(email=request.user.email).exists():
-            participant_obj = EventParticipants.objects.get(email=request.user.email)
-            team = participant_obj.team
-            event = participant_obj.sport
-            if event.event_type == "sports":
-                # check for payment in sports model
-                if Sport.objects.filter(email=request.user.email).exists():
-                    y_count = Sport.objects.filter(transaction_status="Y").count()
-                    if y_count > 0:
-                        team.isPaid = True
-                        team.save()
-                        context["event_paid"] = True
-                        messages.success(request, f"Successfully paid for {event.name}")
+            participant_objs = EventParticipants.objects.filter(email=request.user.email)
+            for participant_obj in participant_objs:
+                team = participant_obj.team
+                event = participant_obj.sport
+                if event.event_type == "sports":
+                    # check for payment in sports model
+                    if Sport.objects.filter(email=request.user.email).exists():
+                        y_count = Sport.objects.filter(transaction_status="Y").count()
+                        if y_count > 0:
+                            team.isPaid = True
+                            team.save()
+                            context["event_paid"] = True
+                        else:
+                            context["event_paid"] = False
+                elif event.event_type == "cultural":
+                    # check for payment in cultural model
+                    if Cultural.objects.filter(email=request.user.email).exists():
+                        y_count = Cultural.objects.filter(transaction_status="Y").count()
+                        if y_count > 0:
+                            team.isPaid = True
+                            team.save()
+                            context["event_paid"] = True
+                        else:
+                            context["event_paid"] = False
                     else:
                         context["event_paid"] = False
-            elif event.event_type == "cultural":
-                # check for payment in cultural model
-                if Cultural.objects.filter(email=request.user.email).exists():
-                    y_count = Cultural.objects.filter(transaction_status="Y").count()
-                    if y_count > 0:
-                        team.isPaid = True
-                        team.save()
-                        context["event_paid"] = True
-                        messages.success(request, f"Successfully paid for {event.name}")
-                    else:
-                        context["event_paid"] = False
-                else:
-                    context["event_paid"] = False
             else:
                 context["event_paid"] = False
         else:
             context["event_paid"] = False
 
         if HackathonParticipants.objects.filter(email=request.user.email).exists():
-            participant_obj = HackathonParticipants.objects.get(request.user.email)
-            team = participant_obj.team
-            event = participant_obj.hackathon
+            participant_objs = HackathonParticipants.objects.filter(email=request.user.email)
+            for participant_obj in participant_objs:
+                team = participant_obj.team
+                event = participant_obj.hackathon
 
-            if Cultural.objects.filter(email=request.user.email).exists():
-                y_count = Cultural.objects.filter(transaction_status="Y").count()
-                if y_count > 0:
-                    team.isPaid = True
-                    team.save()
-                    context["event_paid"] = True
-                    messages.success(request, f"Successfully paid for {event.name}")
+                if Cultural.objects.filter(email=request.user.email).exists():
+                    y_count = Cultural.objects.filter(transaction_status="Y").count()
+                    if y_count > 0:
+                        team.isPaid = True
+                        team.save()
+                        context["event_paid"] = True
+                    else:
+                        context["event_paid"] = False
                 else:
                     context["event_paid"] = False
-            else:
-                context["event_paid"] = False
         else:
             context["event_paid"] = False
             
