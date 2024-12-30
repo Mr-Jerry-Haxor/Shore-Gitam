@@ -131,6 +131,8 @@ def is_transaction_success(user_email):
     if user.is_gitamite:
         if FestPass.objects.filter(email=user_email).exists():
             user_transactions = FestPass.objects.filter(email=user_email)
+        elif Registrations.objects.filter(email=user_email).exists():
+            user_transactions = Registrations.objects.filter(email=user_email)
         else:
             return False
     else:
