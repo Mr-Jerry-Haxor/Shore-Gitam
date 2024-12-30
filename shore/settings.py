@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     "home",
     "grievance",
     "forgot_password",
+    "securitynew",
 ]
 
 MIDDLEWARE = [

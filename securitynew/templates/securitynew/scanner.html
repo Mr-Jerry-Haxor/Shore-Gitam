@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shore 25 - QR Code Scanner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.3.1/dist/jsQR.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-12">
+            <img src="/Shore25 green.png" alt="Shore 25 Logo" class="w-24 h-24 rounded-full bg-white p-2">
+            <h1 class="text-4xl font-bold">QR Code Scanner</h1>
+        </header>
+
+        <!-- Scanner Area -->
+        <div class="bg-gray-800 rounded-xl shadow-lg p-6 mb-12">
+            <div class="relative aspect-video mb-4">
+                <video id="video" class="w-full h-full object-cover rounded-lg"></video>
+                <div id="scanOverlay" class="absolute inset-0 border-2 border-green-400 opacity-0 transition-opacity duration-300"></div>
+            </div>
+            <div class="flex justify-center">
+                <button id="startButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
+                    Start Scanning
+                </button>
+            </div>
+        </div>
+
+        <!-- Result Area -->
+        <div id="result" class="bg-gray-800 rounded-xl shadow-lg p-6 hidden">
+            <h2 class="text-2xl font-semibold mb-4 text-green-400">Scan Result</h2>
+            <p id="resultText" class="text-lg"></p>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="passhash" id="passhash" required hidden>
+            <button type="submit" hidden>submit</button>
+        </form>
+    </div>
+    <script>
+        const video = document.getElementById('video');
+        const startButton = document.getElementById('startButton');
+        const result = document.getElementById('result');
+        const resultText = document.getElementById('resultText');
+        const scanOverlay = document.getElementById('scanOverlay');
+
+        startButton.onclick = () => {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                    video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+                    video.play();
+                    requestAnimationFrame(tick);
+                });
+        };
+
+        function tick() {
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                const canvas = document.createElement("canvas");
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert",
+                });
+                if (code) {
+                    console.log("Found QR code", code.data);
+                    resultText.textContent = code.data;
+                    result.classList.remove('hidden');
+                    scanOverlay.style.opacity = '1';
+                    setTimeout(() => {
+                        scanOverlay.style.opacity = '0';
+                    }, 500);
+                } else {
+                    result.classList.add('hidden');
+                }
+            }
+            requestAnimationFrame(tick);
+        }
+    </script>
+</body>
+</html>
+
