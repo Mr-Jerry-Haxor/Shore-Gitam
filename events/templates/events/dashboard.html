@@ -150,6 +150,16 @@
                         {% csrf_token %}
                         <h3 class="text-lg font-medium text-gray-900">Upload File</h3>
                         <p class="mt-2 text-sm text-gray-500">Click below to select a PDF file</p>
+                        <div class="mt-4 flex items-center p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100 shadow-sm hover:shadow-md transition-all duration-300">
+                            <svg class="h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                            </svg>
+                            <a href="https://docs.google.com/document/d/1iG1TzejZ-69xhbEvtHWl0eziWxdThofd/edit?usp=sharing&ouid=114532637649494315909&rtpof=true&sd=true"
+                                target="_blank" 
+                               class="ml-3 font-medium text-indigo-600 hover:text-indigo-800 transition-colors duration-200">
+                                Download NOC Document
+                            </a>
+                        </div>
                         <!-- File Input -->
                         <div class="mt-4">
                             <input id="file-input" required name="nocfile" type="file" accept="application/pdf" class="block w-full text-sm text-gray-500
