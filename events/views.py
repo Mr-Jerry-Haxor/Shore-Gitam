@@ -491,6 +491,11 @@ def success(request, team_hash):
     context["team"] = team
     context["players"] = players
 
+    if team.sport.event_type == "sports":
+        context["payment_url"] = "https://gevents.gitam.edu/registration/MzE5Mg.."
+    elif team.sport.event_type == "cultural":
+        context["payment_url"] = "https://gevents.gitam.edu/registration/MzE5MA.."
+
     if request.method == "POST":
         noc_file = request.FILES.get("nocfile")
 
