@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from .models import BGMIPlayer, Volunteer
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
@@ -215,15 +215,30 @@ def noc(request):
 def send_emails_to_unpurchased(request):
     if request.user.is_superuser:
         users = CustomUser.objects.filter(is_festpass_purchased=False)
-        emails = [user.email for user in users]
+        # emails = [user.email for user in users]
 
-        try:
-            send_email_async(emails, send_promotion_email)
+        count = 0
+        emails = []
+        for user in users:
+            emails.append(user.email)
+            count += 1
+
+            if count%10 == 0:
+                send_email_async(emails, send_promotion_email) 
+                emails = []
+                count = 0
             
-            messages.success(request, f"completed sending emails, {len(emails)}")
-        except Exception as e:
-            messages.error(request, e)
-            return redirect("home:dashboard")
+        return HttpResponse("Completed sending emails")
+
+        return HttpResponse(len(emails))
+
+        # try:
+        #     send_email_async(emails, send_promotion_email)
+            
+        #     messages.success(request, f"completed sending emails, {len(emails)}")
+        # except Exception as e:
+        #     messages.error(request, e)
+        #     return redirect("home:dashboard")
         
-        return render(request, "promo.html")
+        # return render(request, "promo.html")
     return redirect("home:homepage")

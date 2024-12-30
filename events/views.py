@@ -316,7 +316,7 @@ def register(request, sport_name):
                     )
                     team.delete()
                     return redirect("events:eventshome")
-            elif sport.event_type == "sports":
+            elif sport.event_type == "sports" and not (sport.event_id == 42 or sport.event_id == 33 or sport.event_id == 24 or sport.event_id == 15):
                     if Participants.objects.filter(email=captain_email).count() == 1:
                         messages.error(
                             request,
@@ -392,7 +392,7 @@ def register(request, sport_name):
                             f"A participant is allowed to participant atmost in only two culturals. {name} already registered for 2 cultural events.",
                         )
                         return redirect("events:eventshome")
-                elif sport.event_type == "sports":
+                elif sport.event_type == "sports" and not (sport.event_id == 42 or sport.event_id == 33 or sport.event_id == 24 or sport.event_id == 15):
                     if Participants.objects.filter(email=email).count() == 1:
                         messages.error(
                             request,
