@@ -41,6 +41,7 @@ def view_user(request):
             userin_obj = UserIn.objects.filter(user=user)
             if userin_obj.exists():
                 messages.error(request, f"User already checkin at {userin_obj.in_time}")
+                return redirect("securitynew:scan_qr")
         except CustomUser.DoesNotExist:
             messages.error(request, "Pass does not exist")
             return redirect("securitynew:scan_qr")
