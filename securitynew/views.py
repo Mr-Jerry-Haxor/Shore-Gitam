@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from coreteam.models import CustomUser
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
 
 from .models import UserIn
 
-
+@login_required(login_url="/auth/login/google-oauth2/")
 def home(request):
     # home page
     if request.user.is_superuser or request.user.security or request.user.security_staff:
@@ -16,6 +17,7 @@ def home(request):
         return redirect("home:dashboard")
 
 
+@login_required(login_url="/auth/login/google-oauth2/")
 def scan_qr(request):
     # QR Scanner
     if request.user.is_superuser or request.user.security or request.user.security_staff:
@@ -25,6 +27,7 @@ def scan_qr(request):
         return redirect("home:dashboard")
 
 
+@login_required(login_url="/auth/login/google-oauth2/")
 def view_user(request):
     # shows user details
     if request.user.is_superuser or request.user.security or request.user.security_staff:
@@ -47,6 +50,7 @@ def view_user(request):
         return redirect("home:dashboard")
 
 
+@login_required(login_url="/auth/login/google-oauth2/")
 def accept_user(request, passhash):
     # accepts user
     if request.user.is_superuser or request.user.security or request.user.security_staff:
