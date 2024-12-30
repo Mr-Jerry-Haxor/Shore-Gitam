@@ -75,62 +75,93 @@
           >
             <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium bg-emerald-800/90 rounded-lg md:flex-row md:space-x-6 md:mt-0 md:bg-transparent">
               <li>
-                <a
-                  href="{% url 'home:homepage' %}"
-                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
-                >Home</a>
+                <a href="{% url 'home:homepage' %}" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                  Home
+                </a>
               </li>
               
+              {% if request.user.is_superuser or request.user.hospitality or request.user.hospitality_staff or request.user.security or request.user.security_staff or request.user.events_cultural or request.user.events_sports or request.user.events_cultural_staff or request.user.events_sports_staff %}
+              <li>
+                <button id="domainDropdownButton" data-dropdown-toggle="domainDropdown" class="flex items-center py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                    Domain Access
+                    <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                </button>
+                <!-- Dropdown menu -->
+                <div id="domainDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+                    <ul class="py-2 text-sm text-gray-700" aria-labelledby="domainDropdownButton">
+                        {% if request.user.is_superuser or request.user.hospitality or request.user.hospitality_staff %}
+                        <li>
+                            <a href="{% url 'hospitality:home' %}" class="block px-4 py-2 hover:bg-gray-100">
+                                Hospitality Staff
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% if request.user.is_superuser or request.user.security or request.user.security_staff %}
+                        <li>
+                            <a href="{% url 'securitynew:home' %}" class="block px-4 py-2 hover:bg-gray-100">
+                                Security Staff
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% comment %}
+                        {% if request.user.is_superuser or request.user.events_cultural or request.user.events_sports or request.user.events_cultural_staff or request.user.events_sports_staff %}
+                        <li>
+                            <a href="{% url 'events:staffhome' %}" class="block px-4 py-2 hover:bg-gray-100">
+                                Events Staff
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endcomment %}
+
+                    </ul>
+                </div>
+              </li>
+              {% endif %}
+
               <li>
                 {% if isCoreMember %}
-                <a
-                  href="{% url 'corehome' %}"
-                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
-                >Core Team</a>
+                <a href="{% url 'corehome' %}" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                  Core Team
+                </a>
                 {% endif %}
               </li>
               
               {% if ishospitality %}
               <li>
-                <a
-                  href="{% url 'hospitality:home' %}"
-                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
-                >Hospitality</a>
+                <a href="{% url 'hospitality:home' %}" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                  Hospitality
+                </a>
               </li>
               {% endif %}
               
               <li>
                 {% if request.user.grievance_staff %}
-                <a
-                  href="{% url 'grievance:dashboard' %}"
-                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
-                >Grievence Portal</a>
+                <a href="{% url 'grievance:dashboard' %}" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                  Grievence Portal
+                </a>
                 {% endif %}
               </li>
               
               
               <li>
                 {% if request.user.grievance_staff or request.user.is_superuser %}
-                <a
-                  href="https://shore.gitam.edu/shoreadmin"
-                  class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors"
-                >Django Admin</a>
+                <a href="https://shore.gitam.edu/shoreadmin" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                  Django Admin
+                </a>
                 {% endif %}
               </li>
               
               <li class="mt-2 md:mt-0">
                 {% if not request.user.is_authenticated %}
-                <a
-                  href="{% url 'home:login' %}"
-                  class="block bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full text-center transition-colors duration-300"
-                >
+                <a href="{% url 'home:login' %}" class="block bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full text-center transition-colors duration-300">
                   Login
                 </a>
                 {% else %}
-                <a
-                  href="{% url 'home:logout' %}"
-                  class="block bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full text-center transition-colors duration-300"
-                >
+                <a href="{% url 'home:logout' %}" class="block bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full text-center transition-colors duration-300">
                   Logout
                 </a>
                 {% endif %}

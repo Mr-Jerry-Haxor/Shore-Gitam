@@ -125,7 +125,7 @@ def send_payment_pending_email(user_email):
     msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
     msg.content_subtype = "html"
     msg.send()
-
+    
 
 def is_transaction_success(user_email):
     user = get_object_or_404(CustomUser, email=user_email)
@@ -662,6 +662,9 @@ def dashboard(request):
                         if y_count > 0:
                             team.isPaid = True
                             team.save()
+
+                            # send email
+
                             context["event_paid"] = True
                         else:
                             context["event_paid"] = False
@@ -672,6 +675,9 @@ def dashboard(request):
                         if y_count > 0:
                             team.isPaid = True
                             team.save()
+
+                            # send email
+
                             context["event_paid"] = True
                         else:
                             context["event_paid"] = False
@@ -693,6 +699,9 @@ def dashboard(request):
                     if y_count > 0:
                         team.isPaid = True
                         team.save()
+
+                        # send email
+
                         context["event_paid"] = True
                     else:
                         context["event_paid"] = False
