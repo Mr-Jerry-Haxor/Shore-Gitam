@@ -233,6 +233,7 @@
         </div>
         {% endif %}
 
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Fest Pass Action Card -->
             <div class="bg-white shadow-lg rounded-lg overflow-hidden border border-emerald-100">
@@ -438,7 +439,28 @@
                 <p class="mt-4 text-sm text-gray-600">If you have any other issues, please email us at <a href="mailto:shore_tech@gitam.in" class="text-emerald-600 underline">shore_tech@gitam.in</a>.</p>
             </div>
         </div>
-        
+                <!-- Add Hospitality Domain Section -->
+                <div class="mt-6 bg-white shadow-lg rounded-lg overflow-hidden border border-emerald-100 mb-6">
+                    <div class="bg-emerald-700 text-white p-4">
+                        <h2 class="text-2xl flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25h-1.5a.75.75 0 00-1.5 1.5v4.5h-4.5a.75.75 0 000 1.5h6a.75.75 0 00.75-.75v-6a.75.75 0 00-.75-.75z" />
+                            </svg>
+                            Hospitality Domain
+                        </h2>
+                        <p class="text-emerald-100 text-sm">Access your check-in and food QR codes</p>
+                    </div>
+                    <div class="p-6 text-center">
+                        <p class="text-emerald-700 mb-4">Welcome to the Hospitality Domain! Please find your options below:</p>
+                        <a href="{% url 'hospitality:home' %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
+                            Hospitality Home
+                        </a>
+                        <a href="{% url 'hospitality:food_qr' %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md mt-4">
+                            Food QR Code
+                        </a>
+                    </div>
+                </div>
+                <!-- End of Hospitality Domain Section -->
 
         <!-- Personal Details Card -->
         <div class="mt-6 bg-white shadow-lg rounded-lg overflow-hidden border border-emerald-100">
@@ -623,6 +645,8 @@
             </div>
         </div>
         {% endcomment %}
+
+        
     </main>
 
     <!-- Add this script just before the closing </body> tag -->
