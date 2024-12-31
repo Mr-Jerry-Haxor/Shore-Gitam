@@ -22,6 +22,7 @@ from payments.models import FestPass, Registrations
 from events.models import Participants as EventParticipants, HackathonParticipants
 from payments.models import Cultural, Sport
 from promotion.models import Volunteer
+from hospitality.models import HospitalityUser
 from .models import *
 
 
@@ -657,6 +658,12 @@ def dashboard(request):
                 context["isVolunteer"] = False
         else:
             context["isVolunteer"] = False
+
+        if HospitalityUser.objects.filter(email=request.user.email).exists():
+            context["is_hospitality"] = True
+        else:
+            context["is_hospitality"] = False
+    
 
         # check if they are registered for any event, if yes then check for their payment
         # event models -> Participants, HackathonParticipants
