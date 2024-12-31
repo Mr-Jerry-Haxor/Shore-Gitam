@@ -7,6 +7,18 @@ class FreePass(models.Model):
     email = models.EmailField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        # Custom logic before saving, if needed
+        FestPass.objects.create(
+            email=self.email,
+            txn_id="FREE_PASS",
+            transaction_status="Y",
+            posted_date=self.created_at,
+            updated_date=self.created_at
+        )
+
+        super().save(*args, **kwargs)  # Call the original save method
+
     def __str__(self):
         return self.email
 
