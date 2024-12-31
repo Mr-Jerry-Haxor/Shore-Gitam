@@ -130,7 +130,7 @@
                 {% endif %}
               </li>
               
-              {% if ishospitality %}
+              {% if request.user.is_superuser or request.user.hospitality or request.user.hospitality_staff %}
               <li>
                 <a href="{% url 'hospitality:home' %}" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
                   Hospitality
@@ -151,6 +151,14 @@
                 {% if request.user.grievance_staff or request.user.is_superuser %}
                 <a href="https://shore.gitam.edu/shoreadmin" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
                   Django Admin
+                </a>
+                {% endif %}
+              </li>
+
+              <li>
+                {% if isVolunteer %}
+                <a href="{% url 'volunteer_idcard' %}" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                  Volunteer ID Card
                 </a>
                 {% endif %}
               </li>

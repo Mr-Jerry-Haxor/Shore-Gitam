@@ -1,22 +1,20 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from .models import BGMIPlayer, Volunteer
 from django.views.decorators.http import require_http_methods
 from django.db import IntegrityError
 from django.contrib import messages
 import re
 from django.contrib.auth.decorators import login_required
-from events.models import College, Event, Hackathon
-from hospitality.models import HospitalityUser
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from coreteam.models import CustomUser
 
 from home.views import send_email_async
 from django.conf import settings
 from django.template.loader import get_template
-from django.core.mail import EmailMessage, EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
+
+from .models import Volunteer
 
 
 def send_promotion_email(user_emails):
@@ -242,3 +240,17 @@ def send_emails_to_unpurchased(request):
         
         # return render(request, "promo.html")
     return redirect("home:homepage")
+
+
+@login_required(login_url="home:login")
+def volunteer_id(request):
+    context = {}
+    try:
+        volunteer_obj = Volunteer.objects.get(email=request.user.email)
+    except Volunteer.DoesNotExist:
+        messages.error(request, "You are not authorized.")
+        return redirect("home:dashboard")
+    
+    context["user"] = volunteer_obj
+    
+    return render(request, "volunteer_id.html", context)

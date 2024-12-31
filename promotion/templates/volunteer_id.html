@@ -19,7 +19,7 @@
 
         <!-- Header -->
         <div class="relative bg-emerald-900 p-4 text-white">
-            <div class="flex justify-between items-start">
+            <div class="flex justify-center items-center">
                 <span class="inline-flex items-center rounded-md bg-emerald-500 px-3 py-1 text-sm font-semibold text-white">
                     VOLUNTEER
                 </span>
@@ -31,25 +31,33 @@
             <!-- Profile Photo -->
             <div class="w-32 h-32 rounded-full border-4 border-emerald-500 overflow-hidden mb-4 bg-emerald-50">
                 <img 
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Shore25%20ROUND%20BLACK%202-Vo7Zn88flaSDekqMXkMkrWMmNzFBXu.png"
+                    src="{{ user.profile_pic.url }}"
                     alt="Volunteer Photo"
                     class="w-full h-full object-cover"
                 />
             </div>
 
             <!-- Profile Details -->
-            <h2 class="text-2xl font-bold text-emerald-900 mb-1">Harsha Kumar</h2>
-            <p class="text-emerald-600 font-medium mb-4">ID: VOL-2025-0456</p>
+            <h2 class="text-2xl font-bold text-emerald-900 mb-1">{{ user.name }}</h2>
+            <p class="text-emerald-600 font-medium mb-4">ID: {{ user.regno }}</p>
 
             <!-- Details Grid -->
             <div class="w-full space-y-3 text-sm">
                 <div class="flex justify-between items-center py-2 border-b border-emerald-100">
                     <span class="text-emerald-700 font-medium">E-mail</span>
-                    <span class="text-emerald-900">hsambang@gitam.in</span>
+                    <span class="text-emerald-900">{{ user.email }}</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-emerald-100">
                     <span class="text-emerald-700 font-medium">Phone Number</span>
-                    <span class="text-emerald-900">9441749183</span>
+                    <span class="text-emerald-900">{{ user.phone_number }}</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-emerald-100">
+                    <span class="text-emerald-700 font-medium">Branch</span>
+                    <span class="text-emerald-900">{{ user.branch }}</span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-emerald-100">
+                    <span class="text-emerald-700 font-medium">Year</span>
+                    <span class="text-emerald-900">{{ user.year_of_study }}</span>
                 </div>
                 <div class="flex justify-between items-center py-2 border-b border-emerald-100">
                     <span class="text-emerald-700 font-medium">Position</span>
@@ -58,22 +66,19 @@
             </div>
 
             <!-- QR Code Placeholder -->
-            <div class="mt-6 p-2 bg-white rounded-lg shadow-sm">
+            <!-- <div class="mt-6 p-2 bg-white rounded-lg shadow-sm">
                 <img 
                     src="qr_code_PNG6.png"
                     alt="QR Code"
                     class="w-24 h-24"
                 />
-            </div>
+            </div> -->
         </div>
 
         <!-- Footer -->
         <div class="relative bg-emerald-50 p-4 text-center">
             <p class="text-xs text-emerald-800 font-semibold">
                 SHORE FEST 2025 | January 3-5, 2025
-            </p>
-            <p class="text-xs text-emerald-600 mt-1">   
-                This ID must be worn visibly at all times during the event
             </p>
         </div>
     </div>
