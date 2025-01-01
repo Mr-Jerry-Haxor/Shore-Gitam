@@ -91,7 +91,7 @@
                 <!-- Dropdown menu -->
                 <div id="domainDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                     <ul class="py-2 text-sm text-gray-700" aria-labelledby="domainDropdownButton">
-                        {% if request.user.is_superuser or request.user.hospitality or request.user.hospitality_staff %}
+                        {% if request.user.is_superuser or is_hospitality %}
                         <li>
                             <a href="{% url 'hospitality:home' %}" class="block px-4 py-2 hover:bg-gray-100">
                                 Hospitality Staff
@@ -130,7 +130,7 @@
                 {% endif %}
               </li>
               
-              {% if ishospitality %}
+              {% if request.user.is_superuser or is_hospitality %}
               <li>
                 <a href="{% url 'hospitality:home' %}" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
                   Hospitality
@@ -151,6 +151,14 @@
                 {% if request.user.grievance_staff or request.user.is_superuser %}
                 <a href="https://shore.gitam.edu/shoreadmin" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
                   Django Admin
+                </a>
+                {% endif %}
+              </li>
+
+              <li>
+                {% if isVolunteer %}
+                <a href="{% url 'volunteer_idcard' %}" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
+                  Volunteer ID Card
                 </a>
                 {% endif %}
               </li>
@@ -440,6 +448,7 @@
             </div>
         </div>
                 <!-- Add Hospitality Domain Section -->
+                {% if request.user.is_superuser or is_hospitality %} 
                 <div class="mt-6 bg-white shadow-lg rounded-lg overflow-hidden border border-emerald-100 mb-6">
                     <div class="bg-emerald-700 text-white p-4">
                         <h2 class="text-2xl flex items-center">
@@ -460,6 +469,7 @@
                         </a>
                     </div>
                 </div>
+                {% endif %}
                 <!-- End of Hospitality Domain Section -->
 
         <!-- Personal Details Card -->

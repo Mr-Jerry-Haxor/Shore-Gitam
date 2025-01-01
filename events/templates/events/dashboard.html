@@ -86,7 +86,7 @@
                 <!-- NOC Status Card -->
                 <div class="bg-white overflow-hidden shadow rounded-lg">
                     <div class="bg-blue-600 p-4">
-                        <h3 class="text-white text-lg font-semibold">Endorsment File</h3>
+                        <h3 class="text-white text-lg font-semibold">NOC File(Reference)</h3>
                     </div>
                     <div class="px-4 py-5 sm:p-6">
                         <!-- <dt class="text-sm font-medium text-gray-500 truncate">
@@ -99,13 +99,13 @@
                         {% endif %}
                     </div>
                     <div class="bg-gray-50 px-4 py-4 sm:px-6">
-                        {% if team.endorsment_file %}
-                        <a href="{{ team.endorsment_file.url }}"
+                        {% if team.nocfile %}
+                        <a href="{{ team.nocfile.url }}"
                             class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             View Uploaded File
                         </a>
                         {% else %}
-                        <a href="#"
+                        <a href="https://docs.google.com/document/d/1iG1TzejZ-69xhbEvtHWl0eziWxdThofd/edit?usp=sharing&ouid=114532637649494315909&rtpof=true&sd=true"
                             class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Sample File
                         </a>
