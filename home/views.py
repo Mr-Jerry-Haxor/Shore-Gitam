@@ -829,8 +829,10 @@ def dashboard(request):
             .count()
         )
 
-        context["total_tickets_sold"] = total_unique_tickets + total_unique_ng_tickets
-        context["gitamite_tickets_sold"] = total_unique_tickets
+        freepass_tickets = FreePass.objects.all().count()
+
+        context["total_tickets_sold"] = total_unique_tickets + total_unique_ng_tickets - freepass_tickets
+        context["gitamite_tickets_sold"] = total_unique_tickets - freepass_tickets
         context["nongitamite_tickets_sold"] = total_unique_ng_tickets
 
         # Get registered events for the user
