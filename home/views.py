@@ -668,7 +668,7 @@ def dashboard(request):
         # passes sold out
         global soldout
         if soldout:
-            context["passes_soldout"] = True
+            context["passes_soldout"] = False
 
         if Volunteer.objects.filter(email=request.user.email).exists():
             volunteer_obj = Volunteer.objects.get(email=request.user.email)
