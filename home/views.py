@@ -26,7 +26,7 @@ from hospitality.models import HospitalityUser
 from .models import *
 
 """Passes Sold Out"""
-soldout = True
+soldout = False
 
 
 class EmailThread(threading.Thread):
@@ -668,7 +668,7 @@ def dashboard(request):
         # passes sold out
         global soldout
         if soldout:
-            context["passes_soldout"] = False
+            context["passes_soldout"] = True
 
         if Volunteer.objects.filter(email=request.user.email).exists():
             volunteer_obj = Volunteer.objects.get(email=request.user.email)
