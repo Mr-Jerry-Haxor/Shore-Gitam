@@ -148,7 +148,7 @@
               
               
               <li>
-                {% if request.user.grievance_staff or request.user.is_superuser %}
+                {% if request.user.grievance_staff or request.user.is_superuser or request.user.is_staff %}
                 <a href="https://shore.gitam.edu/shoreadmin" class="block py-2 px-3 text-white hover:text-emerald-300 transition-colors">
                   Django Admin
                 </a>
