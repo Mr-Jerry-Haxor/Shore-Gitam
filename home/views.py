@@ -25,6 +25,9 @@ from promotion.models import Volunteer
 from hospitality.models import HospitalityUser
 from .models import *
 
+"""Passes Sold Out"""
+soldout = True
+
 
 class EmailThread(threading.Thread):
     """
@@ -194,7 +197,14 @@ def random_value():
 
 
 def homepage(request):
-    return render(request, "home/homepage.html")
+    context = {}
+    
+    # passes sold out
+    global soldout
+    if soldout:
+        context["passes_soldout"] = True
+
+    return render(request, "home/homepage.html", context)
 
 
 def login_user(request):
@@ -396,6 +406,11 @@ def signup(request):
 
 @login_required(login_url="home:login")
 def festpass(request):
+    # passes sold out
+    global soldout
+    if soldout:
+        return render(request, "home/passes_soldout.html")
+
     if request.user.is_authenticated:
         context = {}
 
@@ -649,6 +664,11 @@ def eticket(request):
 def dashboard(request):
     if request.user.is_authenticated:
         context = {}
+
+        # passes sold out
+        global soldout
+        if soldout:
+            context["passes_soldout"] = True
 
         if Volunteer.objects.filter(email=request.user.email).exists():
             volunteer_obj = Volunteer.objects.get(email=request.user.email)

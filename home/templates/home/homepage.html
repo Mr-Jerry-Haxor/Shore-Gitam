@@ -135,12 +135,21 @@
                             <span class="inline-block bg-emerald-500 text-white text-xs font-semibold rounded-full px-2 py-1 ml-2 transform scale-105 hover:scale-110 transition-transform duration-300 shadow-lg align-middle">New</span>
                         </a>
                     </li>
+                    {% if passes_soldout %}
+                    <li class="mt-2 md:mt-0">
+                        <a href="{% url "home:festpass" %}"
+                            class="block bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full text-center transition-colors duration-300 animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.7)] hover:shadow-[0_0_20px_rgba(16,185,129,0.9)]">
+                            Passes Sold Out
+                        </a>
+                    </li>
+                    {% else %}
                     <li class="mt-2 md:mt-0">
                         <a href="{% url 'home:festpass' %}"
                             class="block bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full text-center transition-colors duration-300 animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.7)] hover:shadow-[0_0_20px_rgba(16,185,129,0.9)]">
                             Buy Fest Pass
                         </a>
                     </li>
+                    {% endif %}
                     <li class="mt-2 md:mt-0">
                         <a href="{% url 'home:login' %}"
                             class="block bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-full text-center transition-colors duration-300">
@@ -181,10 +190,17 @@
                         <span class="font-semibold text-emerald-300 p-4">January 3rd to 5th, 2025</span>
                     </div>
                     <div class="space-x-4">
+                        {% if passes_soldout %}
+                        <a href="{% url "home:festpass" %}"
+                            class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-8 rounded-full text-lg shadow-[0_0_15px_rgba(16,185,129,0.7)] hover:shadow-[0_0_20px_rgba(16,185,129,0.9)] transition-all duration-300 inline-block hover:-translate-y-1 animate-pulse ml-2">
+                            Passes Sold Out
+                        </a>
+                        {% else %}
                         <a href="{% url 'home:festpass' %}"
                             class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-8 rounded-full text-lg shadow-[0_0_15px_rgba(16,185,129,0.7)] hover:shadow-[0_0_20px_rgba(16,185,129,0.9)] transition-all duration-300 inline-block hover:-translate-y-1 animate-pulse ml-2">
                             Buy Fest Pass
                         </a>
+                        {% endif %}
                         <a href="#about"
                             class="bg-transparent border-2 border-emerald-500 text-emerald-300 hover:bg-emerald-500/10 font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 inline-block hover:-translate-y-1 md:mt-0 mt-2">
                             About Shore Fest

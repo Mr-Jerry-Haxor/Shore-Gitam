@@ -265,9 +265,15 @@
                     
                 {% else %}
                     <p class="mb-4 text-emerald-700">You've not purchased your pass yet.</p>
+                        {% if passes_soldout %}
+                        <a href="{% url "home:festpass" %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
+                            Passes Sold Out
+                        </a>
+                        {% else %}
                         <a href="{% url 'home:festpass' %}" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white transition-colors px-6 py-2 rounded-md">
                             {% if prebooking %}Pre-book{% else %}Buy{% endif %} Fest Pass
                         </a>
+                        {% endif %}
                         <!-- Transaction Table -->
                     {% if transactions %}
                     <div class="mt-6">
