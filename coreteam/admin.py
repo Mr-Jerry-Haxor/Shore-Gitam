@@ -64,6 +64,7 @@ class CustomUserAdmin(ImportExportModelAdmin):
         "course",
         "branch",
         "campus",
+        "zone",
         "is_festpass_purchased",
         "is_gitamite",
         "prebooking",
@@ -101,6 +102,7 @@ class CustomUserAdmin(ImportExportModelAdmin):
         "accomdation",
         "grievance_staff",
         "gender",
+        "zone",
     )
     fieldsets = (
         (None, {"fields": ("username", "password")}),
@@ -123,6 +125,7 @@ class CustomUserAdmin(ImportExportModelAdmin):
                     "course",
                     "branch",
                     "campus",
+                    "zone",
                     "is_festpass_purchased",
                     "is_gitamite",
                     "passhash",
