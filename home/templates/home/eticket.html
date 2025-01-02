@@ -68,6 +68,12 @@
                     <div class="grid grid-cols-2 gap-y-4 text-sm mb-6 relative z-10">
                         <div>
                             <p class="text-emerald-600 flex items-center font-bold">
+                                Zone
+                            </p>
+                            <p class="font-mono font-bold text-emerald-800">{{ request.user.zone }}</p>
+                        </div>
+                        <div>
+                            <p class="text-emerald-600 flex items-center font-bold">
                                 Registration No.
                             </p>
                             <p class="font-mono font-bold text-emerald-800">{{ request.user.registration_number }}</p>

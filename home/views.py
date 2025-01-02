@@ -925,3 +925,57 @@ def update_name(request):
         return render(request, "home/update_name.html")
     else:
         return redirect("home:login")
+
+
+@login_required(login_url="home:login")
+def add_zones(request):
+    if not request.user.is_superuser:
+        messages.error(request, "You don't have permission to perform this action")
+        return redirect('home:dashboard')
+        
+    try:
+        gitam_zones = ["CT1", "CT2", "CT3", "CT4", "CT5", "GT1", "GT2"]
+        nongitam_zones = ["GT3", "GT4"]
+
+        gitam_users = CustomUser.objects.filter(is_festpass_purchased=True, is_gitamite=True)
+        nongitam_users = CustomUser.objects.filter(is_festpass_purchased=True, is_gitamite=False)
+
+        if not gitam_users.exists() and not nongitam_users.exists():
+            return HttpResponse("No users found to assign zones")
+
+        # Calculate users per zone
+        gitam_users_per_zone = len(gitam_users) // len(gitam_zones)
+        nongitam_users_per_zone = len(nongitam_users) // len(nongitam_zones)
+
+        # Assign zones to GITAM users
+        gitam_zone_index = 0
+        users_in_current_zone = 0
+        
+        for user in gitam_users:
+            if users_in_current_zone >= gitam_users_per_zone and gitam_zone_index < len(gitam_zones) - 1:
+                gitam_zone_index += 1
+                users_in_current_zone = 0
+            
+            user.zone = gitam_zones[gitam_zone_index]
+            user.save()
+            users_in_current_zone += 1
+
+        # Assign zones to non-GITAM users
+        nongitam_zone_index = 0
+        users_in_current_zone = 0
+        
+        for user in nongitam_users:
+            if users_in_current_zone >= nongitam_users_per_zone and nongitam_zone_index < len(nongitam_zones) - 1:
+                nongitam_zone_index += 1
+                users_in_current_zone = 0
+            
+            user.zone = nongitam_zones[nongitam_zone_index]
+            user.save()
+            users_in_current_zone += 1
+
+        return HttpResponse(f"Zones assigned successfully. GITAM users per zone: {gitam_users_per_zone}, Non-GITAM users per zone: {nongitam_users_per_zone}")
+
+    except Exception as e:
+        return HttpResponse(f"An error occurred: {str(e)}")
+
+    
