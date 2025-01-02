@@ -39,6 +39,10 @@ def view_user(request, passhash):
             user = CustomUser.objects.get(passhash=passhash)
             context["user"] = user
 
+            if not user.is_festpass_purchased:
+                messages.error(request, "User did not buy festpass")
+                return redirect("home:dashboard")
+
             # checking if user is already in
             userin_obj = UserIn.objects.filter(user=user)
             if userin_obj.exists():
@@ -60,6 +64,11 @@ def accept_user(request, passhash):
     if request.user.is_superuser or request.user.security or request.user.security_staff:
         try:
             user = CustomUser.objects.get(passhash=passhash)
+
+            if not user.is_festpass_purchased:
+                messages.error(request, "User did not buy festpass")
+                return redirect("home:dashboard")
+            
             UserIn.objects.create(
                 user=user, is_user_in=True
             ).save()
