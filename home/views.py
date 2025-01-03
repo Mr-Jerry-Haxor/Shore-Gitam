@@ -71,7 +71,7 @@ def send_email(user_email):
     from_email = settings.EMAIL_HOST_USER
     html_content = get_template("home/guidelines.html").render(
         {
-            "profile_pic_url": "https://shore.gitam.edu/" + user.profile_picture.url,
+            "profile_pic_url": "https://shore.gitam.edu" + user.profile_picture.url,
             "first_name": user.first_name,
             "registration_number": user.registration_number,
             "gender": user.gender,
