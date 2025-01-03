@@ -64,6 +64,24 @@ def send_email_async(user_email, send_mail_function):
     return email_thread
 
 
+def send_email(user_email):
+    user = CustomUser.objects.get(email=user_email)
+
+    subject = "Shore'25 || Important Guidelines"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("home/guidelines.html").render(
+        {
+            "name": user.first_name,
+            "email": user.email,
+            "reg_num": user.registration_number,
+        }
+    )
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
+    msg.content_subtype = "html"
+    msg.send()
+
+
 def send_prebooking_email(user_email):
     user = CustomUser.objects.get(email=user_email)
 
@@ -978,4 +996,3 @@ def add_zones(request):
     except Exception as e:
         return HttpResponse(f"An error occurred: {str(e)}")
 
-    

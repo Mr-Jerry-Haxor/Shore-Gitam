@@ -8,6 +8,17 @@ from .models import UserIn
 
 
 @login_required(login_url="/auth/login/google-oauth2/")
+def home(request):
+    # home page
+    if request.user.is_superuser or request.user.security or request.user.security_staff:
+        return render(request, "securitynew/home.html")
+    
+    else:
+        messages.error(request, "You are not authorized")
+        return redirect("home:dashboard")
+
+
+@login_required(login_url="/auth/login/google-oauth2/")
 def scan_qr(request):
     if request.user.is_superuser or request.user.security or request.user.security_staff:
         if request.POST:
@@ -18,17 +29,6 @@ def scan_qr(request):
         messages.error(request, "You are not authorized")
         return redirect("home:dashboard")
     
-
-@login_required(login_url="/auth/login/google-oauth2/")
-def home(request):
-    # home page
-    if request.user.is_superuser or request.user.security or request.user.security_staff:
-        return render(request, "securitynew/home.html")
-    
-    else:
-        messages.error(request, "You are not authorized")
-        return redirect("home:dashboard")
-
 
 @login_required(login_url="/auth/login/google-oauth2/")
 def view_user(request, passhash):
