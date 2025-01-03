@@ -162,6 +162,8 @@ def is_transaction_success(user_email):
     else:
         if Registrations.objects.filter(email=user_email).exists():
             user_transactions = Registrations.objects.filter(email=user_email)
+        elif FestPass.objects.filter(email=user_email).exists():
+            user_transactions = FestPass.objects.filter(email=user_email)
         else:
             return False
 
@@ -632,13 +634,7 @@ def eticket(request):
                         return render(
                             request, "home/eticket.html", context={"user": request.user}
                         )
-                else:
-                    messages.error(
-                        request, "Please purchase the festpass to get your eticket."
-                    )
-                    return redirect("home:dashboard")
-                
-                if FestPass.objects.filter(email=request.user.email).exists():
+                elif FestPass.objects.filter(email=request.user.email).exists():
                     user_transactions = FestPass.objects.filter(
                         email=request.user.email
                     )
@@ -657,26 +653,7 @@ def eticket(request):
                         request, "Please purchase the festpass to get your eticket."
                     )
                     return redirect("home:dashboard")
-                
-                if FestPass.objects.filter(email=request.user.email).exists():
-                    user_transactions = FestPass.objects.filter(
-                        email=request.user.email
-                    )
-                    y_count = user_transactions.filter(transaction_status="Y").count()
-                    if y_count == 0:
-                        user = CustomUser.objects.get(email=request.user.email)
-                        user.is_festpass_purchased = False
-                        user.save()
-                        return redirect("home:dashboard")
-                    elif y_count > 0:
-                        return render(
-                            request, "home/eticket.html", context={"user": request.user}
-                        )
-                else:
-                    messages.error(
-                        request, "Please purchase the festpass to get your eticket."
-                    )
-                    return redirect("home:dashboard")
+
             return render(request, "home/eticket.html")
         else:
             if request.user.is_gitamite:
