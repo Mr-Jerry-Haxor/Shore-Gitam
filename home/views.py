@@ -69,11 +69,17 @@ def send_email(user_email):
 
     subject = "Shore'25 || Important Guidelines"
     from_email = settings.EMAIL_HOST_USER
-    html_content = get_template("home/eticket.html").render(
+    html_content = get_template("home/guidelines.html").render(
         {
-            "name": user.first_name,
-            "email": user.email,
-            "reg_num": user.registration_number,
+            "profile_pic_url": user.profile_picture.url,
+            "first_name": user.first_name,
+            "registration_number": user.registration_number,
+            "gender": user.gender,
+            "phone_number": user.phone_number,
+            "zone": user.zone,
+            "branch": user.branch,
+            "course": user.course,
+            "passhash": user.passhash
         }
     )
 
