@@ -98,6 +98,23 @@ def send_ng_email(user_emails):
     msg.send()
 
 
+def send_guidelines():
+    users = CustomUser.objects.filter(is_festpass_purchased=True, is_gitamite=False)
+    count = 0
+    emails = []
+
+    for user in users:
+        if count != 20:
+            emails.append(user.email)
+            count += 1
+        else:
+            count = 0
+            send_email_async(send_ng_email, emails)
+            emails = []
+    
+    print("Completed sending emails")
+
+
 def send_prebooking_email(user_email):
     user = CustomUser.objects.get(email=user_email)
 
