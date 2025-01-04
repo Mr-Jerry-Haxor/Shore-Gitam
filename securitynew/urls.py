@@ -8,5 +8,5 @@ urlpatterns = [
     path("view_user/<str:passhash>", views.view_user, name="view_user"),
     path("accept_user/<str:passhash>", views.accept_user, name="accept_user"),
 
-    path("delete_checkins/", views.delete_user_checkin),
+    # path("delete_checkins/", views.delete_user_checkin),
 ]
