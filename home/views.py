@@ -88,12 +88,12 @@ def send_email(user_email):
     msg.send()
 
 
-def send_ng_email(user_emails):
+def send_ng_email(user_email):
     subject = "Shore'25 || Important Guidelines"
     from_email = settings.EMAIL_HOST_USER
     html_content = get_template("home/ng_guidelines.html")
 
-    msg = EmailMultiAlternatives(subject, html_content, from_email, user_emails)
+    msg = EmailMultiAlternatives(subject, html_content, from_email, [user_email])
     msg.content_subtype = "html"
     msg.send()
 
@@ -104,13 +104,7 @@ def send_guidelines():
     emails = []
 
     for user in users:
-        if count != 20:
-            emails.append(user.email)
-            count += 1
-        else:
-            count = 0
-            send_email_async(send_ng_email, emails)
-            emails = []
+        send_email_async(send_ng_email, user_email=user.email)
     
     print("Completed sending emails")
 
