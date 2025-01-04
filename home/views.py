@@ -88,23 +88,23 @@ def send_email(user_email):
     msg.send()
 
 
-def send_ng_email(user_email):
+def send_ng_email(user_emails):
     subject = "Shore'25 || Important Guidelines"
     from_email = settings.EMAIL_HOST_USER
     
     # Render the template with an empty context or specific data
     html_content = get_template("home/ng_guidelines.html").render({})
     
-    msg = EmailMultiAlternatives(subject, "", from_email, [user_email])
+    msg = EmailMultiAlternatives(subject, "", from_email, user_emails)
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
 
 def send_guidelines():
     users = CustomUser.objects.filter(is_festpass_purchased=True, is_gitamite=False)
+    emails = [user.email for user in users]
 
-    for user in users:
-        send_email_async(user.email, send_ng_email)
+    send_email_async(emails, send_ng_email)
     
     print("Completed sending emails")
 
