@@ -877,14 +877,14 @@ def dashboard(request):
             context["festpass_validated"] = True
 
         total_unique_tickets = (
-            FestPass.objects.filter(txn_id__isnull=False, transaction_status="Y")
+            FestPass.objects.filter(transaction_status="Y")
             .values("txn_id")
             .distinct()
             .count()
         )
 
         total_unique_ng_tickets = (
-            Registrations.objects.filter(txn_id__isnull=False, transaction_status="Y")
+            Registrations.objects.filter(transaction_status="Y")
             .values("txn_id")
             .distinct()
             .count()
