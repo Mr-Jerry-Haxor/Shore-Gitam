@@ -82,3 +82,10 @@ def accept_user(request, passhash):
     else:
         messages.error(request, "You are not authorized")
         return redirect("home:dashboard")
+
+
+def delete_user_checkin(request):
+    checkins = UserIn.objects.all()
+    checkins.delete()
+
+    return HttpResponse("deleted")
