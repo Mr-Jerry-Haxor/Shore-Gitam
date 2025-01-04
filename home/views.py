@@ -88,6 +88,16 @@ def send_email(user_email):
     msg.send()
 
 
+def send_ng_email(user_emails):
+    subject = "Shore'25 || Important Guidelines"
+    from_email = settings.EMAIL_HOST_USER
+    html_content = get_template("home/ng_guidelines.html")
+
+    msg = EmailMultiAlternatives(subject, html_content, from_email, user_emails)
+    msg.content_subtype = "html"
+    msg.send()
+
+
 def send_prebooking_email(user_email):
     user = CustomUser.objects.get(email=user_email)
 
