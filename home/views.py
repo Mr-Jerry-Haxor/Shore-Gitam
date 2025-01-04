@@ -104,7 +104,7 @@ def send_guidelines():
     emails = []
 
     for user in users:
-        send_email_async(send_ng_email, user_email=user.email)
+        send_email_async(user.email, send_ng_email)
     
     print("Completed sending emails")
 
