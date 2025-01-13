@@ -26,7 +26,7 @@ from hospitality.models import HospitalityUser
 from .models import *
 
 """Passes Sold Out"""
-soldout = False
+soldout = True
 
 
 class EmailThread(threading.Thread):
